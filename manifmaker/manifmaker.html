@@ -5,10 +5,40 @@
 <body>
   <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
+
+  {{> userList}}
+  {{> taskList}}
+  {{> assignmentList}}
+
+
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="userList">
+  <ul>
+    {{#each users}}
+    <li>
+      <div class="name">{{name}}</div>
+    </li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name="taskList">
+  <ul>
+    {{#each tasks}}
+    <li>
+      <div class="name">{{name}}</div>
+    </li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name="assignmentList">
+  <ul>
+    {{#each assignment}}
+    <li>
+      <div class=""></div>
+    </li>
+    {{/each}}
+  </ul>
 </template>
