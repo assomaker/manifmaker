@@ -33,6 +33,7 @@ class Timeslot {
         this.start = start;
         this.end = end;
         this.peopleNeeded = peopleNeeded; //Array<PeopleNeed]
+        this._id = new Meteor.Collection.ObjectID()._str;
     }
 }
 
@@ -41,3 +42,23 @@ PeopleNeed = {
     SOFT: "soft",
     SOFTDRIVINGLICENSE: "softDrivingLicense"
 };
+
+
+
+
+Assignment =
+class Assignment {
+    constructor(idUser, idTask, idTimeSlot){
+        this._idUser = idUser;
+        this._idTask = idTask;
+        this._idTimeSlot = idTimeSlot;
+    }
+}
+
+
+
+
+
+
+
+

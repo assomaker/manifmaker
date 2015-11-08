@@ -1,5 +1,3 @@
-
-
 Template.userList.helpers({
     users: function () {
         return Users.find({});
@@ -18,14 +16,23 @@ Template.assignmentList.helpers({
     }
 });
 
-
-
+Template.assignment.helpers({
+    userName: function () {
+        return Users.findOne({_id: this._idUser}).name;
+    },
+    taskName: function(){
+        return Tasks.findOne({_id: this._idTask}).name;
+    },
+    start: function(){
+        return Tasks.findOne({_id: this._idTask}).timeslots;
+    }
+});
 
 
 Meteor.startup(function () {
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
-    Meteor.subscribe("assigments");
+    Meteor.subscribe("assignments");
 
 });
 

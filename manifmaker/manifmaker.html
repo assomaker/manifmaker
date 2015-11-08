@@ -18,8 +18,11 @@
         {{#each users}}
             <li>
                 <div class="name">{{name}}</div>
-                <ul>{{#each availabilities}}
-                    <li>from {{start}} to {{end}}</li>{{/each}} </ul>
+                <ul>
+                    {{#each availabilities}}
+                        <li>from {{start}} to {{end}}</li>
+                    {{/each}}
+                </ul>
             </li>
         {{/each}}
     </ul>
@@ -30,11 +33,17 @@
         {{#each tasks}}
             <li>
                 <div class="name">{{name}}</div>
-                <ul>{{#each timeslots}}
-                    <li>from {{start}} to {{end}}
-                        <ul>{{#each peopleNeeded}}
-                            <li>{{this}}</li>{{/each}} </ul>
-                    </li>{{/each}} </ul>
+                <ul>
+                    {{#each timeslots}}
+                        <li>from {{start}} to {{end}}
+                            <ul>
+                                {{#each peopleNeeded}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                        </li>
+                    {{/each}}
+                </ul>
             </li>
         {{/each}}
     </ul>
@@ -42,10 +51,16 @@
 
 <template name="assignmentList">
     <ul>
-        {{#each assignment}}
+        {{#each assignments}}
             <li>
-                <div class=""></div>
+                <div class="">
+                    {{> assignment}}
+                </div>
             </li>
         {{/each}}
     </ul>
+</template>
+
+<template name="assignment">
+    <div>{{userName}} is assigned to {{taskName}} from {{start}} to {{end}}</div>
 </template>
