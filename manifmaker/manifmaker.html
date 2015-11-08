@@ -1,44 +1,51 @@
 <head>
-  <title>manifmaker</title>
+    <title>manifmaker</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+<h1>Welcome to Meteor!</h1>
 
 
-  {{> userList}}
-  {{> taskList}}
-  {{> assignmentList}}
+{{> userList}}
+{{> taskList}}
+{{> assignmentList}}
 
 
 </body>
 
 <template name="userList">
-  <ul>
-    {{#each users}}
-    <li>
-      <div class="name">{{name}}</div>
-    </li>
-    {{/each}}
-  </ul>
+    <ul>
+        {{#each users}}
+            <li>
+                <div class="name">{{name}}</div>
+                <ul>{{#each availabilities}}
+                    <li>from {{start}} to {{end}}</li>{{/each}} </ul>
+            </li>
+        {{/each}}
+    </ul>
 </template>
 
 <template name="taskList">
-  <ul>
-    {{#each tasks}}
-    <li>
-      <div class="name">{{name}}</div>
-    </li>
-    {{/each}}
-  </ul>
+    <ul>
+        {{#each tasks}}
+            <li>
+                <div class="name">{{name}}</div>
+                <ul>{{#each timeslots}}
+                    <li>from {{start}} to {{end}}
+                        <ul>{{#each peopleNeeded}}
+                            <li>{{this}}</li>{{/each}} </ul>
+                    </li>{{/each}} </ul>
+            </li>
+        {{/each}}
+    </ul>
 </template>
 
 <template name="assignmentList">
-  <ul>
-    {{#each assignment}}
-    <li>
-      <div class=""></div>
-    </li>
-    {{/each}}
-  </ul>
+    <ul>
+        {{#each assignment}}
+            <li>
+                <div class=""></div>
+            </li>
+        {{/each}}
+    </ul>
 </template>
