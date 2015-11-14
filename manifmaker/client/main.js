@@ -16,17 +16,6 @@ Template.assignmentList.helpers({
     }
 });
 
-Template.assignment.helpers({
-    userName: function () {
-        return Users.findOne({_id: this._idUser}).name;
-    },
-    taskName: function(){
-        return Tasks.findOne({_id: this._idTask}).name;
-    },
-    start: function(){
-        return Tasks.findOne({_id: this._idTask}).timeslots;
-    }
-});
 
 
 Meteor.startup(function () {

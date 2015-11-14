@@ -13,7 +13,7 @@ Assignments = new Mongo.Collection("assignment");
 
 insertAndFetch = function (Collection, data) {
     var _id = Collection.insert(data);
-    return Collection.findOne({_id});
+    return Collection.findOne({_id:_id});
 };
 
 
@@ -42,8 +42,8 @@ Meteor.methods({
         user3 = insertAndFetch(Users, user3);
 
         var task1 = new Task("task1", [
-            new Timeslot("8h", "10h", [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
-            new Timeslot("10h", "12h", [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
+            new TimeSlot("8h", "10h", [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
+            new TimeSlot("10h", "12h", [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
         ]);
         var task2 = new Task("task2", []);
         var task3 = new Task("task3", []);
@@ -52,19 +52,21 @@ Meteor.methods({
         task2 = insertAndFetch(Tasks, task2);
         task3 = insertAndFetch(Tasks, task3);
 
-
-        console.log(task1);
-        Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeslots[0]._id);
+        Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id);
 
 
     },
 
-    assignUserToTaskTimeSlot: function (_idUser, _idTask, _idTimeSlot) {
-        var assignment = new Assignment(_idUser, _idTask, _idTimeSlot);
+    assignUserToTaskTimeSlot: function (userId, taskId, timeSlotId) {
+        var assignment = new Assignment(userId, taskId, timeSlotId);
 
-        Assignments.insert(assignment);
+        var assignmentId = Assignments.insert(assignment);
+
+        assignment._id = assignmentId;
+        return assignment;
 
     }
 });
+
 
 

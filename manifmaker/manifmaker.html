@@ -14,13 +14,21 @@
 </body>
 
 <template name="userList">
+    <h2>Users List</h2>
     <ul>
         {{#each users}}
             <li>
                 <div class="name">{{name}}</div>
+                Availabilities :
                 <ul>
                     {{#each availabilities}}
                         <li>from {{start}} to {{end}}</li>
+                    {{/each}}
+                </ul>
+                Assignments :
+                <ul>
+                    {{#each assignments}}
+                        <li>{{taskName}} from {{start}} to {{end}}</li>
                     {{/each}}
                 </ul>
             </li>
@@ -29,12 +37,14 @@
 </template>
 
 <template name="taskList">
+    <h2>Tasks List</h2>
     <ul>
         {{#each tasks}}
             <li>
                 <div class="name">{{name}}</div>
+                Timeslots :
                 <ul>
-                    {{#each timeslots}}
+                    {{#each timeSlots}}
                         <li>from {{start}} to {{end}}
                             <ul>
                                 {{#each peopleNeeded}}
@@ -44,23 +54,30 @@
                         </li>
                     {{/each}}
                 </ul>
+                Assignments :
+                <ul>
+                    {{#each assignments}}
+                        <li>{{userName}} from {{start}} to {{end}}</li>
+                    {{/each}}
+                </ul>
             </li>
         {{/each}}
     </ul>
 </template>
 
+
+
+
 <template name="assignmentList">
+    <h2>Assignments List</h2>
     <ul>
         {{#each assignments}}
             <li>
                 <div class="">
-                    {{> assignment}}
+                    <div>{{userId}} is assigned to {{taskId}} at timeslot {{timeSlotId}}</div>
                 </div>
             </li>
         {{/each}}
     </ul>
 </template>
 
-<template name="assignment">
-    <div>{{userName}} is assigned to {{taskName}} from {{start}} to {{end}}</div>
-</template>
