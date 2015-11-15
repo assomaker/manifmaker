@@ -118,20 +118,22 @@ class AssignmentService {
 
 UserAssignment = //to export it to other namespace
 class UserAssignment { //stored along with a user to a direct access
-    constructor(taskName, start, end) {
+    constructor(taskName, start, end, assignmentId) {
         this.taskName = taskName;
         this.start = start;
         this.end = end;
+        this.assignmentId = assignmentId;
     }
 
 }
 
 TaskAssignment = //to export it to other namespace
 class TaskAssignment { //stored along with a task to a direct access
-    constructor(userName, start, end) {
+    constructor(userName, start, end, assignmentId) {
         this.userName = userName;
         this.start = start;
         this.end = end;
+        this.assignmentId = assignmentId;
     }
 
 }

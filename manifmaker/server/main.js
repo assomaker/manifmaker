@@ -1,5 +1,3 @@
-
-
 Meteor.startup(function () {
     // code to run on server at startup
 
@@ -26,10 +24,15 @@ Meteor.startup(function () {
     });
 
     Assignments.allow({
+        insert: function(userId, doc){
+            return true;
+        },
         update: function (userId, doc, fieldNames, modifier) {
             throw new Meteor.Error(400, "An 'Assignment' can't be update but only created or deleted");
+        },
+        remove: function(userId, doc){
+            return true;
         }
-
     });
 
 
@@ -37,31 +40,56 @@ Meteor.startup(function () {
 
 
 function propagateAssignment(assignmentId, assignment, fieldNames) {
-    console.log("propagateAssignment for",assignment);
+    console.log("propagateAssignment for", assignment);
     var assignment = AssignmentService.read(assignment);
     var updateUser = {assignments: []},
         updateTask = {assignments: []},
         user = UserRepository.findOne(assignment.userId),//Meteor.users.findOne(review.userId),
         task = TaskRepository.findOne(assignment.taskId);
-    console.log(user,task);
 
-    var timeSlot = TimeSlotService.getTimeSlot(task,assignment.timeSlotId);
-    console.log(timeSlot);
+    var timeSlot = TimeSlotService.getTimeSlot(task, assignment.timeSlotId);
     delete timeSlot.peopleNeeded;
 
-    var userAssignment = new UserAssignment(task.name, timeSlot.start, timeSlot.end);
+    var userAssignment = new UserAssignment(task.name, timeSlot.start, timeSlot.end, assignment._id);
     updateUser.assignments.push(userAssignment); //' + assignment.taskId] = review;
     Users.update(assignment.userId, {$set: updateUser});
 
-    var taskAssignment = new TaskAssignment(user.name, timeSlot.start, timeSlot.end);
+    var taskAssignment = new TaskAssignment(user.name, timeSlot.start, timeSlot.end, assignment._id);
     updateTask.assignments.push(taskAssignment);
     Tasks.update(assignment.taskId, {$set: updateTask});
 }
 
 
 function removeAssignment(assignmentId, assignment) {
-    //TODO
+    console.log("removeAssignment for", assignment);
+    var assignment = AssignmentService.read(assignment);
+    var updateUser = {},
+        updateTask = {},
+        user = UserRepository.findOne(assignment.userId),//Meteor.users.findOne(review.userId),
+        task = TaskRepository.findOne(assignment.taskId);
+
+    updateUser.assignments = user.assignments;
+    updateUser.assignments.pop(
+        user.assignments.indexOf(
+            _.findWhere(
+                user.assignments, {assignmentId: assignment._id}
+            )
+        )
+    );
+    Users.update(assignment.userId, {$set: updateUser});
+
+    updateTask.assignments = task.assignments;
+    updateTask.assignments.pop(
+        task.assignments.indexOf(
+            _.findWhere(
+                task.assignments, {assignmentId: assignment._id}
+            )
+        )
+    );
+    Tasks.update(assignment.taskId, {$set: updateTask});
 }
+
+
 
 
 
