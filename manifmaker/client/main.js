@@ -4,7 +4,7 @@ SelectedUser = new ReactiveVar(null);
 TaskFilter = new ReactiveVar(defaultFilter);
 SelectedTask = new ReactiveVar(null);
 
-selectedTimeslotId = null; //TODO mettre ca dans Session
+selectedTimeslotId = null; //TODO mettre ca dans Session ?
 
 AssignmentFilter = new ReactiveVar(defaultFilter);
 CurrentAssignmentType = new ReactiveVar(AssignmentType.ALL);
@@ -55,15 +55,21 @@ Template.taskList.events({
         event.stopPropagation();
         var currentAssignmentType = CurrentAssignmentType.get();
         var target = $(event.target);
-        var _id;
+        var _idTask, _idTimeSlot;
         if (target.hasClass("task"))
-            _id = target.data("_id");
+            _idTask = target.data("_id");
         else
-            _id = target.parents(".task").data("_id");
+            _idTask = target.parents(".task").data("_id");
+
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
-                //TODO, recuperer le bon timeSlot
-                //Meteor.call("assignUserToTaskTimeSlot", _id, selectedTaskId._id, selectedTimeslotId);
+
+                if (target.hasClass("time-slot"))
+                    _idTimeSlot = target.data("_id");
+                else
+                    _idTimeSlot = target.parents(".time-slot").data("_id");
+
+                Meteor.call("assignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot);
 
                 break;
             case AssignmentType.TASKTOUSER:

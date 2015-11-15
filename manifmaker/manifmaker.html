@@ -65,12 +65,12 @@
     <h2>Tasks List</h2>
     <ul>
         {{#each tasks}}
-            <li class="task" data data-_id="{{_id}}">
+            <li class="task" data-_id="{{_id}}">
                 <div class="name">{{name}}</div>
                 Timeslots :
                 <ul>
                     {{#each timeSlots}}
-                        <li>from {{start}} to {{end}}
+                        <li class="time-slot" data-_id="{{_id}}">from {{start}} to {{end}}
                             <ul>
                                 {{#each peopleNeeded}}
                                     <li>{{this}}</li>
