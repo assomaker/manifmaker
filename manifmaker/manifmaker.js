@@ -45,7 +45,10 @@ Meteor.methods({
             new TimeSlot("8h", "10h", [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
             new TimeSlot("10h", "12h", [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
         ]);
-        var task2 = new Task("task2", []);
+        var task2 = new Task("task2", [
+            new TimeSlot("2h", "6h", [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
+            new TimeSlot("14", "16h", [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
+        ]);
         var task3 = new Task("task3", []);
 
         task1 = insertAndFetch(Tasks, task1)
@@ -53,11 +56,13 @@ Meteor.methods({
         task3 = insertAndFetch(Tasks, task3);
 
         Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id);
+        Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[1]._id);
 
 
     },
 
     assignUserToTaskTimeSlot: function (userId, taskId, timeSlotId) {
+        console.info("assignUserToTaskTimeSlot to user",userId,"task",taskId,"timeslot",timeSlotId);
         var assignment = new Assignment(userId, taskId, timeSlotId);
 
         var assignmentId = Assignments.insert(assignment);

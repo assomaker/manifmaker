@@ -1,11 +1,10 @@
 User = //to export it to other namespace
 class User {
-    constructor(name, availabilities, _id) {
+    constructor(name, availabilities, assignments = [], _id) {
         this.name = name;
         this.availabilities = availabilities; //Array<Availability>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
-        this.assignments = [];
-
+        this.assignments = assignments;
     }
 
     toString() {
@@ -18,7 +17,7 @@ UserRepository =
 class UserRepository {
     static findOne(userId) {
         var user = Users.findOne(userId);
-        return new User(user.name, user.availabilities, user._id);
+        return new User(user.name, user.availabilities, user.assignments, user._id);
     }
 }
 
@@ -34,11 +33,11 @@ class Availability {
 
 Task = //to export it to other namespace
 class Task {
-    constructor(name, timeSlots) {
+    constructor(name, timeSlots, assignments = [], _id) {
         this.name = name;
         this.timeSlots = timeSlots; //Array<Timeslot>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
-        this.assignments = [];
+        this.assignments = assignments;
     }
 }
 
@@ -46,12 +45,12 @@ TaskRepository =
 class TaskRepository {
     static findOne(taskId) {
         var task = Tasks.findOne(taskId);
-        return new Task(task.name, task.timeSlots, task._id);
+        return new Task(task.name, task.timeSlots, task.assignments, task._id); //TODO trouver un moyen plus NoSQL de faire ca ?
     }
 }
 
 TimeSlot = //to export it to other namespace
-class TimeSlot {
+class TimeSlot { //must inherit Availabilty
     constructor(start, end, peopleNeeded) {
         this.start = start;
         this.end = end;
@@ -86,6 +85,11 @@ PeopleNeed = {
     SOFTDRIVINGLICENSE: "softDrivingLicense"
 };
 
+AssignmentType = {
+    USERTOTASK: "userToTask",
+    TASKTOUSER: "taskToUser",
+    ALL: "all"
+};
 
 Assignment = //to export it to other namespace
 class Assignment {

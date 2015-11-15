@@ -5,19 +5,44 @@
 <body>
 <h1>Welcome to Meteor!</h1>
 
+{{> buttons}}
+
 
 {{> userList}}
+{{> currentAssignment}}
 {{> taskList}}
 {{> assignmentList}}
 
 
 </body>
 
+<template name="buttons">
+    <button id="userToTask">user => task</button>
+    <button id="taskToUser">task => user</button>
+    <button id="all">all</button>
+    {{adviceMessage}}
+</template>
+
+<template name="currentAssignment">
+
+    <h2>Current Assignment</h2>
+
+    <div class="name">{{name}}</div>
+    {{type}} :
+    <ul>
+        {{#each timeSlots}}
+            <li class="timeslot" data-_id="{{_id}}">from {{start}} to {{end}}</li>
+        {{/each}}
+    </ul>
+
+
+</template>
+
 <template name="userList">
     <h2>Users List</h2>
     <ul>
         {{#each users}}
-            <li>
+            <li class="user" data-_id="{{_id}}">
                 <div class="name">{{name}}</div>
                 Availabilities :
                 <ul>
@@ -40,7 +65,7 @@
     <h2>Tasks List</h2>
     <ul>
         {{#each tasks}}
-            <li>
+            <li class="task" data data-_id="{{_id}}">
                 <div class="name">{{name}}</div>
                 Timeslots :
                 <ul>
@@ -64,8 +89,6 @@
         {{/each}}
     </ul>
 </template>
-
-
 
 
 <template name="assignmentList">
