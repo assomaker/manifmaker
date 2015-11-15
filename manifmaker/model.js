@@ -17,7 +17,7 @@ UserRepository =
 class UserRepository {
     static findOne(userId) {
         var user = Users.findOne(userId);
-        return new User(user.name, user.availabilities, user.assignments, user._id);
+        return new User(user.name, user.availabilities, user.assignments, user._id); //TODO trouver un moyen plus NoSQL de faire ca ?
     }
 }
 

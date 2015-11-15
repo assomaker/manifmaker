@@ -1,10 +1,12 @@
 var defaultFilter = {};
+var noneFilter = {none: "none"};
 UserFilter = new ReactiveVar(defaultFilter);
 SelectedUser = new ReactiveVar(null);
 TaskFilter = new ReactiveVar(defaultFilter);
 SelectedTask = new ReactiveVar(null);
 
-selectedTimeslotId = null; //TODO mettre ca dans Session ?
+selectedTimeslotId = null; //TODO mettre ca dans Session ?//TODO pas top
+selectedAvailability = null;//TODO pas top
 
 AssignmentFilter = new ReactiveVar(defaultFilter);
 CurrentAssignmentType = new ReactiveVar(AssignmentType.ALL);
@@ -31,8 +33,12 @@ Template.userList.events({
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
                 SelectedUser.set({_id: _id});
+                selectedAvailability = null; //TODO pas top
+                TaskFilter.set(noneFilter);
+                //TODO reduire la liste à ses amis
                 break;
             case AssignmentType.TASKTOUSER:
+
 
                 Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId);
 
@@ -73,7 +79,10 @@ Template.taskList.events({
 
                 break;
             case AssignmentType.TASKTOUSER:
-                SelectedTask.set({_id: _id});
+                SelectedTask.set({_id: _idTask});
+                selectedTimeslotId = null;//TODO pas top
+                UserFilter.set(noneFilter);
+                //TODO que faire sur la liste des taches ?
                 break;
         }
 
@@ -90,12 +99,12 @@ Template.assignmentList.helpers({
 
 Template.buttons.events({
     "click #userToTask": function (event) {
-        TaskFilter.set({none: "none"});
+        TaskFilter.set(noneFilter);
         UserFilter.set(defaultFilter);
         CurrentAssignmentType.set(AssignmentType.USERTOTASK);
     },
     "click #taskToUser": function (event) {
-        UserFilter.set({none: "none"});
+        UserFilter.set(noneFilter);
         TaskFilter.set(defaultFilter);
         CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
     },
@@ -108,14 +117,36 @@ Template.buttons.events({
 
 Template.buttons.helpers({
     adviceMessage: function () {
-        var userFilter = UserFilter.get();
-        var taskFilter = TaskFilter.get();
+        var userFilter = UserFilter.get(),
+            taskFilter = TaskFilter.get(),
+            currentAssignmentType = CurrentAssignmentType.get(),
+            selectedUser = SelectedUser.get(),
+            selectedTask = SelectedTask.get()
+            message = "";
 
-        if (CurrentAssignmentType.get() === AssignmentType.USERTOTASK) {
-            return "Assignment of user " + userFilter + ", please select a user then one of its availabilities then a task";
+        if (currentAssignmentType === AssignmentType.USERTOTASK) {
+            if (selectedUser === null) {
+                message += "Select a user";
+            } else if (selectedAvailability === null) {//TODO pas top
+                var userName = UserRepository.findOne(selectedUser._id).name;
+                message += "Select one of " + userName + " availability";
+            } else {
+                message += "Select a time slot of one of the available task";
+            }
+
+            return message;
         }
-        if (CurrentAssignmentType.get() === AssignmentType.TASKTOUSER) {
-            return "Assignment of task " + taskFilter + ", please select a task then one of its timeslots then a user";
+        if (currentAssignmentType === AssignmentType.TASKTOUSER) {
+            if (selectedTask === null) {
+                message += "Select a task";
+            } else if (selectedTimeslotId === null) {//TODO pas top
+                var taskName = TaskRepository.findOne(selectedTask._id).name;
+                message += "Select one of " + taskName + " time slot";
+            } else {
+                message += "Select an availability of one of the available user";
+            }
+
+            return message;
         }
 
         return "Here are all the data";
@@ -186,6 +217,7 @@ Template.currentAssignment.events({
             case AssignmentType.USERTOTASK:
                 //_id is undefined because there is no availability id
                 //TODO n'afficher que les taches qui ont un creneau compris dans la dispo en question
+                selectedAvailability = "notnull"; //TODO il faudra voir s'il faut un _id pour user.availabilies
                 TaskFilter.set(defaultFilter);
                 break;
             case AssignmentType.TASKTOUSER:
