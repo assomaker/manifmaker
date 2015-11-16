@@ -11,6 +11,12 @@ selectedAvailability = null;//TODO pas top
 AssignmentFilter = new ReactiveVar(defaultFilter);
 CurrentAssignmentType = new ReactiveVar(AssignmentType.ALL);
 
+Template.registerHelper(
+    "displayHours", function (date) {
+        return new moment(date).format("H[h]");
+    }
+);
+
 
 Template.userList.helpers({
     users: function () {
@@ -82,7 +88,7 @@ Template.taskList.events({
                 SelectedTask.set({_id: _idTask});
                 selectedTimeslotId = null;//TODO pas top
                 UserFilter.set(noneFilter);
-                //TODO que faire sur la liste des taches ?
+                //TODO que faire sur la liste des taches ? la vider pour n'afficher que la tache selectionnée ?
                 break;
         }
 
@@ -122,7 +128,7 @@ Template.buttons.helpers({
             currentAssignmentType = CurrentAssignmentType.get(),
             selectedUser = SelectedUser.get(),
             selectedTask = SelectedTask.get()
-            message = "";
+        message = "";
 
         if (currentAssignmentType === AssignmentType.USERTOTASK) {
             if (selectedUser === null) {
@@ -224,6 +230,26 @@ Template.currentAssignment.events({
                 //_id is a timeSlot Id
                 selectedTimeslotId = _id;
                 //TODO n'afficher que les users qui ont au moins une dispo entourant au moins un des creneau
+
+                //display only user that have at least one availability
+                var midi = getDateFromTime(12)
+                var h14 = getDateFromTime(14)
+
+
+                Users.find({
+                    $and: [{
+                        'availabilities.start': {
+                            $lte: midi
+                        }
+                    },
+                        {
+                            'availabilities.end': {
+                                $gte: h14
+                            }
+                        }]
+                }).fetch();
+
+
                 UserFilter.set(defaultFilter);
                 break;
         }

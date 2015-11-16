@@ -1,15 +1,17 @@
 Meteor.startup(function () {
     // code to run on server at startup
 
-    Users.remove();
-    Tasks.remove();
-    Assignments.remove();
+    //Users.remove();
+    //Tasks.remove();
+    //Assignments.remove();
+
 
     //  Assignments.before.insert( /*if we need to add user and task data to assignments*/);
     Assignments.after.insert(propagateAssignment);
     Assignments.after.remove(removeAssignment);
 
     Meteor.call("populateData");
+
 
     Meteor.publish("users", function () {
         return Users.find({});

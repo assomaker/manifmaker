@@ -26,7 +26,6 @@
 <template name="currentAssignment">
 
     <h2>Current Assignment</h2>
-
     <div class="name">{{name}}</div>
     {{type}} :
     <ul>
@@ -47,13 +46,13 @@
                 Availabilities :
                 <ul>
                     {{#each availabilities}}
-                        <li>from {{start}} to {{end}}</li>
+                        <li>from {{displayHours start}} to {{displayHours end}}</li>
                     {{/each}}
                 </ul>
                 Assignments :
                 <ul>
                     {{#each assignments}}
-                        <li>{{taskName}} from {{start}} to {{end}}</li>
+                        <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
                     {{/each}}
                 </ul>
             </li>
@@ -82,7 +81,7 @@
                 Assignments :
                 <ul>
                     {{#each assignments}}
-                        <li>{{userName}} from {{start}} to {{end}}</li>
+                        <li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>
                     {{/each}}
                 </ul>
             </li>
