@@ -203,6 +203,20 @@ Template.currentAssignment.helpers({
                 return SelectedTask.get() == null ? [] : Tasks.findOne(SelectedTask.get()).timeSlots;
                 break;
         }
+    },
+    _idReference: function () {
+        var currentAssignmentType = CurrentAssignmentType.get();
+        switch (currentAssignmentType) {
+            case AssignmentType.ALL:
+
+                break;
+            case AssignmentType.USERTOTASK:
+                return SelectedUser.get() == null ? [] : Users.findOne(SelectedUser.get())._id;
+                break;
+            case AssignmentType.TASKTOUSER:
+                return SelectedTask.get() == null ? [] : Tasks.findOne(SelectedTask.get())._id;
+                break;
+        }
     }
 
 });
@@ -222,35 +236,55 @@ Template.currentAssignment.events({
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
                 //_id is undefined because there is no availability id
-                //TODO n'afficher que les taches qui ont un creneau compris dans la dispo en question
                 selectedAvailability = "notnull"; //TODO il faudra voir s'il faut un _id pour user.availabilies
-                TaskFilter.set(defaultFilter);
+
+                //only display task that have at least one time slot matching the selected availability slot
+
+                var $availability;
+                if (target.hasClass("timeslot"))
+                    $availability = target;
+                else
+                    $availability = target.parents(".timeslot");
+
+
+                $availability.removeData();//in order to force jQuery to retrieve the data we set in the dom with Blaze
+                var start = new Date($availability.data("start"));
+                var end = new Date($availability.data("end"));
+
+                var newFilter = {
+                    timeSlots: {
+                        $elemMatch: {
+                            start: {$gte: start},
+                            end: {$lte: end}
+                        }
+                    }
+
+                };
+
+                TaskFilter.set(newFilter);
                 break;
             case AssignmentType.TASKTOUSER:
                 //_id is a timeSlot Id
                 selectedTimeslotId = _id;
-                //TODO n'afficher que les users qui ont au moins une dispo entourant au moins un des creneau
 
-                //display only user that have at least one availability
-                var midi = getDateFromTime(12)
-                var h14 = getDateFromTime(14)
+                //only display user that have at least one availability matching the selected time slot
+                $("#assignment-reference").removeData();//in order to force jQuery to retrieve the data we set in the dom with Blaze
+                var idTask = $("#assignment-reference").data("_idreference");
 
+                var task = Tasks.findOne({_id: idTask});
+                var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeslotId);
 
-                Users.find({
-                    $and: [{
-                        'availabilities.start': {
-                            $lte: midi
+                var newFilter = {
+                    availabilities: {
+                        $elemMatch: {
+                            start: {$lte: timeSlot.start},
+                            end: {$gte: timeSlot.end}
                         }
-                    },
-                        {
-                            'availabilities.end': {
-                                $gte: h14
-                            }
-                        }]
-                }).fetch();
+                    }
 
+                };
 
-                UserFilter.set(defaultFilter);
+                UserFilter.set(newFilter);
                 break;
         }
 
