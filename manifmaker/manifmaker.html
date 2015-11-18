@@ -28,9 +28,9 @@
     <h2>Current Assignment</h2>
     <div class="name">{{name}}</div>
     {{type}} :
-    <ul>
+    <ul id="assignment-reference" data-_idreference="{{_idReference}}">
         {{#each timeSlots}}
-            <li class="timeslot" data-_id="{{_id}}">from {{start}} to {{end}}</li>
+            <li class="timeslot" data-start="{{start}}" data-end="{{end}}" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}</li>
         {{/each}}
     </ul>
 
@@ -69,7 +69,7 @@
                 Timeslots :
                 <ul>
                     {{#each timeSlots}}
-                        <li class="time-slot" data-_id="{{_id}}">from {{start}} to {{end}}
+                        <li class="time-slot" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}
                             <ul>
                                 {{#each peopleNeeded}}
                                     <li>{{this}}</li>
