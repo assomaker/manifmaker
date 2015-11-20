@@ -28,7 +28,7 @@ Template.assignmentCalendar.helpers({
     quarterDate: function (date, timeHours) {
         return getCalendarDateTime(date, timeHours, this.quarter);
     },
-    timeSlot: function (date, timeHours) {
+    timeSlot: function (date, timeHours, idTask) {
         var startCalendarTimeSlot = getCalendarDateTime(date, timeHours);
         var currentAssignmentType = CurrentAssignmentType.get();
 
@@ -56,18 +56,17 @@ Template.assignmentCalendar.helpers({
                 if(timeSlotFound === null) return [];
 
                 data.name = task.name;
+                data.taskId = task._id;
+                _.extend(data,timeSlotFound);
 
                 var baseOneHourHeight = 40;
                 var accuracy = CalendarAccuracy.findOne().accuracy
-
 
                 var end = new moment(timeSlotFound.end);
                 var start =  new moment(timeSlotFound.start);
                 var timeSlotDuration = end.diff(start)/(3600 *1000);
 
                 var height = accuracy * baseOneHourHeight * timeSlotDuration;
-
-
 
                 data.height = height + "px";
 
@@ -108,6 +107,65 @@ Template.assignmentCalendar.helpers({
         }
     }
 
+});
+
+
+Template.assignmentCalendar.events({
+   "click .creneau": function(event){
+       //TODO gerer le double click pour la desaffectation
+
+
+       var currentAssignmentType = CurrentAssignmentType.get();
+
+       switch (currentAssignmentType) {
+           case AssignmentType.USERTOTASK://only display task that have at least one time slot matching the selected availability slot
+
+               //var $availability;
+               //if (target.hasClass("timeslot"))
+               //    $availability = target;
+               //else
+               //    $availability = target.parents(".timeslot");
+               //
+               ////_id is undefined because there is no availability id
+               //selectedAvailability = "notnull"; //TODO il faudra voir s'il faut un _id pour user.availabilies
+               //
+               //
+               //$availability.removeData();//in order to force jQuery to retrieve the data we set in the dom with Blaze
+               //var start = new Date($availability.data("start"));
+               //var end = new Date($availability.data("end"));
+               //
+               //var newFilter = {
+               //    timeSlots: {
+               //        $elemMatch: {
+               //            start: {$gte: start},
+               //            end: {$lte: end}
+               //        }
+               //    }
+               //
+               //};
+               //
+               //TaskFilter.set(newFilter);
+               break;
+           case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
+               var selectedTimeSlot = this;
+               selectedTimeslotId = selectedTimeSlot._id;
+
+               var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
+               var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
+
+               var newFilter = {
+                   availabilities: {
+                       $elemMatch: {
+                           start: {$lte: timeSlot.start},
+                           end: {$gte: timeSlot.end}
+                       }
+                   }
+               };
+
+               UserFilter.set(newFilter);
+               break;
+       }
+   }
 });
 
 

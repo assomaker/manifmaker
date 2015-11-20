@@ -1,5 +1,5 @@
-var defaultFilter = {};
-var noneFilter = {none: "none"};
+defaultFilter = {};
+noneFilter = {none: "none"};
 UserFilter = new ReactiveVar(defaultFilter);
 SelectedUser = new ReactiveVar(null);
 TaskFilter = new ReactiveVar(defaultFilter);
@@ -32,10 +32,12 @@ Meteor.startup(function () {
     TaskFilter.set(defaultFilter);
     CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
 
-    var query = Tasks.find({name: "task1"});
+    var query = Tasks.find({name: "task2"});
     var handle = query.observeChanges({
         added: function (_id, task) {
             SelectedTask.set({_id: _id});
+            selectedTimeslotId = null;//TODO pas top
+            UserFilter.set(noneFilter);
         }
     });
 
@@ -165,33 +167,34 @@ Template.currentAssignment.events({
                 TaskFilter.set(newFilter);
                 break;
             case AssignmentType.TASKTOUSER: //only display user that have at least one availability matching the selected time slot
-                var _id;
-                if (target.hasClass("timeslot"))
-                    _id = target.data("_id");
-                else
-                    _id = target.parents(".timeslot").data("_id");
-
-                //_id is a timeSlot Id
-                selectedTimeslotId = _id;
-
-
-                $("#assignment-reference").removeData();//in order to force jQuery to retrieve the data we set in the dom with Blaze
-                var idTask = $("#assignment-reference").data("_idreference");
-
-                var task = Tasks.findOne({_id: idTask});
-                var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeslotId);
-
-                var newFilter = {
-                    availabilities: {
-                        $elemMatch: {
-                            start: {$lte: timeSlot.start},
-                            end: {$gte: timeSlot.end}
-                        }
-                    }
-
-                };
-
-                UserFilter.set(newFilter);
+                //var _id;
+                //if (target.hasClass("timeslot"))
+                //    _id = target.data("_id");
+                //else
+                //    _id = target.parents(".timeslot").data("_id");
+                //
+                ////_id is a timeSlot Id
+                //selectedTimeslotId = _id;
+                //
+                //
+                //$("#assignment-reference").removeData();//in order to force jQuery to retrieve the data we set in the dom with Blaze
+                //var idTask = $("#assignment-reference").data("_idreference");
+                //
+                //var task = Tasks.findOne({_id: idTask});
+                //var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeslotId);
+                //
+                //var newFilter = {
+                //    availabilities: {
+                //        $elemMatch: {
+                //            start: {$lte: timeSlot.start},
+                //            end: {$gte: timeSlot.end}
+                //        }
+                //    }
+                //
+                //};
+                //
+                //UserFilter.set(newFilter);
+                console.error("no more supported");
                 break;
         }
 
