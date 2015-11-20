@@ -41,6 +41,7 @@ Meteor.methods({
         if(Meteor.isServer){
             CalendarHours.remove({});
             CalendarQuarter.remove({});
+        }
         var accuracyDb = CalendarAccuracy.findOne({});
         if(typeof accuracyDb !== "undefined") CalendarAccuracy.remove({_id: accuracyDb._id});
         CalendarAccuracy.insert({accuracy: accuracy});
@@ -52,7 +53,6 @@ Meteor.methods({
         var number2 = ((accuracy < 1) ? 60 * accuracy : 60);
         for (var i = 0; i <= 45; i = i + number2)
             CalendarQuarter.insert({quarter: i});
-        }
 
     },
 
@@ -62,7 +62,7 @@ Meteor.methods({
         //Assignments.remove({});
 
         var user1 = new User("user1", [
-                new Availability(getDateFromTime(8), getDateFromTime(10)),
+                new Availability(getDateFromTime(8), getDateFromTime(9)),
                 new Availability(getDateFromTime(18), getDateFromTime(22))]
         );
         var user2 = new User("user2", [

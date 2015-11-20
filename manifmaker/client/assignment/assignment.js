@@ -1,3 +1,8 @@
+function getCalendarHoursDate(date,timeHours) {
+    var date = new moment(date);
+    date.hours(timeHours);
+    return date;
+}
 Template.assignmentCalendar.helpers({
     days: function () {
         return CalendarDays.find({});
@@ -11,14 +16,13 @@ Template.assignmentCalendar.helpers({
     displayCalendarTitleDate: function (date) {
         return new moment(date).format("dddd DD/MM");
     },
-    hoursDate: function (date, time) {
-        var date = new moment(date);
-        date.hours(time);
-        return date;
+    hoursDate: function (date) {
+        return getCalendarHoursDate.call(date,this.date);
     },
-    quarterDate: function (date, time, minutes) {
-        var date = new moment(date);
-        date.hours(time);
+    quarterDate: function (date, timeHours) {
+        var dateWithHours = getCalendarHoursDate.call(date, timeHours);
+        var date = new moment(dateWithHours);
+        var minutes = this.quarter;
         date.minutes(minutes);
         return date;
     },
@@ -49,6 +53,10 @@ Template.assignmentCalendar.helpers({
             case 4:
                 return "fourHour"
         }
+    },
+
+    timeSlot: function(quarterDate, date2, date, quarter){
+        //console.log("--- ",quarterDate.format()," \n ---- ",date2," \n ---- ",date," \n ----",quarter);
     }
 
 });
