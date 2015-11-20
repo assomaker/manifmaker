@@ -10,17 +10,16 @@
         <div class="jours" id="jours">
             <div class="hours" id="hours">
                 {{#each hours}}
-                    <div class="hour">{{date}}h</div>
+                    <div class="hour {{sideHoursHeight}}">{{date}}h</div>
                 {{/each}}
             </div>
             {{#each days}}
                 <div class="jour" day="{{date}}">
                     {{#each hours}}
                         <div class="heure" hours="{{hoursDate ../date date}}">
-                            <div class="quart_heure" quarter="{{quarterDate ../date date 0}}"></div>
-                            <div class="quart_heure" quarter="{{quarterDate ../date date 15}}"></div>
-                            <div class="quart_heure" quarter="{{quarterDate ../date date 30}}"></div>
-                            <div class="quart_heure" quarter="{{quarterDate ../date date 45}}"></div>
+                            {{#each quarter}}
+                            <div class="quart_heure {{quarterHeight}}" quarter="{{quarterDate ../date date quarter}}"></div>
+                            {{/each}}
                         </div>
                     {{/each}}
                 </div>

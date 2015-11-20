@@ -6,6 +6,8 @@ Meteor.startup(function () {
     Tasks.remove({});
     CalendarDays.remove({});
     CalendarHours.remove({});
+    CalendarQuarter.remove({});
+    CalendarAccuracy.remove({});
 
 
     //  Assignments.before.insert( /*if we need to add user and task data to assignments*/);
@@ -33,6 +35,14 @@ Meteor.startup(function () {
 
     Meteor.publish("calendarHours", function () {
         return CalendarHours.find({});
+    });
+
+    Meteor.publish("calendarQuarter", function () {
+        return CalendarQuarter.find({});
+    });
+
+    Meteor.publish("calendarAccuracy", function () {
+        return CalendarAccuracy.find({});
     });
 
 

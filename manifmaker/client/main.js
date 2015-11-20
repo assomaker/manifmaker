@@ -21,8 +21,10 @@ Meteor.startup(function () {
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("assignments");
+    Meteor.subscribe("calendarAccuracy");
     Meteor.subscribe("calendarDays");
     Meteor.subscribe("calendarHours");
+    Meteor.subscribe("calendarQuarter");
 });
 
 

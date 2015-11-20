@@ -5,6 +5,9 @@ Template.assignmentCalendar.helpers({
     hours: function () {
         return CalendarHours.find({});
     },
+    quarter: function () {
+        return CalendarQuarter.find({});
+    },
     displayCalendarTitleDate: function (date) {
         return new moment(date).format("dddd DD/MM");
     },
@@ -18,6 +21,39 @@ Template.assignmentCalendar.helpers({
         date.hours(time);
         date.minutes(minutes);
         return date;
+    },
+    sideHoursHeight: function () {
+        //return "halfHour";
+
+        switch (CalendarAccuracy.findOne({}).accuracy) {
+            case 0.25 :
+                return "oneHour";
+            case  0.5 :
+                return "oneHour";
+            case 1:
+                return "oneHour";
+            case  2:
+                return "twoHour"
+            case 4:
+                return "fourHour"
+        }
+    },
+    quarterHeight: function () {
+        //return "halfHour";
+
+        //if(CalendarAccuracy.find({}).fetch().length === 0)
+        switch (CalendarAccuracy.findOne({}).accuracy) {
+            case 0.25 :
+                return "quarterHour";
+            case  0.5 :
+                return "halfHour";
+            case 1:
+                return "oneHour";
+            case  2:
+                return "twoHour"
+            case 4:
+                return "fourHour"
+        }
     }
 
 });
