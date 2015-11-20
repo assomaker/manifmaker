@@ -26,7 +26,7 @@ insertAndFetch = function (Collection, data) {
 
 getDateFromTime = function (hours, minutes = 0) {
     var now = new Date();
-    return new Date(now.getYear(), 5 - 1 /*now.getMonth()*/, 13 - 1/*now.getDate()*/, hours, minutes, 0);
+    return new Date(now.getYear(), 5 - 1 /*now.getMonth()*/, 13 /*now.getDate()*/, hours, minutes, 0);
 };
 
 getDateFromDate = function (day, month, year) {
@@ -79,7 +79,7 @@ Meteor.methods({
         user3 = insertAndFetch(Users, user3);
 
         var task1 = new Task("task1", [
-            new TimeSlot(getDateFromTime(8), getDateFromTime(10), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
+            new TimeSlot(getDateFromTime(8), getDateFromTime(11), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
             new TimeSlot(getDateFromTime(4), getDateFromTime(6), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
         ]);
         var task2 = new Task("task2", [

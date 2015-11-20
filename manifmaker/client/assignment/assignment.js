@@ -29,7 +29,7 @@ Template.assignmentCalendar.helpers({
         return getCalendarDateTime(date, timeHours, this.quarter);
     },
     timeSlot: function (date, timeHours) {
-        var startCalendarTimeSlot = getCalendarDateTime(this, date, timeHours);
+        var startCalendarTimeSlot = getCalendarDateTime(date, timeHours);
         var currentAssignmentType = CurrentAssignmentType.get();
 
         var data = {};
@@ -44,22 +44,32 @@ Template.assignmentCalendar.helpers({
                 if (task === null) return [];
 
 
-                var timeSlotFound;
+                var timeSlotFound = null;
+                var currentCalendarTimeSlot =  new moment(new Date(startCalendarTimeSlot));
                 task.timeSlots.forEach(timeSlot => {
                     //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
-                    if (new moment(new Date(timeSlot.start)) === new moment(new Date(startCalendarTimeSlot))) {
+                    if (currentCalendarTimeSlot.isSame(new moment(new Date(timeSlot.start)))) {
                         timeSlotFound = timeSlot;
                         return false;
                     }
                 });
-                if(typeof timeSlotFound === undefined) return [];
+                if(timeSlotFound === null) return [];
 
                 data.name = task.name;
 
+                var baseOneHourHeight = 40;
+                var accuracy = CalendarAccuracy.findOne().accuracy
+
+
+                var end = new moment(timeSlotFound.end);
+                var start =  new moment(timeSlotFound.start);
+                var timeSlotDuration = end.diff(start)/(3600 *1000);
+
+                var height = accuracy * baseOneHourHeight * timeSlotDuration;
 
 
 
-                data.height = "40px";
+                data.height = height + "px";
 
                 break;
             case AssignmentType.ALL:
