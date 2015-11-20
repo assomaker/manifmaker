@@ -15,7 +15,7 @@ Assignments = new Mongo.Collection("assignment");
 CalendarDays = new Mongo.Collection("days");
 CalendarHours = new Mongo.Collection("hours");
 CalendarQuarter = new Mongo.Collection("quarters");
-CalendarAccuracy = new Mongo.Collection("accuracy")
+CalendarAccuracy = new Mongo.Collection("accuracy");
 
 
 
@@ -37,6 +37,25 @@ getDateFromDate = function (day, month, year) {
 };
 
 Meteor.methods({
+    setCalendarAccuracy: function (accuracy) {
+        if(Meteor.isServer){
+            CalendarHours.remove({});
+            CalendarQuarter.remove({});
+        var accuracyDb = CalendarAccuracy.findOne({});
+        if(typeof accuracyDb !== "undefined") CalendarAccuracy.remove({_id: accuracyDb._id});
+        CalendarAccuracy.insert({accuracy: accuracy});
+
+        var number = ((accuracy <= 1) ? 1 : accuracy);
+        for (var i = 0; i < 24; i = i + number)
+            CalendarHours.insert({date: i});
+
+        var number2 = ((accuracy < 1) ? 60 * accuracy : 60);
+        for (var i = 0; i <= 45; i = i + number2)
+            CalendarQuarter.insert({quarter: i});
+        }
+
+    },
+
     populateData: function () {
         //Users.remove({});
         //Tasks.remove({});
@@ -69,7 +88,7 @@ Meteor.methods({
         ]);
         var task3 = new Task("task3", []);
 
-        task1 = insertAndFetch(Tasks, task1)
+        task1 = insertAndFetch(Tasks, task1);
         task2 = insertAndFetch(Tasks, task2);
         task3 = insertAndFetch(Tasks, task3);
 
@@ -82,18 +101,7 @@ Meteor.methods({
         CalendarDays.insert(new CalendarDay(getDateFromDate(15, 5)));
 
         var accuracy = CalendarAccuracyEnum["1"];
-        CalendarAccuracy.insert({accuracy: accuracy});
-
-
-        var number = ((accuracy <= 1) ? 1 : accuracy);
-        for (var i = 0; i < 24; i = i + number)
-            CalendarHours.insert({date: i});
-
-        var number2 = ((accuracy < 1) ? 60 * accuracy : 60);
-        for (var i = 0; i <= 45; i = i + number2)
-            CalendarQuarter.insert({quarter: i});
-
-
+        Meteor.call("setCalendarAccuracy",accuracy);
     },
 
 

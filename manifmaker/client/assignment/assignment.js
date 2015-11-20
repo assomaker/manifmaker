@@ -23,8 +23,6 @@ Template.assignmentCalendar.helpers({
         return date;
     },
     sideHoursHeight: function () {
-        //return "halfHour";
-
         switch (CalendarAccuracy.findOne({}).accuracy) {
             case 0.25 :
                 return "oneHour";
@@ -39,9 +37,6 @@ Template.assignmentCalendar.helpers({
         }
     },
     quarterHeight: function () {
-        //return "halfHour";
-
-        //if(CalendarAccuracy.find({}).fetch().length === 0)
         switch (CalendarAccuracy.findOne({}).accuracy) {
             case 0.25 :
                 return "quarterHour";
