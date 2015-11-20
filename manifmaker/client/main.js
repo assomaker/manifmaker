@@ -17,83 +17,27 @@ Template.registerHelper(
     }
 );
 
-
-Template.userList.helpers({
-    users: function () {
-        var filter = UserFilter.get();
-        return Users.find(filter);
-    }
+Meteor.startup(function () {
+    Meteor.subscribe("users");
+    Meteor.subscribe("tasks");
+    Meteor.subscribe("assignments");
+    Meteor.subscribe("calendarDays");
+    Meteor.subscribe("calendarHours");
 });
 
-Template.userList.events({
-    "click li": function (event) {
-        event.stopPropagation();
-        var currentAssignmentType = CurrentAssignmentType.get();
-        var target = $(event.target);
-        var _id;
-        if (target.hasClass("user"))
-            _id = target.data("_id");
-        else
-            _id = target.parents(".user").data("_id");
-
-        switch (currentAssignmentType) {
-            case AssignmentType.USERTOTASK:
-                SelectedUser.set({_id: _id});
-                selectedAvailability = null; //TODO pas top
-                TaskFilter.set(noneFilter);
-                //TODO reduire la liste à ses amis
-                break;
-            case AssignmentType.TASKTOUSER:
 
 
-                Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId);
-
-                break;
-        }
-
-    }
-});
-
-Template.taskList.helpers({
-    tasks: function () {
-        var filter = TaskFilter.get();
-        return Tasks.find(filter);
-    }
-});
-
-Template.taskList.events({
-    "click li": function (event) {
-        event.stopPropagation();
-        var currentAssignmentType = CurrentAssignmentType.get();
-        var target = $(event.target);
-        var _idTask, _idTimeSlot;
-        if (target.hasClass("task"))
-            _idTask = target.data("_id");
-        else
-            _idTask = target.parents(".task").data("_id");
-
-        switch (currentAssignmentType) {
-            case AssignmentType.USERTOTASK:
-
-                if (target.hasClass("time-slot"))
-                    _idTimeSlot = target.data("_id");
-                else
-                    _idTimeSlot = target.parents(".time-slot").data("_id");
-
-                Meteor.call("assignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot);
-
-                break;
-            case AssignmentType.TASKTOUSER:
-                SelectedTask.set({_id: _idTask});
-                selectedTimeslotId = null;//TODO pas top
-                UserFilter.set(noneFilter);
-                //TODO que faire sur la liste des taches ? la vider pour n'afficher que la tache selectionnée ?
-                break;
-        }
 
 
-    }
-});
+/*********************
+ *
+ *
+ *  La maniere ont on recupere les start/end date est affreuse mais dépendra de la maniere dont est implémentée le
+ *  calendrier, on verra ca donc plus tard
+ *
+ *
+ ********************/
+
 
 Template.assignmentList.helpers({
     assignments: function () {
@@ -102,62 +46,6 @@ Template.assignmentList.helpers({
     }
 });
 
-Template.buttons.events({
-    "click #userToTask": function (event) {
-        TaskFilter.set(noneFilter);
-        UserFilter.set(defaultFilter);
-        CurrentAssignmentType.set(AssignmentType.USERTOTASK);
-    },
-    "click #taskToUser": function (event) {
-        UserFilter.set(noneFilter);
-        TaskFilter.set(defaultFilter);
-        CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
-    },
-    "click #all": function (event) {
-        TaskFilter.set(defaultFilter);
-        UserFilter.set(defaultFilter);
-        CurrentAssignmentType.set(AssignmentType.ALL);
-    }
-});
-
-Template.buttons.helpers({
-    adviceMessage: function () {
-        var userFilter = UserFilter.get(),
-            taskFilter = TaskFilter.get(),
-            currentAssignmentType = CurrentAssignmentType.get(),
-            selectedUser = SelectedUser.get(),
-            selectedTask = SelectedTask.get()
-        message = "";
-
-        if (currentAssignmentType === AssignmentType.USERTOTASK) {
-            if (selectedUser === null) {
-                message += "Select a user";
-            } else if (selectedAvailability === null) {//TODO pas top
-                var userName = UserRepository.findOne(selectedUser._id).name;
-                message += "Select one of " + userName + " availability";
-            } else {
-                message += "Select a time slot of one of the available task";
-            }
-
-            return message;
-        }
-        if (currentAssignmentType === AssignmentType.TASKTOUSER) {
-            if (selectedTask === null) {
-                message += "Select a task";
-            } else if (selectedTimeslotId === null) {//TODO pas top
-                var taskName = TaskRepository.findOne(selectedTask._id).name;
-                message += "Select one of " + taskName + " time slot";
-            } else {
-                message += "Select an availability of one of the available user";
-            }
-
-            return message;
-        }
-
-        return "Here are all the data";
-
-    }
-});
 
 Template.currentAssignment.helpers({
     name: function () {
@@ -221,14 +109,7 @@ Template.currentAssignment.helpers({
 });
 
 
-/*********************
- *
- *
- *  La maniere ont on recupere les start/end date est affreuse mais dépendra de la maniere dont est implémentée le
- *  calendrier, on verra ca donc plus tard
- *
- *
- ********************/
+
 
 Template.currentAssignment.events({
     "click li": function (event) {
@@ -301,13 +182,6 @@ Template.currentAssignment.events({
 });
 
 
-Meteor.startup(function () {
-    Meteor.subscribe("users");
-    Meteor.subscribe("tasks");
-    Meteor.subscribe("assignments");
-    Meteor.subscribe("calendarDays");
-    Meteor.subscribe("calendarHours");
-});
 
 
 
