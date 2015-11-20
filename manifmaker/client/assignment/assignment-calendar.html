@@ -16,14 +16,14 @@
             {{#each days}}
                 <div class="jour" day="{{date}}">
                     {{#each hours}}
-                        <div class="heure" hours="{{hoursDate ../date date}}">
+                        <div class="heure" hours="{{hoursDate ../date}}">
                             {{#each quarter}}
                                 <div class="quart_heure {{quarterHeight}}"
                                      quarter="{{quarterDate ../../date ../date}}">
 
-                                    {{#each timeSlot quarterDate ../../date date ../date }}
-                                    <div id="creneau_4224_0" class="creneau affecte"
-                                         style="height: 80px; background: rgba(141, 182, 0, 0.8);">Barman Bar AIP
+                                    {{#each timeSlot  ../../date ../date this}}
+                                    <div class="creneau affecte"
+                                         style="height: {{height}}; background: rgba(141, 182, 0, 0.8);">Barman Bar AIP
                                     </div>
                                     {{/each}}
 

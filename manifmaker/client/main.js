@@ -27,20 +27,15 @@ Meteor.startup(function () {
     Meteor.subscribe("calendarQuarter");
 
 
-    //pre select user1
+    //pre select task1
     UserFilter.set(noneFilter);
     TaskFilter.set(defaultFilter);
     CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
 
-    var query = Users.find({name: "user1"});
+    var query = Tasks.find({name: "task1"});
     var handle = query.observeChanges({
-        added: function (_id, user) {
-            SelectedUser.set({_id: _id});
-            selectedAvailability = null; //TODO pas top
-            TaskFilter.set(noneFilter);
-        },
-        removed: function () {
-
+        added: function (_id, task) {
+            SelectedTask.set({_id: _id});
         }
     });
 

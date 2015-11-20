@@ -1,6 +1,12 @@
-function getCalendarHoursDate(date,timeHours) {
+function getCalendarDateHours(date, timeHours) {
     var date = new moment(date);
     date.hours(timeHours);
+    return date;
+}
+function getCalendarDateTime(date, timeHours, timeMinutes) {
+    var dateWithHours = getCalendarDateHours(date, timeHours);
+    var date = new moment(dateWithHours);
+    date.minutes(timeMinutes);
     return date;
 }
 Template.assignmentCalendar.helpers({
@@ -17,14 +23,51 @@ Template.assignmentCalendar.helpers({
         return new moment(date).format("dddd DD/MM");
     },
     hoursDate: function (date) {
-        return getCalendarHoursDate.call(date,this.date);
+        return getCalendarDateHours(date, this.date);
     },
     quarterDate: function (date, timeHours) {
-        var dateWithHours = getCalendarHoursDate.call(date, timeHours);
-        var date = new moment(dateWithHours);
-        var minutes = this.quarter;
-        date.minutes(minutes);
-        return date;
+        return getCalendarDateTime(date, timeHours, this.quarter);
+    },
+    timeSlot: function (date, timeHours) {
+        var startCalendarTimeSlot = getCalendarDateTime(this, date, timeHours);
+        var currentAssignmentType = CurrentAssignmentType.get();
+
+        var data = {};
+
+        switch (currentAssignmentType) {
+            case AssignmentType.USERTOTASK:
+                //SelectedUser.get() == null ? "" : Users.findOne(SelectedUser.get()).name;
+                return [];
+                break;
+            case AssignmentType.TASKTOUSER:
+                var task = SelectedTask.get() == null ? null : Tasks.findOne(SelectedTask.get());
+                if (task === null) return [];
+
+
+                var timeSlotFound;
+                task.timeSlots.forEach(timeSlot => {
+                    //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
+                    if (new moment(new Date(timeSlot.start)) === new moment(new Date(startCalendarTimeSlot))) {
+                        timeSlotFound = timeSlot;
+                        return false;
+                    }
+                });
+                if(typeof timeSlotFound === undefined) return [];
+
+                data.name = task.name;
+
+
+
+
+                data.height = "40px";
+
+                break;
+            case AssignmentType.ALL:
+                return [];
+        }
+
+
+        return [data];  //le css ne sait pas encore gerer deux data timeSlot sur un meme calendar timeSlot
     },
     sideHoursHeight: function () {
         switch (CalendarAccuracy.findOne({}).accuracy) {
@@ -53,10 +96,6 @@ Template.assignmentCalendar.helpers({
             case 4:
                 return "fourHour"
         }
-    },
-
-    timeSlot: function(quarterDate, date2, date, quarter){
-        //console.log("--- ",quarterDate.format()," \n ---- ",date2," \n ---- ",date," \n ----",quarter);
     }
 
 });

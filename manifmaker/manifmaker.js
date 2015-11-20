@@ -26,7 +26,7 @@ insertAndFetch = function (Collection, data) {
 
 getDateFromTime = function (hours, minutes = 0) {
     var now = new Date();
-    return new Date(now.getYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
+    return new Date(now.getYear(), 5 - 1 /*now.getMonth()*/, 13 - 1/*now.getDate()*/, hours, minutes, 0);
 };
 
 getDateFromDate = function (day, month, year) {
@@ -96,9 +96,9 @@ Meteor.methods({
         //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[1]._id);
 
 
-        CalendarDays.insert(new CalendarDay(getDateFromDate(13, 5)));
-        CalendarDays.insert(new CalendarDay(getDateFromDate(14, 5)));
-        CalendarDays.insert(new CalendarDay(getDateFromDate(15, 5)));
+        CalendarDays.insert(new CalendarDay(getDateFromDate(13, 5 - 1)));
+        //CalendarDays.insert(new CalendarDay(getDateFromDate(14, 5)));
+        //CalendarDays.insert(new CalendarDay(getDateFromDate(15, 5)));
 
         var accuracy = CalendarAccuracyEnum["1"];
         Meteor.call("setCalendarAccuracy",accuracy);
