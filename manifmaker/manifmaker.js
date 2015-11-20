@@ -11,6 +11,10 @@ Users = new Mongo.Collection("users");
 Tasks = new Mongo.Collection("tasks");
 Assignments = new Mongo.Collection("assignment");
 
+//calendar
+CalendarDays = new Mongo.Collection("days");
+CalendarHours = new Mongo.Collection("hours");
+
 insertAndFetch = function (Collection, data) {
     var _id = Collection.insert(data);
     return Collection.findOne({_id: _id});
@@ -21,6 +25,12 @@ getDateFromTime = function (hours, minutes = 0) {
     return new Date(now.getYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
 };
 
+getDateFromDate = function (day,month,year) {
+    var now = new Date();
+    year = year || now.getYear();
+    month = month || now.getMonth()
+    return new Date(year, month, day, 0, 0, 0);
+};
 
 Meteor.methods({
     populateData: function () {
@@ -61,6 +71,15 @@ Meteor.methods({
 
         //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id);
         //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[1]._id);
+
+
+        CalendarDays.insert(new CalendarDay(getDateFromDate(19,5)));
+       CalendarDays.insert(new CalendarDay(getDateFromDate(21,5)));
+       CalendarDays.insert(new CalendarDay(getDateFromDate(22,5)));
+       CalendarDays.insert(new CalendarDay(getDateFromDate(23,5)));
+
+        for(var i = 0; i < 24; i++)
+            CalendarHours.insert({date: i });
 
 
     },

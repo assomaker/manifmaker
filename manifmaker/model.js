@@ -150,4 +150,12 @@ class AssignmentRepository {
     }
 }
 
+//assignment calendar
+CalendarDay =
+class CalendarDay {
+    constructor(date){
+        this.date = date;
+    }
+}
+
 

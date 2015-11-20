@@ -4,6 +4,8 @@ Meteor.startup(function () {
     Assignments.remove({});
     Users.remove({});
     Tasks.remove({});
+    CalendarDays.remove({});
+    CalendarHours.remove({});
 
 
     //  Assignments.before.insert( /*if we need to add user and task data to assignments*/);
@@ -24,6 +26,15 @@ Meteor.startup(function () {
     Meteor.publish("assignments", function () {
         return Assignments.find({});
     });
+
+    Meteor.publish("calendarDays", function () {
+        return CalendarDays.find({});
+    });
+
+    Meteor.publish("calendarHours", function () {
+        return CalendarHours.find({});
+    });
+
 
     Assignments.allow({
         insert: function(userId, doc){

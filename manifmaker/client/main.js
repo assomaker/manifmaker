@@ -51,7 +51,6 @@ Template.userList.events({
                 break;
         }
 
-
     }
 });
 
@@ -222,29 +221,33 @@ Template.currentAssignment.helpers({
 });
 
 
+/*********************
+ *
+ *
+ *  La maniere ont on recupere les start/end date est affreuse mais dépendra de la maniere dont est implémentée le
+ *  calendrier, on verra ca donc plus tard
+ *
+ *
+ ********************/
+
 Template.currentAssignment.events({
     "click li": function (event) {
         var target = $(event.target);
-        var _id;
-        if (target.hasClass("timeslot"))
-            _id = target.data("_id");
-        else
-            _id = target.parents(".timeslot").data("_id");
+
 
         var currentAssignmentType = CurrentAssignmentType.get();
 
         switch (currentAssignmentType) {
-            case AssignmentType.USERTOTASK:
-                //_id is undefined because there is no availability id
-                selectedAvailability = "notnull"; //TODO il faudra voir s'il faut un _id pour user.availabilies
-
-                //only display task that have at least one time slot matching the selected availability slot
+            case AssignmentType.USERTOTASK://only display task that have at least one time slot matching the selected availability slot
 
                 var $availability;
                 if (target.hasClass("timeslot"))
                     $availability = target;
                 else
                     $availability = target.parents(".timeslot");
+
+                //_id is undefined because there is no availability id
+                selectedAvailability = "notnull"; //TODO il faudra voir s'il faut un _id pour user.availabilies
 
 
                 $availability.removeData();//in order to force jQuery to retrieve the data we set in the dom with Blaze
@@ -263,11 +266,17 @@ Template.currentAssignment.events({
 
                 TaskFilter.set(newFilter);
                 break;
-            case AssignmentType.TASKTOUSER:
+            case AssignmentType.TASKTOUSER: //only display user that have at least one availability matching the selected time slot
+                var _id;
+                if (target.hasClass("timeslot"))
+                    _id = target.data("_id");
+                else
+                    _id = target.parents(".timeslot").data("_id");
+
                 //_id is a timeSlot Id
                 selectedTimeslotId = _id;
 
-                //only display user that have at least one availability matching the selected time slot
+
                 $("#assignment-reference").removeData();//in order to force jQuery to retrieve the data we set in the dom with Blaze
                 var idTask = $("#assignment-reference").data("_idreference");
 
@@ -296,7 +305,8 @@ Meteor.startup(function () {
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("assignments");
-
+    Meteor.subscribe("calendarDays");
+    Meteor.subscribe("calendarHours");
 });
 
 
