@@ -36,8 +36,36 @@ Template.assignmentCalendar.helpers({
 
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
-                //SelectedUser.get() == null ? "" : Users.findOne(SelectedUser.get()).name;
-                return [];
+                var user = SelectedUser.get() == null ? null : Users.findOne(SelectedUser.get());
+                if (user === null) return [];
+
+
+                var availabilityFound = null;
+                var currentCalendarTimeSlot =  new moment(new Date(startCalendarTimeSlot));
+                user.availabilities.forEach(availability => {
+                    //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
+                    if (currentCalendarTimeSlot.isSame(new moment(new Date(availability.start)))) {
+                        availabilityFound = availability;
+                        return false;
+                    }
+                });
+                if(availabilityFound === null) return [];
+
+                data.name = user.name;
+                data.userId = user._id;
+                _.extend(data,availabilityFound);
+
+                var baseOneHourHeight = 40;
+                var accuracy = CalendarAccuracy.findOne().accuracy
+
+                var end = new moment(availabilityFound.end);
+                var start =  new moment(availabilityFound.start);
+                var availabilityDuration = end.diff(start)/(3600 *1000);
+
+                var height = accuracy * baseOneHourHeight * availabilityDuration;
+
+                data.height = height + "px";
+
                 break;
             case AssignmentType.TASKTOUSER:
                 var task = SelectedTask.get() == null ? null : Tasks.findOne(SelectedTask.get());
@@ -111,40 +139,15 @@ Template.assignmentCalendar.helpers({
 
 
 Template.assignmentCalendar.events({
+    //taskToUser (we click on a complete task time slot)
    "click .creneau": function(event){
        //TODO gerer le double click pour la desaffectation
-
 
        var currentAssignmentType = CurrentAssignmentType.get();
 
        switch (currentAssignmentType) {
-           case AssignmentType.USERTOTASK://only display task that have at least one time slot matching the selected availability slot
-
-               //var $availability;
-               //if (target.hasClass("timeslot"))
-               //    $availability = target;
-               //else
-               //    $availability = target.parents(".timeslot");
-               //
-               ////_id is undefined because there is no availability id
-               //selectedAvailability = "notnull"; //TODO il faudra voir s'il faut un _id pour user.availabilies
-               //
-               //
-               //$availability.removeData();//in order to force jQuery to retrieve the data we set in the dom with Blaze
-               //var start = new Date($availability.data("start"));
-               //var end = new Date($availability.data("end"));
-               //
-               //var newFilter = {
-               //    timeSlots: {
-               //        $elemMatch: {
-               //            start: {$gte: start},
-               //            end: {$lte: end}
-               //        }
-               //    }
-               //
-               //};
-               //
-               //TaskFilter.set(newFilter);
+           case AssignmentType.USERTOTASK:
+               console.error("Template.assignmentCalendar.events.click .creneau","User can't normally click on this kind of element when in userToTask");
                break;
            case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
                var selectedTimeSlot = this;
@@ -165,7 +168,71 @@ Template.assignmentCalendar.events({
                UserFilter.set(newFilter);
                break;
        }
-   }
+   },
+
+    //userToTask (we click on a creneau, not on the entire availability)
+    "click .heure, .quart_heure": function(event){
+        //TODO gerer le double click pour la desaffectation
+
+
+        var currentAssignmentType = CurrentAssignmentType.get();
+
+        switch (currentAssignmentType) {
+            case AssignmentType.USERTOTASK://only display task that have at least one time slot matching the selected availability slot
+
+                //what time did we click on ?
+                var $target = $(event.target);
+
+                var selectedDate = null;
+                //var endSelectedDate = null;
+                if(typeof $target.attr("hours") !== "undefined"){
+                    selectedDate = new moment(new Date($target.attr("hours")));
+                } else
+                if(typeof $target.attr("quarter") !== "undefined"){
+                    selectedDate = new moment(new Date($target.attr("quarter")));
+                }
+
+
+
+                var userId = SelectedUser.get()._id;
+
+
+                var user = Users.findOne({_id: userId});
+                var availability = AvailabilityService.getAvailability(user,selectedDate);
+
+                if(typeof availability === "undefined"){
+                    console.error("Template.assignmentCalendar.events.click .heure, .quart_heure","User can't normally click on this kind of element when in userToTask");
+                    return;
+                }
+
+                selectedAvailability = availability;
+
+
+                /*
+                 Task whose have at least one timeSlot (to begin, just one) as
+
+                 user.Dispocorrespante.start <= task.timeslot.start <= selectedDate and
+                 selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
+
+                 */
+
+                var newFilter = {
+                    timeSlots: {
+                        $elemMatch: {
+                            start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                            end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                        }
+                    }
+                };
+
+                TaskFilter.set(newFilter);
+
+                break;
+            case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
+                console.error("Template.assignmentCalendar.events.click .creneau","User can't normally click on this kind of element when in userToTask");
+                return [];
+        }
+    }
 });
 
 

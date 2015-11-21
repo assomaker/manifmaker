@@ -8,6 +8,8 @@ Template.userList.helpers({
 Template.userList.events({
     "click li": function (event) {
         event.stopPropagation();
+
+        //Template.parentData() ne fonctionne pas, alors j'utilise un trick de poney pour stocker dans le dom les _id
         var currentAssignmentType = CurrentAssignmentType.get();
         var target = $(event.target);
         var _id;

@@ -31,7 +31,7 @@ Template.taskList.events({
                 SelectedTask.set({_id: _idTask});
                 selectedTimeslotId = null;//TODO pas top
                 UserFilter.set(noneFilter);
-                //TODO que faire sur la liste des taches ? la vider pour n'afficher que la tache selectionnée ?
+                //TODO aouter du CSS pour signifier quelle tache est la current
                 break;
         }
 

@@ -16,7 +16,6 @@ Meteor.startup(function () {
 
     populateData();
 
-
 });
 
 

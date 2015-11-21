@@ -5,7 +5,7 @@ populateData =  function () {
     //Assignments.remove({});
 
     var user1 = new User("user1", [
-            new Availability(getDateFromTime(8), getDateFromTime(9)),
+            new Availability(getDateFromTime(2), getDateFromTime(12)),
             new Availability(getDateFromTime(18), getDateFromTime(22))]
     );
     var user2 = new User("user2", [

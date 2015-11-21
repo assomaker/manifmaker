@@ -25,6 +25,24 @@ function preSelecterTaskByTaskName(name) {
             UserFilter.set(noneFilter);
         }
     });
+
+}
+
+
+function preSelectedUserByUserName(name) {
+    UserFilter.set(defaultFilter);
+    TaskFilter.set(noneFilter);
+    CurrentAssignmentType.set(AssignmentType.USERTOTASK);
+
+    var query = Users.find({name: name});
+    var handle = query.observeChanges({
+        added: function (_id, task) {
+            SelectedUser.set({_id: _id});
+            selectedAvailability = null;//TODO pas top
+            TaskFilter.set(noneFilter);
+        }
+    });
+
 }
 Meteor.startup(function () {
     Meteor.subscribe("users");
@@ -36,8 +54,10 @@ Meteor.startup(function () {
     Meteor.subscribe("calendarQuarter");
 
 
-    //pre select task1
-    preSelecterTaskByTaskName("task2");
+    //preSelecterTaskByTaskName("task2");
+
+
+    preSelectedUserByUserName("user1");
 });
 
 
