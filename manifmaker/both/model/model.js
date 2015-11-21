@@ -11,15 +11,6 @@ class User {
         return '(' + this.name + ', ' + this.availabilities + ')';
     }
 }
-   
-
-UserRepository =
-class UserRepository {
-    static findOne(userId) {
-        var user = Users.findOne(userId);
-        return new User(user.name, user.availabilities, user.assignments, user._id); //TODO trouver un moyen plus NoSQL de faire ca ?
-    }
-}
 
 
 Availability = //to export it to other namespace
@@ -41,13 +32,6 @@ class Task {
     }
 }
 
-TaskRepository =
-class TaskRepository {
-    static findOne(taskId) {
-        var task = Tasks.findOne(taskId);
-        return new Task(task.name, task.timeSlots, task.assignments, task._id); //TODO trouver un moyen plus NoSQL de faire ca ?
-    }
-}
 
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
@@ -60,36 +44,6 @@ class TimeSlot { //must inherit Availabilty
     }
 }
 
-TimeSlotService =
-class TimeSlotService {
-    static read(timeSlot) {
-        return new TimeSlot(timeSlot.start, timeSlot.end, timeSlot.peopleNeeded, timeSlot._id);
-    }
-
-    static getTimeSlot(task, timeSlotId) {
-        console.info("TimeSlotService.getTimeSlot timeSlot", timeSlotId, "for task", task);
-        var found;
-        task.timeSlots.forEach(timeSlot => {
-            if (timeSlot._id === timeSlotId) {
-                found =  TimeSlotService.read(timeSlot);
-                return false;
-            }
-        });
-        return found;
-    }
-}
-
-PeopleNeed = {
-    JUNKRESP: "junkResp",
-    SOFT: "soft",
-    SOFTDRIVINGLICENSE: "softDrivingLicense"
-};
-
-AssignmentType = {
-    USERTOTASK: "userToTask",
-    TASKTOUSER: "taskToUser",
-    ALL: "all"
-};
 
 Assignment = //to export it to other namespace
 class Assignment {
@@ -98,24 +52,6 @@ class Assignment {
         this.taskId = taskId;
         this.timeSlotId = timeSlotId;
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
-    }
-
-
-}
-
-AssignmentService =
-class AssignmentService {
-    static read(assigment) {
-        return new Assignment(assigment.userId, assigment.taskId, assigment.timeSlotId, assigment._id);
-    }
-
-    static getTimeSlot(task, timeSlotId) {
-        for (var timeSlot in task.timeSlots) {
-            if (timeSlot._id === timeSlotId) {
-                return new TimeSlot();
-            }
-        }
-        return null;
     }
 }
 
@@ -128,8 +64,8 @@ class UserAssignment { //stored along with a user to a direct access
         this.end = end;
         this.assignmentId = assignmentId;
     }
-
 }
+
 
 TaskAssignment = //to export it to other namespace
 class TaskAssignment { //stored along with a task to a direct access
@@ -139,16 +75,8 @@ class TaskAssignment { //stored along with a task to a direct access
         this.end = end;
         this.assignmentId = assignmentId;
     }
-
 }
 
-AssignmentRepository =
-class AssignmentRepository {
-    static findOne(assignmentId) {
-        var assignment = Assignments.findOne(assignmentId);
-        return new Assignment(assignment.userId, assignment.taskId, assignment.timeSlotId, assignment._id);
-    }
-}
 
 //assignment calendar
 CalendarDay =
@@ -158,14 +86,3 @@ class CalendarDay {
     }
 }
 
-/**
- * 0.25 * one hour, 4 * one hour
- * @type {{025: string, 05: string, 1: string, 2: string, 4: string}}
- */
-CalendarAccuracyEnum = {
-    "0.25" : 0.25,
-    "0.5" : 0.5,
-    "1": 1,
-    "2": 2,
-    "4": 4
-};

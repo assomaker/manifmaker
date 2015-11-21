@@ -11,12 +11,21 @@ selectedAvailability = null;//TODO pas top
 AssignmentFilter = new ReactiveVar(defaultFilter);
 CurrentAssignmentType = new ReactiveVar(AssignmentType.ALL);
 
-Template.registerHelper(
-    "displayHours", function (date) {
-        return new moment(date).format("H[h]");
-    }
-);
 
+function preSelecterTaskByTaskName(name) {
+    UserFilter.set(noneFilter);
+    TaskFilter.set(defaultFilter);
+    CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
+
+    var query = Tasks.find({name: name});
+    var handle = query.observeChanges({
+        added: function (_id, task) {
+            SelectedTask.set({_id: _id});
+            selectedTimeslotId = null;//TODO pas top
+            UserFilter.set(noneFilter);
+        }
+    });
+}
 Meteor.startup(function () {
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
@@ -28,20 +37,7 @@ Meteor.startup(function () {
 
 
     //pre select task1
-    UserFilter.set(noneFilter);
-    TaskFilter.set(defaultFilter);
-    CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
-
-    var query = Tasks.find({name: "task2"});
-    var handle = query.observeChanges({
-        added: function (_id, task) {
-            SelectedTask.set({_id: _id});
-            selectedTimeslotId = null;//TODO pas top
-            UserFilter.set(noneFilter);
-        }
-    });
-
-
+    preSelecterTaskByTaskName("task2");
 });
 
 
