@@ -1,51 +1,35 @@
 <head>
-    <title>manifmaker</title>
+    <title>Manifmaker</title>
 </head>
 
 <body>
 
-{{> buttons}}
+<div class="container">
 
-{{> assignmentCalendar}}
+    <div class="row">
+        {{> buttons}}
+    </div>
 
+</div>
 
-{{> userList}}
-{{> currentAssignment}}
-{{> taskList}}
-{{> assignmentList}}
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="clo-xs-12 col-md-2">
+            {{> userList}}
+        </div>
+
+        <div class="clo-xs-12 col-md-8">
+            {{> assignmentCalendar}}
+        </div>
+
+        <div class="clo-xs-12 col-md-2">
+            {{> taskList}}
+        </div>
+
+    </div>
+</div>
+
 
 </body>
-
-
-
-
-<!-- *********** for debug purpose only ******** -->
-
-
-<template name="currentAssignment">
-
-    <h2>Current Assignment</h2>
-    <div class="name">{{name}}</div>
-    {{type}} :
-    <ul id="assignment-reference" data-_idreference="{{_idReference}}">
-        {{#each timeSlots}}
-            <li class="timeslot" data-start="{{start}}" data-end="{{end}}" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}</li>
-        {{/each}}
-    </ul>
-</template>
-
-
-
-<template name="assignmentList">
-    <h2>Assignments List</h2>
-    <ul>
-        {{#each assignments}}
-            <li>
-                <div class="">
-                    <div>{{userId}} is assigned to {{taskId}} at timeslot {{timeSlotId}}</div>
-                </div>
-            </li>
-        {{/each}}
-    </ul>
-</template>
 
