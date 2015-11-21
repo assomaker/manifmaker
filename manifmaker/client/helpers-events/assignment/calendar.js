@@ -10,6 +10,9 @@ function getCalendarDateTime(date, timeHours, timeMinutes) {
     return date;
 }
 Template.assignmentCalendar.helpers({
+    assignmentType: function(){
+      return CurrentAssignmentType.get();
+    },
     days: function () {
         return CalendarDays.find({});
     },
@@ -229,7 +232,9 @@ Template.assignmentCalendar.events({
 
                 break;
             case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
-                console.error("Template.assignmentCalendar.events.click .creneau","User can't normally click on this kind of element when in userToTask");
+                //event.bubbles();
+                //console.info("Template.assignmentCalendar.events.click .heure, .quart_heure","event goes bubling");
+                console.error("Template.assignmentCalendar.events.click .heure, .quart_heure","User can't normally click on this kind of element when in userToTask");
                 return [];
         }
     }
