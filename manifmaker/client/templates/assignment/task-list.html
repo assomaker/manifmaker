@@ -1,0 +1,28 @@
+<template name="taskList">
+    <h2>Tasks List</h2>
+    <ul>
+        {{#each tasks}}
+            <li class="task" data-_id="{{_id}}">
+                <div class="name">{{name}}</div>
+                Timeslots :
+                <ul>
+                    {{#each timeSlots}}
+                        <li class="time-slot" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}
+                            <ul>
+                                {{#each peopleNeeded}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                        </li>
+                    {{/each}}
+                </ul>
+                Assignments :
+                <ul>
+                    {{#each assignments}}
+                        <li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>
+                    {{/each}}
+                </ul>
+            </li>
+        {{/each}}
+    </ul>
+</template>

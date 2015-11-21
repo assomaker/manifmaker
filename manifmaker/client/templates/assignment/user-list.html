@@ -1,0 +1,22 @@
+<template name="userList">
+    <h2>Users List</h2>
+    <ul>
+        {{#each users}}
+            <li class="user" data-_id="{{_id}}">
+                <div class="name">{{name}}</div>
+                Availabilities :
+                <ul>
+                    {{#each availabilities}}
+                        <li>from {{displayHours start}} to {{displayHours end}}</li>
+                    {{/each}}
+                </ul>
+                Assignments :
+                <ul>
+                    {{#each assignments}}
+                        <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
+                    {{/each}}
+                </ul>
+            </li>
+        {{/each}}
+    </ul>
+</template>

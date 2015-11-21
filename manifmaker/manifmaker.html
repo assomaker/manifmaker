@@ -18,17 +18,10 @@
 
 </body>
 
-<template name="buttons">
-    <button id="userToTask">user => task</button>
-    <button id="taskToUser">task => user</button>
-    <button id="all">all</button>
-    <button id="quarterHour">quart hour</button>
-    <button id="halfHour">half hour</button>
-    <button id="oneHour">one hour</button>
-    <button id="twoHour">two hour</button>
-    <button id="fourHour">four hour</button>
-    <p>{{adviceMessage}}</p>
-</template>
+
+
+
+
 
 <template name="currentAssignment">
 
@@ -44,57 +37,9 @@
 
 </template>
 
-<template name="userList">
-    <h2>Users List</h2>
-    <ul>
-        {{#each users}}
-            <li class="user" data-_id="{{_id}}">
-                <div class="name">{{name}}</div>
-                Availabilities :
-                <ul>
-                    {{#each availabilities}}
-                        <li>from {{displayHours start}} to {{displayHours end}}</li>
-                    {{/each}}
-                </ul>
-                Assignments :
-                <ul>
-                    {{#each assignments}}
-                        <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
-                    {{/each}}
-                </ul>
-            </li>
-        {{/each}}
-    </ul>
-</template>
 
-<template name="taskList">
-    <h2>Tasks List</h2>
-    <ul>
-        {{#each tasks}}
-            <li class="task" data-_id="{{_id}}">
-                <div class="name">{{name}}</div>
-                Timeslots :
-                <ul>
-                    {{#each timeSlots}}
-                        <li class="time-slot" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}
-                            <ul>
-                                {{#each peopleNeeded}}
-                                    <li>{{this}}</li>
-                                {{/each}}
-                            </ul>
-                        </li>
-                    {{/each}}
-                </ul>
-                Assignments :
-                <ul>
-                    {{#each assignments}}
-                        <li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>
-                    {{/each}}
-                </ul>
-            </li>
-        {{/each}}
-    </ul>
-</template>
+
+
 
 
 <template name="assignmentList">
