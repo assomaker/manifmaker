@@ -31,6 +31,9 @@ Template.assignmentCalendar.helpers({
     quarterDate: function (date, timeHours) {
         return getCalendarDateTime(date, timeHours, this.quarter);
     },
+
+
+
     timeSlot: function (date, timeHours, idTask) {
         var startCalendarTimeSlot = getCalendarDateTime(date, timeHours);
         var currentAssignmentType = CurrentAssignmentType.get();
@@ -43,30 +46,38 @@ Template.assignmentCalendar.helpers({
                 if (user === null) return [];
 
 
-                var availabilityFound = null;
-                var currentCalendarTimeSlot = new moment(new Date(startCalendarTimeSlot));
-                user.availabilities.forEach(availability => {
-                    //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
-                    if (currentCalendarTimeSlot.isSame(new moment(new Date(availability.start)))) {
-                        availabilityFound = availability;
-                        return false;
-                    }
-                });
-                if (availabilityFound === null) return [];
+                var availabilityFound = AvailabilityService.getAvailabilityByStart(user.availabilities,startCalendarTimeSlot);
+                var assignmentFound = AvailabilityService.getAvailabilityByStart(user.assignments,startCalendarTimeSlot);
 
-                data.name = user.name;
-                data.userId = user._id;
-                _.extend(data, availabilityFound);
+                if (availabilityFound === null && assignmentFound === null) return [];
+                if (availabilityFound !== null && assignmentFound !== null) {
+                    console.error("Calendar.timeSlot : error while displaying user info, both availability and assignment has been found. \nuser",user," => availability",availabilityFound," and assignment",assignmentFound);
+                    return [];
+                }
 
                 var baseOneHourHeight = 40;
-                var accuracy = CalendarAccuracy.findOne().accuracy
+                var accuracy = CalendarAccuracy.findOne().accuracy;
 
-                var end = new moment(availabilityFound.end);
-                var start = new moment(availabilityFound.start);
-                var availabilityDuration = end.diff(start) / (3600 * 1000);
+                var data = {}, founded;
 
-                var height = accuracy * baseOneHourHeight * availabilityDuration;
+                if(availabilityFound !== null){
+                    data.state = "available";
+                    data.name = user.name;
 
+                    founded = availabilityFound;
+                } else if(assignmentFound !== null){
+                    data.name = assignmentFound.taskName;
+                    data.state = "affecte";
+
+                    founded = assignmentFound;
+                }
+
+                _.extend(data, founded);
+                var end = new moment(founded.end);
+                var start = new moment(founded.start);
+                var duration = end.diff(start) / (3600 * 1000);
+
+                var height = accuracy * baseOneHourHeight * duration;
                 data.height = height + "px";
 
                 break;
@@ -195,7 +206,7 @@ Template.assignmentCalendar.events({
 
                 var userId = SelectedUser.get()._id;
                 var user = Users.findOne({_id: userId});
-                var availability = AvailabilityService.getAvailability(user, selectedDate);
+                var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
 
                 if (typeof availability === "undefined") {
                     console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");

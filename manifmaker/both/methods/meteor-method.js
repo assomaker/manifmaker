@@ -28,6 +28,11 @@ Meteor.methods({
         var assignmentId = Assignments.insert(assignment);
 
         assignment._id = assignmentId;
+
+        var timeSlot = TimeSlotService.getTimeSlot(Tasks.findOne({_id:taskId}),timeSlotId);
+
+        AvailabilityService.removeAvailabilities(Users.findOne({_id:userId}),timeSlot.start,timeSlot.end);
+
         return assignment;
 
     }
