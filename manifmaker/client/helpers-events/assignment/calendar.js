@@ -47,7 +47,7 @@ Template.assignmentCalendar.helpers({
 
 
                 var availabilityFound = AvailabilityService.getAvailabilityByStart(user.availabilities,startCalendarTimeSlot);
-                var assignmentFound = AvailabilityService.getAvailabilityByStart(user.assignments,startCalendarTimeSlot);
+                var assignmentFound = AssignmentService.getAssignmentByStart(user.assignments,startCalendarTimeSlot);
 
                 if (availabilityFound === null && assignmentFound === null) return [];
                 if (availabilityFound !== null && assignmentFound !== null) {
@@ -85,31 +85,36 @@ Template.assignmentCalendar.helpers({
                 var task = SelectedTask.get() == null ? null : Tasks.findOne(SelectedTask.get());
                 if (task === null) return [];
 
+                var timeSlotFound = TimeSlotService.getTimeSlotByStart(task.timeSlots,startCalendarTimeSlot);
+                var assignmentsFound = AssignmentService.getAssignmentByStart(task.assignments,startCalendarTimeSlot, true);
 
-                var timeSlotFound = null;
-                var currentCalendarTimeSlot = new moment(new Date(startCalendarTimeSlot));
-                task.timeSlots.forEach(timeSlot => {
-                    //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
-                    if (currentCalendarTimeSlot.isSame(new moment(new Date(timeSlot.start)))) {
-                        timeSlotFound = timeSlot;
-                        return false;
-                    }
-                });
-                if (timeSlotFound === null) return [];
+                if (timeSlotFound === null && assignmentsFound.length === 0) return [];
 
-                data.name = task.name;
-                data.taskId = task._id;
-                _.extend(data, timeSlotFound);
 
                 var baseOneHourHeight = 40;
-                var accuracy = CalendarAccuracy.findOne().accuracy
+                var accuracy = CalendarAccuracy.findOne().accuracy;
 
-                var end = new moment(timeSlotFound.end);
-                var start = new moment(timeSlotFound.start);
-                var timeSlotDuration = end.diff(start) / (3600 * 1000);
+                var data = {}, founded;
 
-                var height = accuracy * baseOneHourHeight * timeSlotDuration;
+                if(timeSlotFound !== null){
+                    data.state = "available";
+                    data.name = task.name;
 
+                    founded = timeSlotFound;
+                }
+                if(assignmentsFound.length !== 0){ //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
+                    data.name = assignmentsFound[0].taskName; //idem, la meme task
+                    data.state = "in-progress";
+
+                    founded = assignmentsFound[0]; //normalement ils ont tous les memes date, TODO controler ca
+                }
+
+                _.extend(data, founded);
+                var end = new moment(founded.end);
+                var start = new moment(founded.start);
+                var duration = end.diff(start) / (3600 * 1000);
+
+                var height = accuracy * baseOneHourHeight * duration;
                 data.height = height + "px";
 
                 break;

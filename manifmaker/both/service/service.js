@@ -15,6 +15,27 @@ class TimeSlotService {
         });
         return found;
     }
+
+    static getTimeSlotByStart(availabilitiesOrTimeSlotsOrAssignments, start, several = false) {
+        if(several){
+            var found = [];
+        } else {
+            var found = null;
+        }
+        var startDate = new moment(new Date(start));
+        availabilitiesOrTimeSlotsOrAssignments.forEach(thing => {
+            //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
+            if (startDate.isSame(new moment(new Date(thing.start)))) {
+                if(several){
+                    found.push(thing)
+                } else {
+                    found = thing;
+                    return false;
+                }
+            }
+        });
+        return found;
+    }
 }
 
 AvailabilityService =
@@ -81,16 +102,7 @@ class AvailabilityService {
     }
 
     static getAvailabilityByStart(availabilities, start) {
-        var availabilityFound = null;
-        var startDate = new moment(new Date(start));
-        availabilities.forEach(availability => {
-            //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
-            if (startDate.isSame(new moment(new Date(availability.start)))) {
-                availabilityFound = availability;
-                return false;
-            }
-        });
-        return availabilityFound;
+        return TimeSlotService.getTimeSlotByStart(availabilities,start);
     }
 }
 
@@ -110,16 +122,7 @@ class AssignmentService {
         return null;
     }
 
-    static getAssignmentByStart(assignment, start) {
-        var assignmentFound = null;
-        var startDate = new moment(new Date(start));
-        assignment.forEach(availability => {
-            //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
-            if (startDate.isSame(new moment(new Date(availability.start)))) {
-                assignmentFound = availability;
-                return false;
-            }
-        });
-        return assignmentFound;
+    static getAssignmentByStart(assignment, start, several) {
+        return TimeSlotService.getTimeSlotByStart(assignment,start, several);
     }
 }
