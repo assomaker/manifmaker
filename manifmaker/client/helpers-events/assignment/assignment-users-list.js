@@ -1,11 +1,11 @@
-Template.userList.helpers({
+Template.assignmentUsersList.helpers({
     users: function () {
         var filter = UserFilter.get();
         return Users.find(filter);
     }
 });
 
-Template.userList.events({
+Template.assignmentUsersList.events({
     "click li": function (event) {
         event.stopPropagation();
 

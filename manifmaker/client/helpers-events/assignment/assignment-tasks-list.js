@@ -1,11 +1,11 @@
-Template.taskList.helpers({
+Template.assignmentTasksList.helpers({
     tasks: function () {
         var filter = TaskFilter.get();
         return Tasks.find(filter);
     }
 });
 
-Template.taskList.events({
+Template.assignmentTasksList.events({
     "click li": function (event) {
         event.stopPropagation();
         var currentAssignmentType = CurrentAssignmentType.get();
