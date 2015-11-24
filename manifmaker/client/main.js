@@ -60,4 +60,3 @@ Meteor.startup(function () {
     preSelectedUserByUserName("user1");
 });
 
-

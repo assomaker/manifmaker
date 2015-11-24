@@ -1,4 +1,4 @@
-Template.buttons.events({
+Template.assignmentMenu.events({
     "click #userToTask": function (event) {
         TaskFilter.set(noneFilter);
         UserFilter.set(defaultFilter);
@@ -36,7 +36,7 @@ Template.buttons.events({
     }
 });
 
-Template.buttons.helpers({
+Template.assignmentMenu.helpers({
     adviceMessage: function () {
         var userFilter = UserFilter.get(),
             taskFilter = TaskFilter.get(),
