@@ -12,6 +12,13 @@ Meteor.startup(function () {
         return Assignments.find({});
     });
 
+    Meteor.publish("skills", function () {
+        return Skills.find({});
+    });
+
+
+    //below will be only client only
+
     Meteor.publish("calendarDays", function () {
         return CalendarDays.find({});
     });

@@ -48,6 +48,10 @@ Meteor.startup(function () {
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("assignments");
+    Meteor.subscribe("skills");
+
+
+    //below will be client only
     Meteor.subscribe("calendarAccuracy");
     Meteor.subscribe("calendarDays");
     Meteor.subscribe("calendarHours");
@@ -57,6 +61,6 @@ Meteor.startup(function () {
     //preSelecterTaskByTaskName("task2");
 
 
-    preSelectedUserByUserName("user1");
+    //preSelectedUserByUserName("user1");
 });
 

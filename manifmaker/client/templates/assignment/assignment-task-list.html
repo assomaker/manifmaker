@@ -10,7 +10,14 @@
                         <li class="time-slot" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}
                             <ul>
                                 {{#each peopleNeeded}}
-                                    <li>{{this}}</li>
+                                    <li>
+                                        Skills :
+                                        <ul>
+                                            {{#each skills}}
+                                                <li>{{skillLabel}}</li>
+                                            {{/each}}
+                                        </ul>
+                                    </li>
                                 {{/each}}
                             </ul>
                         </li>

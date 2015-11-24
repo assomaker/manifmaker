@@ -2,6 +2,7 @@
 Users = new Mongo.Collection("users");
 Tasks = new Mongo.Collection("tasks");
 Assignments = new Mongo.Collection("assignment");
+Skills = new Mongo.Collection("skills");
 
 //calendar, client side only
 CalendarDays = new Mongo.Collection("days");

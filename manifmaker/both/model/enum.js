@@ -1,8 +1,3 @@
-PeopleNeed = {
-    JUNKRESP: "junkResp",
-    SOFT: "soft",
-    SOFTDRIVINGLICENSE: "softDrivingLicense"
-};
 
 AssignmentType = {
     USERTOTASK: "userToTask",

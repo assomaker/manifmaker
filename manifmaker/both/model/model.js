@@ -1,8 +1,9 @@
 User = //to export it to other namespace
 class User {
-    constructor(name, availabilities, assignments = [], _id) {
+    constructor(name, availabilities, skills = [], assignments = [], _id) {
         this.name = name;
         this.availabilities = availabilities; //Array<Availability>
+        this.skills = skills; //Array<SkillId>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
         this.assignments = assignments;
     }
@@ -41,6 +42,34 @@ class TimeSlot { //must inherit Availabilty
         this.peopleNeeded = peopleNeeded; //Array<PeopleNeed>
         if (typeof _id !== "undefined") this._id = _id
         else this._id = new Meteor.Collection.ObjectID()._str;
+    }
+}
+
+PeopleNeed =
+class PeopleNeed {
+    constructor(options){
+        if(typeof options !== "object"){
+            console.error("PeopleNeed constructor only accept a key:value object");
+        }
+        this.userId = options.userId;
+
+        if(!this.userId) { //we cannot ask for a specific user and anything else
+            this.teamId = options.teamId;
+            this.skills = options.skills || []; //Array<Skill>
+        } else {
+            console.warn("PeoplNeed constructor : we cannot ask for a specific user and anything else")
+        }
+
+        if (typeof _id !== "undefined") this._id = _id
+        else this._id = new Meteor.Collection.ObjectID()._str;
+    }
+}
+
+Skill =
+class Skill{
+    constructor(key, label){
+        this.key = key; //unique key   => TODO preInsert pour verifier l'unicité
+        this.label = label; //printable label
     }
 }
 

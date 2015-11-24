@@ -8,6 +8,7 @@ Meteor.startup(function () {
     CalendarHours.remove({});
     CalendarQuarter.remove({});
     CalendarAccuracy.remove({});
+    Skills.remove({});
 
 
     //  Assignments.before.insert( /*if we need to add user and task data to assignments*/);
