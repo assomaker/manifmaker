@@ -1,0 +1,25 @@
+<template name="bracelets">
+<div class="row tools">
+    <select name="BraceletsNeed" class="col-md-3">
+        <option value="predefinedBracelets" selected>Quel type de bracelets?</option>
+        <option value="VIPBracelets">VIP</option>
+        <option value="SoftBracelets">Soft</option>
+        <option value="HardBracelets">Hard</option>
+        <option value="SecurityBracelets">Sécu</option>
+        <!-- Créer un autre template avec toutes les bracelets, et appeler le template plutôt que de créer ça ici -->
+    </select>
+
+    <form>
+        <div class="col-md-2">
+        Combien?
+        <input type="text" titre="BraceletsNeedQuantity" class="quantity">
+        </div>
+        <div class="col-md-3">
+        Pourquoi?
+        <input type="text" titre="BraceletsNeedReasons">
+        </div>
+
+    </form>
+    <button type="button" class="button-plus col-md-1" name="buttonPlusBracelets">+</button>
+</div>
+</template>

@@ -1,0 +1,18 @@
+<template name="bodywear">
+<div class="row tools">
+    <select class="col-md-3" name="BodywearNeed">
+        <option value="predefinedBodywear" selected>Besoin de te protéger mon cochon?</option>
+        <option value="Gloves">Gants de manutention</option>
+        <option value="SecureShoes">Chaussures de sécurité</option>
+        <option value="Vest">Gilet fluorescent</option>
+        <!-- Créer un autre template avec toutes les bodywear, et appeler le template plutôt que de créer ça ici -->
+    </select>
+
+    <form class="col-md-2">
+        Combien?
+        <input type="text" titre="BodywearNeedQuantity" class="quantity">
+    </form>
+    <button type="button" class="col-md-1 button-plus" name="buttonPlusBodywear">+</button>
+</div>
+
+</template>

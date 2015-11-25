@@ -1,0 +1,22 @@
+<template name="cableties">
+    <div class="row tools">
+        <select class="col-md-3" name="CabletiesNeed">
+            <option value="predefinedCableties" selected>Besoin de quoi attacher ton bordel?</option>
+            <option value="Colson">Colson</option>
+            <option value="GafferTape">Gaffer</option>
+            <option value="Tape">Scotch marron</option>
+            <option value="ElecTape">Scotch elec</option>
+            <option value="IronWire">Fil de fer</option>
+            <option value="String">String</option>
+            <!-- Créer un autre template avec toutes les attaches, et appeler le template plutôt que de créer ça ici -->
+        </select>
+
+        <form class="col-md-3">
+            En quelle quantité mon brave?
+            <input type="text" titre="CabletiesNeedQuantity" class="quantity">
+        </form>
+        <button class="col-md-1 button-plus" type="button" name="buttonPlusCableties" >+</button>
+
+    </div>
+
+</template>

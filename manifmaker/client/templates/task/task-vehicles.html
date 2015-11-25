@@ -1,0 +1,20 @@
+<template name="vehicles">
+<div class="row tools">
+    <select class="col-md-3" name="VehicleNeed">
+        <option value="predefinedVehicle" selected>Besoin d'engin motorisé ou non?</option>
+        <option value="Fen">Fen</option>
+        <option value="Car">Voiture</option>
+        <option value="Truck">20m3</option>
+        <option value="MiniTruck">12m3</option>
+        <option value="Bike">Vélo</option>
+
+    </select>
+
+    <form class="col-md-2">
+        Combien?
+        <input type="text" titre="VehicleNeedQuantity" class="quantity">
+    </form>
+    <button type="button" class="button-plus col-md-1" name="buttonPlusVehicle">+</button>
+</div>
+
+</template>
