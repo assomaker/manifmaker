@@ -28,7 +28,7 @@ populateData = function () {
             new Availability(getDateFromTime(10), getDateFromTime(14)),
             new Availability(getDateFromTime(16), getDateFromTime(18)),
             new Availability(getDateFromTime(20), getDateFromTime(22))],
-        [skill1._id, skill2._id, skill3._id]
+       // [skill1._id, skill2._id, skill3._id]
     );
 
 
@@ -51,8 +51,8 @@ populateData = function () {
         new TimeSlot(getDateFromTime(4), getDateFromTime(6), [peopleNeed1])
     ]);
     var task2 = new Task("task2", [
-        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed2]),
-        new TimeSlot(getDateFromTime(14), getDateFromTime(22), [peopleNeed3])
+        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed1,peopleNeed2]),
+        new TimeSlot(getDateFromTime(14), getDateFromTime(22), [peopleNeed2])
     ]);
     var task3 = new Task("task3", []);
 

@@ -33,7 +33,6 @@ Template.assignmentCalendar.helpers({
     },
 
 
-
     timeSlot: function (date, timeHours, idTask) {
         var startCalendarTimeSlot = getCalendarDateTime(date, timeHours);
         var currentAssignmentType = CurrentAssignmentType.get();
@@ -46,12 +45,12 @@ Template.assignmentCalendar.helpers({
                 if (user === null) return [];
 
 
-                var availabilityFound = AvailabilityService.getAvailabilityByStart(user.availabilities,startCalendarTimeSlot);
-                var assignmentFound = AssignmentService.getAssignmentByStart(user.assignments,startCalendarTimeSlot);
+                var availabilityFound = AvailabilityService.getAvailabilityByStart(user.availabilities, startCalendarTimeSlot);
+                var assignmentFound = AssignmentService.getAssignmentByStart(user.assignments, startCalendarTimeSlot);
 
                 if (availabilityFound === null && assignmentFound === null) return [];
                 if (availabilityFound !== null && assignmentFound !== null) {
-                    console.error("Calendar.timeSlot : error while displaying user info, both availability and assignment has been found. \nuser",user," => availability",availabilityFound," and assignment",assignmentFound);
+                    console.error("Calendar.timeSlot : error while displaying user info, both availability and assignment has been found. \nuser", user, " => availability", availabilityFound, " and assignment", assignmentFound);
                     return [];
                 }
 
@@ -60,12 +59,12 @@ Template.assignmentCalendar.helpers({
 
                 var data = {}, founded;
 
-                if(availabilityFound !== null){
+                if (availabilityFound !== null) {
                     data.state = "available";
                     data.name = user.name;
 
                     founded = availabilityFound;
-                } else if(assignmentFound !== null){
+                } else if (assignmentFound !== null) {
                     data.name = assignmentFound.taskName;
                     data.state = "affecte";
 
@@ -85,8 +84,8 @@ Template.assignmentCalendar.helpers({
                 var task = SelectedTask.get() == null ? null : Tasks.findOne(SelectedTask.get());
                 if (task === null) return [];
 
-                var timeSlotFound = TimeSlotService.getTimeSlotByStart(task.timeSlots,startCalendarTimeSlot);
-                var assignmentsFound = AssignmentService.getAssignmentByStart(task.assignments,startCalendarTimeSlot, true);
+                var timeSlotFound = TimeSlotService.getTimeSlotByStart(task.timeSlots, startCalendarTimeSlot);
+                var assignmentsFound = AssignmentService.getAssignmentByStart(task.assignments, startCalendarTimeSlot, true);
 
                 if (timeSlotFound === null && assignmentsFound.length === 0) return [];
 
@@ -96,13 +95,13 @@ Template.assignmentCalendar.helpers({
 
                 var data = {}, founded;
 
-                if(timeSlotFound !== null){
+                if (timeSlotFound !== null) {
                     data.state = "available";
                     data.name = task.name;
 
                     founded = timeSlotFound;
                 }
-                if(assignmentsFound.length !== 0){ //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
+                if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
                     data.name = assignmentsFound[0].taskName; //idem, la meme task
                     data.state = "in-progress";
 
@@ -190,34 +189,52 @@ Template.assignmentCalendar.events({
 
 
                 //si PN.skills != empty  => on prend les users (users.skills) qui ont au moins toutes les PN.skills
-                var task = Tasks.findOne({name: "task1"});
-                var timeSlot = task.timeSlots[0];
-                var askingSkills = timeSlot.peopleNeeded[0].skills;
+                //var task = Tasks.findOne({name: "task2"});
+                //var timeSlot = task.timeSlots[0];
+                //var askingSkills = timeSlot.peopleNeeded[0].skills;
+                //var askingSkills1 = timeSlot.peopleNeeded[1].skills;
+                var askingSkills = [];
+                timeSlot.peopleNeeded.forEach(peopleNeeded => {
+                        askingSkills.push({skills: {$all: peopleNeeded.skills}});
+                    }
+                );
+
+
+
                 var skillsFilter = {
-                    skills: {$all : askingSkills}
+                    $or: askingSkills
                 };
-                Users.find(skillsFilter).fetch();
-
-                //TODO peut etre utiliser un &elemMatch pour faire pour tous les peopleNeeded
+                //Users.find(skillsFilter).fetch();
 
 
+                //avec le jeu de test actuel : [0] => user1   [1]  => user2
+
+
+                //TODO peut etre utiliser un &elemMatch pour faire pour tous les peopleNeeded => non, mais pour USERTOTASK
 
 
                 //pour chaque peopleNeeded.skills, il faut que le user les aient tous pour que ce soit bon
+                //
+                //skillsFilter = {
+                //    skills: {
+                //        $in: []
+                //    }
+                //};
 
-                skillsFilter = {
-                  skills : {
-                      $in :[]
-                  }
-                };
 
-                var newFilter = {
+                var availabilitiesFilter = {
                     availabilities: {
                         $elemMatch: {
                             start: {$lte: timeSlot.start},
                             end: {$gte: timeSlot.end}
                         }
                     }
+                };
+
+                var newFilter = {
+                    $and: [
+                        availabilitiesFilter, skillsFilter
+                    ]
                 };
 
 
