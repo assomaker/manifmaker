@@ -10,7 +10,7 @@
         <div class="container-fluid" >
             <form >
                 <h3>Nom de la tache</h3>
-                <input type="text" titre="TaskName"  autofocus="autofocus" class="task-name">
+                <input type="text" name="taskName" class="task-name" autofocus>
             </form>
 
             <div class="row">
@@ -24,14 +24,14 @@
                 <div class="clo-xs-12 col-md-4">
                     <form class="informations">
                         Où ça?
-                        <input type="text" titre="place">
+                        <input type="text" name="place">
                     </form>
                 </div>
 
                 <div class="clo-xs-12 col-md-4">
                     <form class="informations">
                         Groupe de tache:
-                        <input type="text" titre="TaskGroup" >
+                        <input type="text" name="taskGroup" >
                     </form>
 
 
@@ -45,7 +45,7 @@
                 <div class="clo-xs-12 col-md-6">
                     <form>
                         Happiness level:
-                        <input type="text" titre="HappinessLevel">
+                        <input type="text" name="tappinessLevel">
                     </form>
 
                 </div>
@@ -58,7 +58,7 @@
         <div class="clo-xs-12 col-md-12 ">
             <form>
                 <strong>Description:</strong><br>
-                <input class="text-description" type="textarea" name="Description"> <!-- j'ai un problème ici, je
+                <input class="text-description" type="textarea" name="description"> <!-- j'ai un problème ici, je
                 n'arrive pas à obtenir un grand bloc de texte. J'ai essayé un textarea et u text mais aucun des deux
                  ne me satisfait-->
             </form>
@@ -111,9 +111,9 @@
 
 <footer >
     <div class="clo-xs-12 col-md-12 bottom-button" >
-        <button class="button-validate" type="button">Envoyer la fiche tache en validation</button>
-        <button class="button-save" type="button">Sauvegarder la fiche tache</button>
-        <button class="button-supress" type="button">Supprimer la fiche tache</button>
+        <button class="button-validate" type="button" name="buttonValidate">Envoyer la fiche tache en validation</button>
+        <button class="button-save" type="button" name="buttonSave">Sauvegarder la fiche tache</button>
+        <button class="button-supress" type="button" name="buttonSupress">Supprimer la fiche tache</button>
 
     </div>
 </footer>
