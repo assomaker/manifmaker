@@ -5,32 +5,119 @@
 </head>
 
 <body>
+    <section class="top-section">
 
-<div class="container-fluid">
+        <div class="container-fluid" >
+            <form >
+                <h3>Nom de la tache</h3>
+                <input type="text" titre="TaskName"  autofocus="autofocus" class="task-name">
+            </form>
 
-    <div class="row">
-
-        <div class="clo-xs-12 col-md-4">
+            <div class="row">
 
 
+                <div class="clo-xs-12 col-md-4 ">
+                    {{>teams}}
+                    {{>respManif}}
+                </div>
+
+                <div class="clo-xs-12 col-md-4">
+                    <form class="informations">
+                        Où ça?
+                        <input type="text" titre="place">
+                    </form>
+                </div>
+
+                <div class="clo-xs-12 col-md-4">
+                    <form class="informations">
+                        Groupe de tache:
+                        <input type="text" titre="TaskGroup" >
+                    </form>
+
+
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="clo-xs-12 col-md-6">
+                {{>taskType}}
+                </div>
+                <div class="clo-xs-12 col-md-6">
+                    <form>
+                        Happiness level:
+                        <input type="text" titre="HappinessLevel">
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="description">
+        <div class="clo-xs-12 col-md-12 ">
             <form>
-            Titre:<br>
-            <input type="text" titre="firstname">
+                <strong>Description:</strong><br>
+                <input class="text-description" type="textarea" name="Description"> <!-- j'ai un problème ici, je
+                n'arrive pas à obtenir un grand bloc de texte. J'ai essayé un textarea et u text mais aucun des deux
+                 ne me satisfait-->
             </form>
         </div>
-        <div class="clo-xs-12 col-md-8">
-            <form>
-            Description:<br>
-            <input type="text" name="description">
-            </form>
+    </section>
+
+
+
+    <section class="besoin-log">
+
+        <h2> Besoins Log </h2>
+
+        <div class="row">
+            {{>vehicles}}
+
+
         </div>
 
-    {{> equips}}
-    </div>
+        <div class="row">
+            {{>cableties}}
 
 
-</div>
+        </div>
+
+        <div class="row">
+            {{>bodywear}}
+        </div>
+
+        <div class="row">
+            {{>tools}}
+        </div>
+    </section>
+
+    <section class="besoin-bracelets">
+        <h2> Besoins en bracelets </h2>
+
+        <div class="row">
+           {{>bracelets}}
+        </div>
+
+    </section>
+
+    <section class="plages-horaires">
+
+        <h2> Plages horaires </h2>
+
+    </section>
 
 </body>
+
+<footer >
+    <div class="clo-xs-12 col-md-12 bottom-button" >
+        <button class="button-validate" type="button">Envoyer la fiche tache en validation</button>
+        <button class="button-save" type="button">Sauvegarder la fiche tache</button>
+        <button class="button-supress" type="button">Supprimer la fiche tache</button>
+
+    </div>
+</footer>
+
+
 
 </template>
