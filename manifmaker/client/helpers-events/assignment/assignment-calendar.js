@@ -176,6 +176,41 @@ Template.assignmentCalendar.events({
                 var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
                 var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
 
+                var skillsFilter = {};
+                //TODO match des skills (du user) avec les skills du timeSlot
+                //bddd.user.skills sont des ID
+                //timeslot.peopleNeeded.skills sont des ID
+
+
+                //pour chaque timeSlot.peopleNeeded PN
+                //si PN.userId !== null => on prend le user tq user._id = PN.userId
+
+
+                //sinon si PN.teamId !== null => on prend tous les user.teamId = PN.teamId
+
+
+                //si PN.skills != empty  => on prend les users (users.skills) qui ont au moins toutes les PN.skills
+                var task = Tasks.findOne({name: "task1"});
+                var timeSlot = task.timeSlots[0];
+                var askingSkills = timeSlot.peopleNeeded[0].skills;
+                var skillsFilter = {
+                    skills: {$all : askingSkills}
+                };
+                Users.find(skillsFilter).fetch();
+
+                //TODO peut etre utiliser un &elemMatch pour faire pour tous les peopleNeeded
+
+
+
+
+                //pour chaque peopleNeeded.skills, il faut que le user les aient tous pour que ce soit bon
+
+                skillsFilter = {
+                  skills : {
+                      $in :[]
+                  }
+                };
+
                 var newFilter = {
                     availabilities: {
                         $elemMatch: {
@@ -184,6 +219,7 @@ Template.assignmentCalendar.events({
                         }
                     }
                 };
+
 
                 UserFilter.set(newFilter);
                 break;
