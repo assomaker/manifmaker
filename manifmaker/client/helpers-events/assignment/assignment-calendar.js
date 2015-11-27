@@ -285,53 +285,27 @@ Template.assignmentCalendar.events({
                 //pour ne traiter que les skills
                 //toutes les fiches taches qui ont au moins un timeSlot qui a au moins un peopleNeed dont les skills sont tous dans le user.skills
 
+                //var skillsFilter = {
+                //    'timeSlots.each.peopleNeeded.each.skills' : user.skills
+                //};
+
+
+                //var user = Users.findOne({name:"user1"});
+                //var askedSkills = user.skills;
+
+
                 var skillsFilter = {
-                    'timeSlots.each.peopleNeeded.each.skills' : user.skills
-                };
-
-
-                var user = Users.findOne({name:"user1"});
-                var askedSkills = user.skills;
-
-
-                skillsFilter = {
                     timeSlots : {
                         $elemMatch: {
                             peopleNeeded : {
                                 $elemMatch : {
-                                    skills : askedSkills
+                                    skills : user.skills
                                 }
                             }
                         }
                     }
                 };
-                Tasks.find(skillsFilter).fetch();
-
-
-
-                //TODO match des skills (du user) avec les skills de toutes les taches tous les timeslots qui match la selected hours
-                //bddd.user.skills sont des ID
-                //timeslot.peopleNeeded.skills sont des ID
-
-
-                //pour chaque timeSlot.peopleNeeded PN
-                //si PN.userId !== null => on prend le user tq user._id = PN.userId
-
-
-                //sinon si PN.teamId !== null => on prend tous les user.teamId = PN.teamId
-
-
-                //si PN.skills != empty  => on prend les users (users.skills) qui ont au moins toutes les PN.skills
-                //var task = Tasks.findOne({name: "task2"});
-                //var timeSlot = task.timeSlots[0];
-                //var askingSkills = timeSlot.peopleNeeded[0].skills;
-                //var askingSkills1 = timeSlot.peopleNeeded[1].skills;
-                var askingSkills = [];
-                timeSlot.peopleNeeded.forEach(peopleNeeded => {
-                        askingSkills.push({skills: {$all: peopleNeeded.skills}});
-                    }
-                );
-
+                //Tasks.find(skillsFilter).fetch();
 
 
 
@@ -344,13 +318,19 @@ Template.assignmentCalendar.events({
 
                  */
 
-                var newFilter = {
+                var availabilitiesFilter = {
                     timeSlots: {
                         $elemMatch: {
                             start: {$gte: availability.start, $lte: selectedDate.toDate()},
                             end: {$gt: selectedDate.toDate(), $lte: availability.end}
                         }
                     }
+                };
+
+                var newFilter = {
+                    $and: [
+                        availabilitiesFilter, skillsFilter
+                    ]
                 };
 
                 TaskFilter.set(newFilter);
