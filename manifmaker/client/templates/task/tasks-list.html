@@ -2,7 +2,10 @@
     <!--<h1>Here is the tasks list</h1>-->
 <body>
     {{#each tasks}}
-        <li>{{name}},{{places}}</li>
+
+        <li><a>{{name}}</a>,{{teams}},{{places}}</li>
     {{/each}}
+
+    <button type="button" name="newTaskButton">Créer une nouvelle fiche tache</button>
 </body>
 </template>

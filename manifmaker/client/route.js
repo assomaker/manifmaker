@@ -1,5 +1,5 @@
 
-Router.route('/tasks', function () {
+Router.route('/tasksList', function () {
     this.render('TasksList');
 });
 
@@ -13,4 +13,8 @@ Router.route('/assignment', function () {
 
 Router.route('/', function () {
     this.render('home');
+});
+
+Router.route('/task', function(){
+    this.render('Tasks');
 });

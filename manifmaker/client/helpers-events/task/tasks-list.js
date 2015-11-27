@@ -6,8 +6,11 @@ Template.tasksList.helpers({
         return Tasks.find();
 
     }
+
 });
 
 Template.tasksList.events({
-
+    "click a": function (event) {
+        event.stopPropagation();
+    }
 });
