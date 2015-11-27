@@ -45,10 +45,10 @@ function preSelectedUserByUserName(name) {
 
 }
 Meteor.startup(function () {
+    Meteor.subscribe("skills");
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("assignments");
-    Meteor.subscribe("skills");
 
 
     //below will be client only
