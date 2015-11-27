@@ -24,12 +24,12 @@ populateData =  function () {
     var task1 = new Task("task1", [
         new TimeSlot(getDateFromTime(8), getDateFromTime(11), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(4), getDateFromTime(6), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
-    ]);
+    ], "place1");
     var task2 = new Task("task2", [
         new TimeSlot(getDateFromTime(10), getDateFromTime(12), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
-    ]);
-    var task3 = new Task("task3", []);
+    ], "place2");
+    var task3 = new Task("task3", [], "place3");
 
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
@@ -62,6 +62,6 @@ getDateFromTime = function (hours, minutes = 0) {
 getDateFromDate = function (day, month, year) {
     var now = new Date();
     year = year || now.getYear();
-    month = month || now.getMonth()
+    month = month || now.getMonth();
     return new Date(year, month, day, 0, 0, 0);
 };

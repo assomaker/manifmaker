@@ -17,7 +17,7 @@ function preSelecterTaskByTaskName(name) {
     TaskFilter.set(defaultFilter);
     CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
 
-    var query = Tasks.find({name: name});
+    var query = Tasks.find({name: name},{teams: teams},{respManif: respManif}, {places: place});
     var handle = query.observeChanges({
         added: function (_id, task) {
             SelectedTask.set({_id: _id});
@@ -48,6 +48,8 @@ Meteor.startup(function () {
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("assignments");
+    Meteor.subscribe("teams");
+    Meteor.subscribe("respManif");
     Meteor.subscribe("calendarAccuracy");
     Meteor.subscribe("calendarDays");
     Meteor.subscribe("calendarHours");

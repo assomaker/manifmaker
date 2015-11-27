@@ -12,6 +12,18 @@ Meteor.startup(function () {
         return Assignments.find({});
     });
 
+    Meteor.publish("teams", function (){
+        return Teams.find({});
+    });
+
+    Meteor.publish("respManif", function(){
+        return RespManif.find({});
+    });
+
+    Meteor.publish("places", function(){
+        return Places.find({});
+    });
+
     Meteor.publish("calendarDays", function () {
         return CalendarDays.find({});
     });
