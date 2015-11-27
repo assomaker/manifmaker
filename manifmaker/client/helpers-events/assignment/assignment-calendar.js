@@ -98,12 +98,16 @@ Template.assignmentCalendar.helpers({
                 if (timeSlotFound !== null) {
                     data.state = "available";
                     data.name = task.name;
+                    //Template.parentData() doesn't work so we use a trick
+                    data.taskId = task._id;
 
                     founded = timeSlotFound;
                 }
                 if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
                     data.name = assignmentsFound[0].taskName; //idem, la meme task
                     data.state = "in-progress";
+                    data.taskId = task._id;
+
 
                     founded = assignmentsFound[0]; //normalement ils ont tous les memes date, TODO controler ca
                 }
@@ -200,7 +204,6 @@ Template.assignmentCalendar.events({
                 );
 
 
-
                 var skillsFilter = {
                     $or: askingSkills
                 };
@@ -236,6 +239,7 @@ Template.assignmentCalendar.events({
                         availabilitiesFilter, skillsFilter
                     ]
                 };
+                console.info("TASKTOUSER user filter", newFilter);
 
 
                 UserFilter.set(newFilter);
@@ -273,65 +277,42 @@ Template.assignmentCalendar.events({
                 selectedAvailability = availability;
 
 
-
-
-
-                var skillsFilter = {};
-
                 //pour traiter userId != null et teamId != null
                 //TODO
 
 
-                //pour ne traiter que les skills
-                //toutes les fiches taches qui ont au moins un timeSlot qui a au moins un peopleNeed dont les skills sont tous dans le user.skills
-
-                //var skillsFilter = {
-                //    'timeSlots.each.peopleNeeded.each.skills' : user.skills
-                //};
-
-
-                //var user = Users.findOne({name:"user1"});
-                //var askedSkills = user.skills;
-
-
-                var skillsFilter = {
-                    timeSlots : {
-                        $elemMatch: {
-                            peopleNeeded : {
-                                $elemMatch : {
-                                    skills : user.skills
-                                }
-                            }
-                        }
-                    }
-                };
-                //Tasks.find(skillsFilter).fetch();
-
-
-
-
                 /*
-                 Task whose have at least one timeSlot (to begin, just one) as
 
-                 user.Dispocorrespante.start <= task.timeslot.start <= selectedDate and
+                ** Skills filter
+                User is eligible for a task if he has all skills for at least one task' people need's skills.
+                The query looks like something like this : 'foreach timeSlot foreach peopleNeeded foreach skills' = at least user.skills
+
+                 ** Availabilities filter :
+                 Task whose have at least one timeSlot (to begin, just one) as
+                 user.selectedAvailabilities.start <= task.timeslot.start <= selectedDate and
                  selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
+
+
+                 Foreach task's time slot, we need a matching skills and a matching availability
 
                  */
 
-                var availabilitiesFilter = {
+                var newFilter = {
                     timeSlots: {
                         $elemMatch: {
+                            //skills filter
+                            peopleNeeded: {
+                                $elemMatch: {
+                                    skills: user.skills
+                                }
+                            },
+                            //availabilities filter
                             start: {$gte: availability.start, $lte: selectedDate.toDate()},
                             end: {$gt: selectedDate.toDate(), $lte: availability.end}
                         }
                     }
                 };
 
-                var newFilter = {
-                    $and: [
-                        availabilitiesFilter, skillsFilter
-                    ]
-                };
 
                 TaskFilter.set(newFilter);
                 break;
