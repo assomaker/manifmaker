@@ -51,7 +51,7 @@ populateData = function () {
         new TimeSlot(getDateFromTime(4), getDateFromTime(6), [peopleNeed1])
     ]);
     var task2 = new Task("task2", [
-        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed1,peopleNeed2]),
+        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed3,peopleNeed2]),
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [peopleNeed2])
     ]);
     var task3 = new Task("task3", []);
