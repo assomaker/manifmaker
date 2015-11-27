@@ -10,7 +10,7 @@ Template.tasksList.helpers({
 });
 
 Template.tasksList.events({
-    "click a": function (event) {
-        event.stopPropagation();
+    "click button": function(){
+        window.open('/task');
     }
 });

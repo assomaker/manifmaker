@@ -16,9 +16,6 @@ Meteor.startup(function () {
         return Teams.find({});
     });
 
-    Meteor.publish("respManif", function(){
-        return RespManif.find({});
-    });
 
     Meteor.publish("places", function(){
         return Places.find({});

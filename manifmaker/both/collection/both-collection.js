@@ -4,7 +4,7 @@ Tasks = new Mongo.Collection("tasks");
 Assignments = new Mongo.Collection("assignment");
 Teams= new Mongo.Collection("teams");
 RespManif= new Mongo.Collection("respManif");
-Places= new Mongo.Collection("places");
+Places= new Mongo.Collection("place");
 
 //calendar, client side only
 CalendarDays = new Mongo.Collection("days");

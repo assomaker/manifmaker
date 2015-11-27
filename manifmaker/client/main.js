@@ -17,7 +17,7 @@ function preSelecterTaskByTaskName(name) {
     TaskFilter.set(defaultFilter);
     CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
 
-    var query = Tasks.find({name: name},{teams: teams},{respManif: respManif}, {places: place});
+    var query = Tasks.find({name: name});
     var handle = query.observeChanges({
         added: function (_id, task) {
             SelectedTask.set({_id: _id});

@@ -16,5 +16,5 @@ Router.route('/', function () {
 });
 
 Router.route('/task', function(){
-    this.render('Tasks');
+    this.render('task');
 });

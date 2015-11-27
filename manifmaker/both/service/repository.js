@@ -11,7 +11,7 @@ TaskRepository =
 class TaskRepository {
     static findOne(taskId) {
         var task = Tasks.findOne(taskId);
-        return new Task(task.name, task.timeSlots, task.assignments, task.teams, task.respManif, task.places, task._id); //TODO trouver un moyen plus NoSQL de faire ca ?
+        return new Task(task.name, task.timeSlots, task.assignments, task.teams, task.respManif, task.places, task.description, task._id); //TODO trouver un moyen plus NoSQL de faire ca ?
     }
 }
 
