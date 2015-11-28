@@ -176,6 +176,7 @@ Template.assignmentCalendar.events({
                 var selectedTimeSlot = this;
                 selectedTimeslotId = selectedTimeSlot._id;
 
+                //Template.parentData() doesn't work so we use a trick to retrieve taskId
                 var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
                 var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
 
@@ -186,43 +187,35 @@ Template.assignmentCalendar.events({
 
 
                 //pour chaque timeSlot.peopleNeeded PN
-                //si PN.userId !== null => on prend le user tq user._id = PN.userId
-
+                //si PN.userId !== null => on prend le user tq user._id = PN.userId et on ignore le reste
+                //TODO
 
                 //sinon si PN.teamId !== null => on prend tous les user.teamId = PN.teamId
-
+                //TODO
 
                 //si PN.skills != empty  => on prend les users (users.skills) qui ont au moins toutes les PN.skills
-                //var task = Tasks.findOne({name: "task2"});
-                //var timeSlot = task.timeSlots[0];
-                //var askingSkills = timeSlot.peopleNeeded[0].skills;
-                //var askingSkills1 = timeSlot.peopleNeeded[1].skills;
+
+
+                /**
+                 *
+                 * Skills filter
+                 *
+                 * For selected task's time slot, the user must have all the required skills of at least
+                 * one of task's people need
+                 *
+                 */
                 var askingSkills = [];
                 timeSlot.peopleNeeded.forEach(peopleNeeded => {
-                        askingSkills.push({skills: {$all: peopleNeeded.skills}});
+                        if (peopleNeeded.skills.length !== 0) //if people need doesn't require any particular skills
+                            askingSkills.push({skills: {$all: peopleNeeded.skills}});
                     }
                 );
 
-
-                var skillsFilter = {
-                    $or: askingSkills
-                };
-                //Users.find(skillsFilter).fetch();
-
-
-                //avec le jeu de test actuel : [0] => user1   [1]  => user2
-
-
-                //TODO peut etre utiliser un &elemMatch pour faire pour tous les peopleNeeded => non, mais pour USERTOTASK
-
-
-                //pour chaque peopleNeeded.skills, il faut que le user les aient tous pour que ce soit bon
-                //
-                //skillsFilter = {
-                //    skills: {
-                //        $in: []
-                //    }
-                //};
+                var skillsFilter;
+                if (askingSkills.length !== 0) //if all time slot's people need don't require any particular skills
+                    skillsFilter = {
+                        $or: askingSkills
+                    };
 
 
                 var availabilitiesFilter = {
@@ -234,9 +227,13 @@ Template.assignmentCalendar.events({
                     }
                 };
 
+                /**
+                 * The user must be free during the time slot duration and have skills that match the required ones
+                 */
                 var newFilter = {
                     $and: [
-                        availabilitiesFilter, skillsFilter
+                        availabilitiesFilter,
+                        skillsFilter
                     ]
                 };
                 console.info("TASKTOUSER user filter", newFilter);
@@ -283,9 +280,9 @@ Template.assignmentCalendar.events({
 
                 /*
 
-                ** Skills filter
-                User is eligible for a task if he has all skills for at least one task' people need's skills.
-                The query looks like something like this : 'foreach timeSlot foreach peopleNeeded foreach skills' = at least user.skills
+                 ** Skills filter
+                 User is eligible for a task if he has all skills for at least one task' people need's skills.
+                 The query looks like something like this : 'foreach timeSlot foreach peopleNeeded foreach skills' = at least user.skills
 
                  ** Availabilities filter :
                  Task whose have at least one timeSlot (to begin, just one) as
@@ -298,30 +295,61 @@ Template.assignmentCalendar.events({
                  */
 
                 var newFilter = {
-                    timeSlots: {
-                        $elemMatch: {
-                            //skills filter
-                            peopleNeeded: {
+                    $or: [ //$or does't work on $elemMatch with miniMongo
+                        { //skills filter
+                            timeSlots: {
                                 $elemMatch: {
-                                    skills: user.skills
+                                    //skills filter
+                                    peopleNeeded: {
+                                        $elemMatch: {
+                                            skills: {  ////=> or just skills : user.skills (what the differences ?)
+                                                $elemMatch: {
+                                                    $in: user.skills
+                                                }
+                                            }
+                                        }
+                                    },
+                                    //availabilities filter
+                                    start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                    end: {$gt: selectedDate.toDate(), $lte: availability.end}
                                 }
-                            },
-                            //availabilities filter
-                            start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                            end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                            }
+                        },
+                        {//no skills filter
+                            timeSlots: {
+                                $elemMatch: {
+                                    //skills filter
+                                    peopleNeeded: {
+                                        $elemMatch: {
+                                            skills: { // $eq : [] doesn't work with miniMongo, here is a trick
+                                                $not: {
+                                                    $ne: []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    //availabilities filter
+                                    start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                    end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                                }
+                            }
                         }
-                    }
+                    ]
                 };
+                //aggregate is not supported by mini mongo
 
 
                 TaskFilter.set(newFilter);
                 break;
-            case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
+            case
+            AssignmentType.TASKTOUSER
+            : //only display users that have at least one availability matching the selected time slot
                 //we let the event bubbles to the parent
                 return [];
         }
     }
-});
+})
+;
 
 
 

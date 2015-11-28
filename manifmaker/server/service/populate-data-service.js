@@ -22,7 +22,9 @@ populateData = function () {
     );
     var user2 = new User("user2", [
             new Availability(getDateFromTime(2), getDateFromTime(20))],
-        [skill2._id]
+        [
+            skill2._id
+        ]
     );
     var user3 = new User("user3", [
             new Availability(getDateFromTime(10), getDateFromTime(14)),
@@ -37,7 +39,7 @@ populateData = function () {
     user3 = insertAndFetch(Users, user3);
 
     var peopleNeed1 = new PeopleNeed({
-        skills: [skill1._id]
+        skills: []//skill1._id]
     });
     var peopleNeed2 = new PeopleNeed({
         skills: [skill2._id]
@@ -48,13 +50,15 @@ populateData = function () {
 
     var task1 = new Task("task1", [
         new TimeSlot(getDateFromTime(2), getDateFromTime(4), [peopleNeed1]),
-        new TimeSlot(getDateFromTime(6), getDateFromTime(8), [peopleNeed2])
+        new TimeSlot(getDateFromTime(6), getDateFromTime(8), [peopleNeed1])
     ]);
     var task2 = new Task("task2", [
-        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed3,peopleNeed2]),
+        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed2]),
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [peopleNeed2])
     ]);
-    var task3 = new Task("task3", []);
+    var task3 = new Task("task3", [
+        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed1,peopleNeed2])
+    ]);
 
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
