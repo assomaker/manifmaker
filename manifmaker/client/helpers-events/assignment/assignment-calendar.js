@@ -206,7 +206,15 @@ Template.assignmentCalendar.events({
                  */
                 var askingSkills = [];
                 timeSlot.peopleNeeded.forEach(peopleNeeded => {
-                        if (peopleNeeded.skills.length !== 0) //if people need doesn't require any particular skills
+                        if (peopleNeeded.userId) {
+                            askingSkills.push({
+                                _id: peopleNeeded.userId
+                            });
+                        } else if (peopleNeeded.teamId) {
+                            askingSkills.push({
+                                teams: peopleNeeded.teamId
+                            });
+                        } else if (peopleNeeded.skills.length !== 0) //if people need doesn't require any particular skills
                             askingSkills.push({skills: {$all: peopleNeeded.skills}});
                     }
                 );
