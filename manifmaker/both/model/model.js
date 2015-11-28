@@ -55,6 +55,10 @@ class TimeSlot { //must inherit Availabilty
 }
 
 PeopleNeed =
+/**
+ * By now, userId, teamId and skills can't be combined.
+ * In particular we can't ask for a specific team and for specific skills (will be soon)
+ */
 class PeopleNeed {
     constructor(options){
         if(typeof options !== "object"){

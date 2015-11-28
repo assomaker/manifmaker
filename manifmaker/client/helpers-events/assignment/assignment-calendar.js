@@ -180,23 +180,10 @@ Template.assignmentCalendar.events({
                 var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
                 var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
 
-                var skillsFilter = {};
-                //TODO match des skills (du user) avec les skills du timeSlot
-                //bddd.user.skills sont des ID
-                //timeslot.peopleNeeded.skills sont des ID
-
-
-                //pour chaque timeSlot.peopleNeeded PN
-                //si PN.userId !== null => on prend le user tq user._id = PN.userId et on ignore le reste
-                //TODO
-
-                //sinon si PN.teamId !== null => on prend tous les user.teamId = PN.teamId
-                //TODO
-
-                //si PN.skills != empty  => on prend les users (users.skills) qui ont au moins toutes les PN.skills
-
-
                 /**
+                 *
+                 * By now, userId, teamId and skills can't be combined.
+                 * In particular we can't ask for a specific team and for specific skills (will be soon)
                  *
                  * Skills filter
                  *
@@ -204,25 +191,25 @@ Template.assignmentCalendar.events({
                  * one of task's people need
                  *
                  */
-                var askingSkills = [];
+                var askingSpecificNeedAndSkills = [];
                 timeSlot.peopleNeeded.forEach(peopleNeeded => {
-                        if (peopleNeeded.userId) {
-                            askingSkills.push({
+                        if (peopleNeeded.userId) { //prior above teamId an skills
+                            askingSpecificNeedAndSkills.push({
                                 _id: peopleNeeded.userId
                             });
-                        } else if (peopleNeeded.teamId) {
-                            askingSkills.push({
+                        } else if (peopleNeeded.teamId) { //prior above skills
+                            askingSpecificNeedAndSkills.push({
                                 teams: peopleNeeded.teamId
                             });
                         } else if (peopleNeeded.skills.length !== 0) //if people need doesn't require any particular skills
-                            askingSkills.push({skills: {$all: peopleNeeded.skills}});
+                            askingSpecificNeedAndSkills.push({skills: {$all: peopleNeeded.skills}});
                     }
                 );
 
-                var skillsFilter;
-                if (askingSkills.length !== 0) //if all time slot's people need don't require any particular skills
-                    skillsFilter = {
-                        $or: askingSkills
+                var userTeamsSkillsFilter;
+                if (askingSpecificNeedAndSkills.length !== 0) //if all time slot's people need don't require any particular skills
+                    userTeamsSkillsFilter = {
+                        $or: askingSpecificNeedAndSkills
                     };
 
 
@@ -241,7 +228,7 @@ Template.assignmentCalendar.events({
                 var newFilter = {
                     $and: [
                         availabilitiesFilter,
-                        skillsFilter
+                        userTeamsSkillsFilter
                     ]
                 };
                 console.info("TASKTOUSER user filter", newFilter);
