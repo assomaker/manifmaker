@@ -2,6 +2,9 @@ Template.assignmentTasksList.helpers({
     tasks: function () {
         var filter = TaskFilter.get();
         return Tasks.find(filter);
+    },
+    team: function () {
+        return Teams.findOne({_id:this.teamId}).name;
     }
 });
 

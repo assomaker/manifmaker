@@ -16,6 +16,9 @@ Meteor.startup(function () {
         return Skills.find({});
     });
 
+    Meteor.publish("teams", function () {
+        return Teams.find({});
+    });
 
     //below will be only client only
 

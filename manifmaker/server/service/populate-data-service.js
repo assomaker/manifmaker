@@ -3,6 +3,12 @@ populateData = function () {
     //Tasks.remove({});
     //Assignments.remove({});
 
+    var team1 = new Team("team1");
+    var team2 = new Team("team2");
+
+    team1 = insertAndFetch(Teams,team1);
+    team2 = insertAndFetch(Teams,team2);
+
 
     var skill1 = new Skill("RESPTASK1", "Responsable tache 1");
     var skill2 = new Skill("RESPTASK2", "Responsable tache 2");
@@ -15,18 +21,18 @@ populateData = function () {
 
     //il reste les equipes à prendre en compte pour les PeopleNeeded
 
-    var user1 = new User("user1", [
+    var user1 = new User("user1", [team1._id], [
             new Availability(getDateFromTime(2), getDateFromTime(12)),
             new Availability(getDateFromTime(18), getDateFromTime(22))],
-        [skill1._id]
+        []
     );
-    var user2 = new User("user2", [
+    var user2 = new User("user2", [team2._id], [
             new Availability(getDateFromTime(2), getDateFromTime(20))],
         [
             skill2._id
         ]
     );
-    var user3 = new User("user3", [
+    var user3 = new User("user3", [team1._id, team2._id], [
             new Availability(getDateFromTime(10), getDateFromTime(14)),
             new Availability(getDateFromTime(16), getDateFromTime(18)),
             new Availability(getDateFromTime(20), getDateFromTime(22))],
@@ -39,10 +45,12 @@ populateData = function () {
     user3 = insertAndFetch(Users, user3);
 
     var peopleNeed1 = new PeopleNeed({
-        skills: []//skill1._id]
+        skills: [],//skill1._id]
+        teamId : team1._id
     });
     var peopleNeed2 = new PeopleNeed({
-        skills: [skill2._id]
+        skills: [skill2._id],
+        teamId : team2._id
     });
     var peopleNeed3 = new PeopleNeed({
         skills: [skill1._id, skill2._id, skill3._id]
@@ -57,7 +65,7 @@ populateData = function () {
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [peopleNeed2])
     ]);
     var task3 = new Task("task3", [
-        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed1,peopleNeed2])
+        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed1,peopleNeed2,peopleNeed3])
     ]);
 
     task1 = insertAndFetch(Tasks, task1);

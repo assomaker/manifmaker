@@ -15,8 +15,11 @@
                                         <ul>
                                             {{#each skills}}
                                                 <li>{{skillLabel}}</li>
+                                            {{else}}
+                                                No specific skills
                                             {{/each}}
                                         </ul>
+                                        {{#if teamId}} Team : {{team}} {{/if}}
                                     </li>
                                 {{/each}}
                             </ul>

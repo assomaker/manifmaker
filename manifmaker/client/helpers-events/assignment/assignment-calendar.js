@@ -295,7 +295,7 @@ Template.assignmentCalendar.events({
                  */
 
                 var newFilter = {
-                    $or: [ //$or does't work on $elemMatch with miniMongo
+                    $or: [ //$or does't work on $elemMatch with miniMongo, so we use it here
                         { //skills filter
                             timeSlots: {
                                 $elemMatch: {

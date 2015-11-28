@@ -2,6 +2,9 @@ Template.assignmentUsersList.helpers({
     users: function () {
         var filter = UserFilter.get();
         return Users.find(filter);
+    },
+    team: function () {
+        return Teams.findOne({_id:this.toString()}).name;
     }
 });
 

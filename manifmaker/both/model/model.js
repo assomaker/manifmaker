@@ -1,7 +1,8 @@
 User = //to export it to other namespace
 class User {
-    constructor(name, availabilities, skills = [], assignments = [], _id) {
+    constructor(name, teams,availabilities, skills = [], assignments = [], _id) {
         this.name = name;
+        this.teams = teams; //Array<TeamId>
         this.availabilities = availabilities; //Array<Availability>
         this.skills = skills; //Array<SkillId>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
@@ -10,6 +11,14 @@ class User {
 
     toString() {
         return '(' + this.name + ', ' + this.availabilities + ')';
+    }
+}
+
+Team = //to export it to other namespace
+class Team {
+    constructor(name){
+        this.name = name;
+        if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
     }
 }
 

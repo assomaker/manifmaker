@@ -49,6 +49,7 @@ Meteor.startup(function () {
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("assignments");
+    Meteor.subscribe("teams");
 
 
     //below will be client only

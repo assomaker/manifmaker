@@ -4,6 +4,12 @@
         {{#each users}}
             <li class="user" data-_id="{{_id}}">
                 <div class="name">{{name}}</div>
+                Teams :
+                <ul>
+                    {{#each teams}}
+                        <li>{{team}}</li>
+                    {{/each}}
+                </ul>
                 Availabilities :
                 <ul>
                     {{#each availabilities}}
