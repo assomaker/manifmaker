@@ -3,6 +3,9 @@ populateData = function () {
     //Tasks.remove({});
     //Assignments.remove({});
 
+    var assignmentReadyTeam = new Team(ASSIGNMENTREADYTEAM); //init data
+    assignmentReadyTeam = insertAndFetch(Teams,assignmentReadyTeam);
+
     var team1 = new Team("team1");
     var team2 = new Team("team2");
 
@@ -24,15 +27,15 @@ populateData = function () {
     var user1 = new User("user1", [team1._id], [
             new Availability(getDateFromTime(2), getDateFromTime(12)),
             new Availability(getDateFromTime(18), getDateFromTime(22))],
-        []
+        [skill1._id]
     );
     var user2 = new User("user2", [team2._id], [
             new Availability(getDateFromTime(2), getDateFromTime(20))],
         [
-            skill2._id
+           skill2._id
         ]
     );
-    var user3 = new User("user3", [team1._id, team2._id], [
+    var user3 = new User("user3", [team1._id], [
             new Availability(getDateFromTime(10), getDateFromTime(14)),
             new Availability(getDateFromTime(16), getDateFromTime(18)),
             new Availability(getDateFromTime(20), getDateFromTime(22))],
@@ -47,14 +50,15 @@ populateData = function () {
     var peopleNeed1 = new PeopleNeed({
         skills: [],//skill1._id]
         teamId : team1._id, //will be ignored if userId is setup
-        userId: user3._id
+       // userId: user3._id
     });
     var peopleNeed2 = new PeopleNeed({
         skills: [skill2._id],
         teamId : team2._id
     });
     var peopleNeed3 = new PeopleNeed({
-        skills: [skill1._id, skill2._id, skill3._id]
+        skills: [skill1._id, skill2._id, skill3._id],
+        userId: user1._id
     });
 
     var task1 = new Task("task1", [

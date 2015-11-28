@@ -5,6 +5,9 @@ Template.assignmentTasksList.helpers({
     },
     team: function () {
         return Teams.findOne({_id:this.teamId}).name;
+    },
+    user: function () {
+        return Users.findOne({_id:this.userId}).name;
     }
 });
 

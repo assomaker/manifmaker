@@ -291,43 +291,91 @@ Template.assignmentCalendar.events({
 
                 var newFilter = {
                     $or: [ //$or does't work on $elemMatch with miniMongo, so we use it here
-                        { //skills filter
+                        { //userId filter
                             timeSlots: {
                                 $elemMatch: {
                                     //skills filter
                                     peopleNeeded: {
                                         $elemMatch: {
-                                            skills: {  ////=> or just skills : user.skills (what the differences ?)
-                                                $elemMatch: {
-                                                    $in: user.skills
-                                                }
-                                            }
+                                            userId: user._id
                                         }
-                                    },
-                                    //availabilities filter
-                                    start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                                    end: {$gt: selectedDate.toDate(), $lte: availability.end}
-                                }
+                                    }
+                                },
+                                //availabilities filter
+                                //start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                //end: {$gt: selectedDate.toDate(), $lte: availability.end}
                             }
                         },
-                        {//no skills filter
-                            timeSlots: {
-                                $elemMatch: {
-                                    //skills filter
-                                    peopleNeeded: {
+                        //   { // teamId and skills filter
+
+                        //$and: [  //team and skills requirements must match accordingly
+                        //    { //teamId filter
+                        //        timeSlots: {
+                        //            $elemMatch: {
+                        //                //skills filter
+                        //                peopleNeeded: {
+                        //                    $elemMatch: {
+                        //                        teamId: {
+                        //                            $in: user.teams
+                        //                        }
+                        //                    }
+                        //                }
+                        //            }
+                        //        },
+                        //availabilities filter
+                        //start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                        //end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                        //},
+                        {
+                            $or: [ //either we match skills requirement or there is no skills requirement (and we don't care)
+                                { //skills filter
+                                    timeSlots: {
                                         $elemMatch: {
-                                            skills: { // $eq : [] doesn't work with miniMongo, here is a trick
-                                                $not: {
-                                                    $ne: []
+                                            //skills filter
+                                            peopleNeeded: {
+                                                $elemMatch: {
+                                                    skills: user.skills,
+                                                    teamId: {
+                                                        $in: user.teams
+                                                    }
+                                                    //{  ////=> or just skills : user.skills (what the differences ?)
+                                                    //    $elemMatch: {
+                                                    //        $in: user.skills
+                                                    //    }
+                                                    //}
                                                 }
-                                            }
+                                            },
+                                            //availabilities filter
+                                            //start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                            //end: {$gt: selectedDate.toDate(), $lte: availability.end}
                                         }
-                                    },
-                                    //availabilities filter
-                                    start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                                    end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                                    }
+                                },
+                                {//no-skills filter
+                                    timeSlots: {
+                                        $elemMatch: {
+                                            //skills filter
+                                            peopleNeeded: {
+                                                $elemMatch: {
+                                                    skills: { // $eq : [] doesn't work with miniMongo, here is a trick
+                                                        $not: {
+                                                            $ne: []
+                                                        }
+                                                    },
+                                                    teamId: {
+                                                        $in: user.teams
+                                                    }
+                                                }
+                                            },
+                                            //availabilities filter
+                                            //start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                            //end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                                        }
+                                    }
                                 }
-                            }
+                                //]
+                                //}
+                            ]
                         }
                     ]
                 };
@@ -343,8 +391,8 @@ Template.assignmentCalendar.events({
                 return [];
         }
     }
-})
-;
+});
+
 
 
 

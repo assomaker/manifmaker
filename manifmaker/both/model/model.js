@@ -1,8 +1,9 @@
 User = //to export it to other namespace
 class User {
-    constructor(name, teams,availabilities, skills = [], assignments = [], _id) {
+    constructor(name, teams = [],availabilities = [], skills = [], assignments = [], _id) {
         this.name = name;
         this.teams = teams; //Array<TeamId>
+        this.teams.push(Teams.findOne({name: ASSIGNMENTREADYTEAM})._id); //TODO c'est nul de faire ca ici, le faire dans le Tasks.allow.insert et Tasks.allow.update
         this.availabilities = availabilities; //Array<Availability>
         this.skills = skills; //Array<SkillId>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
@@ -61,17 +62,30 @@ PeopleNeed =
  */
 class PeopleNeed {
     constructor(options){
+        this.userId;
+        this.teamId;
+        this.skills = [];//Array<Skill>
+
+
         if(typeof options !== "object"){
             console.error("PeopleNeed constructor only accept a key:value object");
         }
         this.userId = options.userId;
 
         if(!this.userId) { //we cannot ask for a specific user and anything else
-            this.teamId = options.teamId;
             this.skills = options.skills || []; //Array<Skill>
-        } else {
-            console.warn("PeoplNeed constructor : we cannot ask for a specific user and anything else")
+
+            if(options.teamId){
+                this.teamId = options.teamId;
+            } else { //all peopleNeed should have a team, if not, it's the global team
+                this.teamId = Teams.findOne({name: ASSIGNMENTREADYTEAM})._id; //TODO c'est nul de faire ca ici, le faire dans le Tasks.allow.insert et Tasks.allow.update
+            }
+
+        } else if(options.teamId || this.skills) {
+            console.warn("PeoplNeed constructor : we cannot ask for a specific userId and anything else, teamId and skills information are ignored and not set");
         }
+
+
 
         if (typeof _id !== "undefined") this._id = _id
         else this._id = new Meteor.Collection.ObjectID()._str;
