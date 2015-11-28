@@ -197,7 +197,20 @@ Template.assignmentCalendar.events({
                             askingSpecificNeedAndSkills.push({
                                 _id: peopleNeeded.userId
                             });
-                        } else if (peopleNeeded.teamId) { //prior above skills
+                        } else if (peopleNeeded.teamId && peopleNeeded.skills.length !== 0) {  //we combine teamId and skills
+                            askingSpecificNeedAndSkills.push({
+                                $and: [
+                                    {
+                                        teams: peopleNeeded.teamId
+                                    },
+                                    {
+                                        skills: {
+                                            $all: peopleNeeded.skills
+                                        }
+                                    }
+                                ]
+                            });
+                        } else if (peopleNeeded.teamId) { //we only use teamId
                             askingSpecificNeedAndSkills.push({
                                 teams: peopleNeeded.teamId
                             });
@@ -227,7 +240,7 @@ Template.assignmentCalendar.events({
                  */
                 var newFilter = {
                     $and: [
-                        availabilitiesFilter,
+                        // availabilitiesFilter,
                         userTeamsSkillsFilter
                     ]
                 };

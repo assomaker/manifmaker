@@ -29,7 +29,7 @@ populateData = function () {
             new Availability(getDateFromTime(18), getDateFromTime(22))],
         [skill1._id]
     );
-    var user2 = new User("user2", [team2._id], [
+    var user2 = new User("user2", [team1._id], [
             new Availability(getDateFromTime(2), getDateFromTime(20))],
         [
            skill2._id
@@ -54,11 +54,11 @@ populateData = function () {
     });
     var peopleNeed2 = new PeopleNeed({
         skills: [skill2._id],
-        teamId : team2._id
+        teamId : team1._id
     });
     var peopleNeed3 = new PeopleNeed({
         skills: [skill1._id, skill2._id, skill3._id],
-        userId: user1._id
+        //userId: user1._id
     });
 
     var task1 = new Task("task1", [
