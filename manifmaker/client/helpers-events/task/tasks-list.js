@@ -14,8 +14,8 @@ Template.tasksList.events({
         Router.go('/task');
     },
 
-    "click a" : function(){
-        Router.go('/task/:_id');
+    //"click a" : function(){
+      //  Router.go('/task/:_id');
 
-    }
+    //}
 });

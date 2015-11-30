@@ -25,8 +25,8 @@ Router.route('/task', function(){
 //});
 
 Router.route('/task/:_id', {
-    name: 'tasksList',
-    template: 'tasksList',
+    name: 'taskList',
+    template: 'task',
     data: function(){
         var currentTask = this.params._id;
         return Tasks.findOne({ _id: currentTask });
