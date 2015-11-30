@@ -18,3 +18,17 @@ Router.route('/', function () {
 Router.route('/task', function(){
     this.render('task');
 });
+
+//Router.route('/task/:_id', function(){
+  //  var params = this.params; // { _id: "5" }
+    //var id = params._id; // "5"
+//});
+
+Router.route('/task/:_id', {
+    name: 'tasksList',
+    template: 'tasksList',
+    data: function(){
+        var currentTask = this.params._id;
+        return Tasks.findOne({ _id: currentTask });
+    }
+});

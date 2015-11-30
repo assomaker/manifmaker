@@ -3,8 +3,12 @@
 <body>
     {{#each tasks}}
 
-        <li><a>{{name}}</a>,{{teams}},{{places}}</li>
+            <li><a href="{{pathFor route='tasksList'}}">{{name}}</a >,{{teams}},{{places}}</li>
+            <button type="button" name="updateButton">Modifier la tache</button>
+            <button type="button" name="readButton" disabled="">Consulter la tache</button>
+
     {{/each}}
+    <br>
 
     <button type="button" name="newTaskButton" >Créer une nouvelle fiche tache</button>
 </body>

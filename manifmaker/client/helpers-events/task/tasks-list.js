@@ -10,7 +10,12 @@ Template.tasksList.helpers({
 });
 
 Template.tasksList.events({
-    "click button": function(){
-        window.open('/task');
+    "click button[name=newTaskButton]":function(){
+        Router.go('/task');
+    },
+
+    "click a" : function(){
+        Router.go('/task/:_id');
+
     }
 });

@@ -10,7 +10,10 @@
         <div class="container-fluid" >
             <form >
                 <h3>Nom de la tache</h3>
-                <input type="text" name="taskName" class="task-name" autofocus>
+                <input type="text" name="taskName" value="Cette tache a pas encore de nom" class="task-name" autofocus
+                       onfocus="if(this.value == 'Cette tache a pas encore de nom'){this.value=''};"
+                       onBlur="if(this.value == ''){this.value='Cette tache a pas encore de nom';}"
+                       onclick="if(this.value=='Cette tache a pas encore de nom'){this.value=''};" >
             </form>
 
             <div class="row">
