@@ -24,11 +24,11 @@ Router.route('/task', function(){
     //var id = params._id; // "5"
 //});
 
-Router.route('/task/:_id', {
+Router.route('/task/:name', {
     name: 'taskList',
     template: 'task',
     data: function(){
-        var currentTask = this.params._id;
-        return Tasks.findOne({ _id: currentTask });
+        var currentTask = this.params.name;
+        return Tasks.findOne({ name: currentTask });
     }
 });

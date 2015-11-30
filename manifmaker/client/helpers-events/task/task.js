@@ -20,8 +20,9 @@ Template.task.events({
         //console.log(TaskName, Team, RespManif, Description, Place);
         task4 = new Task(TaskName,[],[],Place, Team, RespManif, Description );
             Tasks.insert(task4, function(error,results){
-                Router.go('tasksList',{_id:results});
+                Router.go('tasksList',{name:results});
             });
+
 
 
         //console.log(task4);
