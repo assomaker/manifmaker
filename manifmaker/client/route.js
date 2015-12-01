@@ -1,4 +1,3 @@
-
 Router.route('/tasksList', function () {
     this.render('TasksList');
 });
@@ -24,11 +23,11 @@ Router.route('/task', function(){
     //var id = params._id; // "5"
 //});
 
-Router.route('/task/:name', {
-    name: 'taskList',
-    template: 'task',
-    data: function(){
-        var currentTask = this.params.name;
-        return Tasks.findOne({ name: currentTask });
-    }
+Router.route('/task/:name', function () {
+    this.render('task', {
+            data: function () {
+                var currentTask = this.params.name;
+                return Tasks.findOne({name: currentTask});
+            }
+        });
 });

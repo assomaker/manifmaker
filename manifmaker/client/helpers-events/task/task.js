@@ -1,6 +1,3 @@
-/**
- * Created by constant on 27/11/2015.
- */
 Template.task.helpers({
     tasks: function () {
         return Tasks.find();
@@ -12,23 +9,23 @@ Template.task.helpers({
 Template.task.events({
     "click .button-save": function(event){
         event.preventDefault();
-        var TaskName = $('input[name=taskName]').val();
-        var Team = $('select[name=team]').val();
-        var RespManif = $('select[name=respManif]').val();
-        var Description = $('input[name=description]').val();
-        var Place = $('input[name=place]').val();
+        var taskName = $('input[name=taskName]').val();
+        var team = $('select[name=team]').val();
+        var respManif = $('select[name=respManif]').val();
+        var description = $('input[name=description]').val();
+        var place = $('input[name=place]').val();
         //console.log(TaskName, Team, RespManif, Description, Place);
-        task4 = new Task(TaskName,[],[],Place, Team, RespManif, Description );
-            Tasks.insert(task4, function(error,results){
-                Router.go('tasksList',{name:results});
+        var task = new Task(taskName,[],[],place, team, respManif, description );
+
+        if(this._id){ //already exist, we update it
+            Tasks.update({_id: this._id}, task, function(error,results){
+                Router.go('tasksList');
             });
-
-
-
-        //console.log(task4);
-
-
-
-        //Router.go('/tasksList');
+        } else { //doesn't already exist, we create it
+            Tasks.insert(task, function(error,results){
+                Router.go('tasksList');
+            });
+        }
+        
     }
 });

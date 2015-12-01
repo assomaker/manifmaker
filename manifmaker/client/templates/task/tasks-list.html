@@ -3,8 +3,8 @@
 <body>
     {{#each tasks}}
 
-            <li><a href="{{pathFor route='taskList'}}">{{name}}</a >,{{teams}},{{places}}</li>
-            <button type="button" name="updateButton">Modifier la tache</button>
+            <li><a href="{{pathFor route='tasksList'}}">{{name}}</a >,{{team}},{{place}}</li>
+            <a href="/task/{{name}}">Modifier la tache</a >
             <button type="button" name="readButton" disabled="">Consulter la tache</button>
 
     {{/each}}
