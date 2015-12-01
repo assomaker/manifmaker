@@ -17,10 +17,11 @@ Template.tasksList.events({
     "click button[name=supressButton]": function(){
         event.preventDefault();
         var taskId = this._id;
-        //var confirm = window.confirm("Delete this task?");
-        //if(confirm) {
+        //var placeId = Place._id;
+
             Tasks.remove({_id: taskId});
-        //}
+           // Places.remove({_id: placeId});
+
     }
 
     //"click a" : function(){

@@ -21,6 +21,9 @@ populateData =  function () {
     user2 = insertAndFetch(Users, user2);
     user3 = insertAndFetch(Users, user3);
 
+
+
+
     var task1 = new Task("task1", [
         new TimeSlot(getDateFromTime(8), getDateFromTime(11), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(4), getDateFromTime(6), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
@@ -34,6 +37,17 @@ populateData =  function () {
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
     task3 = insertAndFetch(Tasks, task3);
+
+    var place1= new Place ("place1");
+    var place2= new Place ("place2");
+
+    place1= insertAndFetch(Places, place1);
+    place2= insertAndFetch(Places, place2);
+
+
+
+
+
 
 
 

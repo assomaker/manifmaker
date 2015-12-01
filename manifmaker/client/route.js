@@ -18,16 +18,22 @@ Router.route('/task', function(){
     this.render('task');
 });
 
+Router.route('/place', function(){
+    this.render('place');
+});
+
 //Router.route('/task/:_id', function(){
   //  var params = this.params; // { _id: "5" }
     //var id = params._id; // "5"
 //});
 
 Router.route('/task/:name', function () {
-    this.render('task', {
-            data: function () {
-                var currentTask = this.params.name;
-                return Tasks.findOne({name: currentTask});
-            }
-        });
+
+       this.render('task', {
+           data: function () {
+               var currentTask = this.params.name;
+               return Tasks.findOne({name: currentTask});
+           }
+       });
+
 });

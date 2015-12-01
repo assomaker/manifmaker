@@ -37,6 +37,14 @@ class Task {
     }
 }
 
+Place=
+class Place {
+    constructor(name, _id){
+        this.name = name;
+        if (typeof _id !== "undefined") this._id = _id;
+    }
+}
+
 
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
@@ -44,7 +52,7 @@ class TimeSlot { //must inherit Availabilty
         this.start = start;
         this.end = end;
         this.peopleNeeded = peopleNeeded; //Array<PeopleNeed>
-        if (typeof _id !== "undefined") this._id = _id
+        if (typeof _id !== "undefined") this._id = _id;
         else this._id = new Meteor.Collection.ObjectID()._str;
     }
 }

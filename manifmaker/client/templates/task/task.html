@@ -22,8 +22,21 @@
                 </div>
 
                 <div class="clo-xs-12 col-md-4">
-                        Où ça?
-                        <input type="text" name="place" value="{{place}}">
+
+
+                    <select class="informations" name="place" >
+                    <option value="predefinedPlace" selected>Où ça?</option>
+                        {{#each place}}
+
+                            <option value="{{_id}}" >{{name}}</option>
+
+                        {{/each}}
+                    </select>
+
+
+
+
+
                 </div>
                 
             </div>
