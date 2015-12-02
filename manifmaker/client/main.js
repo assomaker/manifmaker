@@ -44,7 +44,10 @@ function preSelectedUserByUserName(name) {
     });
 
 }
+
+
 Meteor.startup(function () {
+
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("places");
@@ -61,5 +64,6 @@ Meteor.startup(function () {
 
 
     preSelectedUserByUserName("user1");
+
 });
 

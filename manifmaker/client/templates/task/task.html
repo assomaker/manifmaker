@@ -25,12 +25,13 @@
 
 
                     <select class="informations" name="place" >
-                    <option value="predefinedPlace" selected>Où ça?</option>
                         {{#each places}}
-
-                            <option value="{{_id}}" >{{name}}</option>
-
+                            <option value="{{_id}}">{{name}}</option>
+                            {{#if equals task.place _id}}
+                            <option value="{{_id}}" selected>{{name}}</option>
+                            {{/if}}
                         {{/each}}
+
                     </select>
 
 

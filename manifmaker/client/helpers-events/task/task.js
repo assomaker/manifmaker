@@ -17,7 +17,6 @@ Template.task.events({
         var respManif = $('select[name=respManif]').val();
         var description = $('input[name=description]').val();
         var place = $('select[name=place]').val();
-        //console.log(TaskName, Team, RespManif, Description, Place);
         var task = new Task(taskName,[],[],place, team, respManif, description );
 
 
@@ -25,7 +24,9 @@ Template.task.events({
         if(this._id){ //already exist, we update it
             Tasks.update({_id: this._id}, task, function(error,results){
                 Router.go('tasksList');
+
             });
+
 
 
         } else { //doesn't already exist, we create it

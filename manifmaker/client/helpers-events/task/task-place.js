@@ -12,7 +12,6 @@ Template.place.events({
         var place = new Place(placeName);
 
 
-
         if(this._id){ //already exist, we update it
             Places.update({_id: this._id}, place, function(error,results){
                 Router.go('tasksList');

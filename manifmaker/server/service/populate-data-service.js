@@ -23,9 +23,11 @@ populateData =  function () {
 
     var place1= new Place ("place1");
     var place2= new Place ("place2");
+    var place3= new Place ("place3");
 
     place1= insertAndFetch(Places, place1);
     place2= insertAndFetch(Places, place2);
+    place3= insertAndFetch(Places, place3);
 
 
 
@@ -37,7 +39,7 @@ populateData =  function () {
         new TimeSlot(getDateFromTime(10), getDateFromTime(12), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
     ], [], place2._id, "team2", "resp2", "description2");
-    var task3 = new Task("task3", [], [], "place3", "team3", "resp3","description3");
+    var task3 = new Task("task3", [], [], place3._id, "team3", "resp3","description3");
 
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
