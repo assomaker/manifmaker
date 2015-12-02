@@ -21,28 +21,29 @@ populateData =  function () {
     user2 = insertAndFetch(Users, user2);
     user3 = insertAndFetch(Users, user3);
 
+    var place1= new Place ("place1");
+    var place2= new Place ("place2");
+
+    place1= insertAndFetch(Places, place1);
+    place2= insertAndFetch(Places, place2);
 
 
 
     var task1 = new Task("task1", [
         new TimeSlot(getDateFromTime(8), getDateFromTime(11), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(4), getDateFromTime(6), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
-    ], [], "place1", "team1", "resp1", "description1");
+    ], [], place1._id, "team1", "resp1", "description1");
     var task2 = new Task("task2", [
         new TimeSlot(getDateFromTime(10), getDateFromTime(12), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
-    ], [], "place2", "team2", "resp2", "description2");
+    ], [], place2._id, "team2", "resp2", "description2");
     var task3 = new Task("task3", [], [], "place3", "team3", "resp3","description3");
 
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
     task3 = insertAndFetch(Tasks, task3);
 
-    var place1= new Place ("place1");
-    var place2= new Place ("place2");
 
-    place1= insertAndFetch(Places, place1);
-    place2= insertAndFetch(Places, place2);
 
 
 
