@@ -4,5 +4,12 @@
     <input type="text" name="placeName" placeHolder="nouveau lieu" >
     <button type="button" name="newPlaceButton" >Ajouter un lieu</button>
 
+    {{#each places}}
+        <li><a>{{name}}</a ></li>
+        <button type="button" name="supressPlaceButton" >Supprimer le lieu</button>
+    {{/each}}
+    <br>
+    <a href="/tasksList">Retourner à la liste de taches</a >
+
 
 </template>

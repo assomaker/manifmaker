@@ -14,17 +14,27 @@ Template.place.events({
 
         if(this._id){ //already exist, we update it
             Places.update({_id: this._id}, place, function(error,results){
-                Router.go('tasksList');
+                Router.update('place');
             });
 
 
         } else { //doesn't already exist, we create it
             Places.insert(place, function(error,results){
-                Router.go('tasksList');
+                Router.update('place');
             });
 
         }
+    },
+
+    "click button[name=supressPlaceButton]": function(){
+        event.preventDefault();
+        var placeId = this._id;
+
+        Places.remove({_id: placeId});
+
+
     }
+
 
 
 });
