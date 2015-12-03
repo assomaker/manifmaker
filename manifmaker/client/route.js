@@ -1,5 +1,5 @@
 Router.route('/tasks', function () {
-    this.render('tasks');
+    this.render('tasksList');
 });
 
 Router.route('/activities', function () {
@@ -31,8 +31,8 @@ Router.route('/task/:_id', function () {
 
        this.render('task', {
            data: function () {
-               var currentTask = this.params.name;
-               return Tasks.findOne({name: currentTask});
+               var currentTask = this.params._id;
+               return Tasks.findOne({_id: currentTask});
            }
        });
 

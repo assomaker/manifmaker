@@ -26,7 +26,7 @@
 
                     <select class="informations" name="place">
                         {{#each places}}
-                            {{#if equals  _id ../place}}
+                            {{#if equals ../place _id }}
                                 <option value="{{_id}}" selected>{{name}}</option>
                             {{else}}
                                 <option value="{{_id}}">{{name}}</option>

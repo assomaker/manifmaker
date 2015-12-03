@@ -1,11 +1,11 @@
 
-Template.tasks.helpers({
+Template.tasksList.helpers({
     tasks: function () {
         return Tasks.find();
     }
 });
 
-Template.tasks.events({
+Template.tasksList.events({
 
     "click button[name=supressButton]": function(){
         event.preventDefault();
