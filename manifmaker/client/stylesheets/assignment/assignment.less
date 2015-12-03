@@ -193,7 +193,7 @@
             &.available {
               font-size: 0.8em;
 
-             width: 100%;
+              width: 100%;
               table-layout: fixed;
 
               .peopleNeed {
@@ -201,12 +201,11 @@
                 text-align: center;
                 overflow-y: scroll;
                 width: 2%;
-//                margin-bottom: 0;
+                overflow: hidden;
 
-                overflow:hidden;
-
-
-
+                div {
+                  pointer-events: none; //in order to allow selecting a below calendar time slot instead of the whole user availability
+                }
               }
             }
           }

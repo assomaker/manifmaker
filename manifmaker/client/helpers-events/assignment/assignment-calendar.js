@@ -32,16 +32,16 @@ Template.assignmentCalendar.helpers({
         return getCalendarDateTime(date, timeHours, this.quarter);
     },
 
-    labelSkills: function(){
-        return Skills.findOne({_id:this.toString()}).label;
+    labelSkills: function () {
+        return Skills.findOne({_id: this.toString()}).label;
     },
 
-    userName: function(){
-        return Users.findOne({_id:this.userId}).name;
+    userName: function () {
+        return Users.findOne({_id: this.userId}).name;
     },
 
-    teamName: function(){
-        return Teams.findOne({_id:this.teamId}).name;
+    teamName: function () {
+        return Teams.findOne({_id: this.teamId}).name;
     },
 
 
@@ -130,7 +130,6 @@ Template.assignmentCalendar.helpers({
                 }
 
 
-
                 _.extend(data, founded);
                 var end = new moment(founded.end);
                 var start = new moment(founded.start);
@@ -178,8 +177,16 @@ Template.assignmentCalendar.helpers({
 
 });
 
+selectedPeopleNeed = null;
 
 Template.assignmentCalendar.events({
+    "click .peopleNeed": function (event) {
+        selectedPeopleNeed = this;
+
+        //event should bubbles to .creneau
+    },
+
+
     //taskToUser (we click on a complete task time slot)
     "click .creneau": function (event) {
         //TODO gerer le double click pour la desaffectation
@@ -210,8 +217,9 @@ Template.assignmentCalendar.events({
                  * one of task's people need
                  *
                  */
+                var peopleNeeded = selectedPeopleNeed;
                 var askingSpecificNeedAndSkills = [];
-                timeSlot.peopleNeeded.forEach(peopleNeeded => {
+                //timeSlot.peopleNeeded.forEach(peopleNeeded => {
                         if (peopleNeeded.userId) { //prior above teamId an skills
                             askingSpecificNeedAndSkills.push({
                                 _id: peopleNeeded.userId
@@ -235,8 +243,8 @@ Template.assignmentCalendar.events({
                             });
                         } else if (peopleNeeded.skills.length !== 0) //if people need doesn't require any particular skills
                             askingSpecificNeedAndSkills.push({skills: {$all: peopleNeeded.skills}});
-                    }
-                );
+                    //}
+                //);
 
                 var userTeamsSkillsFilter;
                 if (askingSpecificNeedAndSkills.length !== 0) //if all time slot's people need don't require any particular skills
