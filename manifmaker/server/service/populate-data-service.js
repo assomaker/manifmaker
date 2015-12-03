@@ -15,11 +15,17 @@ populateData = function () {
 
     var skill1 = new Skill("RESPTASK1", "Responsable tache 1");
     var skill2 = new Skill("RESPTASK2", "Responsable tache 2");
-    var skill3 = new Skill("DRIVINGLICENSE", "Permis de conduire +21 +3ans");
+    var skill3 = new Skill("RESPTASK3", "Responsable tache 3");
+    var skill4 = new Skill("RESPTASK4", "Responsable tache 4");
+    var skill5 = new Skill("RESPTASK5", "Responsable tache 5");
+    var skill6 = new Skill("DRIVINGLICENSE", "Permis de conduire +21 +3ans");
 
     skill1 = insertAndFetch(Skills, skill1);
     skill2 = insertAndFetch(Skills, skill2);
     skill3 = insertAndFetch(Skills, skill3);
+    skill4 = insertAndFetch(Skills, skill4);
+    skill5 = insertAndFetch(Skills, skill5);
+    skill6 = insertAndFetch(Skills, skill6);
 
 
     //il reste les equipes à prendre en compte pour les PeopleNeeded
@@ -57,12 +63,12 @@ populateData = function () {
         teamId : team1._id
     });
     var peopleNeed3 = new PeopleNeed({
-        skills: [skill1._id, skill2._id, skill3._id],
+        skills: [skill1._id, skill2._id, skill3._id, skill4._id, skill5._id],
         //userId: user1._id
     });
 
     var task1 = new Task("task1", [
-        new TimeSlot(getDateFromTime(2), getDateFromTime(4), [peopleNeed1]),
+        new TimeSlot(getDateFromTime(2), getDateFromTime(4), [peopleNeed1,peopleNeed2]),
         new TimeSlot(getDateFromTime(6), getDateFromTime(8), [peopleNeed1])
     ]);
     var task2 = new Task("task2", [
@@ -70,7 +76,7 @@ populateData = function () {
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [peopleNeed2])
     ]);
     var task3 = new Task("task3", [
-        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed3])
+        new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed1,peopleNeed2,peopleNeed3])
     ]);
 
     task1 = insertAndFetch(Tasks, task1);
