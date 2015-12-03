@@ -1,5 +1,5 @@
-Router.route('/tasksList', function () {
-    this.render('TasksList');
+Router.route('/tasks', function () {
+    this.render('tasks');
 });
 
 Router.route('/activities', function () {
@@ -18,8 +18,8 @@ Router.route('/task', function(){
     this.render('task');
 });
 
-Router.route('/place', function(){
-    this.render('place');
+Router.route('/places', function(){
+    this.render('places');
 });
 
 //Router.route('/task/:_id', function(){
@@ -27,7 +27,7 @@ Router.route('/place', function(){
     //var id = params._id; // "5"
 //});
 
-Router.route('/task/:name', function () {
+Router.route('/task/:_id', function () {
 
        this.render('task', {
            data: function () {

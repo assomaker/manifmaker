@@ -1,9 +1,9 @@
-<template name="tasksList">
+<template name="tasks">
     <!--<h1>Here is the tasks list</h1>-->
 <body>
     {{#each tasks}}
 
-            <li><a href="{{pathFor route='tasksList'}}">{{name}}</a >,{{team}},{{place}}</li>
+            <li><a href="{{pathFor route='tasks'}}">{{name}}</a >,{{team}},{{place}}</li>
             <a href="/task/{{name}}">Modifier la tache</a >
             <button type="button" name="readButton" disabled="">Consulter la tache</button>
             <button type="button" name="supressButton" >Supprimer la tache</button>
@@ -11,8 +11,8 @@
     {{/each}}
     <br>
 
-    <button type="button" name="newTaskButton" >Créer une nouvelle fiche tache</button>
+    <a href="/task">Créer une nouvelle fiche tache</a>
     <br>
-    <a href="/place">Créer un nouveau lieu</a >
+    <a href="/places">Créer un nouveau lieu</a >
 </body>
 </template>

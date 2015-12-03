@@ -1,12 +1,10 @@
 Template.task.helpers({
     tasks: function () {
         return Tasks.find();
-
     },
     places: function(){
         return Places.find();
     }
-
 });
 
 Template.task.events({
@@ -19,21 +17,15 @@ Template.task.events({
         var place = $('select[name=place]').val();
         var task = new Task(taskName,[],[],place, team, respManif, description );
 
-
-
         if(this._id){ //already exist, we update it
             Tasks.update({_id: this._id}, task, function(error,results){
-                Router.go('tasksList');
+                Router.go('tasks');
 
             });
-
-
-
         } else { //doesn't already exist, we create it
             Tasks.insert(task, function(error,results){
-                Router.go('tasksList');
+                Router.go('tasks');
             });
-
         }
         
     }
