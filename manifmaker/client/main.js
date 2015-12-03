@@ -59,7 +59,7 @@ Meteor.startup(function () {
     Meteor.subscribe("calendarQuarter");
 
 
-    //preSelecterTaskByTaskName("task2");
+    preSelecterTaskByTaskName("task3");
 
 
     //preSelectedUserByUserName("user1");

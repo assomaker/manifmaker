@@ -32,6 +32,18 @@ Template.assignmentCalendar.helpers({
         return getCalendarDateTime(date, timeHours, this.quarter);
     },
 
+    labelSkills: function(){
+        return Skills.findOne({_id:this.toString()}).label;
+    },
+
+    userName: function(){
+        return Users.findOne({_id:this.userId}).name;
+    },
+
+    teamName: function(){
+        return Teams.findOne({_id:this.teamId}).name;
+    },
+
 
     timeSlot: function (date, timeHours, idTask) {
         var startCalendarTimeSlot = getCalendarDateTime(date, timeHours);
@@ -102,6 +114,11 @@ Template.assignmentCalendar.helpers({
                     data.taskId = task._id;
 
                     founded = timeSlotFound;
+
+                    //people need
+                    var peopleNeeds = founded.peopleNeeded;
+                    data.peopleNeeded = peopleNeeds;
+
                 }
                 if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
                     data.name = assignmentsFound[0].taskName; //idem, la meme task
@@ -111,6 +128,8 @@ Template.assignmentCalendar.helpers({
 
                     founded = assignmentsFound[0]; //normalement ils ont tous les memes date, TODO controler ca
                 }
+
+
 
                 _.extend(data, founded);
                 var end = new moment(founded.end);

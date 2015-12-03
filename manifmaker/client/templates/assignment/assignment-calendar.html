@@ -23,7 +23,20 @@
 
                                     {{#each timeSlot  ../../date ../date this}}
                                         <div class="creneau {{state}}"
-                                             style="height: {{height}};">{{name}}
+                                             style="height: {{height}};">
+                                            {{#each peopleNeeded}}
+                                                <div class="peopleNeed">
+                                                    {{#if userId }}<div class="user">User: {{userName}}</div>{{/if}}
+                                                    {{#if teamId}}<div class="team">Team : {{teamName}}</div>{{/if}}
+                                                    <!--{{#ifNotEmpty skills}}-->
+                                                        <div>
+                                                            {{#each skills}}
+                                                                <div class="skill">{{labelSkills}}</div>
+                                                            {{/each}}
+                                                        </div>
+                                                    <!--{{/ifNotEmpty}}-->
+                                                </div>
+                                            {{/each}}
                                         </div>
                                     {{/each}}
 
