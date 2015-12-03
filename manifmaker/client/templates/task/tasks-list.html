@@ -5,12 +5,11 @@
 
             <li><a href="{{pathFor route='tasks'}}">{{name}}</a >,{{team}},{{place}}</li>
             <a href="/task/{{_id}}">Modifier la tache</a >
-            <button type="button" name="readButton" disabled="">Consulter la tache</button>
-            <button type="button" name="supressButton" >Supprimer la tache</button>
+            <a href="/task/{{_id}}/delete">supprimer la tache</a>
 
     {{/each}}
-    <br>
 
+    <br>
     <a href="/task">Créer une nouvelle fiche tache</a>
     <br>
     <a href="/places">Créer un nouveau lieu</a >

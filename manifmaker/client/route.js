@@ -22,10 +22,16 @@ Router.route('/places', function(){
     this.render('places');
 });
 
-//Router.route('/task/:_id', function(){
-  //  var params = this.params; // { _id: "5" }
-    //var id = params._id; // "5"
-//});
+Router.route('/place/:_id/delete', function() {
+    this.render('places',{
+        data: function() {
+            var currentPlace = this.params._id;
+            return Places.remove({_id: currentPlace});
+
+        }
+    });
+});
+
 
 Router.route('/task/:_id', function () {
 
@@ -35,5 +41,15 @@ Router.route('/task/:_id', function () {
                return Tasks.findOne({_id: currentTask});
            }
        });
-
 });
+
+
+Router.route('/task/:_id/delete', function() {
+        this.render('tasksList',{
+            data: function() {
+                var currentTask = this.params._id;
+                return Tasks.remove({_id: currentTask});
+            }
+    });
+});
+

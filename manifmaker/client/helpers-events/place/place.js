@@ -14,18 +14,10 @@ Template.places.events({
                 Router.update('place');
             });
 
-
         } else { //doesn't already exist, we create it
             Places.insert(place, function(error,results){
                 Router.update('place');
             });
         }
-    },
-
-    "click button[name=supressPlaceButton]": function(){
-        event.preventDefault();
-        var placeId = this._id;
-        Places.remove({_id: placeId});
     }
-
 });
