@@ -4,6 +4,9 @@ Template.task.helpers({
     },
     places: function(){
         return Places.find();
+    },
+    teams: function(){
+        return Teams.find();
     }
 });
 

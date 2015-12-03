@@ -45,6 +45,13 @@ class Place {
     }
 }
 
+Team=
+    class Team {
+        constructor(name, _id){
+            this.name = name;
+            if (typeof _id !== "undefined") this._id = _id;
+        }
+    }
 
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
