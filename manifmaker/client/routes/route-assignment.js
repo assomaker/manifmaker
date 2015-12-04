@@ -1,3 +1,5 @@
-/**
- * Created by remi on 04/12/15.
- */
+Router.route('/assignment', function () {
+        this.render('AssignmentHome', {to: 'mainContent'});
+    },
+    {name: 'assignment.calendar'}
+);

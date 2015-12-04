@@ -4,7 +4,4 @@ Template.tasksList.helpers({
     }
 });
 
-Template.tasksList.events({
-
-
-});
+Template.tasksList.events({});
