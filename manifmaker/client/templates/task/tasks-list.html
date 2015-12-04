@@ -1,3 +1,15 @@
-<template name="TasksList">
-    <h1>Here is the tasks list</h1>
+<template name="tasksList">
+    <!--<h1>Here is the tasks list</h1>-->
+<body>
+    {{#each tasks}}
+
+            <li><a href="{{pathFor route='tasks'}}">{{name}}</a >,{{team}},{{place}}</li>
+            <a href="/task/{{_id}}">Modifier la tache</a >
+            <a href="/task/{{_id}}/delete">supprimer la tache</a>
+
+    {{/each}}
+
+    <a href="/task">Créer une nouvelle fiche tache</a>
+
+</body>
 </template>

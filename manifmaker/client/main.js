@@ -44,10 +44,16 @@ function preSelectedUserByUserName(name) {
     });
 
 }
+
+
 Meteor.startup(function () {
+
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
+    Meteor.subscribe("places");
     Meteor.subscribe("assignments");
+    Meteor.subscribe("teams");
+    Meteor.subscribe("teams");
     Meteor.subscribe("calendarAccuracy");
     Meteor.subscribe("calendarDays");
     Meteor.subscribe("calendarHours");
@@ -58,5 +64,6 @@ Meteor.startup(function () {
 
 
     preSelectedUserByUserName("user1");
+
 });
 

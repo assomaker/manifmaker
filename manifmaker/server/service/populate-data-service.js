@@ -21,19 +21,46 @@ populateData =  function () {
     user2 = insertAndFetch(Users, user2);
     user3 = insertAndFetch(Users, user3);
 
+    var place1= new Place ("place1");
+    var place2= new Place ("place2");
+    var place3= new Place ("place3");
+
+    place1= insertAndFetch(Places, place1);
+    place2= insertAndFetch(Places, place2);
+    place3= insertAndFetch(Places, place3);
+
+    var team1= new Team ("team1");
+    var team2= new Team("team2");
+    var team3= new Team("team3");
+
+    team1= insertAndFetch(Teams, team1);
+    team2= insertAndFetch(Teams, team2);
+    team3= insertAndFetch(Teams, team3);
+
+
+
     var task1 = new Task("task1", [
         new TimeSlot(getDateFromTime(8), getDateFromTime(11), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(4), getDateFromTime(6), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
-    ]);
+    ], [], place1._id, team1._id, "resp1", "description1");
     var task2 = new Task("task2", [
         new TimeSlot(getDateFromTime(10), getDateFromTime(12), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
-    ]);
-    var task3 = new Task("task3", []);
+    ], [], place2._id, team2._id, "resp2", "description2");
+    var task3 = new Task("task3", [], [], place3._id, team3._id, "resp3","description3");
 
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
     task3 = insertAndFetch(Tasks, task3);
+
+
+
+
+
+
+
+
+
 
     //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id);
     //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[1]._id);
@@ -60,6 +87,6 @@ getDateFromTime = function (hours, minutes = 0) {
 getDateFromDate = function (day, month, year) {
     var now = new Date();
     year = year || now.getYear();
-    month = month || now.getMonth()
+    month = month || now.getMonth();
     return new Date(year, month, day, 0, 0, 0);
 };
