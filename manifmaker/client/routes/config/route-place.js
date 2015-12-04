@@ -1,5 +1,5 @@
 Router.route('/places', function () {
-        this.render('places');
+        this.render('places', {to: 'mainContent'});
     },
     {name: "place.list"}
 );
@@ -11,7 +11,7 @@ Router.route('/place/:_id/delete', function () {
                 return Places.remove({_id: currentPlace});
 
             }
-        });
+        }, {to: 'mainContent'});
     },
     {name: 'place.delete'}
 );

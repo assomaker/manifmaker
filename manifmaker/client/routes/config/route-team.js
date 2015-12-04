@@ -1,11 +1,11 @@
 Router.route('/teams', function () {
-        this.render('teamsList');
+        this.render('teamsList', {to: 'mainContent'});
     },
     {name: 'team.list'}
 );
 
 Router.route('/team', function () {
-        this.render('team');
+        this.render('team', {to: 'mainContent'});
     },
     {name: 'team.create'}
 );
@@ -16,7 +16,7 @@ Router.route('/team/:_id', function () {
                 var currentTeam = this.params._id;
                 return Teams.findOne({_id: currentTeam});
             }
-        });
+        }, {to: 'mainContent'});
     },
     {name: 'team.read'}
 );
@@ -27,7 +27,7 @@ Router.route('/team/:_id/delete', function () {
                 var currentTeam = this.params._id;
                 return Teams.remove({_id: currentTeam});
             }
-        });
+        }, {to: 'mainContent'});
     },
     {name: 'team.delete'}
 );

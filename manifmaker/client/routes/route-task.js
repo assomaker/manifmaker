@@ -1,13 +1,13 @@
 Router.route('/tasks', function () {
-        this.render('TasksList');
+        this.render('TasksList', {to: 'mainContent'});
     },
     {name: 'task.list'}
 );
 
-Router.route('/team', function () {
-        this.render('team');
+Router.route('/task', function () {
+        this.render('task', {to: 'mainContent'});
     },
-    {name: 'team.create'}
+    {name: 'task.create'}
 );
 
 Router.route('/task/:_id', function () {
@@ -16,7 +16,7 @@ Router.route('/task/:_id', function () {
                 var currentTask = this.params._id;
                 return Tasks.findOne({_id: currentTask});
             }
-        });
+        }, {to: 'mainContent'});
     },
     {name: 'task.read'}
 );
@@ -27,7 +27,7 @@ Router.route('/task/:_id/delete', function () {
                 var currentTask = this.params._id;
                 return Tasks.remove({_id: currentTask});
             }
-        });
+        }, {to: 'mainContent'});
     },
     {name: 'task.delete'}
 );
