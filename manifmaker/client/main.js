@@ -53,7 +53,6 @@ Meteor.startup(function () {
     Meteor.subscribe("places");
     Meteor.subscribe("assignments");
     Meteor.subscribe("teams");
-    Meteor.subscribe("respManif");
     Meteor.subscribe("teams");
     Meteor.subscribe("calendarAccuracy");
     Meteor.subscribe("calendarDays");

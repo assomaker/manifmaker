@@ -1,8 +1,7 @@
 Template.team.helpers({
     teams: function () {
         return Teams.find();
-    },
-
+    }
 });
 
 Template.team.events({
