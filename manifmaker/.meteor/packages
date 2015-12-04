@@ -24,3 +24,4 @@ momentjs:moment
 less
 mizzao:bootstrap-3
 iron:router
+materialize:materialize
