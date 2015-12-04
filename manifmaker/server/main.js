@@ -4,6 +4,8 @@ Meteor.startup(function () {
     Assignments.remove({});
     Users.remove({});
     Tasks.remove({});
+    Places.remove({});
+    Teams.remove({});
     CalendarDays.remove({});
     CalendarHours.remove({});
     CalendarQuarter.remove({});
