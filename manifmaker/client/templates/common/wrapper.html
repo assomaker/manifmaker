@@ -1,0 +1,11 @@
+<template name="wrapper">
+
+    {{> leftMenu}}
+
+    <div class="container-fluid">
+        <aside>
+            {{> yield "mainContent"}}
+        </aside>
+    </div>
+
+</template>
