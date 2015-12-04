@@ -21,9 +21,9 @@ Meteor.methods({
 
 
 
-    assignUserToTaskTimeSlot: function (userId, taskId, timeSlotId) {
-        console.info("assignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId);
-        var assignment = new Assignment(userId, taskId, timeSlotId);
+    assignUserToTaskTimeSlot: function (userId, taskId, timeSlotId, peopleNeed) {
+        console.info("assignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId,"with people need",peopleNeed);
+        var assignment = new Assignment(userId, taskId, timeSlotId, peopleNeed);
 
         var assignmentId = Assignments.insert(assignment);
 
@@ -32,6 +32,8 @@ Meteor.methods({
         var timeSlot = TimeSlotService.getTimeSlot(Tasks.findOne({_id:taskId}),timeSlotId);
 
         AvailabilityService.removeAvailabilities(Users.findOne({_id:userId}),timeSlot.start,timeSlot.end);
+
+        PeopleNeedService.removePeopleNeed(Tasks.findOne({_id:taskId}), timeSlot,peopleNeed);
 
         return assignment;
 

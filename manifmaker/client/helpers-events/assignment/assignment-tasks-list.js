@@ -35,7 +35,7 @@ Template.assignmentTasksList.events({
                 break;
             case AssignmentType.TASKTOUSER:
                 SelectedTask.set({_id: _idTask});
-                selectedTimeslotId = null;//TODO pas top
+                //selectedTimeslotId = null;//TODO pas top
                 UserFilter.set(noneFilter);
                 //TODO aouter du CSS pour signifier quelle tache est la current
                 break;

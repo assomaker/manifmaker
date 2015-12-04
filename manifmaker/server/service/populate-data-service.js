@@ -1,7 +1,14 @@
 populateData = function () {
-    //Users.remove({});
-    //Tasks.remove({});
-    //Assignments.remove({});
+
+    Assignments.remove({});
+    Users.remove({});
+    Tasks.remove({});
+    CalendarDays.remove({});
+    CalendarHours.remove({});
+    CalendarQuarter.remove({});
+    CalendarAccuracy.remove({});
+    Skills.remove({});
+    Teams.remove({});
 
     var assignmentReadyTeam = new Team(ASSIGNMENTREADYTEAM); //init data
     assignmentReadyTeam = insertAndFetch(Teams,assignmentReadyTeam);

@@ -109,7 +109,7 @@ Template.assignmentCalendar.helpers({
 
                 if (timeSlotFound !== null) {
                     data.state = "available";
-                    data.name = task.name;
+                    //data.name = task.name;
                     //Template.parentData() doesn't work so we use a trick
                     data.taskId = task._id;
 
@@ -120,14 +120,15 @@ Template.assignmentCalendar.helpers({
                     data.peopleNeeded = peopleNeeds;
 
                 }
-                if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
-                    data.name = assignmentsFound[0].taskName; //idem, la meme task
-                    data.state = "in-progress";
-                    data.taskId = task._id;
 
-
-                    founded = assignmentsFound[0]; //normalement ils ont tous les memes date, TODO controler ca
-                }
+                //if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
+                //    data.name = assignmentsFound[0].taskName; //idem, la meme task
+                //    data.state = "in-progress";
+                //    data.taskId = task._id;
+                //
+                //
+                //    founded = assignmentsFound[0]; //normalement ils ont tous les memes date, TODO controler ca
+                //}
 
 
                 _.extend(data, founded);

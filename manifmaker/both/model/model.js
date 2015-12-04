@@ -46,10 +46,11 @@ class Task {
 
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
-    constructor(start, end, peopleNeeded) {
+    constructor(start, end, peopleNeeded,peopleNeededAssigned = [],_id) {
         this.start = start;
         this.end = end;
         this.peopleNeeded = peopleNeeded; //Array<PeopleNeed>
+        this.peopleNeededAssigned = peopleNeededAssigned; //Array<PeopleNeed>
         if (typeof _id !== "undefined") this._id = _id
         else this._id = new Meteor.Collection.ObjectID()._str;
     }
@@ -103,10 +104,11 @@ class Skill{
 
 Assignment = //to export it to other namespace
 class Assignment {
-    constructor(userId, taskId, timeSlotId, _id) {
+    constructor(userId, taskId, timeSlotId, peopleNeed,_id) {
         this.userId = userId;
         this.taskId = taskId;
         this.timeSlotId = timeSlotId;
+        this.peopleNeed = peopleNeed;
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
     }
 }

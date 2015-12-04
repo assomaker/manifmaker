@@ -20,6 +20,6 @@ AssignmentRepository =
 class AssignmentRepository {
     static findOne(assignmentId) {
         var assignment = Assignments.findOne(assignmentId);
-        return new Assignment(assignment.userId, assignment.taskId, assignment.timeSlotId, assignment._id);
+        return new Assignment(assignment.userId, assignment.taskId, assignment.timeSlotId, assignment.peopleNeeded, assignment._id);
     }
 }

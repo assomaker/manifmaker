@@ -31,7 +31,7 @@ Template.assignmentUsersList.events({
             case AssignmentType.TASKTOUSER:
 
 
-                Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId);
+                Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
 
                 break;
         }

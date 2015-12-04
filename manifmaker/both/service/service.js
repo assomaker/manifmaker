@@ -1,7 +1,7 @@
 TimeSlotService =
 class TimeSlotService {
     static read(timeSlot) {
-        return new TimeSlot(timeSlot.start, timeSlot.end, timeSlot.peopleNeeded, timeSlot._id);
+        return new TimeSlot(timeSlot.start, timeSlot.end, timeSlot.peopleNeeded, timeSlot.peopleNeededAssigned, timeSlot._id);
     }
 
     static getTimeSlot(task, timeSlotId) {
@@ -16,8 +16,22 @@ class TimeSlotService {
         return found;
     }
 
+    static getTimeSlotIndex(task, timeSlotId) {
+        console.info("TimeSlotService.getTimeSlot timeSlot", timeSlotId, "for task", task);
+        var found;
+        var i = 0;
+        task.timeSlots.forEach(timeSlot => {
+            if (timeSlot._id === timeSlotId) {
+                found = i;
+                return false;
+            }
+            i++;
+        });
+        return found;
+    }
+
     static getTimeSlotByStart(availabilitiesOrTimeSlotsOrAssignments, start, several = false) {
-        if(several){
+        if (several) {
             var found = [];
         } else {
             var found = null;
@@ -26,7 +40,28 @@ class TimeSlotService {
         availabilitiesOrTimeSlotsOrAssignments.forEach(thing => {
             //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
             if (startDate.isSame(new moment(new Date(thing.start)))) {
-                if(several){
+                if (several) {
+                    found.push(thing)
+                } else {
+                    found = thing;
+                    return false;
+                }
+            }
+        });
+        return found;
+    }
+
+    static getTimeSlotAssignedByStart(availabilitiesOrTimeSlotsOrAssignments, start, several = false) {
+        if (several) {
+            var found = [];
+        } else {
+            var found = null;
+        }
+        var startDate = new moment(new Date(start));
+        availabilitiesOrTimeSlotsOrAssignments.forEach(thing => {
+            //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
+            if (startDate.isSame(new moment(new Date(thing.start)))) {
+                if (several) {
                     found.push(thing)
                 } else {
                     found = thing;
@@ -102,15 +137,62 @@ class AvailabilityService {
     }
 
     static getAvailabilityByStart(availabilities, start) {
-        return TimeSlotService.getTimeSlotByStart(availabilities,start);
+        return TimeSlotService.getTimeSlotByStart(availabilities, start);
     }
+}
+
+PeopleNeedService =
+class PeopleNeedService {
+    static read(availability) {
+    }
+
+    static getPeopleNeedIndex(timeSlot, peopleNeedHunter) {
+        var found;
+        timeSlot.peopleNeeded.forEach(function (peopleNeed,index) {
+            console.log(arguments);
+            if(peopleNeed._id === peopleNeedHunter._id){
+                found = index;
+            }
+        });
+        return found;
+
+
+    }
+
+
+    static removePeopleNeed(task, timeSlot, peopleNeed) {
+        console.info("PeopleNeedService.removePeopleNeed for task", task, "when", timeSlot, "and need", peopleNeed);
+        //we have the task
+        var timeSlots = task.timeSlots; //all its timeslots
+        var peopleNeeded = timeSlot.peopleNeeded; //all its peopleNeed
+
+
+        var updatedTimeslot = timeSlot;
+
+        //attention a ne pas pas perdre les poineteurs de tableau et du conteu des tableaux
+
+
+        var timeSlotToUpdateIndex = TimeSlotService.getTimeSlotIndex(task, timeSlot._id);
+        var timeSlotToUpdate = timeSlots[timeSlotToUpdateIndex];
+        var peopleNeedToRemoveIndex = PeopleNeedService.getPeopleNeedIndex(timeSlotToUpdate,peopleNeed);
+        //remove peopleNeed assigned
+        timeSlotToUpdate.peopleNeeded.splice(peopleNeedToRemoveIndex,1);
+
+        timeSlotToUpdate.peopleNeededAssigned.push(peopleNeed);
+
+
+
+        Tasks.update({_id: task._id}, {$set: {timeSlots: timeSlots}});
+
+    }
+
 }
 
 
 AssignmentService =
 class AssignmentService {
     static read(assigment) {
-        return new Assignment(assigment.userId, assigment.taskId, assigment.timeSlotId, assigment._id);
+        return new Assignment(assigment.userId, assigment.taskId, assigment.timeSlotId, assigment.peopleNeeded, assigment._id);
     }
 
     static getTimeSlot(task, timeSlotId) {
@@ -123,6 +205,6 @@ class AssignmentService {
     }
 
     static getAssignmentByStart(assignment, start, several) {
-        return TimeSlotService.getTimeSlotByStart(assignment,start, several);
+        return TimeSlotService.getTimeSlotByStart(assignment, start, several);
     }
 }

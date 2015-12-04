@@ -22,10 +22,10 @@
                                      quarter="{{quarterDate ../../date ../date}}">
 
                                     {{#each timeSlot  ../../date ../date this}}
-                                        <div class="creneau {{state}}"
+                                        <div class="creneau usedByTask {{state}}"
                                              style="height: {{height}};">
                                             {{#each peopleNeeded}}
-                                                <div class="peopleNeed">
+                                                <div class="peopleNeed"  style="height: {{../height}};">
                                                     {{#if userId }}<div class="user">{{userName}}</div>{{/if}}
                                                     {{#if teamId}}<div class="team">{{teamName}}</div>{{/if}}
                                                     <!--{{#ifNotEmpty skills}}-->
@@ -35,6 +35,19 @@
                                                             {{/each}}
                                                         </div>
                                                     <!--{{/ifNotEmpty}}-->
+                                                </div>
+                                            {{/each}}
+                                            {{#each peopleNeededAssigned}}
+                                                <div class="peopleNeed assigned" style="height: {{../height}};">
+                                                    {{#if userId }}<div class="user">{{userName}}</div>{{/if}}
+                                                    {{#if teamId}}<div class="team">{{teamName}}</div>{{/if}}
+                                                        <!--{{#ifNotEmpty skills}}-->
+                                                    <div>
+                                                        {{#each skills}}
+                                                            <div class="skill">{{labelSkills}}</div>
+                                                        {{/each}}
+                                                    </div>
+                                                        <!--{{/ifNotEmpty}}-->
                                                 </div>
                                             {{/each}}
                                         </div>
