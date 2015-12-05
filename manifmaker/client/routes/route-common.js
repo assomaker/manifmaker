@@ -18,6 +18,9 @@ Router.onAfterAction(function () {
         'assignment.calendar',
         'assignment.calendar.user',
         'assignment.calendar.userToTask',
+        'assignment.calendar.userToTask.user',
+        'assignment.calendar.userToTask.user.date',
+
         'assignment.calendar.taskToUser'
     ]}
 );

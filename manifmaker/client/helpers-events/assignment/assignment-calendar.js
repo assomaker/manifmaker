@@ -209,34 +209,47 @@ Template.assignmentCalendar.events({
                     selectedDate = new moment(new Date($target.attr("quarter")));
                 }
 
-                var userId = SelectedUser.get()._id;
-                var user = Users.findOne({_id: userId});
-                var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
+                var current = Iron.Location.get().path;
 
-                if (typeof availability === "undefined") {
-                    console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");
-                    return;
-                }
-                selectedAvailability = availability;
+                //new moment(parseInt(selectedDate.format('x')))
 
-                /*
-                 Task whose have at least one timeSlot (to begin, just one) as
+                //preveng /assignment/userToTask/inzDwHBs2dnYXbHei/-58526748000000/-58526740800000
+                var userId = current.split("/")[3];
 
-                 user.Dispocorrespante.start <= task.timeslot.start <= selectedDate and
-                 selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
 
-                 */
+                Router.go("/assignment/userToTask/"+userId+"/"+selectedDate.format('x'));
 
-                var newFilter = {
-                    timeSlots: {
-                        $elemMatch: {
-                            start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                            end: {$gt: selectedDate.toDate(), $lte: availability.end}
-                        }
-                    }
-                };
 
-                TaskFilter.set(newFilter);
+                //var selectedDate = params.selectedDate;
+                //SelectedDate.set(selectedDate);
+                //var userId = SelectedUser.get()._id;
+                //var user = Users.findOne({_id: userId});
+                //var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
+                //
+                //if (typeof availability === "undefined") {
+                //    console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");
+                //    return;
+                //}
+                //selectedAvailability = availability;
+                //
+                ///*
+                // Task whose have at least one timeSlot (to begin, just one) as
+                //
+                // user.Dispocorrespante.start <= task.timeslot.start <= selectedDate and
+                // selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
+                //
+                // */
+                //
+                //var newFilter = {
+                //    timeSlots: {
+                //        $elemMatch: {
+                //            start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                //            end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                //        }
+                //    }
+                //};
+                //
+                //TaskFilter.set(newFilter);
                 break;
             case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
                 //we let the event bubbles to the parent

@@ -29,29 +29,77 @@ Router.route('/assignment/userToTask', function () {
     }
 );
 
-Router.route('/assignment/user/:userId', function () {
-    //ceci est seulement le userToTask => faire le taskToUser
+Router.route('/assignment/userToTask/:userId/:selectedDate', function () {
+        console.info("routing", '/assignment/userToTask/' + this.params.userId + '/' + this.params.selectedDate);
 
-    // add the subscription handle to our waitlist
-    this.wait(Meteor.subscribe('users', this.params.userId));
+        var selectedDate = parseInt(this.params.selectedDate);
 
-    // this.ready() is true if all items in the wait list are ready
+        //new moment(parseInt(selectedDate.format('x')))
 
-    if (this.ready()) {
-        CurrentAssignmentType.set(AssignmentType.USERTOTASK);
-        SelectedUser.set({_id: this.params.userId});
-        TaskFilter.set(noneFilter);
+        selectedDate = new moment(selectedDate);
+        SelectedDate.set(selectedDate);
+        var userId = SelectedUser.get()._id;
+        var user = Users.findOne({_id: userId});
+        var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
 
+        if (typeof availability === "undefined") {
+            console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");
+            return;
+        }
+        selectedAvailability = availability;
 
-        selectedAvailability = null; //TODO pas top
+        /*
+         Task whose have at least one timeSlot (to begin, just one) as
 
-        UserFilter.set(defaultFilter);
-        //TODO reduire la liste à ses amis
-    } else {
-       console.log("waiting user data");
+         user.Dispocorrespante.start <= task.timeslot.start <= selectedDate and
+         selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
+
+         */
+
+        var newFilter = {
+            timeSlots: {
+                $elemMatch: {
+                    start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                    end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                }
+            }
+        };
+
+        TaskFilter.set(newFilter);
+
+    }, {
+        controller: 'AssignmentController',
+        name: 'assignment.calendar.userToTask.user.date'
     }
+);
+
+Router.route('/assignment/userToTask/:userId', function () {
+
+    }, {
+        controller: 'AssignmentController',
+        name: 'assignment.calendar.userToTask.user'
+    }
+);
 
 
+Router.route('/assignment/user/:userId', function () {
+        //ceci est seulement le userToTask => faire le taskToUser
+
+        this.wait(Meteor.subscribe('users', this.params.userId));
+
+        if (this.ready()) {
+            CurrentAssignmentType.set(AssignmentType.USERTOTASK);
+            SelectedUser.set({_id: this.params.userId});
+            TaskFilter.set(noneFilter);
+
+            selectedAvailability = null; //TODO pas top
+            UserFilter.set(defaultFilter);
+            //TODO reduire la liste à ses amis
+
+            Router.go("/assignment/userToTask/" + this.params.userId);
+        } else {
+            console.log("waiting user data"); //TODO add a spinner
+        }
 
     }, {
         controller: 'AssignmentController',
