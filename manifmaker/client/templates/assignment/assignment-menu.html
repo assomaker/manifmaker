@@ -1,16 +1,16 @@
 <template name="assignmentMenu">
     <div class="half-top-row">
         <div class="action-button-top-bar">
-            <a id="userToTask" class="waves-effect waves-light btn">User to Task mode</a>
-            <a id="taskToUser" class="waves-effect waves-light btn">Task to User mode</a>
+            <a id="userToTask" href="/assignment/userToTask" class="waves-effect waves-light btn">User to Task mode</a>
+            <a id="taskToUser" href="/assignment/taskToUser" class="waves-effect waves-light btn">Task to User mode</a>
         </div>
     </div>
 
     <div class="half-top-row">
         <div class="breadcrumb-top-bar">
-            <a href="#!" class="breadcrumb">First</a>
-            <a href="#!" class="breadcrumb">Second</a>
-            <a href="#!" class="breadcrumb">{{adviceMessage}}</a>
+            {{#each breadCrumbAssignment}}
+                <a href="{{url}}" class="breadcrumb">{{label}}</a>
+            {{/each}}
         </div>
 
     </div>

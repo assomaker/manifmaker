@@ -20,10 +20,10 @@ Template.assignmentUsersList.events({
 
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
-                SelectedUser.set({_id: _id});
-                selectedAvailability = null; //TODO pas top
-                TaskFilter.set(noneFilter);
-                //TODO reduire la liste à ses amis
+                //SelectedUser.set({_id: _id});
+                //selectedAvailability = null; //TODO pas top
+                //TaskFilter.set(noneFilter);
+                ////TODO reduire la liste à ses amis
                 break;
             case AssignmentType.TASKTOUSER:
 

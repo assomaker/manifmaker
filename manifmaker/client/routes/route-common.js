@@ -10,9 +10,16 @@ Router.onAfterAction(function () {
 
 //hide topNavBar to each expect assignment
 Router.onAfterAction(function () {
-        this.render("", {to: "topNavBar"})
+        this.render("", {to: "topNavBar"});
+
+        assignmentCalendarIsRendered = false;
     },
-    {except: ['assignment.calendar']}
+    {except: [
+        'assignment.calendar',
+        'assignment.calendar.user',
+        'assignment.calendar.userToTask',
+        'assignment.calendar.taskToUser'
+    ]}
 );
 
 

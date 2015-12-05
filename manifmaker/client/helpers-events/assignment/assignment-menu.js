@@ -1,14 +1,14 @@
 Template.assignmentMenu.events({
-    "click #userToTask": function (event) {
-        TaskFilter.set(noneFilter);
-        UserFilter.set(defaultFilter);
-        CurrentAssignmentType.set(AssignmentType.USERTOTASK);
-    },
-    "click #taskToUser": function (event) {
-        UserFilter.set(noneFilter);
-        TaskFilter.set(defaultFilter);
-        CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
-    },
+    //"click #userToTask": function (event) {
+    //    TaskFilter.set(noneFilter);
+    //    UserFilter.set(defaultFilter);
+    //    CurrentAssignmentType.set(AssignmentType.USERTOTASK);
+    //},
+    //"click #taskToUser": function (event) {
+    //    UserFilter.set(noneFilter);
+    //    TaskFilter.set(defaultFilter);
+    //    CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
+    //},
     "click #all": function (event) {
         TaskFilter.set(defaultFilter);
         UserFilter.set(defaultFilter);
@@ -16,61 +16,89 @@ Template.assignmentMenu.events({
     },
     "click #quarterHour": function (event) {
         var accuracy = CalendarAccuracyEnum["0.25"];
-        Meteor.call("setCalendarAccuracy",accuracy);
+        Meteor.call("setCalendarAccuracy", accuracy);
     },
     "click #halfHour": function (event) {
         var accuracy = CalendarAccuracyEnum["0.5"];
-        Meteor.call("setCalendarAccuracy",accuracy);
+        Meteor.call("setCalendarAccuracy", accuracy);
     },
     "click #oneHour": function (event) {
         var accuracy = CalendarAccuracyEnum["1"];
-        Meteor.call("setCalendarAccuracy",accuracy);
+        Meteor.call("setCalendarAccuracy", accuracy);
     },
     "click #twoHour": function (event) {
         var accuracy = CalendarAccuracyEnum["2"];
-        Meteor.call("setCalendarAccuracy",accuracy);
+        Meteor.call("setCalendarAccuracy", accuracy);
     },
     "click #fourHour": function (event) {
         var accuracy = CalendarAccuracyEnum["4"];
-        Meteor.call("setCalendarAccuracy",accuracy);
+        Meteor.call("setCalendarAccuracy", accuracy);
     }
 });
 
 Template.assignmentMenu.helpers({
-    adviceMessage: function () {
+    breadCrumbAssignment: function () {
         var userFilter = UserFilter.get(),
             taskFilter = TaskFilter.get(),
             currentAssignmentType = CurrentAssignmentType.get(),
             selectedUser = SelectedUser.get(),
-            selectedTask = SelectedTask.get()
-        message = "";
+            selectedTask = SelectedTask.get(),
+            result = [];
 
         if (currentAssignmentType === AssignmentType.USERTOTASK) {
             if (selectedUser === null) {
-                message += "Select a user";
-            } else if (selectedAvailability === null) {//TODO pas top
+                result.push({
+                    label: "Select a user",
+                    url: ""
+                });
+            } else  {
                 var userName = UserRepository.findOne(selectedUser._id).name;
-                message += "Select one of " + userName + " availability";
-            } else {
-                message += "Select a time slot of one of the available task";
+                result.push({
+                    label: userName,
+                    url: "/assignment/" + selectedUser._id
+                });
+
+                if (selectedAvailability === null) {//TODO pas top
+                    result.push({
+                        label: "Select one of the availability",
+                        url: ""
+                    });
+                } else {
+                    result.push({
+                        label: "HEURE",
+                        url: "/assignment/" + selectedUser._id + "/" + 1234
+                    });
+
+                    if(true){ //if pas de task/people need selected
+                        result.push({
+                            label: "Select one of the available task [and a people need]",
+                            url: ""
+                        });
+                    }
+                }
+
+
+
+                //todo select a task [and a people need]
+
             }
 
-            return message;
+            return result;
         }
-        if (currentAssignmentType === AssignmentType.TASKTOUSER) {
-            if (selectedTask === null) {
-                message += "Select a task";
-            } else if (selectedTimeslotId === null) {//TODO pas top
-                var taskName = TaskRepository.findOne(selectedTask._id).name;
-                message += "Select one of " + taskName + " time slot";
-            } else {
-                message += "Select an availability of one of the available user";
-            }
-
-            return message;
-        }
-
-        return "Here are all the data";
+        //if (currentAssignmentType === AssignmentType.TASKTOUSER) {
+        //    if (selectedTask === null) {
+        //        message += "Select a task";
+        //    } else if (selectedTimeslotId === null) {//TODO pas top
+        //        var taskName = TaskRepository.findOne(selectedTask._id).name;
+        //        message += "Select one of " + taskName + " time slot";
+        //    } else {
+        //        message += "Select an availability of one of the available user";
+        //    }
+        //
+        //    return message;
+        //}
+        //
+        //return "Here are all the data";
 
     }
 });

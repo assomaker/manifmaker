@@ -1,8 +1,9 @@
 <template name="assignmentUsersList">
     <h2>Users List</h2>
-    <ul>
-        {{#each users}}
-            <li class="user" data-_id="{{_id}}">
+    <!--<ul>-->
+    {{#each users}}
+        <div class="user" data-_id="{{_id}}">
+            <a href="/assignment/user/{{_id}}">{{name}} </a>
                 <div class="name">{{name}}</div>
                 Availabilities :
                 <ul>
@@ -16,7 +17,8 @@
                         <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
                     {{/each}}
                 </ul>
-            </li>
-        {{/each}}
-    </ul>
+
+        </div>
+    {{/each}}
+    <!--</ul>-->
 </template>
