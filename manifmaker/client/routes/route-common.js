@@ -8,6 +8,15 @@ Router.onAfterAction(function () {
 });
 
 
+//hide topNavBar to each expect assignment
+Router.onAfterAction(function () {
+        this.render("", {to: "topNavBar"})
+    },
+    {except: ['assignment.calendar']}
+);
+
+
+
 Router.route('/', function () {
         this.render('home', {to: 'mainContent'});
     },

@@ -1,11 +1,18 @@
 <template name="assignmentMenu">
-    <button id="userToTask">user => task</button>
-    <button id="taskToUser">task => user</button>
-    <button id="all">all</button>
-    <button id="quarterHour">quart hour</button>
-    <button id="halfHour">half hour</button>
-    <button id="oneHour">one hour</button>
-    <button id="twoHour">two hour</button>
-    <button id="fourHour">four hour</button>
-    <p>{{adviceMessage}}</p>
+    <div class="half-top-row">
+        <div class="action-button-top-bar">
+            <a id="userToTask" class="waves-effect waves-light btn">User to Task mode</a>
+            <a id="taskToUser" class="waves-effect waves-light btn">Task to User mode</a>
+        </div>
+    </div>
+
+    <div class="half-top-row">
+        <div class="breadcrumb-top-bar">
+            <a href="#!" class="breadcrumb">First</a>
+            <a href="#!" class="breadcrumb">Second</a>
+            <a href="#!" class="breadcrumb">{{adviceMessage}}</a>
+        </div>
+
+    </div>
+
 </template>
