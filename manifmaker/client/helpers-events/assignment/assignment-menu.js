@@ -43,6 +43,7 @@ Template.assignmentMenu.helpers({
             currentAssignmentType = CurrentAssignmentType.get(),
             selectedUser = SelectedUser.get(),
             selectedTask = SelectedTask.get(),
+            selectedDate = SelectedDate.get(),
             result = [];
 
         if (currentAssignmentType === AssignmentType.USERTOTASK) {
@@ -55,7 +56,7 @@ Template.assignmentMenu.helpers({
                 var userName = UserRepository.findOne(selectedUser._id).name;
                 result.push({
                     label: userName,
-                    url: "/assignment/" + selectedUser._id
+                    url: "/assignment/userToTask/" + selectedUser._id
                 });
 
                 if (selectedAvailability === null) {//TODO pas top
@@ -65,8 +66,8 @@ Template.assignmentMenu.helpers({
                     });
                 } else {
                     result.push({
-                        label: "HEURE",
-                        url: "/assignment/" + selectedUser._id + "/" + 1234
+                        label: selectedDate.format("ddd D HH:mm"),
+                        url: "/assignment/userToTask/" + selectedUser._id + "/" + selectedDate.format('x')
                     });
 
                     if(true){ //if pas de task/people need selected

@@ -22,6 +22,7 @@ Router.route('/assignment/userToTask', function () {
         TaskFilter.set(noneFilter);
         UserFilter.set(defaultFilter);
         CurrentAssignmentType.set(AssignmentType.USERTOTASK);
+        SelectedUser.set(null);
 
     }, {
         controller: 'AssignmentController',
@@ -74,6 +75,7 @@ Router.route('/assignment/userToTask/:userId/:selectedDate', function () {
 );
 
 Router.route('/assignment/userToTask/:userId', function () {
+    TaskFilter.set(noneFilter);
 
     }, {
         controller: 'AssignmentController',
