@@ -111,20 +111,14 @@ Template.assignmentMenu.helpers({
             }
             return result;
         }
-        //if (currentAssignmentType === AssignmentType.TASKTOUSER) {
-        //    if (selectedTask === null) {
-        //        message += "Select a task";
-        //    } else if (selectedTimeslotId === null) {//TODO pas top
-        //        var taskName = TaskRepository.findOne(selectedTask._id).name;
-        //        message += "Select one of " + taskName + " time slot";
-        //    } else {
-        //        message += "Select an availability of one of the available user";
-        //    }
-        //
-        //    return message;
-        //}
-        //
-        //return "Here are all the data";
+
+        if(currentAssignmentType == AssignmentType.ALL){
+            result.push({
+                label: "Welcome, start by selecting an assignment mode",
+                url: ""
+            });
+            return result;
+        }
 
     }
 });

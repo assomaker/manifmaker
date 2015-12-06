@@ -12,13 +12,13 @@ AssignmentController = RouteController.extend({
 });
 
 
-Router.route('/assignment', {
+Router.route('/assignment', function () {
+        CurrentAssignmentType.set(AssignmentType.ALL);
+    }, {
         controller: 'AssignmentController',
         name: 'assignment.calendar',
     }
 );
-
-
 
 
 Router.route('/assignment/user/:userId', function () {
