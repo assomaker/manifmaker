@@ -1,5 +1,16 @@
 <template name="assignmentUsersList">
-    <h2>Users List</h2>
+    <h4 class="list-title">Users List</h4>
+
+    <form class="col s12">
+        <div class="row">
+            <div class="input-field">
+                <input placeholder="" id="user_name" type="text" class="validate">
+                <label for="user_name"><i class="material-icons tiny">search</i>User name..</label>
+            </div>
+        </div>
+    </form>
+
+
     <ul class="collapsible " data-collapsible="expandable">
         {{#each users}}
 

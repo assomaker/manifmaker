@@ -1,6 +1,15 @@
 <template name="assignmentTasksList">
-    <h2>Tasks List</h2>
-    
+    <h4 class="list-title">Tasks List</h4>
+
+    <form class="col s12">
+        <div class="row">
+            <div class="input-field">
+                <input placeholder="" id="task_name" type="text" class="validate">
+                <label for="task_name"><i class="material-icons tiny">search</i>Task name..</label>
+            </div>
+        </div>
+    </form>
+
     <ul class="collapsible " data-collapsible="expandable">
 
         {{#each tasks}}
