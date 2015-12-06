@@ -1,27 +1,33 @@
 <template name="assignmentTasksList">
     <h2>Tasks List</h2>
-    {{#each tasks}}
-        <div class="task" data-_id="{{_id}}">
-            <a href="/assignment/task/{{_id}}">{{name}} </a>
+    
+    <ul class="collapsible " data-collapsible="expandable">
 
-            Timeslots :
-            <ul>
-                {{#each timeSlots}}
-                    <li class="time-slot" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}
-                        <ul>
-                            {{#each peopleNeeded}}
-                                <li>{{this}}</li>
-                            {{/each}}
-                        </ul>
-                    </li>
-                {{/each}}
-            </ul>
-            Assignments :
-            <ul>
-                {{#each assignments}}
-                    <li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>
-                {{/each}}
-            </ul>
-        </div>
-    {{/each}}
+        {{#each tasks}}
+            <li>
+                <div class="collapsible-header"><a href="/assignment/task/{{_id}}">{{name}}</a></div>
+                <div class="collapsible-body">
+                    Timeslots :
+                    <ul>
+                        {{#each timeSlots}}
+                            <li class="time-slot" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}
+                                <ul>
+                                    {{#each peopleNeeded}}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </li>
+                        {{/each}}
+                    </ul>
+                    Assignments :
+                    <ul>
+                        {{#each assignments}}
+                            <li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </li>
+        {{/each}}
+    </ul>
+
 </template>

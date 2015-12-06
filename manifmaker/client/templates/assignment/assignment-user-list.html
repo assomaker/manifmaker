@@ -1,23 +1,26 @@
 <template name="assignmentUsersList">
     <h2>Users List</h2>
-    {{#each users}}
-        <div class="user" data-_id="{{_id}}">
-            <a href="/assignment/user/{{_id}}">{{name}} </a>
+    <ul class="collapsible " data-collapsible="expandable">
+        {{#each users}}
 
-            <div class="name">{{name}}</div>
-            Availabilities :
-            <ul>
-                {{#each availabilities}}
-                    <li>from {{displayHours start}} to {{displayHours end}}</li>
-                {{/each}}
-            </ul>
-            Assignments :
-            <ul>
-                {{#each assignments}}
-                    <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
-                {{/each}}
-            </ul>
+            <li>
+                <div class="collapsible-header"><a href="/assignment/user/{{_id}}">{{name}}</a></div>
+                <div class="collapsible-body">
+                    Availabilities :
+                    <ul>
+                        {{#each availabilities}}
+                            <li>from {{displayHours start}} to {{displayHours end}}</li>
+                        {{/each}}
+                    </ul>
+                    Assignments :
+                    <ul>
+                        {{#each assignments}}
+                            <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </li>
 
-        </div>
-    {{/each}}
+        {{/each}}
+    </ul>
 </template>
