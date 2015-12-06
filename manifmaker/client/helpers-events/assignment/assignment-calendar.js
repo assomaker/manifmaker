@@ -96,6 +96,7 @@ Template.assignmentCalendar.helpers({
 
                 var data = {}, founded;
 
+                data.taskId = task._id;
                 if(timeSlotFound !== null){
                     data.state = "available";
                     data.name = task.name;
@@ -173,19 +174,23 @@ Template.assignmentCalendar.events({
                 var selectedTimeSlot = this;
                 selectedTimeslotId = selectedTimeSlot._id;
 
-                var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
-                var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
+                //var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
+                //var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
 
-                var newFilter = {
-                    availabilities: {
-                        $elemMatch: {
-                            start: {$lte: timeSlot.start},
-                            end: {$gte: timeSlot.end}
-                        }
-                    }
-                };
+                //var newFilter = {
+                //    availabilities: {
+                //        $elemMatch: {
+                //            start: {$lte: timeSlot.start},
+                //            end: {$gte: timeSlot.end}
+                //        }
+                //    }
+                //};
+                //
+                //UserFilter.set(newFilter);
 
-                UserFilter.set(newFilter);
+                Router.go("/assignment/taskToUser/"+selectedTimeSlot.taskId+"/"+selectedTimeSlot._id);
+
+
                 break;
         }
     },
@@ -217,7 +222,7 @@ Template.assignmentCalendar.events({
                 var userId = current.split("/")[3];
 
 
-                Router.go("/assignment/userToTask/"+userId+"/"+selectedDate.format('x'));
+                Router.go("/assignment/userToTask/"+userId+"/"+selectedDate);
 
 
                 //var selectedDate = params.selectedDate;

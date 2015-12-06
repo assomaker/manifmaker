@@ -4,6 +4,7 @@ UserFilter = new ReactiveVar(defaultFilter);
 SelectedUser = new ReactiveVar(null);
 TaskFilter = new ReactiveVar(defaultFilter);
 SelectedTask = new ReactiveVar(null);
+SelectedTimeSlot = new ReactiveVar(null);
 SelectedDate = new ReactiveVar(null);
 
 selectedTimeslotId = null; //TODO mettre ca dans Session ?//TODO pas top
@@ -63,7 +64,7 @@ Meteor.startup(function () {
     //preSelecterTaskByTaskName("task2");
 
 
-    preSelectedUserByUserName("user1");
+//    preSelectedUserByUserName("user1");
 
 });
 

@@ -1,14 +1,4 @@
 Template.assignmentMenu.events({
-    //"click #userToTask": function (event) {
-    //    TaskFilter.set(noneFilter);
-    //    UserFilter.set(defaultFilter);
-    //    CurrentAssignmentType.set(AssignmentType.USERTOTASK);
-    //},
-    //"click #taskToUser": function (event) {
-    //    UserFilter.set(noneFilter);
-    //    TaskFilter.set(defaultFilter);
-    //    CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
-    //},
     "click #all": function (event) {
         TaskFilter.set(defaultFilter);
         UserFilter.set(defaultFilter);
@@ -44,6 +34,7 @@ Template.assignmentMenu.helpers({
             selectedUser = SelectedUser.get(),
             selectedTask = SelectedTask.get(),
             selectedDate = SelectedDate.get(),
+            selectedTimeSlot = SelectedTimeSlot.get(),
             result = [];
 
         if (currentAssignmentType === AssignmentType.USERTOTASK) {
@@ -77,13 +68,47 @@ Template.assignmentMenu.helpers({
                         });
                     }
                 }
-
-
-
-                //todo select a task [and a people need]
-
             }
+            return result;
+        }
 
+        if (currentAssignmentType === AssignmentType.TASKTOUSER) {
+            if (selectedTask === null) {
+                result.push({
+                    label: "Select a task",
+                    url: ""
+                });
+            } else  {
+                var taskName = TaskRepository.findOne(selectedTask._id).name;
+                result.push({
+                    label: taskName,
+                    url: "/assignment/taskToUser/" + selectedTask._id
+                });
+
+                if (selectedTimeSlot === null) {//TODO pas top
+                    result.push({
+                        label: "Select one of the time slot [and a people need]",
+                        url: ""
+                    });
+                } else {
+
+                    var task = Tasks.findOne(selectedTask);
+                    var timeSlot = TimeSlotService.getTimeSlot(task,selectedTimeSlot._id);
+
+
+                    result.push({
+                        label: new moment(timeSlot.start).format("HH:mm") + " to " +  new moment(timeSlot.end).format("HH:mm"),
+                        url: "/assignment/taskToUser/" + selectedTask._id + "/" + selectedTimeSlot._id
+                    });
+
+                    if(true){ //if pas de task/people need selected
+                        result.push({
+                            label: "Select one of the available user",
+                            url: ""
+                        });
+                    }
+                }
+            }
             return result;
         }
         //if (currentAssignmentType === AssignmentType.TASKTOUSER) {

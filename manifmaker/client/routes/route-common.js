@@ -14,17 +14,21 @@ Router.onAfterAction(function () {
 
         assignmentCalendarIsRendered = false;
     },
-    {except: [
-        'assignment.calendar',
-        'assignment.calendar.user',
-        'assignment.calendar.userToTask',
-        'assignment.calendar.userToTask.user',
-        'assignment.calendar.userToTask.user.date',
+    {
+        except: [
+            'assignment.calendar',
+            'assignment.calendar.user',
+            'assignment.calendar.userToTask',
+            'assignment.calendar.userToTask.user',
+            'assignment.calendar.userToTask.user.date',
 
-        'assignment.calendar.taskToUser'
-    ]}
+            'assignment.calendar.taskToUser',
+            'assignment.calendar.taskToUser.task',
+            'assignment.calendar.taskToUser.task.timeSlot'
+
+        ]
+    }
 );
-
 
 
 Router.route('/', function () {
