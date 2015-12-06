@@ -24,7 +24,9 @@ Router.onAfterAction(function () {
 
             'assignment.calendar.taskToUser',
             'assignment.calendar.taskToUser.task',
-            'assignment.calendar.taskToUser.task.timeSlot'
+            'assignment.calendar.taskToUser.task.timeSlot',
+
+            'assignment.calendar.task.search'
 
         ]
     }

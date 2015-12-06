@@ -69,3 +69,42 @@ Router.route('/assignment/task/:taskId', function () {
         name: 'assignment.calendar.task'
     }
 );
+
+
+Router.route('/assignment/task/search/:searchInput', function () {
+
+    var searchInput = this.params.searchInput;
+    this.wait(Meteor.subscribe('tasks', {
+        name: searchInput
+    }));
+
+    if (this.ready()) {
+        console.info("task search for", searchInput);
+
+
+        //if ($("#task_name").val() === "") {
+        //    $("#task_name").val(searchInput);
+        //}
+
+        //var
+        //
+        //SelectedTask.set({_id: taskId});
+        if (searchInput === "") {
+            TaskFilter.set(defaultFilter);
+        } else {
+            TaskIndexFilter.set(searchInput);
+
+            //TasksIndex.search(searchInput, { limit: 20 }).fetch()
+
+        }
+
+
+    } else {
+        console.log("waiting task data"); //TODO add a spinner
+    }
+
+
+}, {
+    controller: "AssignmentController",
+    name: "assignment.calendar.task.search"
+});

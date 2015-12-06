@@ -1,9 +1,22 @@
 Template.assignmentTasksList.helpers({
     tasks: function () {
         var filter = TaskFilter.get();
-        return Tasks.find(filter);
+        var filterIndex = TaskIndexFilter.get();
+
+        if (filter != TaskFilterBefore) {
+            TaskFilterBefore = filter;
+            return Tasks.find(filter);
+        }
+        if (filterIndex != TaskIndexFilterBefore) {
+            TaskIndexFilterBefore = filterIndex;
+            return TasksIndex.search(filterIndex, {limit: 20}).fetch();
+        }
+
     }
 });
+
+TaskFilterBefore = null;
+TaskIndexFilterBefore = null;
 
 Template.assignmentTasksList.events({
     "click li": function (event) {
@@ -36,5 +49,11 @@ Template.assignmentTasksList.events({
         }
 
 
+    },
+
+    "keyup #task_name": function (event) {
+        var query = $("#task_name").val();
+
+        Router.go("/assignment/task/search/" + query);
     }
 });
