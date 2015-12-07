@@ -22,7 +22,9 @@ Template.assignmentTasksList.events({
     "click .href-assignment-task": function(event){
         event.stopPropagation();
         event.preventDefault();
+        //TODO can't event to bubble to the collapsible event
 
+        console.info("routing", "/assignment/task/"+this._id);
         Router.go("/assignment/task/"+this._id);
     },
 
@@ -62,6 +64,7 @@ Template.assignmentTasksList.events({
     "keyup #task_name": function (event) {
         var query = $("#task_name").val();
 
-        Router.go("/assignment/task/search/" + query);
+        console.info("routing", "/assignment/task/"+this._id);
+        Router.go("/assignment/task/"+this._id);
     }
 });

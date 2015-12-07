@@ -11,6 +11,7 @@ Template.assignmentUsersList.events({
         event.preventDefault();
         //TODO can't event to bubble to the collapsible event
 
+        console.info("routing", "/assignment/user/"+this._id);
         Router.go("/assignment/user/"+this._id);
     },
 

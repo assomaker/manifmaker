@@ -1,4 +1,6 @@
 Router.route('/assignment/taskToUser', function () {
+        console.info("routing", '/assignment/taskToUser');
+
         TaskFilter.set(defaultFilter);
         UserFilter.set(noneFilter);
         CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
@@ -15,8 +17,8 @@ Router.route('/assignment/taskToUser/:taskId/:timeSlotId', function () {
         console.info("routing", '/assignment/taskToUser/' + this.params.taskId + '/' + this.params.timeSlotId);
 
         CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
-    SelectedTask.set({_id: this.params.taskId});
-    SelectedTimeSlot.set({_id: this.params.timeSlotId});
+        SelectedTask.set({_id: this.params.taskId});
+        SelectedTimeSlot.set({_id: this.params.timeSlotId});
 
         var task = Tasks.findOne({_id: this.params.taskId});
         var timeSlot = TimeSlotService.getTimeSlot(task, this.params.timeSlotId);
@@ -40,6 +42,7 @@ Router.route('/assignment/taskToUser/:taskId/:timeSlotId', function () {
 );
 
 Router.route('/assignment/taskToUser/:taskId', function () {
+        console.info("routing", '/assignment/taskToUser/' + this.params.taskId);
 
         CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
         SelectedTask.set({_id: this.params.taskId});

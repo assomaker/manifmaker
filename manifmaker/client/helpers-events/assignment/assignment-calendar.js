@@ -188,6 +188,7 @@ Template.assignmentCalendar.events({
                 //
                 //UserFilter.set(newFilter);
 
+                console.info("routing", "/assignment/taskToUser/"+selectedTimeSlot.taskId+"/"+selectedTimeSlot._id);
                 Router.go("/assignment/taskToUser/"+selectedTimeSlot.taskId+"/"+selectedTimeSlot._id);
 
 
@@ -222,6 +223,7 @@ Template.assignmentCalendar.events({
                 var userId = current.split("/")[3];
 
 
+                console.info("routing", "/assignment/userToTask/"+userId+"/"+selectedDate);
                 Router.go("/assignment/userToTask/"+userId+"/"+selectedDate);
 
 

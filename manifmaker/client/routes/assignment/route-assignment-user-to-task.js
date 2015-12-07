@@ -1,4 +1,6 @@
 Router.route('/assignment/userToTask', function () {
+        console.info("routing", '/assignment/userToTask');
+
         TaskFilter.set(noneFilter);
         UserFilter.set(defaultFilter);
         CurrentAssignmentType.set(AssignmentType.USERTOTASK);
@@ -55,6 +57,8 @@ Router.route('/assignment/userToTask/:userId/:selectedDate', function () {
 );
 
 Router.route('/assignment/userToTask/:userId', function () {
+        console.info("routing", '/assignment/userToTask/' + this.params.userId);
+
         CurrentAssignmentType.set(AssignmentType.USERTOTASK);
         SelectedUser.set({_id: this.params.userId});
         TaskFilter.set(noneFilter);

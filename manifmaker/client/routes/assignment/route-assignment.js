@@ -13,6 +13,8 @@ AssignmentController = RouteController.extend({
 
 
 Router.route('/assignment', function () {
+        console.info("routing", '/assignment');
+
         CurrentAssignmentType.set(AssignmentType.ALL);
     }, {
         controller: 'AssignmentController',
@@ -22,6 +24,8 @@ Router.route('/assignment', function () {
 
 
 Router.route('/assignment/user/:userId', function () {
+        console.info("routing", '/assignment/user/' + this.params.userId);
+
         //ceci est seulement le userToTask => faire le taskToUser
 
         this.wait(Meteor.subscribe('users', this.params.userId));
@@ -48,6 +52,8 @@ Router.route('/assignment/user/:userId', function () {
 
 
 Router.route('/assignment/task/:taskId', function () {
+        console.info("routing", '/assignment/task/' + this.params.taskId);
+
         //ceci est seulement le taskToUser => faire le  userToTask
 
         this.wait(Meteor.subscribe('tasks', this.params.taskId));
@@ -70,37 +76,36 @@ Router.route('/assignment/task/:taskId', function () {
     }
 );
 
+Router.route('/assignment/task/search', function () {
+
+    console.info("search but no query")
+
+}, {
+    controller: "AssignmentController",
+    name: "assignment.calendar.task.search.noquery"
+});
 
 Router.route('/assignment/task/search/:searchInput', function () {
+    console.info("routing", '/assignment/task/search/' + this.params.searchInput);
+
 
     var searchInput = this.params.searchInput;
-    this.wait(Meteor.subscribe('tasks', {
-        name: searchInput
-    }));
 
-    if (this.ready()) {
-        console.info("task search for", searchInput);
-
-
-        //if ($("#task_name").val() === "") {
-        //    $("#task_name").val(searchInput);
-        //}
-
-        //var
-        //
-        //SelectedTask.set({_id: taskId});
-        if (searchInput === "") {
-            TaskFilter.set(defaultFilter);
-        } else {
-            TaskIndexFilter.set(searchInput);
-
-            //TasksIndex.search(searchInput, { limit: 20 }).fetch()
-
-        }
-
-
+    if (searchInput === "") {
+        TaskFilter.set(defaultFilter);
+        this.redirect("/assignment");
     } else {
-        console.log("waiting task data"); //TODO add a spinner
+        this.wait(Meteor.subscribe('tasks', {
+            name: searchInput
+        }));
+
+        if (this.ready()) {
+            console.info("task search for", searchInput);
+
+            TaskIndexFilter.set(searchInput);
+        } else {
+            console.log("waiting task data"); //TODO add a spinner
+        }
     }
 
 
