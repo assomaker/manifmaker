@@ -10,11 +10,13 @@
         </div>
     </form>
 
-    <ul class="collapsible " data-collapsible="expandable">
+    <ul class="collapsible " data-collapsible="accordion">
 
         {{#each tasks}}
             <li>
-                <div class="collapsible-header"><a href="/assignment/task/{{_id}}">{{name}}</a></div>
+                <div class="collapsible-header">
+                    <a class="href-assignment-task">{{name}}</a>
+                </div>
                 <div class="collapsible-body">
                     Timeslots :
                     <ul>

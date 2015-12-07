@@ -11,16 +11,12 @@
     </form>
 
 
-    <ul class="collapsible " data-collapsible="expandable">
+    <ul class="collapsible " data-collapsible="accordion">
         {{#each users}}
-            <!--<a id="userToTask" href="/assignment/taskToUser" class="waves-purple waves-effect waves-light btn">User to Task mode</a>-->
-
-
-
-            <a href="/assignment/user/{{_id}}">{{name}}
             <li>
-                <!--<a id="userToTask" href="/assignment/taskToUser" class="waves-purple waves-effect waves-light btn">User to Task mode</a>-->
-                <div class="collapsible-header"><a id="/assignment/user/{{_id}}">{{name}}</a></div>
+                <div class="collapsible-header">
+                    <a class="href-assignment-user">{{name}}</a>
+                </div>
 
                 <div class="collapsible-body">
                     Availabilities :
@@ -37,8 +33,6 @@
                     </ul>
                 </div>
             </li>
-            </a>
-
         {{/each}}
     </ul>
 </template>

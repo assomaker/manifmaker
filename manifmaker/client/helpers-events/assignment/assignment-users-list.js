@@ -6,6 +6,14 @@ Template.assignmentUsersList.helpers({
 });
 
 Template.assignmentUsersList.events({
+    "click .href-assignment-user": function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        //TODO can't event to bubble to the collapsible event
+
+        Router.go("/assignment/user/"+this._id);
+    },
+
     "click li": function (event) {
         event.stopPropagation();
 

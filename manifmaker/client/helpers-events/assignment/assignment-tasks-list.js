@@ -19,6 +19,13 @@ TaskFilterBefore = null;
 TaskIndexFilterBefore = null;
 
 Template.assignmentTasksList.events({
+    "click .href-assignment-task": function(event){
+        event.stopPropagation();
+        event.preventDefault();
+
+        Router.go("/assignment/task/"+this._id);
+    },
+
     "click li": function (event) {
         event.stopPropagation();
         var currentAssignmentType = CurrentAssignmentType.get();
@@ -50,6 +57,7 @@ Template.assignmentTasksList.events({
 
 
     },
+
 
     "keyup #task_name": function (event) {
         var query = $("#task_name").val();
