@@ -24,8 +24,7 @@ momentjs:moment
 less
 mizzao:bootstrap-3
 iron:router
-<<<<<<< HEAD
-=======
+
 materialize:materialize
->>>>>>> 128de42ba85cf849804b1da639c5f2dbef253a97
-aslagle:reactive-table #DAtaTables
+
+aslagle:reactive-table  #DAtaTables
