@@ -1,6 +1,6 @@
 Template.task.helpers({
-    tasks: function () {
-        return Tasks.find();
+    tasks: function(){
+        return Tasks.find()
     },
     places: function(){
         return Places.find();
