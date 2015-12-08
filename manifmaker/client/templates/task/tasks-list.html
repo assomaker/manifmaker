@@ -1,6 +1,7 @@
 <template name="tasksList">
     <!--<h1>Here is the tasks list</h1>-->
 <body>
+    {{> reactiveTableFilter settings=settings }}
     {{#each tasks}}
 
             <li><a href="{{pathFor route='tasks'}}">{{name}}</a >,{{team}},{{place}}</li>
