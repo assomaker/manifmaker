@@ -5,7 +5,7 @@
     {{#each tasks}}
 
             <li><a href="{{pathFor route='tasks'}}">{{name}}</a >,{{team}},{{place}}</li>
-            <a href="/task/{{_id}}" name="modification">Modifier la tache</a >
+            <a href="/task/{{_id}}">Modifier la tache</a >
             <a href="/task/{{_id}}/delete">supprimer la tache</a>
 
     {{/each}}
