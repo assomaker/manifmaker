@@ -1,7 +1,11 @@
 <template name="tasksList">
     <!--<h1>Here is the tasks list</h1>-->
 <body>
+<<<<<<< HEAD
     {{> reactiveTable settings=settings }}
+=======
+    {{> reactiveTableFilter settings=settings }}
+>>>>>>> 128de42ba85cf849804b1da639c5f2dbef253a97
     {{#each tasks}}
 
             <li><a href="{{pathFor route='tasks'}}">{{name}}</a >,{{team}},{{place}}</li>
@@ -10,11 +14,7 @@
 
     {{/each}}
 
-    <br>
     <a href="/task">Créer une nouvelle fiche tache</a>
-    <br>
-    <a href="/places">Créer un nouveau lieu</a >
-    <br>
-    <a href="/teams">Modifier les équipes</a>
+
 </body>
 </template>

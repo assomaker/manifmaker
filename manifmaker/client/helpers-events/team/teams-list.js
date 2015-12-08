@@ -4,8 +4,4 @@ Template.teamsList.helpers({
     }
 });
 
-Template.teamsList.events({
-
-
-
-});
+Template.teamsList.events({});
