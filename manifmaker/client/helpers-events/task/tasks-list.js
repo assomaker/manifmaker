@@ -9,9 +9,9 @@ Template.tasksList.helpers({
             fields: [{ key: 'name', label: 'Nom de la tache' },
                 {  label: 'Groupe' },
                 { key: 'team', label: 'Equipe' },
-                { key: 'timeSlots', label:'Nombre de créneaux', fn:function(timeSlots,Task){return timeSlots.length;}}]
+                { key: 'timeSlots', label:'Nombre de créneaux', sortable:false, fn:function(timeSlots,Task){return timeSlots.length;}}]
         };
-    },
+    }
 
 });
 
