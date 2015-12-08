@@ -1,11 +1,11 @@
 <template name="tasksList">
     <!--<h1>Here is the tasks list</h1>-->
 <body>
-    {{> reactiveTable settings=settings }}
+    {{> reactiveTable settings=tasksList }}
     {{#each tasks}}
 
             <li><a href="{{pathFor route='tasks'}}">{{name}}</a >,{{team}},{{place}}</li>
-            <a href="/task/{{_id}}">Modifier la tache</a >
+            <a href="/task/{{_id}}" name="modification">Modifier la tache</a >
             <a href="/task/{{_id}}/delete">supprimer la tache</a>
 
     {{/each}}
