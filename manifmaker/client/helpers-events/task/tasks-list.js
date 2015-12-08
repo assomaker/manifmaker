@@ -9,12 +9,12 @@ Template.tasksList.helpers({
                 {label: 'Groupe'},
                 {key: 'team', label: 'Equipe'},
                 {
-                    key: 'timeSlots', label: 'Nombre de créneaux', fn: function (timeSlots, Task) {
+                    key: 'timeSlots', label: 'Nombre de créneaux', sortable:false, fn: function (timeSlots, Task) {
                     return timeSlots.length;
                 }
                 }]
         };
-    },
+    }
 });
 
 Template.tasksList.events({});
