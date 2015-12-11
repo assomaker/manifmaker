@@ -4,7 +4,7 @@ Template.tasksList.helpers({
             collection: Tasks,
             rowsPerPage: 10,
             showFilter: true,
-            columnPerPage: 3,
+            columnPerPage: 4,
             multiColumnSort: true,
             fields: [//{label: 'Groupe', fnAdjustColumnSizing:true},
                 {key: 'name', label: 'Nom de la tache', fnAdjustColumnSizing:true},
@@ -15,8 +15,8 @@ Template.tasksList.helpers({
                 }},
                 {key: 'timeSlots', label: 'Nombre de créneaux', sortable: false, fn: function (timeSlots, Task) {
                     return timeSlots.length;
-                    }, fnAdjustColumnSizing:true}
-                //{key:'suppress', label:'Supprimer la tache?', fnAdjustColumnSizing:true}
+                    }, fnAdjustColumnSizing:true},
+                {label:'Modifier la tache?', tmpl:Template.taskButtons, fnAdjustColumnSizing:true}
 
             ]
 
