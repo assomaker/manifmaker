@@ -1,5 +1,5 @@
 Router.route('/tasks', function () {
-        this.render('TasksList', {to: 'mainContent'});
+        this.render('tasksList', {to: 'mainContent'});
     },
     {name: 'task.list'}
 );
