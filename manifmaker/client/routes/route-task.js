@@ -15,8 +15,7 @@ Router.route('/task/:_id', function () {
             data: function () {
                 var currentTask = this.params._id;
                 return Tasks.findOne({_id: currentTask});
-            }
-        }, {to: 'mainContent'});
+            },to: 'mainContent'});
     },
     {name: 'task.read'}
 );
@@ -26,8 +25,7 @@ Router.route('/task/:_id/delete', function () {
             data: function () {
                 var currentTask = this.params._id;
                 return Tasks.remove({_id: currentTask});
-            }
-        }, {to: 'mainContent'});
+            },to: 'mainContent'});
     },
     {name: 'task.delete'}
 );
