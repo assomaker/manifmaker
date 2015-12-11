@@ -3,6 +3,11 @@ Template.assignmentUsersList.helpers({
         var filter = UserFilter.get();
         var filterIndex = UserIndexFilter.get();
 
+        if(filterIndex === noSearchFilter){
+            UserIndexFilterBefore = filterIndex;
+            UserFilterBefore = null; //in order to force update via userFilter
+        }
+
         if (filter != UserFilterBefore) {
             UserFilterBefore = filter;
             return Users.find(filter);
@@ -20,13 +25,13 @@ UserFilterBefore = defaultFilter;
 UserIndexFilterBefore = defaultFilter;
 
 Template.assignmentUsersList.events({
-    "click .href-assignment-user": function(event){
+    "click .href-assignment-user": function (event) {
         event.stopPropagation();
         event.preventDefault();
         //TODO can't event to bubble to the collapsible event
 
-        console.info("routing", "/assignment/user/"+this._id);
-        Router.go("/assignment/user/"+this._id);
+        console.info("routing", "/assignment/user/" + this._id);
+        Router.go("/assignment/user/" + this._id);
     },
 
     "click li": function (event) {
@@ -59,10 +64,18 @@ Template.assignmentUsersList.events({
     },
 
     "keyup #search_user_name": function (event) {
-        var query = $("#search_user_name").val();
+        var searchInput = $("#search_user_name").val();
 
-        console.info("routing", "/assignment/user/search/"+query);
-        Router.go("/assignment/user/search/"+query);
+        //desactivation de la recherche par URL
+        //console.info("routing", "/assignment/user/search/"+query);
+        //Router.go("/assignment/user/search/"+query);
+
+
+        if (searchInput === "") {
+            UserIndexFilter.set(noSearchFilter);
+        } else {
+            UserIndexFilter.set(searchInput);
+        }
     }
 
 

@@ -3,6 +3,12 @@ Template.assignmentTasksList.helpers({
         var filter = TaskFilter.get();
         var filterIndex = TaskIndexFilter.get();
 
+        if(filterIndex === noSearchFilter){
+            TaskIndexFilterBefore = filterIndex;
+            TaskFilterBefore = null; //in order to force update via userFilter
+        }
+
+
         if (filter != TaskFilterBefore) {
             TaskFilterBefore = filter;
             return Tasks.find(filter);
@@ -63,9 +69,16 @@ Template.assignmentTasksList.events({
 
 
     "keyup #search_task_name": function (event) {
-        var query = $("#search_task_name").val();
+        var searchInput = $("#search_task_name").val();
 
-        console.info("routing", "/assignment/task/search/"+query);
-        Router.go("/assignment/task/search/"+query);
+        //desactivation de la recherche par URL
+        //console.info("routing", "/assignment/task/search/"+query);
+        //Router.go("/assignment/task/search/"+query);
+
+        if (searchInput === "") {
+            TaskIndexFilter.set(noSearchFilter);
+        } else {
+            TaskIndexFilter.set(searchInput);
+        }
     }
 });
