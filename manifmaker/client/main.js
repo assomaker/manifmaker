@@ -1,5 +1,5 @@
 defaultFilter = {};
-noSearchFilter = "NOSEARCHFILTER";
+noSearchFilter = "";
 noneFilter = {none: "none"};
 UserFilter = new ReactiveVar(defaultFilter);
 SelectedUser = new ReactiveVar(null);

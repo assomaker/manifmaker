@@ -3,19 +3,26 @@ Template.assignmentUsersList.helpers({
         var filter = UserFilter.get();
         var filterIndex = UserIndexFilter.get();
 
-        if(filterIndex === noSearchFilter){
-            UserIndexFilterBefore = filterIndex;
-            UserFilterBefore = null; //in order to force update via userFilter
-        }
+        //if(filterIndex === noSearchFilter){
+        //    UserIndexFilterBefore = filterIndex;
+        //    UserFilterBefore = null; //in order to force update via userFilter
+        //}
 
-        if (filter != UserFilterBefore) {
+        var searchResult;
+        var filterResult;
+
+        //if (filter != UserFilterBefore) {
             UserFilterBefore = filter;
-            return Users.find(filter);
-        }
-        if (filterIndex != UserIndexFilterBefore) {
+            filterResult = Users.find(filter).fetch();
+        //}
+        //if (filterIndex != UserIndexFilterBefore) {
             UserIndexFilterBefore = filterIndex;
-            return UsersIndex.search(filterIndex, {limit: 20}).fetch();
-        }
+            searchResult = UsersIndex.search(filterIndex, {limit: 20}).fetch();
+        //}
+var result=  _.uniq(_.union(searchResult, filterResult), false, function(item, key, a){
+    return item._id;
+});
+        return result;
 
     }
 });

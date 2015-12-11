@@ -3,10 +3,10 @@ Template.assignmentTasksList.helpers({
         var filter = TaskFilter.get();
         var filterIndex = TaskIndexFilter.get();
 
-        if(filterIndex === noSearchFilter){
-            TaskIndexFilterBefore = filterIndex;
-            TaskFilterBefore = null; //in order to force update via userFilter
-        }
+        //if(filterIndex === noSearchFilter){
+        //    TaskIndexFilterBefore = filterIndex;
+        //    TaskFilterBefore = null; //in order to force update via userFilter
+        //}
 
 
         if (filter != TaskFilterBefore) {
