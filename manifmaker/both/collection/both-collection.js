@@ -9,6 +9,11 @@ Tasks = new Mongo.Collection("tasks");
         engine: new EasySearch.Minimongo()
     });
 
+UsersIndex = new EasySearch.Index({
+    collection: Users,
+    fields: ['name'],
+    engine: new EasySearch.Minimongo()
+});
 
 Assignments = new Mongo.Collection("assignment");
 Teams= new Mongo.Collection("teams");

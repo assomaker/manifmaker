@@ -26,6 +26,12 @@ Router.route('/assignment', function () {
 Router.route('/assignment/user/:userId', function () {
         console.info("routing", '/assignment/user/' + this.params.userId);
 
+
+        if (this.params.userId === "search") {
+            console.info("routing error, misunderstanding 'search' as a userId");
+            Router.go("/assignment");
+        }
+
         //ceci est seulement le userToTask => faire le taskToUser
 
         this.wait(Meteor.subscribe('users', this.params.userId));
@@ -54,8 +60,8 @@ Router.route('/assignment/user/:userId', function () {
 Router.route('/assignment/task/:taskId', function () {
         console.info("routing", '/assignment/task/' + this.params.taskId);
 
-        if(this.params.taskId === "search"){
-            console.info("routing error, missunderstanding 'seach' as a taskId");
+        if (this.params.taskId === "search") {
+            console.info("routing error, misunderstanding 'search' as a taskId");
             Router.go("/assignment");
         }
 
@@ -92,6 +98,9 @@ Router.route('/assignment/task/search/:searchInput', function () {
         TaskFilter.set(defaultFilter);
         this.redirect("/assignment");
     } else {
+
+        $("#search_task_name").val(searchInput);
+
         this.wait(Meteor.subscribe('tasks', {
             name: searchInput
         }));
@@ -109,4 +118,36 @@ Router.route('/assignment/task/search/:searchInput', function () {
 }, {
     controller: "AssignmentController",
     name: "assignment.calendar.task.search"
+});
+
+
+Router.route('/assignment/user/search/:searchInput', function () {
+    console.info("routing", '/assignment/user/search/' + this.params.searchInput);
+
+
+    var searchInput = this.params.searchInput;
+
+    if (searchInput === "") {
+        UserFilter.set(defaultFilter);
+        this.redirect("/assignment");
+    } else {
+
+        $("#search_user_name").val(searchInput);
+        this.wait(Meteor.subscribe('users', {
+            name: searchInput
+        }));
+
+        if (this.ready()) {
+            console.info("user search for", searchInput);
+
+            UserIndexFilter.set(searchInput);
+        } else {
+            console.log("waiting user data"); //TODO add a spinner
+        }
+    }
+
+
+}, {
+    controller: "AssignmentController",
+    name: "assignment.calendar.user.search"
 });

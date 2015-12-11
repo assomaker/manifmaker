@@ -1,9 +1,22 @@
 Template.assignmentUsersList.helpers({
     users: function () {
         var filter = UserFilter.get();
-        return Users.find(filter);
+        var filterIndex = UserIndexFilter.get();
+
+        if (filter != UserFilterBefore) {
+            UserFilterBefore = filter;
+            return Users.find(filter);
+        }
+        if (filterIndex != UserIndexFilterBefore) {
+            UserIndexFilterBefore = filterIndex;
+            return UsersIndex.search(filterIndex, {limit: 20}).fetch();
+        }
+
     }
 });
+
+UserFilterBefore = null;
+UserIndexFilterBefore = null;
 
 Template.assignmentUsersList.events({
     "click .href-assignment-user": function(event){
@@ -42,5 +55,14 @@ Template.assignmentUsersList.events({
                 break;
         }
 
+    },
+
+    "keyup #search_user_name": function (event) {
+        var query = $("#search_user_name").val();
+
+        console.info("routing", "/assignment/user/search/"+query);
+        Router.go("/assignment/user/search/"+query);
     }
+
+
 });

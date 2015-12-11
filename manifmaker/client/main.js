@@ -4,6 +4,7 @@ UserFilter = new ReactiveVar(defaultFilter);
 SelectedUser = new ReactiveVar(null);
 TaskFilter = new ReactiveVar(defaultFilter);
 TaskIndexFilter = new ReactiveVar(defaultFilter);
+UserIndexFilter = new ReactiveVar(defaultFilter);
 SelectedTask = new ReactiveVar(null);
 SelectedTimeSlot = new ReactiveVar(null);
 SelectedDate = new ReactiveVar(null);
