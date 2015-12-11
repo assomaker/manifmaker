@@ -29,7 +29,7 @@ class Task {
         this.timeSlots = timeSlots; //Array<Timeslot>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
         this.assignments = assignments;
-        this.team=teamId;
+        this.teamId=teamId;
         this.description=description;
         this.place=placeId;
         this.respManif=respManifId;
