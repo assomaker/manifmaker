@@ -19,7 +19,7 @@
                 <div class="clo-xs-12 col-md-4 ">
                     <select class="informations" name="team">
                         {{#each teams}}
-                            {{#if equals ../team/_id _id }}
+                            {{#if equals ../teamId _id }}
                                 <option value="{{_id}}" selected>{{name}}</option>
                             {{else}}
                                 <option value="{{_id}}">{{name}}</option>
