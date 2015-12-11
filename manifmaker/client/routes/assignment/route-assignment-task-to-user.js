@@ -2,6 +2,8 @@ Router.route('/assignment/taskToUser', function () {
         console.info("routing", '/assignment/taskToUser');
 
         TaskFilter.set(defaultFilter);
+        TaskIndexFilter.set(noSearchFilter);
+        $("#search_task_name").val("");
         UserFilter.set(noneFilter);
         CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
         SelectedUser.set(null);
