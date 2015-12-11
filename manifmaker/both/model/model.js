@@ -24,15 +24,15 @@ class Availability {
 
 Task = //to export it to other namespace
 class Task {
-    constructor(name, timeSlots, assignments = [], place, team, respManif, description, _id) {
+    constructor(name, timeSlots, assignments = [], placeId, teamId, respManifId, description, _id) {
         this.name = name;
         this.timeSlots = timeSlots; //Array<Timeslot>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
         this.assignments = assignments;
-        this.team=team;
+        this.team=teamId;
         this.description=description;
-        this.place=place;
-        this.respManif=respManif;
+        this.place=placeId;
+        this.respManif=respManifId;
 
     }
 }

@@ -42,12 +42,12 @@ populateData =  function () {
     var task1 = new Task("task1", [
         new TimeSlot(getDateFromTime(8), getDateFromTime(11), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(4), getDateFromTime(6), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
-    ], [], place1._id, team1, "resp1", "description1");
+    ], [], place1._id, team1._id, "resp1", "description1");
     var task2 = new Task("task2", [
         new TimeSlot(getDateFromTime(10), getDateFromTime(12), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE]),
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [PeopleNeed.JUNKRESP, PeopleNeed.SOFT, PeopleNeed.SOFT, PeopleNeed.SOFTDRIVINGLICENSE])
-    ], [], place2._id, team2, "resp2", "description2");
-    var task3 = new Task("task3", [], [], place3._id, team3, "resp3","description3");
+    ], [], place2._id, team2._id, "resp2", "description2");
+    var task3 = new Task("task3", [], [], place3._id, team3._id, "resp3","description3");
 
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
