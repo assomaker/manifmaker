@@ -15,8 +15,9 @@ Template.assignmentTasksList.helpers({
     }
 });
 
-TaskFilterBefore = null;
-TaskIndexFilterBefore = null;
+defaultFilter = {};
+TaskFilterBefore = defaultFilter;
+TaskIndexFilterBefore = defaultFilter;
 
 Template.assignmentTasksList.events({
     "click .href-assignment-task": function(event){

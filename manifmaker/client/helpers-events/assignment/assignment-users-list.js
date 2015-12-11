@@ -15,8 +15,9 @@ Template.assignmentUsersList.helpers({
     }
 });
 
-UserFilterBefore = null;
-UserIndexFilterBefore = null;
+defaultFilter = {};
+UserFilterBefore = defaultFilter;
+UserIndexFilterBefore = defaultFilter;
 
 Template.assignmentUsersList.events({
     "click .href-assignment-user": function(event){
