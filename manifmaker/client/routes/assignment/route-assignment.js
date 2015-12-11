@@ -54,6 +54,11 @@ Router.route('/assignment/user/:userId', function () {
 Router.route('/assignment/task/:taskId', function () {
         console.info("routing", '/assignment/task/' + this.params.taskId);
 
+        if(this.params.taskId === "search"){
+            console.info("routing error, missunderstanding 'seach' as a taskId");
+            Router.go("/assignment");
+        }
+
         //ceci est seulement le taskToUser => faire le  userToTask
 
         this.wait(Meteor.subscribe('tasks', this.params.taskId));
@@ -76,14 +81,6 @@ Router.route('/assignment/task/:taskId', function () {
     }
 );
 
-Router.route('/assignment/task/search', function () {
-
-    console.info("search but no query")
-
-}, {
-    controller: "AssignmentController",
-    name: "assignment.calendar.task.search.noquery"
-});
 
 Router.route('/assignment/task/search/:searchInput', function () {
     console.info("routing", '/assignment/task/search/' + this.params.searchInput);

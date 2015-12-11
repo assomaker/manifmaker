@@ -61,10 +61,10 @@ Template.assignmentTasksList.events({
     },
 
 
-    "keyup #task_name": function (event) {
-        var query = $("#task_name").val();
+    "keyup #search_task_name": function (event) {
+        var query = $("#search_task_name").val();
 
-        console.info("routing", "/assignment/task/"+this._id);
-        Router.go("/assignment/task/"+this._id);
+        console.info("routing", "/assignment/task/search/"+query);
+        Router.go("/assignment/task/search/"+query);
     }
 });
