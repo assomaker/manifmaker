@@ -22,11 +22,11 @@ Template.task.events({
 
         if(this._id){ //already exist, we update it
             Tasks.update({_id: this._id}, task, function(error,results){
-                Router.go('/tasks');
+                Router.go('task.list');
             });
         } else { //doesn't already exist, we create it
             Tasks.insert(task, function(error,results){
-                Router.go('/tasks');
+                Router.go('task.list');
             });
         }
         
