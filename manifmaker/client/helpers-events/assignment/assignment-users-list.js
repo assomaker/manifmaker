@@ -7,12 +7,16 @@ Template.assignmentUsersList.helpers({
         var filterResult;
 
         UserFilterBefore = filter;
-        filterResult = Users.find(filter).fetch();
+        filterResult = Users.find(filter,{limit: 20}).fetch();
 
         UserIndexFilterBefore = filterIndex;
         searchResult = UsersIndex.search(filterIndex, {limit: 20}).fetch();
 
         return _.intersectionObjects(searchResult, filterResult);
+    },
+
+    "allTeams": function () {
+        return Teams.find();
     }
 });
 

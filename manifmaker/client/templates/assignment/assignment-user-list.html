@@ -8,6 +8,17 @@
                 <label for="search_user_name"><i class="material-icons tiny">search</i>User name..</label>
             </div>
         </div>
+
+        <div class="input-field col s12">
+            <select class="browser-default">
+                <option value="" disabled selected>Choose a team</option>
+                {{#each allTeams}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+            <!--<label>Teams</label>-->
+        </div>
+
     </form>
 
 

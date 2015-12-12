@@ -266,5 +266,18 @@ Template.assignmentCalendar.events({
 });
 
 
+//
+//Template.assignmentTasksList.rendered = function(){
+//    $(document).ready(function() {
+//        $('select').material_select();
+//    });
+//};
+//
+//Template.assignmentUsersList.rendered = function(){
+//    $(document).ready(function() {
+//        $('select').material_select();
+//    });
+//};
+
 
 
