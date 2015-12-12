@@ -17,9 +17,13 @@ populateData =  function () {
         new Availability(getDateFromTime(20), getDateFromTime(22))
     ]);
 
+    var user4 = new User("MichMich", [
+    ]);
+
     user1 = insertAndFetch(Users, user1);
     user2 = insertAndFetch(Users, user2);
     user3 = insertAndFetch(Users, user3);
+    user4 = insertAndFetch(Users, user4);
 
     var place1= new Place ("place1");
     var place2= new Place ("place2");

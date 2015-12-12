@@ -3,20 +3,16 @@ Template.assignmentTasksList.helpers({
         var filter = TaskFilter.get();
         var filterIndex = TaskIndexFilter.get();
 
-        //if(filterIndex === noSearchFilter){
-        //    TaskIndexFilterBefore = filterIndex;
-        //    TaskFilterBefore = null; //in order to force update via userFilter
-        //}
+        var searchResult;
+        var filterResult;
 
+        TaskFilterBefore = filter;
+        filterResult = Tasks.find(filter);
 
-        if (filter != TaskFilterBefore) {
-            TaskFilterBefore = filter;
-            return Tasks.find(filter);
-        }
-        if (filterIndex != TaskIndexFilterBefore) {
-            TaskIndexFilterBefore = filterIndex;
-            return TasksIndex.search(filterIndex, {limit: 20}).fetch();
-        }
+        TaskIndexFilterBefore = filterIndex;
+        searchResult = TasksIndex.search(filterIndex, {limit: 20}).fetch();
+
+        return _.intersectionObjects(searchResult, filterResult);
 
     }
 });
@@ -26,13 +22,13 @@ TaskFilterBefore = defaultFilter;
 TaskIndexFilterBefore = defaultFilter;
 
 Template.assignmentTasksList.events({
-    "click .href-assignment-task": function(event){
+    "click .href-assignment-task": function (event) {
         event.stopPropagation();
         event.preventDefault();
         //TODO can't event to bubble to the collapsible event
 
-        console.info("routing", "/assignment/task/"+this._id);
-        Router.go("/assignment/task/"+this._id);
+        console.info("routing", "/assignment/task/" + this._id);
+        Router.go("/assignment/task/" + this._id);
     },
 
     "click li": function (event) {
