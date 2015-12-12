@@ -10,8 +10,8 @@
         </div>
 
         <div class="input-field col s12">
-            <select class="browser-default">
-                <option value="" disabled selected>Choose a team</option>
+            <select id="filter_team_user" class="browser-default">
+                <option value="" selected>Choose a team</option>
                 {{#each allTeams}}
                     <option value="{{_id}}">{{name}}</option>
                 {{/each}}

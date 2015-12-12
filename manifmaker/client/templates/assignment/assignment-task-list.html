@@ -8,6 +8,16 @@
                 <label for="search_task_name"><i class="material-icons tiny">search</i>Task name..</label>
             </div>
         </div>
+
+        <div class="input-field col s12">
+            <select id="filter_team_task" class="browser-default">
+                <option value="" selected>Choose a team</option>
+                {{#each allTeams}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+            <!--<label>Teams</label>-->
+        </div>
     </form>
 
     <ul class="collapsible " data-collapsible="accordion">

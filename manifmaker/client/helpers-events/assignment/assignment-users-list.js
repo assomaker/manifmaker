@@ -2,14 +2,17 @@ Template.assignmentUsersList.helpers({
     users: function () {
         var filter = UserFilter.get();
         var filterIndex = UserIndexFilter.get();
+        var teamFilter = UserTeamFilter.get();
 
         var searchResult;
         var filterResult;
 
-        UserFilterBefore = filter;
-        filterResult = Users.find(filter,{limit: 20}).fetch();
-
-        UserIndexFilterBefore = filterIndex;
+        filterResult = Users.find({
+            $and: [
+                filter,
+                teamFilter
+            ]
+        }, {limit: 20}).fetch();
         searchResult = UsersIndex.search(filterIndex, {limit: 20}).fetch();
 
         return _.intersectionObjects(searchResult, filterResult);
@@ -20,9 +23,6 @@ Template.assignmentUsersList.helpers({
     }
 });
 
-defaultFilter = {};
-UserFilterBefore = defaultFilter;
-UserIndexFilterBefore = defaultFilter;
 
 Template.assignmentUsersList.events({
     "click .href-assignment-user": function (event) {
@@ -76,6 +76,13 @@ Template.assignmentUsersList.events({
         } else {
             UserIndexFilter.set(searchInput);
         }
+    },
+
+    "change #filter_team_user" : function(event){
+        var _id = $(event.target).val();
+        //TODO
+        console.debug("TODO");
+
     }
 
 

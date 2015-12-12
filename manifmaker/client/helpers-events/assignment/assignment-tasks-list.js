@@ -2,24 +2,30 @@ Template.assignmentTasksList.helpers({
     tasks: function () {
         var filter = TaskFilter.get();
         var filterIndex = TaskIndexFilter.get();
+        var teamFilter = TaskTeamFilter.get();
+
 
         var searchResult;
         var filterResult;
 
-        TaskFilterBefore = filter;
-        filterResult = Tasks.find(filter);
+        //filterResult = Tasks.find(filter);
+        filterResult = Tasks.find({
+            $and: [
+                filter,
+                teamFilter
+            ]
+        }, {limit: 20}).fetch();
 
-        TaskIndexFilterBefore = filterIndex;
         searchResult = TasksIndex.search(filterIndex, {limit: 20}).fetch();
 
         return _.intersectionObjects(searchResult, filterResult);
 
+    },
+
+    "allTeams": function () {
+        return Teams.find();
     }
 });
-
-defaultFilter = {};
-TaskFilterBefore = defaultFilter;
-TaskIndexFilterBefore = defaultFilter;
 
 Template.assignmentTasksList.events({
     "click .href-assignment-task": function (event) {
@@ -76,5 +82,16 @@ Template.assignmentTasksList.events({
         } else {
             TaskIndexFilter.set(searchInput);
         }
+    },
+
+    "change #filter_team_task": function (event) {
+        var _id = $(event.target).val();
+        if (_id === "")
+            TaskTeamFilter.set(defaultFilter);
+        else
+            TaskTeamFilter.set({
+                team: _id
+            });
+
     }
 });
