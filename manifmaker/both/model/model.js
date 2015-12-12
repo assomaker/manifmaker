@@ -53,6 +53,16 @@ class Team {
     }
 }
 
+Group=
+class Group {
+    constructor(name, tasksId = [], teamId, _id) {
+        this.name = name;
+        if (typeof _id !== "undefined") this._id = _id;
+        this.tasksId=tasksId;
+        this.teamId= teamId;
+    }
+}
+
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
     constructor(start, end, peopleNeeded) {

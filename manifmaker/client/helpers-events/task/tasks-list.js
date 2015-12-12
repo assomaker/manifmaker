@@ -5,9 +5,9 @@ Template.tasksList.helpers({
             rowsPerPage: 10,
             showFilter: true,
             showRowCount:true,
-            columnPerPage: 4,
+            columnPerPage: 5,
             multiColumnSort: true,
-            fields: [//{label: 'Groupe', fnAdjustColumnSizing:true},
+            fields: [
                 {key: 'name', label: 'Nom de la tache', fnAdjustColumnSizing:true},
 
                 {key: 'teamId', label: 'Equipe', fnAdjustColumnSizing:true, fn: function(teamId,Task){
