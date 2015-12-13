@@ -7,6 +7,8 @@ Router.route('/assignment/userToTask', function () {
         UserFilter.set(defaultFilter);
         CurrentAssignmentType.set(AssignmentType.USERTOTASK);
         SelectedUser.set(null);
+        SelectedDate.set(null);
+
 
     }, {
         controller: 'AssignmentController',

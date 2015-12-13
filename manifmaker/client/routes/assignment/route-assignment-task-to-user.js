@@ -8,6 +8,7 @@ Router.route('/assignment/taskToUser', function () {
         CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
         SelectedUser.set(null);
         SelectedTask.set(null);
+        SelectedDate.set(null);
 
     }, {
         controller: 'AssignmentController',
