@@ -26,7 +26,6 @@ Router.route('/assignment/taskToUser/:taskId/:timeSlotId', function () {
         var task = Tasks.findOne({_id: this.params.taskId});
         var timeSlot = TimeSlotService.getTimeSlot(task, this.params.timeSlotId);
 
-
         var newFilter = {
             availabilities: {
                 $elemMatch: {

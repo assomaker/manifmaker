@@ -8,8 +8,6 @@ Router.route('/assignment/userToTask', function () {
         CurrentAssignmentType.set(AssignmentType.USERTOTASK);
         SelectedUser.set(null);
         SelectedDate.set(null);
-
-
     }, {
         controller: 'AssignmentController',
         name: 'assignment.calendar.userToTask'
@@ -20,9 +18,6 @@ Router.route('/assignment/userToTask/:userId/:selectedDate', function () {
         console.info("routing", '/assignment/userToTask/' + this.params.userId + '/' + this.params.selectedDate);
 
         var selectedDate = parseInt(this.params.selectedDate);
-
-        //new moment(parseInt(selectedDate.format('x')))
-
         selectedDate = new moment(selectedDate);
         var userId = SelectedUser.get()._id;
         var user = Users.findOne({_id: userId});

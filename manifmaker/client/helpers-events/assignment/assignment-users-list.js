@@ -14,7 +14,6 @@ Template.assignmentUsersList.helpers({
             ]
         }, {limit: 20}).fetch();
         searchResult = UsersIndex.search(filterIndex, {limit: 20}).fetch();
-
         return _.intersectionObjects(searchResult, filterResult);
     },
 
@@ -48,16 +47,9 @@ Template.assignmentUsersList.events({
 
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
-                //SelectedUser.set({_id: _id});
-                //selectedAvailability = null; //TODO pas top
-                //TaskFilter.set(noneFilter);
-                ////TODO reduire la liste à ses amis
                 break;
             case AssignmentType.TASKTOUSER:
-
-
                 Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId);
-
                 break;
         }
 
@@ -70,7 +62,6 @@ Template.assignmentUsersList.events({
         //console.info("routing", "/assignment/user/search/"+query);
         //Router.go("/assignment/user/search/"+query);
 
-
         if (searchInput === "") {
             UserIndexFilter.set(noSearchFilter);
         } else {
@@ -82,8 +73,5 @@ Template.assignmentUsersList.events({
         var _id = $(event.target).val();
         //TODO
         console.debug("TODO");
-
     }
-
-
 });

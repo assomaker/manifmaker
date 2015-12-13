@@ -89,7 +89,6 @@ Template.assignmentCalendar.helpers({
 
                 if (timeSlotFound === null && assignmentsFound.length === 0) return [];
 
-
                 var baseOneHourHeight = 40;
                 var accuracy = CalendarAccuracy.findOne().accuracy;
 
@@ -121,8 +120,6 @@ Template.assignmentCalendar.helpers({
             case AssignmentType.ALL:
                 return [];
         }
-
-
         return [data];  //le css ne sait pas encore gerer deux data timeSlot sur un meme calendar timeSlot
     },
     sideHoursHeight: function () {
@@ -153,18 +150,13 @@ Template.assignmentCalendar.helpers({
                 return "fourHour"
         }
     },
-
-
-
     //works for .heure et .quart d'heure
     isSelected: function (date, timeHours) {
         if(getCalendarDateTime(date, timeHours, 0).isSame(SelectedDate.get())){
             return "selected"
         }
         return ""
-
     }
-
 });
 
 
@@ -184,24 +176,8 @@ Template.assignmentCalendar.events({
                 var selectedTimeSlot = this;
                 selectedTimeslotId = selectedTimeSlot._id;
 
-                //var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
-                //var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
-
-                //var newFilter = {
-                //    availabilities: {
-                //        $elemMatch: {
-                //            start: {$lte: timeSlot.start},
-                //            end: {$gte: timeSlot.end}
-                //        }
-                //    }
-                //};
-                //
-                //UserFilter.set(newFilter);
-
                 console.info("routing", "/assignment/taskToUser/" + selectedTimeSlot.taskId + "/" + selectedTimeSlot._id);
                 Router.go("/assignment/taskToUser/" + selectedTimeSlot.taskId + "/" + selectedTimeSlot._id);
-
-
                 break;
         }
     },
@@ -226,47 +202,10 @@ Template.assignmentCalendar.events({
                 }
 
                 var current = Iron.Location.get().path;
-
-                //new moment(parseInt(selectedDate.format('x')))
-
-                //preveng /assignment/userToTask/inzDwHBs2dnYXbHei/-58526748000000/-58526740800000
                 var userId = current.split("/")[3];
-
 
                 console.info("routing", "/assignment/userToTask/" + userId + "/" + selectedDate);
                 Router.go("/assignment/userToTask/" + userId + "/" + selectedDate);
-
-
-                //var selectedDate = params.selectedDate;
-                //SelectedDate.set(selectedDate);
-                //var userId = SelectedUser.get()._id;
-                //var user = Users.findOne({_id: userId});
-                //var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
-                //
-                //if (typeof availability === "undefined") {
-                //    console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");
-                //    return;
-                //}
-                //selectedAvailability = availability;
-                //
-                ///*
-                // Task whose have at least one timeSlot (to begin, just one) as
-                //
-                // user.Dispocorrespante.start <= task.timeslot.start <= selectedDate and
-                // selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
-                //
-                // */
-                //
-                //var newFilter = {
-                //    timeSlots: {
-                //        $elemMatch: {
-                //            start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                //            end: {$gt: selectedDate.toDate(), $lte: availability.end}
-                //        }
-                //    }
-                //};
-                //
-                //TaskFilter.set(newFilter);
                 break;
             case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
                 //we let the event bubbles to the parent
@@ -275,19 +214,6 @@ Template.assignmentCalendar.events({
     }
 });
 
-
-//
-//Template.assignmentTasksList.rendered = function(){
-//    $(document).ready(function() {
-//        $('select').material_select();
-//    });
-//};
-//
-//Template.assignmentUsersList.rendered = function(){
-//    $(document).ready(function() {
-//        $('select').material_select();
-//    });
-//};
 
 
 

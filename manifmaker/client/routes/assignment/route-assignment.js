@@ -27,25 +27,16 @@ Router.route('/assignment/user/:userId', function () {
         console.info("routing", '/assignment/user/' + this.params.userId);
 
         //desactivation de la recherche par URL
-        //
         //if (this.params.userId === "search") {
         //    console.info("routing error, misunderstanding 'search' as a userId");
         //    Router.go("/assignment");
         //}
 
-        //ceci est seulement le userToTask => faire le taskToUser
+        //ceci est seulement le userToTask => TODO faire le taskToUser
 
         this.wait(Meteor.subscribe('users', this.params.userId));
 
         if (this.ready()) {
-            //CurrentAssignmentType.set(AssignmentType.USERTOTASK);
-            //SelectedUser.set({_id: this.params.userId});
-            //TaskFilter.set(noneFilter);
-            //
-            //selectedAvailability = null; //TODO pas top
-            //UserFilter.set(defaultFilter);
-            ////TODO reduire la liste à ses amis
-
             Router.go("/assignment/userToTask/" + this.params.userId);
         } else {
             console.log("waiting user data"); //TODO add a spinner
@@ -61,8 +52,8 @@ Router.route('/assignment/user/:userId', function () {
 Router.route('/assignment/task/:taskId', function () {
         console.info("routing", '/assignment/task/' + this.params.taskId);
 
-    //desactivation de la recherche par URL
-    //if (this.params.taskId === "search") {
+        //desactivation de la recherche par URL
+        //if (this.params.taskId === "search") {
         //    console.info("routing error, misunderstanding 'search' as a taskId");
         //    Router.go("/assignment");
         //}
@@ -72,12 +63,6 @@ Router.route('/assignment/task/:taskId', function () {
         this.wait(Meteor.subscribe('tasks', this.params.taskId));
 
         if (this.ready()) {
-            //CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
-            //SelectedTask.set({_id: this.params.taskId});
-            //selectedTimeslotId = null;//TODO pas top
-            //UserFilter.set(noneFilter);
-            //TODO aouter du CSS pour signifier quelle tache est la current
-
             Router.go("/assignment/taskToUser/" + this.params.taskId);
         } else {
             console.log("waiting task data"); //TODO add a spinner

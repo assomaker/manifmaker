@@ -1,38 +1,9 @@
-//Template.assignmentMenu.events({
-//    "click #all": function (event) {
-//        TaskFilter.set(defaultFilter);
-//        UserFilter.set(defaultFilter);
-//        CurrentAssignmentType.set(AssignmentType.ALL);
-//    },
-//    "click #quarterHour": function (event) {
-//        var accuracy = CalendarAccuracyEnum["0.25"];
-//        Meteor.call("setCalendarAccuracy", accuracy);
-//    },
-//    "click #halfHour": function (event) {
-//        var accuracy = CalendarAccuracyEnum["0.5"];
-//        Meteor.call("setCalendarAccuracy", accuracy);
-//    },
-//    "click #oneHour": function (event) {
-//        var accuracy = CalendarAccuracyEnum["1"];
-//        Meteor.call("setCalendarAccuracy", accuracy);
-//    },
-//    "click #twoHour": function (event) {
-//        var accuracy = CalendarAccuracyEnum["2"];
-//        Meteor.call("setCalendarAccuracy", accuracy);
-//    },
-//    "click #fourHour": function (event) {
-//        var accuracy = CalendarAccuracyEnum["4"];
-//        Meteor.call("setCalendarAccuracy", accuracy);
-//    }
-//});
-//
 Template.assignmentMenu.helpers({
     isSelected: function(mode){
         if(mode === CurrentAssignmentType.get()){
             return "active";
         }
         return "";
-
     },
     breadCrumbAssignment: function () {
         var userFilter = UserFilter.get(),

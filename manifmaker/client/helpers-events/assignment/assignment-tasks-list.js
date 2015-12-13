@@ -4,7 +4,6 @@ Template.assignmentTasksList.helpers({
         var filterIndex = TaskIndexFilter.get();
         var teamFilter = TaskTeamFilter.get();
 
-
         var searchResult;
         var filterResult;
 
@@ -17,9 +16,7 @@ Template.assignmentTasksList.helpers({
         }, {limit: 20}).fetch();
 
         searchResult = TasksIndex.search(filterIndex, {limit: 20}).fetch();
-
         return _.intersectionObjects(searchResult, filterResult);
-
     },
 
     "allTeams": function () {
@@ -29,10 +26,6 @@ Template.assignmentTasksList.helpers({
 
 Template.assignmentTasksList.events({
     "click .href-assignment-task": function (event) {
-        event.stopPropagation();
-        event.preventDefault();
-        //TODO can't event to bubble to the collapsible event
-
         console.info("routing", "/assignment/task/" + this._id);
         Router.go("/assignment/task/" + this._id);
     },
@@ -56,13 +49,8 @@ Template.assignmentTasksList.events({
                     _idTimeSlot = target.parents(".time-slot").data("_id");
 
                 Meteor.call("assignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot);
-
                 break;
             case AssignmentType.TASKTOUSER:
-                //SelectedTask.set({_id: _idTask});
-                //selectedTimeslotId = null;//TODO pas top
-                //UserFilter.set(noneFilter);
-                ////TODO aouter du CSS pour signifier quelle tache est la current
                 break;
         }
 
@@ -95,8 +83,5 @@ Template.assignmentTasksList.events({
             });
             $("#filter_team_task_option_advice_all").text("All teams"); //TODO label
         }
-
-
-
     }
 });
