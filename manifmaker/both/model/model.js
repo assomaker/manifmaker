@@ -65,7 +65,7 @@ class Group {
 
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
-    constructor(start, end, peopleNeeded) {
+    constructor(start, end, peopleNeeded, _id) {
         this.start = start;
         this.end = end;
         this.peopleNeeded = peopleNeeded; //Array<PeopleNeed>

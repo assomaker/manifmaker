@@ -8,7 +8,7 @@ class TimeSlotService {
         console.info("TimeSlotService.getTimeSlot timeSlot", timeSlotId, "for task", task);
         var found;
         task.timeSlots.forEach(timeSlot => {
-            if (timeSlot._id === timeSlotId) {
+            if (timeSlot._id == timeSlotId) {
                 found = TimeSlotService.read(timeSlot);
                 return false;
             }

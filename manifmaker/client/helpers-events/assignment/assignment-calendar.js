@@ -33,7 +33,6 @@ Template.assignmentCalendar.helpers({
     },
 
 
-
     timeSlot: function (date, timeHours, idTask) {
         var startCalendarTimeSlot = getCalendarDateTime(date, timeHours);
         var currentAssignmentType = CurrentAssignmentType.get();
@@ -46,12 +45,12 @@ Template.assignmentCalendar.helpers({
                 if (user === null) return [];
 
 
-                var availabilityFound = AvailabilityService.getAvailabilityByStart(user.availabilities,startCalendarTimeSlot);
-                var assignmentFound = AssignmentService.getAssignmentByStart(user.assignments,startCalendarTimeSlot);
+                var availabilityFound = AvailabilityService.getAvailabilityByStart(user.availabilities, startCalendarTimeSlot);
+                var assignmentFound = AssignmentService.getAssignmentByStart(user.assignments, startCalendarTimeSlot);
 
                 if (availabilityFound === null && assignmentFound === null) return [];
                 if (availabilityFound !== null && assignmentFound !== null) {
-                    console.error("Calendar.timeSlot : error while displaying user info, both availability and assignment has been found. \nuser",user," => availability",availabilityFound," and assignment",assignmentFound);
+                    console.error("Calendar.timeSlot : error while displaying user info, both availability and assignment has been found. \nuser", user, " => availability", availabilityFound, " and assignment", assignmentFound);
                     return [];
                 }
 
@@ -60,12 +59,12 @@ Template.assignmentCalendar.helpers({
 
                 var data = {}, founded;
 
-                if(availabilityFound !== null){
+                if (availabilityFound !== null) {
                     data.state = "available";
                     data.name = user.name;
 
                     founded = availabilityFound;
-                } else if(assignmentFound !== null){
+                } else if (assignmentFound !== null) {
                     data.name = assignmentFound.taskName;
                     data.state = "affecte";
 
@@ -85,24 +84,24 @@ Template.assignmentCalendar.helpers({
                 var task = SelectedTask.get() == null ? null : Tasks.findOne(SelectedTask.get());
                 if (task === null) return [];
 
-                var timeSlotFound = TimeSlotService.getTimeSlotByStart(task.timeSlots,startCalendarTimeSlot);
-                var assignmentsFound = AssignmentService.getAssignmentByStart(task.assignments,startCalendarTimeSlot, true);
+                var timeSlotFound = TimeSlotService.getTimeSlotByStart(task.timeSlots, startCalendarTimeSlot);
+                var assignmentsFound = AssignmentService.getAssignmentByStart(task.assignments, startCalendarTimeSlot, true);
 
                 if (timeSlotFound === null && assignmentsFound.length === 0) return [];
-
 
                 var baseOneHourHeight = 40;
                 var accuracy = CalendarAccuracy.findOne().accuracy;
 
                 var data = {}, founded;
 
-                if(timeSlotFound !== null){
+                data.taskId = task._id;
+                if (timeSlotFound !== null) {
                     data.state = "available";
                     data.name = task.name;
 
                     founded = timeSlotFound;
                 }
-                if(assignmentsFound.length !== 0){ //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
+                if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
                     data.name = assignmentsFound[0].taskName; //idem, la meme task
                     data.state = "in-progress";
 
@@ -121,8 +120,6 @@ Template.assignmentCalendar.helpers({
             case AssignmentType.ALL:
                 return [];
         }
-
-
         return [data];  //le css ne sait pas encore gerer deux data timeSlot sur un meme calendar timeSlot
     },
     sideHoursHeight: function () {
@@ -152,8 +149,14 @@ Template.assignmentCalendar.helpers({
             case 4:
                 return "fourHour"
         }
+    },
+    //works for .heure et .quart d'heure
+    isSelected: function (date, timeHours) {
+        if(getCalendarDateTime(date, timeHours, 0).isSame(SelectedDate.get())){
+            return "selected"
+        }
+        return ""
     }
-
 });
 
 
@@ -173,19 +176,8 @@ Template.assignmentCalendar.events({
                 var selectedTimeSlot = this;
                 selectedTimeslotId = selectedTimeSlot._id;
 
-                var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
-                var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
-
-                var newFilter = {
-                    availabilities: {
-                        $elemMatch: {
-                            start: {$lte: timeSlot.start},
-                            end: {$gte: timeSlot.end}
-                        }
-                    }
-                };
-
-                UserFilter.set(newFilter);
+                console.info("routing", "/assignment/taskToUser/" + selectedTimeSlot.taskId + "/" + selectedTimeSlot._id);
+                Router.go("/assignment/taskToUser/" + selectedTimeSlot.taskId + "/" + selectedTimeSlot._id);
                 break;
         }
     },
@@ -209,34 +201,11 @@ Template.assignmentCalendar.events({
                     selectedDate = new moment(new Date($target.attr("quarter")));
                 }
 
-                var userId = SelectedUser.get()._id;
-                var user = Users.findOne({_id: userId});
-                var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
+                var current = Iron.Location.get().path;
+                var userId = current.split("/")[3];
 
-                if (typeof availability === "undefined") {
-                    console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");
-                    return;
-                }
-                selectedAvailability = availability;
-
-                /*
-                 Task whose have at least one timeSlot (to begin, just one) as
-
-                 user.Dispocorrespante.start <= task.timeslot.start <= selectedDate and
-                 selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
-
-                 */
-
-                var newFilter = {
-                    timeSlots: {
-                        $elemMatch: {
-                            start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                            end: {$gt: selectedDate.toDate(), $lte: availability.end}
-                        }
-                    }
-                };
-
-                TaskFilter.set(newFilter);
+                console.info("routing", "/assignment/userToTask/" + userId + "/" + selectedDate);
+                Router.go("/assignment/userToTask/" + userId + "/" + selectedDate);
                 break;
             case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
                 //we let the event bubbles to the parent

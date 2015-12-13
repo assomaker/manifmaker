@@ -1,21 +1,47 @@
 <template name="assignmentUsersList">
-    <h2>Users List</h2>
-    <ul>
+    <h4 class="list-title">Users List</h4>
+
+    <form class="col s12">
+        <div class="row">
+            <div class="input-field">
+                <input placeholder="" id="search_user_name" type="text" class="validate">
+                <label for="search_user_name"><i class="material-icons tiny">search</i>User name..</label>
+            </div>
+        </div>
+
+        <div class="input-field col s12">
+            <select id="filter_team_user" class="browser-default">
+                <option value="" selected>Choose a team</option>
+                {{#each allTeams}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+    </form>
+
+
+    <ul class="collapsible " data-collapsible="accordion">
         {{#each users}}
-            <li class="user" data-_id="{{_id}}">
-                <div class="name">{{name}}</div>
-                Availabilities :
-                <ul>
-                    {{#each availabilities}}
-                        <li>from {{displayHours start}} to {{displayHours end}}</li>
-                    {{/each}}
-                </ul>
-                Assignments :
-                <ul>
-                    {{#each assignments}}
-                        <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
-                    {{/each}}
-                </ul>
+            <li>
+                <div class="collapsible-header">
+                    <a class="href-assignment-user">{{name}}</a>
+                </div>
+
+                <div class="collapsible-body">
+                    Availabilities :
+                    <ul>
+                        {{#each availabilities}}
+                            <li>from {{displayHours start}} to {{displayHours end}}</li>
+                        {{/each}}
+                    </ul>
+                    Assignments :
+                    <ul>
+                        {{#each assignments}}
+                            <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
             </li>
         {{/each}}
     </ul>

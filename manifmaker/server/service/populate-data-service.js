@@ -17,9 +17,13 @@ populateData =  function () {
         new Availability(getDateFromTime(20), getDateFromTime(22))
     ]);
 
+    var user4 = new User("MichMich", [
+    ]);
+
     user1 = insertAndFetch(Users, user1);
     user2 = insertAndFetch(Users, user2);
     user3 = insertAndFetch(Users, user3);
+    user4 = insertAndFetch(Users, user4);
 
     var place1= new Place ("place1");
     var place2= new Place ("place2");
@@ -32,10 +36,16 @@ populateData =  function () {
     var team1= new Team ("team1");
     var team2= new Team("team2");
     var team3= new Team("team3");
+    var team4= new Team("team4");
+    var team5= new Team("team5");
+    var team6= new Team("team6");
 
     team1= insertAndFetch(Teams, team1);
     team2= insertAndFetch(Teams, team2);
     team3= insertAndFetch(Teams, team3);
+    team4= insertAndFetch(Teams, team4);
+    team5= insertAndFetch(Teams, team5);
+    team6= insertAndFetch(Teams, team6);
 
 
 
