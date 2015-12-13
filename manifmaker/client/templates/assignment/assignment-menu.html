@@ -1,8 +1,8 @@
 <template name="assignmentMenu">
     <div class="half-top-row">
         <div class="action-button-top-bar">
-            <a id="userToTask" href="/assignment/userToTask" class="waves-purple waves-effect waves-light btn">User to Task mode</a>
-            <a id="taskToUser" href="/assignment/taskToUser" class="waves-purple waves-effect waves-light btn">Task to User mode</a>
+            <a id="userToTask" href="/assignment/userToTask" class="{{isSelected "userToTask"}} waves-purple waves-effect waves-light btn">User to Task mode</a>
+            <a id="taskToUser" href="/assignment/taskToUser" class="{{isSelected "taskToUser"}} waves-purple waves-effect waves-light btn">Task to User mode</a>
         </div>
     </div>
 

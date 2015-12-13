@@ -26,7 +26,14 @@
 //    }
 //});
 //
-//Template.assignmentMenu.helpers({
+Template.assignmentMenu.helpers({
+    isSelected: function(mode){
+        if(mode === CurrentAssignmentType.get()){
+            return "active";
+        }
+        return "";
+
+    }
 //    breadCrumbAssignment: function () {
 //        var userFilter = UserFilter.get(),
 //            taskFilter = TaskFilter.get(),
@@ -121,4 +128,4 @@
 //        }
 //
 //    }
-//});
+});
