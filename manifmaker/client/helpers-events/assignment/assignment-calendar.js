@@ -33,7 +33,6 @@ Template.assignmentCalendar.helpers({
     },
 
 
-
     timeSlot: function (date, timeHours, idTask) {
         var startCalendarTimeSlot = getCalendarDateTime(date, timeHours);
         var currentAssignmentType = CurrentAssignmentType.get();
@@ -46,12 +45,12 @@ Template.assignmentCalendar.helpers({
                 if (user === null) return [];
 
 
-                var availabilityFound = AvailabilityService.getAvailabilityByStart(user.availabilities,startCalendarTimeSlot);
-                var assignmentFound = AssignmentService.getAssignmentByStart(user.assignments,startCalendarTimeSlot);
+                var availabilityFound = AvailabilityService.getAvailabilityByStart(user.availabilities, startCalendarTimeSlot);
+                var assignmentFound = AssignmentService.getAssignmentByStart(user.assignments, startCalendarTimeSlot);
 
                 if (availabilityFound === null && assignmentFound === null) return [];
                 if (availabilityFound !== null && assignmentFound !== null) {
-                    console.error("Calendar.timeSlot : error while displaying user info, both availability and assignment has been found. \nuser",user," => availability",availabilityFound," and assignment",assignmentFound);
+                    console.error("Calendar.timeSlot : error while displaying user info, both availability and assignment has been found. \nuser", user, " => availability", availabilityFound, " and assignment", assignmentFound);
                     return [];
                 }
 
@@ -60,12 +59,12 @@ Template.assignmentCalendar.helpers({
 
                 var data = {}, founded;
 
-                if(availabilityFound !== null){
+                if (availabilityFound !== null) {
                     data.state = "available";
                     data.name = user.name;
 
                     founded = availabilityFound;
-                } else if(assignmentFound !== null){
+                } else if (assignmentFound !== null) {
                     data.name = assignmentFound.taskName;
                     data.state = "affecte";
 
@@ -85,8 +84,8 @@ Template.assignmentCalendar.helpers({
                 var task = SelectedTask.get() == null ? null : Tasks.findOne(SelectedTask.get());
                 if (task === null) return [];
 
-                var timeSlotFound = TimeSlotService.getTimeSlotByStart(task.timeSlots,startCalendarTimeSlot);
-                var assignmentsFound = AssignmentService.getAssignmentByStart(task.assignments,startCalendarTimeSlot, true);
+                var timeSlotFound = TimeSlotService.getTimeSlotByStart(task.timeSlots, startCalendarTimeSlot);
+                var assignmentsFound = AssignmentService.getAssignmentByStart(task.assignments, startCalendarTimeSlot, true);
 
                 if (timeSlotFound === null && assignmentsFound.length === 0) return [];
 
@@ -97,13 +96,13 @@ Template.assignmentCalendar.helpers({
                 var data = {}, founded;
 
                 data.taskId = task._id;
-                if(timeSlotFound !== null){
+                if (timeSlotFound !== null) {
                     data.state = "available";
                     data.name = task.name;
 
                     founded = timeSlotFound;
                 }
-                if(assignmentsFound.length !== 0){ //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
+                if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
                     data.name = assignmentsFound[0].taskName; //idem, la meme task
                     data.state = "in-progress";
 
@@ -153,6 +152,17 @@ Template.assignmentCalendar.helpers({
             case 4:
                 return "fourHour"
         }
+    },
+
+
+
+    //works for .heure et .quart d'heure
+    isSelected: function (date, timeHours) {
+        if(getCalendarDateTime(date, timeHours, 0).isSame(SelectedDate.get())){
+            return "selected"
+        }
+        return ""
+
     }
 
 });
@@ -188,8 +198,8 @@ Template.assignmentCalendar.events({
                 //
                 //UserFilter.set(newFilter);
 
-                console.info("routing", "/assignment/taskToUser/"+selectedTimeSlot.taskId+"/"+selectedTimeSlot._id);
-                Router.go("/assignment/taskToUser/"+selectedTimeSlot.taskId+"/"+selectedTimeSlot._id);
+                console.info("routing", "/assignment/taskToUser/" + selectedTimeSlot.taskId + "/" + selectedTimeSlot._id);
+                Router.go("/assignment/taskToUser/" + selectedTimeSlot.taskId + "/" + selectedTimeSlot._id);
 
 
                 break;
@@ -223,8 +233,8 @@ Template.assignmentCalendar.events({
                 var userId = current.split("/")[3];
 
 
-                console.info("routing", "/assignment/userToTask/"+userId+"/"+selectedDate);
-                Router.go("/assignment/userToTask/"+userId+"/"+selectedDate);
+                console.info("routing", "/assignment/userToTask/" + userId + "/" + selectedDate);
+                Router.go("/assignment/userToTask/" + userId + "/" + selectedDate);
 
 
                 //var selectedDate = params.selectedDate;

@@ -22,7 +22,6 @@ Router.route('/assignment/userToTask/:userId/:selectedDate', function () {
         //new moment(parseInt(selectedDate.format('x')))
 
         selectedDate = new moment(selectedDate);
-        SelectedDate.set(selectedDate);
         var userId = SelectedUser.get()._id;
         var user = Users.findOne({_id: userId});
         var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
@@ -31,6 +30,8 @@ Router.route('/assignment/userToTask/:userId/:selectedDate', function () {
             console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");
             return;
         }
+
+        SelectedDate.set(selectedDate);
         selectedAvailability = availability;
 
         /*
