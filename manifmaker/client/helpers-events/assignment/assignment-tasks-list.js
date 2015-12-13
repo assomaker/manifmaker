@@ -86,12 +86,17 @@ Template.assignmentTasksList.events({
 
     "change #filter_team_task": function (event) {
         var _id = $(event.target).val();
-        if (_id === "")
+        if (_id === "") {
             TaskTeamFilter.set(defaultFilter);
-        else
+            $("#filter_team_task_option_advice_all").text("Choose a team"); //TODO label
+        }else {
             TaskTeamFilter.set({
                 team: _id
             });
+            $("#filter_team_task_option_advice_all").text("All teams"); //TODO label
+        }
+
+
 
     }
 });
