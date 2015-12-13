@@ -1,6 +1,6 @@
 Router.route('/tasks', function () {
-        this.render('tasksList', {to: 'mainContent'});
         console.info("routing", "/tasks");
+        this.render('tasksList', {to: 'mainContent'});
     },
     {name: 'task.list'}
 );

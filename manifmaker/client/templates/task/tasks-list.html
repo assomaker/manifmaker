@@ -2,7 +2,7 @@
     <!--<h1>Here is the tasks list</h1>-->
 <body>
     <div class="input-field col s12">
-        <select multiple>
+        <select id="team_filter" multiple>
             <option value="" disabled selected>Choose your option</option>
             {{#each teams}}
                 <option value="{{_id}}">{{name}}</option>

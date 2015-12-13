@@ -1,5 +1,5 @@
 Template.tasksList.helpers({
-    teams: function(){
+    teams: function () {
         return Teams.find();
     },
     tasksList: function () {
@@ -7,19 +7,23 @@ Template.tasksList.helpers({
             collection: Tasks,
             rowsPerPage: 10,
             showFilter: true,
-            showRowCount:true,
+            showRowCount: true,
             columnPerPage: 5,
             multiColumnSort: true,
             fields: [
-                {key: 'name', label: 'Nom de la tache', fnAdjustColumnSizing:true},
+                {key: 'name', label: 'Task name', fnAdjustColumnSizing: true},
 
-                {key: 'teamId', label: 'Equipe', fnAdjustColumnSizing:true, fn: function(teamId,Task){
+                {
+                    key: 'teamId', label: 'Team', fnAdjustColumnSizing: true, fn: function (teamId, Task) {
                     return Teams.findOne(teamId).name;
-                }},
-                {key: 'timeSlots', label: 'Nombre de créneaux', sortable: false, fn: function (timeSlots, Task) {
+                }
+                },
+                {
+                    key: 'timeSlots', label: 'Time slots count', sortable: false, fn: function (timeSlots, Task) {
                     return timeSlots.length;
-                    }, fnAdjustColumnSizing:true},
-                {label:'Modifier la tache?', tmpl:Template.taskButtons, fnAdjustColumnSizing:true}
+                }, fnAdjustColumnSizing: true
+                },
+                {label: 'Actions', tmpl: Template.taskButtons, fnAdjustColumnSizing: true}
 
             ]
 
@@ -27,8 +31,8 @@ Template.tasksList.helpers({
     }
 });
 
-Template.tasksList.rendered = function(){
-    $(document).ready(function() {
+Template.tasksList.rendered = function () {
+    $(document).ready(function () {
         $('select').material_select();
     });
 };
@@ -38,8 +42,10 @@ Template.tasksList.created = function () {
 };
 
 Template.tasksList.events({
-    "click multiple": function (event, template) {
+    "change #team_filter": function (event, template) {
         event.preventDefault();
+        var _id = $(event.target).val();
+        //TODO constant
         template.filter.set({'team1': input});
 
     }
