@@ -1,6 +1,16 @@
 <template name="tasksList">
     <!--<h1>Here is the tasks list</h1>-->
 <body>
+    <div class="input-field col s12">
+        <select multiple>
+            <option value="" disabled selected>Choose your option</option>
+            {{#each teams}}
+                <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+        </select>
+        <label>Filtre d'équipe</label>
+    </div>
+
     {{> reactiveTable settings=tasksList }}
     {{#each tasks}}
 
