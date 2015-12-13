@@ -1,6 +1,6 @@
 Router.route('/tasks', function () {
         console.info("routing", "/tasks");
-        this.render('TasksList', {to: 'mainContent'});
+        this.render('tasksList', {to: 'mainContent'});
     },
     {name: 'task.list'}
 );
@@ -18,8 +18,7 @@ Router.route('/task/:_id', function () {
             data: function () {
                 var currentTask = this.params._id;
                 return Tasks.findOne({_id: currentTask});
-            }
-        }, {to: 'mainContent'});
+            },to: 'mainContent'});
     },
     {name: 'task.read'}
 );
@@ -30,8 +29,7 @@ Router.route('/task/:_id/delete', function () {
             data: function () {
                 var currentTask = this.params._id;
                 return Tasks.remove({_id: currentTask});
-            }
-        }, {to: 'mainContent'});
+            },to: 'mainContent'});
     },
     {name: 'task.delete'}
 );

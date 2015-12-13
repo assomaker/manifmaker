@@ -1,11 +1,18 @@
 <template name="tasksList">
     <!--<h1>Here is the tasks list</h1>-->
 <body>
-    {{#each tasks}}
+    <div class="input-field col s12">
+        <select id="team_filter" multiple>
+            <option value="" disabled selected>Choose your option</option>
+            {{#each teams}}
+                <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+        </select>
+        <label>Filtre d'équipe</label>
+    </div>
 
-            <li><a href="{{pathFor route='tasks'}}">{{name}}</a >,{{team}},{{place}}</li>
-            <a href="/task/{{_id}}">Modifier la tache</a >
-            <a href="/task/{{_id}}/delete">supprimer la tache</a>
+    {{> reactiveTable settings=tasksList }}
+    {{#each tasks}}
 
     {{/each}}
 

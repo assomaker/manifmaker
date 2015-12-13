@@ -63,7 +63,11 @@ populateData =  function () {
     task2 = insertAndFetch(Tasks, task2);
     task3 = insertAndFetch(Tasks, task3);
 
+    var group1= new Group ("group1",[task1._id, task2._id],team1._id);
+    var group2= new Group ("group2", [task3._id], team3._id);
 
+    group1 = insertAndFetch(Groups, group1);
+    group2 = insertAndFetch(Groups, group2);
 
 
 

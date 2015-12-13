@@ -25,4 +25,5 @@ less
 mizzao:bootstrap-3
 iron:router
 materialize:materialize
+aslagle:reactive-table #DAtaTables
 easy:search
