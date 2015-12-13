@@ -1,9 +1,17 @@
 defaultFilter = {};
+noSearchFilter = "";
 noneFilter = {none: "none"};
 UserFilter = new ReactiveVar(defaultFilter);
 SelectedUser = new ReactiveVar(null);
 TaskFilter = new ReactiveVar(defaultFilter);
+TaskIndexFilter = new ReactiveVar(defaultFilter);
+UserIndexFilter = new ReactiveVar(defaultFilter);
+UserTeamFilter = new ReactiveVar(defaultFilter);
+TaskTeamFilter = new ReactiveVar(defaultFilter);
+UserSkillsFilter = new ReactiveVar(defaultFilter);
 SelectedTask = new ReactiveVar(null);
+SelectedTimeSlot = new ReactiveVar(null);
+SelectedDate = new ReactiveVar(null);
 
 selectedTimeslotId = null; //TODO mettre ca dans Session ?//TODO pas top
 selectedAvailability = null;//TODO pas top
@@ -62,7 +70,7 @@ Meteor.startup(function () {
     //preSelecterTaskByTaskName("task2");
 
 
-    preSelectedUserByUserName("user1");
+//    preSelectedUserByUserName("user1");
 
 });
 

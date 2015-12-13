@@ -1,9 +1,12 @@
 <template name="wrapper">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
     {{> leftMenu}}
 
-    <div class="container-fluid">
-        <aside>
+    <div class="container-fluid no-padding">
+        <aside class="">
             {{> yield "mainContent"}}
         </aside>
     </div>
