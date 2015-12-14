@@ -38,15 +38,15 @@ Template.tasksList.rendered = function () {
 };
 
 Template.tasksList.created = function () {
-    this.filter = new ReactiveTable.Filter('team1', ['team']);
+    this.filter = new ReactiveTable.Filter('teamFilter', ['team']);
 };
 
 Template.tasksList.events({
     "change #team_filter": function (event, template) {
         event.preventDefault();
-        var _id = $(event.target).val();
+        var team_id = $(event.target).val();
         //TODO constant
-        template.filter.set({'team1': input});
+        template.filter.set({'teamFilter': team_id});
 
     }
 });
