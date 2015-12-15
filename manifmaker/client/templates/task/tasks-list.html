@@ -1,9 +1,8 @@
 <template name="tasksList">
     <!--<h1>Here is the tasks list</h1>-->
 <body>
-{{> reactiveTableFilter id="teamFilter" fields=['team'] }}
     <div class="input-field col s12">
-        <select id="team_filter" name="selectTeamFilter" multiple>
+        <select id="team_filter" name="selectTeamFilter" >
             <option value="" disabled selected>Choose your option</option>
             {{#each teams}}
                 <option value="{{_id}}">{{name}}</option>
@@ -13,6 +12,7 @@
     </div>
 
     {{> reactiveTable settings=tasksList }}
+    {{> reactiveTableFilter }}
     {{#each tasks}}
 
     {{/each}}

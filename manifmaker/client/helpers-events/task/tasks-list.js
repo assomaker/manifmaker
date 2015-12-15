@@ -10,6 +10,7 @@ Template.tasksList.helpers({
             showRowCount: true,
             columnPerPage: 5,
             multiColumnSort: true,
+            filters:['teamFilterId'],
             fields: [
                 {key: 'name', label: 'Task name', fnAdjustColumnSizing: true},
 
@@ -38,16 +39,17 @@ Template.tasksList.rendered = function () {
 };
 
 Template.tasksList.created = function () {
-    this.filter = new ReactiveTable.Filter('teamFilter', ['team']);
+    this.filter = new ReactiveTable.Filter('teamFilterId', ['teamId']);
 };
 
 Template.tasksList.events({
     "change #team_filter": function (event, template) {
         event.preventDefault();
         var team_id = $(event.target).val();
+        //console.log (team_id);
         //TODO constant
-        template.filter.set({'teamFilter': team_id});
+        template.filter.set({'teamId': team_id});
 
-    }
+    },
 });
 
