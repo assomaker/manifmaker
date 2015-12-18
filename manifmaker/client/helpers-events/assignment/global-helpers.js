@@ -9,6 +9,12 @@ Template.registerHelper(
     }
 );
 
+Template.registerHelper(
+    "displayUser", function () {
+        return Users.findOne({_id:this.assignedUserId}).name;
+    }
+);
+
 
 Template.registerHelper('ifNotEmpty', function(item, options) {
     if(item){

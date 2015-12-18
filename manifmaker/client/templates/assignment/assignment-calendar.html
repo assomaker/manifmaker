@@ -39,6 +39,7 @@
                                             {{/each}}
                                             {{#each peopleNeededAssigned}}
                                                 <div class="peopleNeed assigned" style="height: {{../height}};">
+                                                    <span>Assigned to {{displayUser assignedUserId}}</span>
                                                     {{#if userId }}<div class="user">{{userName}}</div>{{/if}}
                                                     {{#if teamId}}<div class="team">{{teamName}}</div>{{/if}}
                                                         <!--{{#ifNotEmpty skills}}-->

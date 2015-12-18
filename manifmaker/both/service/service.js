@@ -246,7 +246,7 @@ PeopleNeedService =
         }
 
 
-        static removePeopleNeed(task, timeSlot, peopleNeed) {
+        static removePeopleNeed(task, timeSlot, peopleNeed, userId) {
             console.info("PeopleNeedService.removePeopleNeed for task", task, "when", timeSlot, "and need", peopleNeed);
             //we have the task
             var timeSlots = task.timeSlots; //all its timeslots
@@ -264,6 +264,8 @@ PeopleNeedService =
             //remove peopleNeed assigned
             timeSlotToUpdate.peopleNeeded.splice(peopleNeedToRemoveIndex, 1);
 
+            //store assigned user
+            peopleNeed.assignedUserId = userId;
             timeSlotToUpdate.peopleNeededAssigned.push(peopleNeed);
 
 

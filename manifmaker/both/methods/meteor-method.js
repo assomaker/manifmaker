@@ -38,6 +38,7 @@ Meteor.methods({
 
         AvailabilityService.restoreAvailabilities(user, timeSlot.start, timeSlot.end);
         //PeopleNeedService.restorePeopleNeed(task, timeSlot, peopleNeed);
+        console.error("!!!!  TODO PeopleNeedService.restorePeopleNeed(task, timeSlot, peopleNeed);");
 
 
         return assignment;
@@ -67,7 +68,7 @@ Meteor.methods({
         Assignments.insert(assignment);
 
         AvailabilityService.removeAvailabilities(user, timeSlot.start, timeSlot.end);
-        PeopleNeedService.removePeopleNeed(task, timeSlot, peopleNeed);
+        PeopleNeedService.removePeopleNeed(task, timeSlot, peopleNeed, userId);
 
 
         return assignment;
