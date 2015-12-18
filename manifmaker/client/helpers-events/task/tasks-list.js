@@ -52,9 +52,7 @@ Template.tasksList.events({
 
     },
     "click .team-filter-wrapper" : function(){
-        console.log("pouet");
         $('.team-filter-wrapper select').material_select();
-
     }
 });
 
