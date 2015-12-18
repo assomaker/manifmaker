@@ -295,6 +295,8 @@ Template.assignmentCalendar.events({
                 } else if (typeof $target.attr("quarter") !== "undefined") {
                     selectedDate = new moment(new Date($target.attr("quarter")));
                 }
+                selectedDateUserToTask = selectedDate;
+
 
                 var userId = SelectedUser.get()._id;
                 var user = Users.findOne({_id: userId});

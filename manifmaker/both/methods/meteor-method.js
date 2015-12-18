@@ -47,6 +47,13 @@ Meteor.methods({
 
         return assignment;
 
+    },
+
+
+    populate: function(){
+        if(Meteor.isServer){
+            populateData();
+        }
     }
 });
 

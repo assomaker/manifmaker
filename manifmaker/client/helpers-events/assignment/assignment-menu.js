@@ -33,6 +33,9 @@ Template.assignmentMenu.events({
     "click #fourHour": function (event) {
         var accuracy = CalendarAccuracyEnum["4"];
         Meteor.call("setCalendarAccuracy",accuracy);
+    },
+    "click #populate": function(event){
+        Meteor.call("populate");
     }
 });
 
