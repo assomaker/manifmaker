@@ -3,8 +3,12 @@ Template.tasksList.helpers({
         return Teams.find();
     },
     tasksList: function () {
+
+        var teamFilter = TaskListTeamFilter.get();
+
+
         return {
-            collection: Tasks,
+            collection: Tasks,//.find(teamFilter),
             rowsPerPage: 10,
             showFilter: true,
             showRowCount: true,
@@ -46,7 +50,10 @@ Template.tasksList.events({
         event.preventDefault();
         var _id = $(event.target).val();
         //TODO constant
-        template.filter.set({'team1': input});
+
+        TaskListTeamFilter.set({
+            teamId : _id
+        });
 
     }
 });
