@@ -86,9 +86,14 @@ populateData = function () {
         new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed1,peopleNeed2,peopleNeed3])
     ]);
 
+    var task4 = new Task("task4", [
+        new TimeSlot(getDateFromTime(14), getDateFromTime(16), [peopleNeed1,peopleNeed2,peopleNeed3])
+    ]);
+
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
     task3 = insertAndFetch(Tasks, task3);
+    task4 = insertAndFetch(Tasks, task4);
 
     //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id);
     //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[1]._id);

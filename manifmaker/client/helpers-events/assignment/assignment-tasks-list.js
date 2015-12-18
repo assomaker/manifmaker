@@ -12,7 +12,7 @@ Template.assignmentTasksList.helpers({
 });
 
 Template.assignmentTasksList.events({
-    "click li": function (event) {
+    "click li.peopleNeed": function (event) {
         event.stopPropagation();
         var currentAssignmentType = CurrentAssignmentType.get();
         var target = $(event.target);
@@ -22,6 +22,8 @@ Template.assignmentTasksList.events({
         else
             _idTask = target.parents(".task").data("_id");
 
+        var peopleNeed = this;
+
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
 
@@ -30,7 +32,7 @@ Template.assignmentTasksList.events({
                 else
                     _idTimeSlot = target.parents(".time-slot").data("_id");
 
-                Meteor.call("assignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot);
+                Meteor.call("assignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot, peopleNeed);
 
                 break;
             case AssignmentType.TASKTOUSER:
