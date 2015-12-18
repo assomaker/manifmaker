@@ -24,33 +24,44 @@
                                     {{#each timeSlot  ../../date ../date this}}
                                         <div class="creneau usedByTask {{state}}"
                                              style="height: {{height}};">
-                                            {{#each peopleNeeded}}
-                                                <div class="peopleNeed"  style="height: {{../height}};">
-                                                    {{#if userId }}<div class="user">{{userName}}</div>{{/if}}
-                                                    {{#if teamId}}<div class="team">{{teamName}}</div>{{/if}}
-                                                    <!--{{#ifNotEmpty skills}}-->
+
+                                                {{#if taskName}}
+                                                    <span>Assigned to task {{taskName}}</span>
+                                                {{/if}}
+
+
+                                                {{#each peopleNeeded}}
+                                                    <div class="peopleNeed" style="height: {{../height}};">
+                                                        {{#if userId }}
+                                                            <div class="user">{{userName}}</div>{{/if}}
+                                                        {{#if teamId}}
+                                                            <div class="team">{{teamName}}</div>{{/if}}
+                                                            <!--{{#ifNotEmpty skills}}-->
                                                         <div>
                                                             {{#each skills}}
                                                                 <div class="skill">{{labelSkills}}</div>
                                                             {{/each}}
                                                         </div>
-                                                    <!--{{/ifNotEmpty}}-->
-                                                </div>
-                                            {{/each}}
-                                            {{#each peopleNeededAssigned}}
-                                                <div class="peopleNeed assigned" style="height: {{../height}};">
-                                                    <span>Assigned to {{displayUser assignedUserId}}</span>
-                                                    {{#if userId }}<div class="user">{{userName}}</div>{{/if}}
-                                                    {{#if teamId}}<div class="team">{{teamName}}</div>{{/if}}
-                                                        <!--{{#ifNotEmpty skills}}-->
-                                                    <div>
-                                                        {{#each skills}}
-                                                            <div class="skill">{{labelSkills}}</div>
-                                                        {{/each}}
+                                                            <!--{{/ifNotEmpty}}-->
                                                     </div>
-                                                        <!--{{/ifNotEmpty}}-->
-                                                </div>
-                                            {{/each}}
+                                                {{/each}}
+                                                {{#each peopleNeededAssigned}}
+                                                    <div class="peopleNeed assigned" style="height: {{../height}};">
+                                                        <span>Assigned to {{displayUser assignedUserId}}</span>
+                                                        {{#if userId }}
+                                                            <div class="user">{{userName}}</div>{{/if}}
+                                                        {{#if teamId}}
+                                                            <div class="team">{{teamName}}</div>{{/if}}
+                                                            <!--{{#ifNotEmpty skills}}-->
+                                                        <div>
+                                                            {{#each skills}}
+                                                                <div class="skill">{{labelSkills}}</div>
+                                                            {{/each}}
+                                                        </div>
+                                                            <!--{{/ifNotEmpty}}-->
+                                                    </div>
+                                                {{/each}}
+
                                         </div>
                                     {{/each}}
 

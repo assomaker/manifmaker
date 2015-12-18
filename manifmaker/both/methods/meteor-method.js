@@ -38,6 +38,7 @@ Meteor.methods({
 
         AvailabilityService.restoreAvailabilities(user, timeSlot.start, timeSlot.end);
         //PeopleNeedService.restorePeopleNeed(task, timeSlot, peopleNeed);
+        //TODO don't forget to remove assignedUserId when restoring people need from the available one
         console.error("!!!!  TODO PeopleNeedService.restorePeopleNeed(task, timeSlot, peopleNeed);");
 
 

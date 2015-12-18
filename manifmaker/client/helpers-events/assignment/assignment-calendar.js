@@ -81,6 +81,8 @@ Template.assignmentCalendar.helpers({
                     data.state = "affecte";
 
                     founded = assignmentFound;
+
+                    data.taskName = founded.taskName;
                 }
 
                 _.extend(data, founded);
