@@ -220,32 +220,29 @@ Template.assignmentCalendar.events({
                  */
                 var peopleNeeded = selectedPeopleNeed;
                 var askingSpecificNeedAndSkills = [];
-                //timeSlot.peopleNeeded.forEach(peopleNeeded => {
-                        if (peopleNeeded.userId) { //prior above teamId an skills
-                            askingSpecificNeedAndSkills.push({
-                                _id: peopleNeeded.userId
-                            });
-                        } else if (peopleNeeded.teamId && peopleNeeded.skills.length !== 0) {  //we combine teamId and skills
-                            askingSpecificNeedAndSkills.push({
-                                $and: [
-                                    {
-                                        teams: peopleNeeded.teamId
-                                    },
-                                    {
-                                        skills: {
-                                            $all: peopleNeeded.skills
-                                        }
-                                    }
-                                ]
-                            });
-                        } else if (peopleNeeded.teamId) { //we only use teamId
-                            askingSpecificNeedAndSkills.push({
+                if (peopleNeeded.userId) { //prior above teamId an skills
+                    askingSpecificNeedAndSkills.push({
+                        _id: peopleNeeded.userId
+                    });
+                } else if (peopleNeeded.teamId && peopleNeeded.skills.length !== 0) {  //we combine teamId and skills
+                    askingSpecificNeedAndSkills.push({
+                        $and: [
+                            {
                                 teams: peopleNeeded.teamId
-                            });
-                        } else if (peopleNeeded.skills.length !== 0) //if people need doesn't require any particular skills
-                            askingSpecificNeedAndSkills.push({skills: {$all: peopleNeeded.skills}});
-                    //}
-                //);
+                            },
+                            {
+                                skills: {
+                                    $all: peopleNeeded.skills
+                                }
+                            }
+                        ]
+                    });
+                } else if (peopleNeeded.teamId) { //we only use teamId
+                    askingSpecificNeedAndSkills.push({
+                        teams: peopleNeeded.teamId
+                    });
+                } else if (peopleNeeded.skills.length !== 0) //if people need doesn't require any particular skills
+                    askingSpecificNeedAndSkills.push({skills: {$all: peopleNeeded.skills}});
 
                 var userTeamsSkillsFilter;
                 if (askingSpecificNeedAndSkills.length !== 0) //if all time slot's people need don't require any particular skills
@@ -268,7 +265,7 @@ Template.assignmentCalendar.events({
                  */
                 var newFilter = {
                     $and: [
-                        // availabilitiesFilter,
+                        availabilitiesFilter,
                         userTeamsSkillsFilter
                     ]
                 };
@@ -310,10 +307,6 @@ Template.assignmentCalendar.events({
                 selectedAvailability = availability;
 
 
-                //pour traiter userId != null et teamId != null
-                //TODO
-
-
                 /*
 
                  ** Skills filter
@@ -343,30 +336,10 @@ Template.assignmentCalendar.events({
                                     }
                                 },
                                 //availabilities filter
-                                //start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                                //end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                                // start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                // end: {$gt: selectedDate.toDate(), $lte: availability.end}
                             }
                         },
-                        //   { // teamId and skills filter
-
-                        //$and: [  //team and skills requirements must match accordingly
-                        //    { //teamId filter
-                        //        timeSlots: {
-                        //            $elemMatch: {
-                        //                //skills filter
-                        //                peopleNeeded: {
-                        //                    $elemMatch: {
-                        //                        teamId: {
-                        //                            $in: user.teams
-                        //                        }
-                        //                    }
-                        //                }
-                        //            }
-                        //        },
-                        //availabilities filter
-                        //start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                        //end: {$gt: selectedDate.toDate(), $lte: availability.end}
-                        //},
                         {
                             $or: [ //either we match skills requirement or there is no skills requirement (and we don't care)
                                 { //skills filter
@@ -387,8 +360,8 @@ Template.assignmentCalendar.events({
                                                 }
                                             },
                                             //availabilities filter
-                                            //start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                                            //end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                                            start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                            end: {$gt: selectedDate.toDate(), $lte: availability.end}
                                         }
                                     }
                                 },
@@ -409,13 +382,11 @@ Template.assignmentCalendar.events({
                                                 }
                                             },
                                             //availabilities filter
-                                            //start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                                            //end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                                            start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                            end: {$gt: selectedDate.toDate(), $lte: availability.end}
                                         }
                                     }
                                 }
-                                //]
-                                //}
                             ]
                         }
                     ]
@@ -426,8 +397,8 @@ Template.assignmentCalendar.events({
                 TaskFilter.set(newFilter);
                 break;
             case
-            AssignmentType.TASKTOUSER
-            : //only display users that have at least one availability matching the selected time slot
+            AssignmentType.TASKTOUSER:
+                //only display users that have at least one availability matching the selected time slot
                 //we let the event bubbles to the parent
                 return [];
         }

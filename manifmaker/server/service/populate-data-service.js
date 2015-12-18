@@ -43,7 +43,7 @@ populateData = function () {
         [skill1._id]
     );
     var user2 = new User("user2", [team1._id], [
-            new Availability(getDateFromTime(2), getDateFromTime(20))],
+            new Availability(getDateFromTime(10), getDateFromTime(20))],
         [
            skill2._id
         ]
@@ -87,7 +87,7 @@ populateData = function () {
     ]);
 
     var task4 = new Task("task4", [
-        new TimeSlot(getDateFromTime(14), getDateFromTime(16), [peopleNeed1,peopleNeed2,peopleNeed3])
+        new TimeSlot(getDateFromTime(14), getDateFromTime(16), [peopleNeed2,peopleNeed3])
     ]);
 
     task1 = insertAndFetch(Tasks, task1);
