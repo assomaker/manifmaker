@@ -180,12 +180,39 @@ Template.assignmentCalendar.helpers({
 
 selectedPeopleNeed = null;
 
+
+
+var peopleNeedAssignedClick = 0;
+
 Template.assignmentCalendar.events({
-    "click .peopleNeed": function (event) {
+    "click .peopleNeed:not(.assigned)": function (event) {
         selectedPeopleNeed = this;
 
         //event should bubbles to .creneau
     },
+
+    "click .peopleNeed.assigned": function (event) {
+        event.stopPropagation();
+        peopleNeedAssignedClick++;
+        if (peopleNeedAssignedClick == 1) {
+            setTimeout(function () {
+                if (peopleNeedAssignedClick == 1) {
+                    console.info("click on peopleNeed.assigned : double click to perform remove assignment");
+                } else {
+                        console.info("dblclick on peopleNeed.assigned : TODO remove assignment");
+                    //    //TODO remove assignment
+
+                }
+                peopleNeedAssignedClick = 0;
+            },  300);
+        }
+
+    },
+    //
+    //"dblclick .peopleNeed.assigned": function (event) {
+    //    console.info("dblclick on peopleNeed.assigned : TODO remove assignment");
+    //    //TODO remove assignment
+    //},
 
 
     //taskToUser (we click on a complete task time slot)
