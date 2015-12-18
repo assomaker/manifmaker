@@ -8,7 +8,7 @@ Template.tasksList.helpers({
 
 
         return {
-            collection: Tasks,//.find(teamFilter),
+            collection: Tasks.find(teamFilter),
             rowsPerPage: 10,
             showFilter: true,
             showRowCount: true,
@@ -36,11 +36,6 @@ Template.tasksList.helpers({
     }
 });
 
-Template.tasksList.rendered = function () {
-    $(document).ready(function () {
-        $('select').material_select();
-    });
-};
 
 Template.tasksList.created = function () {
     this.filter = new ReactiveTable.Filter('teamFilterId', ['teamId']);
@@ -49,13 +44,16 @@ Template.tasksList.created = function () {
 Template.tasksList.events({
     "change #team_filter": function (event, template) {
         event.preventDefault();
-        var team_id = $(event.target).val();
-        //console.log (team_id);
-        //TODO constant
+        var _id = $(event.target).val();
 
         TaskListTeamFilter.set({
             teamId : _id
         });
+
+    },
+    "click .team-filter-wrapper" : function(){
+        console.log("pouet");
+        $('.team-filter-wrapper select').material_select();
 
     }
 });
