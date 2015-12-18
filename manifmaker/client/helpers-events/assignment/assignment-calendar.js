@@ -181,7 +181,6 @@ Template.assignmentCalendar.helpers({
 selectedPeopleNeed = null;
 
 
-
 var peopleNeedAssignedClick = 0;
 
 Template.assignmentCalendar.events({
@@ -199,21 +198,20 @@ Template.assignmentCalendar.events({
                 if (peopleNeedAssignedClick == 1) {
                     console.info("click on peopleNeed.assigned : double click to perform remove assignment");
                 } else {
-                        console.info("dblclick on peopleNeed.assigned : TODO remove assignment");
-                    //    //TODO remove assignment
-
+                    console.info("dblclick on peopleNeed.assigned : TODO remove assignment");
+                    //TODO remove assignment
+                    //
+                    //Meteor.call("assignUserToTaskTimeSlot",
+                    //    SelectedUser.get()._id,
+                    //    SelectedTask.get()._id,  //ok
+                    //    selectedTimeslotId,
+                    //    selectedPeopleNeed);
                 }
                 peopleNeedAssignedClick = 0;
-            },  300);
+            }, 300);
         }
 
     },
-    //
-    //"dblclick .peopleNeed.assigned": function (event) {
-    //    console.info("dblclick on peopleNeed.assigned : TODO remove assignment");
-    //    //TODO remove assignment
-    //},
-
 
     //taskToUser (we click on a complete task time slot)
     "click .creneau": function (event) {

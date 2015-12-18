@@ -20,6 +20,31 @@ Meteor.methods({
     },
 
 
+    removeAssignUserToTaskTimeSlot: function (userId, taskId, timeSlotId, peopleNeed) {
+        console.info("removeAssignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId, "with people need", peopleNeed);
+
+        var user = Users.findOne({_id: userId});
+        var task = Tasks.findOne({_id: taskId});
+        var timeSlot = TimeSlotService.getTimeSlot(task, timeSlotId);
+
+
+        var assignment = Assignments.findOne({
+            userId: userId,
+            taskId: taskId,
+            timeSlotId: timeSlotId,
+            'peopleNeed._id': peopleNeed._id
+        });
+        Assignments.remove(assignment._id);
+
+        AvailabilityService.restoreAvailabilities(user, timeSlot.start, timeSlot.end);
+        //PeopleNeedService.restorePeopleNeed(task, timeSlot, peopleNeed);
+
+
+        return assignment;
+
+    },
+
+
     assignUserToTaskTimeSlot: function (userId, taskId, timeSlotId, peopleNeed) {
         console.info("assignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId, "with people need", peopleNeed);
 

@@ -10,7 +10,6 @@ class ServerAssignmentService {
             task = Tasks.findOne(assignment.taskId);
 
         var timeSlot = TimeSlotService.getTimeSlot(task, assignment.timeSlotId);
-        delete timeSlot.peopleNeeded;//.......
 
         var userAssignment = new UserAssignment(task.name, timeSlot.start, timeSlot.end, assignment._id);
         updateUser.assignments = user.assignments;

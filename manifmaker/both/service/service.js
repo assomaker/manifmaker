@@ -138,6 +138,76 @@ AvailabilityService =
 
         }
 
+        static getIndexOfAvailabilityWhichEndWhenParamStart(user, start) {
+            console.info("AvailabilityService.getIndexOfAvailabilityWhichEndWhenParamStart start:", start, "for user", user);
+            var found;
+            var start = new moment(start);
+
+            user.availabilities.forEach(function (availability, index, availabilities) {
+                var availabilityEnd = new moment(availability.end);
+                if (availabilityEnd.isSame(start) ){
+                    found = index;
+                    return false;
+                }
+            });
+            return found;
+        }
+
+        static getIndexOfAvailabilityWhichStartWhenParamEnd(user, end) {
+            console.info("AvailabilityService.getIndexOfAvailabilityWhichStartWhenParamEnd end:", end, "for user", user);
+            var found;
+            var end = new moment(end);
+
+            user.availabilities.forEach(function (availability, index, availabilities) {
+                var availabilityStart = new moment(availability.start);
+                if (availabilityStart.isSame(end) ){
+                    found = index;
+                    return false;
+                }
+            });
+            return found;
+        }
+
+        static restoreAvailabilities(user, start, end) {
+            console.info("AvailabilityService.restoreAvailabilities for user", user, " from", start, "to", end);
+            var availabilities = user.availabilities;
+            var previousAvailability,nextAvailability;
+
+            //if exits, get direct previous availabilty
+            var previousAvailabilityIndex = AvailabilityService.getIndexOfAvailabilityWhichEndWhenParamStart(user,start);
+
+            //if exits, get direct next availabilty
+            var nextAvailabilityIndex = AvailabilityService.getIndexOfAvailabilityWhichStartWhenParamEnd(user,end);
+
+
+            //if possible
+
+            //remove old availability(ies)
+            if(previousAvailabilityIndex){
+                previousAvailability = availabilities.splice(previousAvailabilityIndex, 1)[0];
+            }
+            if(nextAvailabilityIndex){
+                nextAvailability = availabilities.splice(nextAvailabilityIndex, 1)[0];
+            }
+
+            var newAvailability = {};
+
+            //merge availability
+            if(previousAvailability){
+                newAvailability.start = previousAvailability.start;
+            } else {
+                newAvailability.start = start;
+            }
+            if(nextAvailability){
+                nextAvailability.end = nextAvailability.end;
+            } else {
+                newAvailability.end = end;
+            }
+
+            Users.update({_id: user._id}, {$set: {availabilities: availabilities}});
+
+        }
+
         static getAvailabilityByStart(availabilities, start) {
             return TimeSlotService.getTimeSlotByStart(availabilities, start);
         }

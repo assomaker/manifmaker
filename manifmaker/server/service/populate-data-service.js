@@ -95,7 +95,7 @@ populateData = function () {
     task3 = insertAndFetch(Tasks, task3);
     task4 = insertAndFetch(Tasks, task4);
 
-    //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id);
+    Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id,peopleNeed1);
     //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[1]._id);
 
 
