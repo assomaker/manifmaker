@@ -35,14 +35,44 @@ class Availability {
 
 Task = //to export it to other namespace
 class Task {
-    constructor(name, timeSlots, assignments = [], _id) {
+    constructor(name, timeSlots, assignments = [], placeId, teamId, respManifId, description, _id) {
         this.name = name;
         this.timeSlots = timeSlots; //Array<Timeslot>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
         this.assignments = assignments;
+        this.teamId=teamId;
+        this.description=description;
+        this.place=placeId;
+        this.respManif=respManifId;
+
     }
 }
 
+Place=
+class Place {
+    constructor(name, _id){
+        this.name = name;
+        if (typeof _id !== "undefined") this._id = _id;
+    }
+}
+
+Team=
+class Team {
+    constructor(name, _id) {
+        this.name = name;
+        if (typeof _id !== "undefined") this._id = _id;
+    }
+}
+
+Group=
+class Group {
+    constructor(name, tasksId = [], teamId, _id) {
+        this.name = name;
+        if (typeof _id !== "undefined") this._id = _id;
+        this.tasksId=tasksId;
+        this.teamId= teamId;
+    }
+}
 
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
@@ -88,7 +118,6 @@ class PeopleNeed {
 
 
 
-        if (typeof _id !== "undefined") this._id = _id
         else this._id = new Meteor.Collection.ObjectID()._str;
     }
 }

@@ -1,9 +1,11 @@
 Meteor.startup(function () {
     // code to run on server at startup
-
     Assignments.remove({});
     Users.remove({});
     Tasks.remove({});
+    Places.remove({});
+    Teams.remove({});
+    Groups.remove({});
     CalendarDays.remove({});
     CalendarHours.remove({});
     CalendarQuarter.remove({});

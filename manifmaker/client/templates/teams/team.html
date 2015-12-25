@@ -1,0 +1,21 @@
+<template name="team">
+
+    <section class="top-section">
+
+        <div class="container-fluid" >
+
+            <h3>Nom de l'équipe</h3>
+            <input type="text" name="teamName" placeHolder="Cette tache a pas encore de nom" class="task-name" value="{{name}}">
+
+        </div>
+    </section>
+
+    <footer >
+        <div class="clo-xs-12 col-md-12 bottom-button" >
+            <button class="button-save" type="button" name="buttonSave">Sauvegarder l'équipe</button>
+        </div>
+        <a href="/team/{{_id}}/delete">supprimer l'équipe</a>
+    </footer>
+
+
+</template>

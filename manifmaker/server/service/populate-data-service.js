@@ -56,9 +56,33 @@ populateData = function () {
     );
 
 
+    var user4 = new User("MichMich", [
+    ]);
+
     user1 = insertAndFetch(Users, user1);
     user2 = insertAndFetch(Users, user2);
     user3 = insertAndFetch(Users, user3);
+    user4 = insertAndFetch(Users, user4);
+
+    var place1= new Place ("place1");
+    var place2= new Place ("place2");
+    var place3= new Place ("place3");
+
+    place1= insertAndFetch(Places, place1);
+    place2= insertAndFetch(Places, place2);
+    place3= insertAndFetch(Places, place3);
+
+    var team3= new Team("team3");
+    var team4= new Team("team4");
+    var team5= new Team("team5");
+    var team6= new Team("team6");
+
+    team3= insertAndFetch(Teams, team3);
+    team4= insertAndFetch(Teams, team4);
+    team5= insertAndFetch(Teams, team5);
+    team6= insertAndFetch(Teams, team6);
+
+
 
     var peopleNeed1 = new PeopleNeed({
         skills: [],//skill1._id]
@@ -90,12 +114,20 @@ populateData = function () {
         new TimeSlot(getDateFromTime(14), getDateFromTime(16), [peopleNeed2,peopleNeed3])
     ]);
 
+
     task1 = insertAndFetch(Tasks, task1);
     task2 = insertAndFetch(Tasks, task2);
     task3 = insertAndFetch(Tasks, task3);
     task4 = insertAndFetch(Tasks, task4);
 
-    Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id,peopleNeed1);
+    var group1= new Group ("group1",[task1._id, task2._id],team1._id);
+    var group2= new Group ("group2", [task3._id], team3._id);
+
+    group1 = insertAndFetch(Groups, group1);
+    group2 = insertAndFetch(Groups, group2);
+
+
+    //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[0]._id);
     //Meteor.call("assignUserToTaskTimeSlot", user1._id, task1._id, task1.timeSlots[1]._id);
 
 
@@ -120,6 +152,6 @@ getDateFromTime = function (hours, minutes = 0) {
 getDateFromDate = function (day, month, year) {
     var now = new Date();
     year = year || now.getYear();
-    month = month || now.getMonth()
+    month = month || now.getMonth();
     return new Date(year, month, day, 0, 0, 0);
 };

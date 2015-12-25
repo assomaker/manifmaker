@@ -1,0 +1,68 @@
+<template name="task">
+
+    <section class="top-section">
+
+        <div class="container-fluid" >
+
+                <h3>Nom de la tache</h3>
+                <input type="text" name="taskName" placeHolder="Cette tache a pas encore de nom" class="task-name" value="{{name}}">
+
+
+            <div class="row">
+
+
+                <div class="clo-xs-12 col-md-4 ">
+                    <select class="informations" name="team">
+                        {{#each teams}}
+                            {{#if equals ../teamId _id }}
+                                <option value="{{_id}}" selected>{{name}}</option>
+                            {{else}}
+                                <option value="{{_id}}">{{name}}</option>
+                            {{/if}}
+                        {{/each}}
+
+                    </select>
+                    {{>respManif}} <!--TODO-->
+                </div>
+
+                <div class="clo-xs-12 col-md-4">
+
+
+                    <select class="informations" name="place">
+                        {{#each places}}
+                            {{#if equals ../place _id }}
+                                <option value="{{_id}}" selected>{{name}}</option>
+                            {{else}}
+                                <option value="{{_id}}">{{name}}</option>
+                            {{/if}}
+                        {{/each}}
+
+                    </select>
+
+
+                </div>
+                
+            </div>
+
+        </div>
+    </section>
+
+    <section class="description">
+        <div class="clo-xs-12 col-md-12 ">
+                <strong>Description:</strong><br>
+                <input class="text-description" type="textarea" name="description" value="{{description}}"> <!-- j'ai un problème ici, je
+                n'arrive pas à obtenir un grand bloc de texte. J'ai essayé un textarea et u text mais aucun des deux
+                 ne me satisfait-->
+        </div>
+    </section>
+
+
+<footer >
+    <div class="clo-xs-12 col-md-12 bottom-button" >
+        <button class="button-save" type="button" name="buttonSave">Sauvegarder la fiche tache</button>
+        <a href="/task/{{_id}}/delete" name="suppress">supprimer la tache</a>
+    </div>
+</footer>
+
+
+</template>

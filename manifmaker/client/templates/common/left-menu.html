@@ -1,0 +1,35 @@
+<template name="leftMenu">
+
+    <nav id="top-left-menu">
+        <ul id="left-menu" class="side-nav collapsible-left-menu" data-collapsible="accordion">
+            <li><a class="home-link" href="{{pathFor route='home'}}">Assomaker</a></li>
+            <li>
+                <div class="collapsible-header">Activity</div>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a href="{{pathFor route='activity.list'}}">List</a></li>
+                        <li><a href="{{pathFor route='activity.create'}}">Create</a></li>
+                        <li><a href="{{pathFor route='activity.stats'}}">Stats</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">Tasks</div>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a href="{{pathFor route='task.list'}}">List</a></li>
+                        <li><a href="{{pathFor route='group.list'}}">Groups</a></li>
+                        <li><a href="{{pathFor route='task.create'}}">Create</a></li>
+                        <li><a href="{{pathFor route='task.stats'}}">Stats</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="{{pathFor route='assignment.calendar'}}">Assignment</a></li>
+        </ul>
+        <a href="#" id="button-collapse-left-menu" data-activates="left-menu" class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a>
+
+        {{> yield "topNavBar"}}
+
+    </nav>
+
+</template>

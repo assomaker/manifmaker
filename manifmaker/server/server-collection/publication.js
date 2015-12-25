@@ -16,11 +16,18 @@ Meteor.startup(function () {
         return Skills.find({});
     });
 
-    Meteor.publish("teams", function () {
+    //below will be only client only
+    Meteor.publish("teams", function (){
         return Teams.find({});
     });
 
-    //below will be only client only
+    Meteor.publish("groups", function (){
+        return Groups.find({});
+    });
+
+    Meteor.publish("places", function(){
+        return Places.find({});
+    });
 
     Meteor.publish("calendarDays", function () {
         return CalendarDays.find({});

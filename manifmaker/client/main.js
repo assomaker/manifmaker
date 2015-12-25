@@ -1,9 +1,17 @@
 defaultFilter = {};
+noSearchFilter = "";
 noneFilter = {none: "none"};
 UserFilter = new ReactiveVar(defaultFilter);
 SelectedUser = new ReactiveVar(null);
 TaskFilter = new ReactiveVar(defaultFilter);
+TaskIndexFilter = new ReactiveVar(noSearchFilter);
+UserIndexFilter = new ReactiveVar(noSearchFilter);
+UserTeamFilter = new ReactiveVar(defaultFilter);
+TaskTeamFilter = new ReactiveVar(defaultFilter);
+UserSkillsFilter = new ReactiveVar(defaultFilter);
 SelectedTask = new ReactiveVar(null);
+SelectedTimeSlot = new ReactiveVar(null);
+SelectedDate = new ReactiveVar(null);
 
 selectedTimeslotId = null; //TODO mettre ca dans Session ?//TODO pas top
 selectedAvailability = null;//TODO pas top
@@ -44,13 +52,16 @@ function preSelectedUserByUserName(name) {
     });
 
 }
+
+
 Meteor.startup(function () {
     Meteor.subscribe("skills");
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
+    Meteor.subscribe("places");
     Meteor.subscribe("assignments");
     Meteor.subscribe("teams");
-
+    Meteor.subscribe("groups");
 
     //below will be client only
     Meteor.subscribe("calendarAccuracy");
@@ -60,6 +71,6 @@ Meteor.startup(function () {
 
 
     //preSelecterTaskByTaskName("task1");
-    preSelectedUserByUserName("user1");
+    //preSelectedUserByUserName("user1");
 });
 

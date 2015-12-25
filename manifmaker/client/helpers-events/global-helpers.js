@@ -35,3 +35,8 @@ Template.registerHelper('ifNotEmpty', function(item, options) {
         return options.inverse(this);
     }
 });
+
+Template.registerHelper("equals", function (a, b) {
+       return a === b;
+    }
+);

@@ -1,0 +1,50 @@
+<template name="group">
+
+    <section class="top-section">
+
+        <div class="container-fluid" >
+
+            <h3>Nom du groupe</h3>
+            <input type="text" name="groupName" placeHolder="Ce groupe n'a pas encore de nom" class="task-name" value="{{name}}">
+
+
+            <div class="row">
+
+
+                <div class="clo-xs-12 col-md-4 ">
+                    <select class="informations" name="team">
+                        {{#each teams}}
+                            {{#if equals ../teamId _id }}
+                                <option value="{{_id}}" selected>{{name}}</option>
+                            {{else}}
+                                <option value="{{_id}}">{{name}}</option>
+                            {{/if}}
+                        {{/each}}
+
+                    </select>
+                </div>
+
+                <div class="clo-xs-12 col-md-4">
+
+
+                   <!-- Mettre en place un select pour choisir une animation liée au groupe de tache*/-->
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <footer >
+        <div class="clo-xs-12 col-md-12 bottom-button" >
+            <button class="button-save" type="button" name="buttonSave">Sauvegarder le groupe</button>
+            <a href="/group/{{_id}}/delete" name="suppress">supprimer le groupe</a>
+        </div>
+    </footer>
+
+
+</template>

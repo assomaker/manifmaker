@@ -25,3 +25,7 @@ less
 mizzao:bootstrap-3
 iron:router
 meteorhacks:aggregate
+materialize:materialize
+aslagle:reactive-table #DAtaTables
+easy:search
+

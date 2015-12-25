@@ -176,6 +176,13 @@ Template.assignmentCalendar.helpers({
             case 4:
                 return "fourHour"
         }
+    },
+    //works for .heure et .quart d'heure
+    isSelected: function (date, timeHours) {
+        if(getCalendarDateTime(date, timeHours, 0).isSame(SelectedDate.get())){
+            return "selected"
+        }
+        return ""
     }
 
 });
@@ -337,19 +344,14 @@ Template.assignmentCalendar.events({
 
 
                 /*
-
                  ** Skills filter
                  User is eligible for a task if he has all skills for at least one task' people need's skills.
                  The query looks like something like this : 'foreach timeSlot foreach peopleNeeded foreach skills' = at least user.skills
-
                  ** Availabilities filter :
                  Task whose have at least one timeSlot (to begin, just one) as
                  user.selectedAvailabilities.start <= task.timeslot.start <= selectedDate and
                  selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
-
-
                  Foreach task's time slot, we need a matching skills and a matching availability
-
                  */
 
                 var newFilter = {

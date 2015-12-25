@@ -40,40 +40,105 @@ Template.assignmentMenu.events({
 });
 
 Template.assignmentMenu.helpers({
-    adviceMessage: function () {
+    isSelected: function(mode){
+        if(mode === CurrentAssignmentType.get()){
+            return "active";
+        }
+        return "";
+    },
+    breadCrumbAssignment: function () {
+        return [{label:"TODO",url:""}];
         var userFilter = UserFilter.get(),
             taskFilter = TaskFilter.get(),
             currentAssignmentType = CurrentAssignmentType.get(),
             selectedUser = SelectedUser.get(),
-            selectedTask = SelectedTask.get()
-        message = "";
+            selectedTask = SelectedTask.get(),
+            selectedDate = SelectedDate.get(),
+            selectedTimeSlot = SelectedTimeSlot.get(),
+            result = [];
 
         if (currentAssignmentType === AssignmentType.USERTOTASK) {
             if (selectedUser === null) {
-                message += "Select a user";
-            } else if (selectedAvailability === null) {//TODO pas top
+                result.push({
+                    label: "Select a user",
+                    url: ""
+                });
+            } else  {
                 var userName = UserRepository.findOne(selectedUser._id).name;
-                message += "Select one of " + userName + " availability";
-            } else {
-                message += "Select a time slot of one of the available task";
-            }
+                result.push({
+                    label: userName,
+                    url: "/assignment/userToTask/" + selectedUser._id
+                });
 
-            return message;
+                if (selectedAvailability === null) {//TODO pas top
+                    result.push({
+                        label: "Select one of the availability",
+                        url: ""
+                    });
+                } else {
+                    result.push({
+                        label: selectedDate.format("ddd D HH:mm"),
+                        url: "/assignment/userToTask/" + selectedUser._id + "/" + selectedDate.format('x')
+                    });
+
+                    if(true){ //if pas de task/people need selected
+                        result.push({
+                            label: "Select one of the available task [and a people need]",
+                            url: ""
+                        });
+                    }
+                }
+            }
+            return result;
         }
+
         if (currentAssignmentType === AssignmentType.TASKTOUSER) {
             if (selectedTask === null) {
-                message += "Select a task";
-            } else if (selectedTimeslotId === null) {//TODO pas top
+                result.push({
+                    label: "Select a task",
+                    url: ""
+                });
+            } else  {
                 var taskName = TaskRepository.findOne(selectedTask._id).name;
-                message += "Select one of " + taskName + " time slot";
-            } else {
-                message += "Select an availability of one of the available user";
-            }
+                result.push({
+                    label: taskName,
+                    url: "/assignment/taskToUser/" + selectedTask._id
+                });
 
-            return message;
+                if (selectedTimeSlot === null) {//TODO pas top
+                    result.push({
+                        label: "Select one of the time slot [and a people need]",
+                        url: ""
+                    });
+                } else {
+
+                    var task = Tasks.findOne(selectedTask);
+                    var timeSlot = TimeSlotService.getTimeSlot(task,selectedTimeSlot._id);
+
+
+                    result.push({
+                        label: new moment(timeSlot.start).format("HH:mm") + " to " +  new moment(timeSlot.end).format("HH:mm"),
+                        url: "/assignment/taskToUser/" + selectedTask._id + "/" + selectedTimeSlot._id
+                    });
+
+                    if(true){ //if pas de task/people need selected
+                        result.push({
+                            label: "Select one of the available user",
+                            url: ""
+                        });
+                    }
+                }
+            }
+            return result;
         }
 
-        return "Here are all the data";
+        if(currentAssignmentType == AssignmentType.ALL){
+            result.push({
+                label: "Welcome, start by selecting an assignment mode",
+                url: ""
+            });
+            return result;
+        }
 
     }
 });
