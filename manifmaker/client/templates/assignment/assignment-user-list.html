@@ -1,5 +1,5 @@
 <template name="assignmentUsersList">
-    <h4 class="list-title">Users List</h4>
+    <h5 class="list-title">Users List</h5>
 
     <form class="col s12">
         <div class="row">
@@ -23,16 +23,28 @@
 
     <ul class="collapsible " data-collapsible="accordion">
         {{#each users}}
-            <li>
+            <li class="user" data-_id="{{_id}}">
                 <div class="collapsible-header">
                     <a class="href-assignment-user">{{name}}</a>
                 </div>
 
                 <div class="collapsible-body">
+                    Teams :
+                    <ul>
+                        {{#each teams}}
+                            <li>{{team}}</li>
+                        {{/each}}
+                    </ul>
                     Availabilities :
                     <ul>
                         {{#each availabilities}}
                             <li>from {{displayHours start}} to {{displayHours end}}</li>
+                        {{/each}}
+                    </ul>
+                    Skills :
+                    <ul>
+                        {{#each skills}}
+                            <li>{{skillLabel}}</li>
                         {{/each}}
                     </ul>
                     Assignments :

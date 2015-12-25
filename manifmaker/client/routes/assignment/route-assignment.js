@@ -7,7 +7,17 @@ AssignmentController = RouteController.extend({
             this.render("assignmentMenu", {to: "topNavBar"})
             assignmentCalendarIsRendered = true;
         }
+
         this.next();
+
+        //
+        //this.wait(Meteor.subscribe('teams'));
+        //
+        //if (this.ready()) {
+        //    this.next();
+        //} else {
+        //    console.log("waiting teams data"); //TODO add a spinner
+        //}
     }
 });
 

@@ -1,19 +1,19 @@
 <template name="AssignmentHome">
 
-        <div class="row">
+    <div class="row">
 
-            <div class="clo-xs-12 col-md-2 no-padding">
-                {{> assignmentUsersList}}
-            </div>
-
-            <div class="clo-xs-12 col-md-8 no-padding">
-                {{> assignmentCalendar}}
-            </div>
-
-            <div class="clo-xs-12 col-md-2 no-padding">
-                {{> assignmentTasksList}}
-            </div>
-
+        <div id="assignment-user-list" class="clo-xs-12 col-md-4 no-padding">
+            {{> assignmentUsersList}}
         </div>
+
+        <div class="clo-xs-12 col-md-4 no-padding">
+            {{> assignmentCalendar}}
+        </div>
+
+        <div id="assignment-task-list" class="clo-xs-12 col-md-4 no-padding">
+            {{> assignmentTasksList}}
+        </div>
+
+    </div>
 
 </template>

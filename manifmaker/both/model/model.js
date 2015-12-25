@@ -1,14 +1,25 @@
 User = //to export it to other namespace
 class User {
-    constructor(name, availabilities, assignments = [], _id) {
+    constructor(name, teams = [],availabilities = [], skills = [], assignments = [], _id) {
         this.name = name;
+        this.teams = teams; //Array<TeamId>
+        this.teams.push(Teams.findOne({name: ASSIGNMENTREADYTEAM})._id); //TODO c'est nul de faire ca ici, le faire dans le Tasks.allow.insert et Tasks.allow.update
         this.availabilities = availabilities; //Array<Availability>
+        this.skills = skills; //Array<SkillId>
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
         this.assignments = assignments;
     }
 
     toString() {
         return '(' + this.name + ', ' + this.availabilities + ')';
+    }
+}
+
+Team = //to export it to other namespace
+class Team {
+    constructor(name){
+        this.name = name;
+        if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
     }
 }
 
@@ -65,22 +76,68 @@ class Group {
 
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
-    constructor(start, end, peopleNeeded, _id) {
+    constructor(start, end, peopleNeeded,peopleNeededAssigned = [],_id) {
         this.start = start;
         this.end = end;
         this.peopleNeeded = peopleNeeded; //Array<PeopleNeed>
-        if (typeof _id !== "undefined") this._id = _id;
+        this.peopleNeededAssigned = peopleNeededAssigned; //Array<PeopleNeed>
+        if (typeof _id !== "undefined") this._id = _id
         else this._id = new Meteor.Collection.ObjectID()._str;
+    }
+}
+
+PeopleNeed =
+/**
+ * By now, userId, teamId and skills can't be combined.
+ * In particular we can't ask for a specific team and for specific skills (will be soon)
+ */
+class PeopleNeed {
+    constructor(options){
+        this.userId;
+        this.teamId;
+        this.skills = [];//Array<Skill>
+
+
+        if(typeof options !== "object"){
+            console.error("PeopleNeed constructor only accept a key:value object");
+        }
+        this.userId = options.userId;
+
+        if(!this.userId) { //we cannot ask for a specific user and anything else
+            this.skills = options.skills || []; //Array<Skill>
+
+            if(options.teamId){
+                this.teamId = options.teamId;
+            } else { //all peopleNeed should have a team, if not, it's the global team
+                this.teamId = Teams.findOne({name: ASSIGNMENTREADYTEAM})._id; //TODO c'est nul de faire ca ici, le faire dans le Tasks.allow.insert et Tasks.allow.update
+            }
+
+        } else if(options.teamId || this.skills) {
+            console.warn("PeoplNeed constructor : we cannot ask for a specific userId and anything else, teamId and skills information are ignored and not set");
+        }
+
+
+
+        else this._id = new Meteor.Collection.ObjectID()._str;
+    }
+}
+
+Skill =
+class Skill{
+    constructor(key, label){
+        this.key = key; //unique key   => TODO preInsert pour verifier l'unicité
+        this.label = label; //printable label
     }
 }
 
 
 Assignment = //to export it to other namespace
 class Assignment {
-    constructor(userId, taskId, timeSlotId, _id) {
+    constructor(userId, taskId, timeSlotId, peopleNeed,_id) {
         this.userId = userId;
         this.taskId = taskId;
         this.timeSlotId = timeSlotId;
+        this.peopleNeed = peopleNeed;
         if (typeof _id !== "undefined") this._id = _id; //if undefined, Assignment is not yet stored in DB
     }
 }

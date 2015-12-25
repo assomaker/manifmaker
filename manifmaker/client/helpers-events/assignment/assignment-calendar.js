@@ -32,6 +32,18 @@ Template.assignmentCalendar.helpers({
         return getCalendarDateTime(date, timeHours, this.quarter);
     },
 
+    labelSkills: function () {
+        return Skills.findOne({_id: this.toString()}).label;
+    },
+
+    userName: function () {
+        return Users.findOne({_id: this.userId}).name;
+    },
+
+    teamName: function () {
+        return Teams.findOne({_id: this.teamId}).name;
+    },
+
 
     timeSlot: function (date, timeHours, idTask) {
         var startCalendarTimeSlot = getCalendarDateTime(date, timeHours);
@@ -69,6 +81,8 @@ Template.assignmentCalendar.helpers({
                     data.state = "affecte";
 
                     founded = assignmentFound;
+
+                    data.taskName = founded.taskName;
                 }
 
                 _.extend(data, founded);
@@ -89,24 +103,35 @@ Template.assignmentCalendar.helpers({
 
                 if (timeSlotFound === null && assignmentsFound.length === 0) return [];
 
+
                 var baseOneHourHeight = 40;
                 var accuracy = CalendarAccuracy.findOne().accuracy;
 
                 var data = {}, founded;
 
-                data.taskId = task._id;
                 if (timeSlotFound !== null) {
                     data.state = "available";
-                    data.name = task.name;
+                    //data.name = task.name;
+                    //Template.parentData() doesn't work so we use a trick
+                    data.taskId = task._id;
 
                     founded = timeSlotFound;
-                }
-                if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
-                    data.name = assignmentsFound[0].taskName; //idem, la meme task
-                    data.state = "in-progress";
 
-                    founded = assignmentsFound[0]; //normalement ils ont tous les memes date, TODO controler ca
+                    //people need
+                    var peopleNeeds = founded.peopleNeeded;
+                    data.peopleNeeded = peopleNeeds;
+
                 }
+
+                //if (assignmentsFound.length !== 0) { //at least one assignment TODO code couleur d'avancement en fonction des peoples needed
+                //    data.name = assignmentsFound[0].taskName; //idem, la meme task
+                //    data.state = "in-progress";
+                //    data.taskId = task._id;
+                //
+                //
+                //    founded = assignmentsFound[0]; //normalement ils ont tous les memes date, TODO controler ca
+                //}
+
 
                 _.extend(data, founded);
                 var end = new moment(founded.end);
@@ -120,6 +145,8 @@ Template.assignmentCalendar.helpers({
             case AssignmentType.ALL:
                 return [];
         }
+
+
         return [data];  //le css ne sait pas encore gerer deux data timeSlot sur un meme calendar timeSlot
     },
     sideHoursHeight: function () {
@@ -157,10 +184,44 @@ Template.assignmentCalendar.helpers({
         }
         return ""
     }
+
 });
 
+selectedPeopleNeed = null;
+
+
+var peopleNeedAssignedClick = 0;
 
 Template.assignmentCalendar.events({
+    "click .peopleNeed:not(.assigned)": function (event) {
+        selectedPeopleNeed = this;
+
+        //event should bubbles to .creneau
+    },
+
+    "click .peopleNeed.assigned": function (event) {
+        event.stopPropagation();
+        peopleNeedAssignedClick++;
+        if (peopleNeedAssignedClick == 1) {
+            setTimeout(function () {
+                if (peopleNeedAssignedClick == 1) {
+                    console.info("click on peopleNeed.assigned : double click to perform remove assignment");
+                } else {
+                    console.info("dblclick on peopleNeed.assigned : TODO remove assignment");
+                    //TODO remove assignment
+                    //
+                    //Meteor.call("assignUserToTaskTimeSlot",
+                    //    SelectedUser.get()._id,
+                    //    SelectedTask.get()._id,  //ok
+                    //    selectedTimeslotId,
+                    //    selectedPeopleNeed);
+                }
+                peopleNeedAssignedClick = 0;
+            }, 300);
+        }
+
+    },
+
     //taskToUser (we click on a complete task time slot)
     "click .creneau": function (event) {
         //TODO gerer le double click pour la desaffectation
@@ -176,8 +237,76 @@ Template.assignmentCalendar.events({
                 var selectedTimeSlot = this;
                 selectedTimeslotId = selectedTimeSlot._id;
 
-                console.info("routing", "/assignment/taskToUser/" + selectedTimeSlot.taskId + "/" + selectedTimeSlot._id);
-                Router.go("/assignment/taskToUser/" + selectedTimeSlot.taskId + "/" + selectedTimeSlot._id);
+                //Template.parentData() doesn't work so we use a trick to retrieve taskId
+                var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
+                var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
+
+                /**
+                 *
+                 * By now, userId, teamId and skills can't be combined.
+                 * In particular we can't ask for a specific team and for specific skills (will be soon)
+                 *
+                 * Skills filter
+                 *
+                 * For selected task's time slot, the user must have all the required skills of at least
+                 * one of task's people need
+                 *
+                 */
+                var peopleNeeded = selectedPeopleNeed;
+                var askingSpecificNeedAndSkills = [];
+                if (peopleNeeded.userId) { //prior above teamId an skills
+                    askingSpecificNeedAndSkills.push({
+                        _id: peopleNeeded.userId
+                    });
+                } else if (peopleNeeded.teamId && peopleNeeded.skills.length !== 0) {  //we combine teamId and skills
+                    askingSpecificNeedAndSkills.push({
+                        $and: [
+                            {
+                                teams: peopleNeeded.teamId
+                            },
+                            {
+                                skills: {
+                                    $all: peopleNeeded.skills
+                                }
+                            }
+                        ]
+                    });
+                } else if (peopleNeeded.teamId) { //we only use teamId
+                    askingSpecificNeedAndSkills.push({
+                        teams: peopleNeeded.teamId
+                    });
+                } else if (peopleNeeded.skills.length !== 0) //if people need doesn't require any particular skills
+                    askingSpecificNeedAndSkills.push({skills: {$all: peopleNeeded.skills}});
+
+                var userTeamsSkillsFilter;
+                if (askingSpecificNeedAndSkills.length !== 0) //if all time slot's people need don't require any particular skills
+                    userTeamsSkillsFilter = {
+                        $or: askingSpecificNeedAndSkills
+                    };
+
+
+                var availabilitiesFilter = {
+                    availabilities: {
+                        $elemMatch: {
+                            start: {$lte: timeSlot.start},
+                            end: {$gte: timeSlot.end}
+                        }
+                    }
+                };
+
+                /**
+                 * The user must be free during the time slot duration and have skills that match the required ones
+                 */
+                var newFilter = {
+                    $and: [
+                        availabilitiesFilter,
+                        userTeamsSkillsFilter
+                    ]
+                };
+                console.info("TASKTOUSER user filter", newFilter);
+
+
+                UserFilter.set(newFilter);
                 break;
         }
     },
@@ -200,19 +329,113 @@ Template.assignmentCalendar.events({
                 } else if (typeof $target.attr("quarter") !== "undefined") {
                     selectedDate = new moment(new Date($target.attr("quarter")));
                 }
+                selectedDateUserToTask = selectedDate;
 
-                var current = Iron.Location.get().path;
-                var userId = current.split("/")[3];
 
-                console.info("routing", "/assignment/userToTask/" + userId + "/" + selectedDate);
-                Router.go("/assignment/userToTask/" + userId + "/" + selectedDate);
+                var userId = SelectedUser.get()._id;
+                var user = Users.findOne({_id: userId});
+                var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
+
+                if (typeof availability === "undefined") {
+                    console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");
+                    return;
+                }
+                selectedAvailability = availability;
+
+
+                /*
+                 ** Skills filter
+                 User is eligible for a task if he has all skills for at least one task' people need's skills.
+                 The query looks like something like this : 'foreach timeSlot foreach peopleNeeded foreach skills' = at least user.skills
+                 ** Availabilities filter :
+                 Task whose have at least one timeSlot (to begin, just one) as
+                 user.selectedAvailabilities.start <= task.timeslot.start <= selectedDate and
+                 selectedDate <=  task.timeslot.end <=  user.Dispocorrespante.end
+                 Foreach task's time slot, we need a matching skills and a matching availability
+                 */
+
+                var newFilter = {
+                    $or: [ //$or does't work on $elemMatch with miniMongo, so we use it here
+                        { //userId filter
+                            timeSlots: {
+                                $elemMatch: {
+                                    //skills filter
+                                    peopleNeeded: {
+                                        $elemMatch: {
+                                            userId: user._id
+                                        }
+                                    }
+                                },
+                                //availabilities filter
+                                // start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                // end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                            }
+                        },
+                        {
+                            $or: [ //either we match skills requirement or there is no skills requirement (and we don't care)
+                                { //skills filter
+                                    timeSlots: {
+                                        $elemMatch: {
+                                            //skills filter
+                                            peopleNeeded: {
+                                                $elemMatch: {
+                                                    skills: user.skills,
+                                                    teamId: {
+                                                        $in: user.teams
+                                                    }
+                                                    //{  ////=> or just skills : user.skills (what the differences ?)
+                                                    //    $elemMatch: {
+                                                    //        $in: user.skills
+                                                    //    }
+                                                    //}
+                                                }
+                                            },
+                                            //availabilities filter
+                                            start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                            end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                                        }
+                                    }
+                                },
+                                {//no-skills filter
+                                    timeSlots: {
+                                        $elemMatch: {
+                                            //skills filter
+                                            peopleNeeded: {
+                                                $elemMatch: {
+                                                    skills: { // $eq : [] doesn't work with miniMongo, here is a trick
+                                                        $not: {
+                                                            $ne: []
+                                                        }
+                                                    },
+                                                    teamId: {
+                                                        $in: user.teams
+                                                    }
+                                                }
+                                            },
+                                            //availabilities filter
+                                            start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                            end: {$gt: selectedDate.toDate(), $lte: availability.end}
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                };
+                //aggregate is not supported by mini mongo
+
+
+                TaskFilter.set(newFilter);
                 break;
-            case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
+            case
+            AssignmentType.TASKTOUSER:
+                //only display users that have at least one availability matching the selected time slot
                 //we let the event bubbles to the parent
                 return [];
         }
     }
 });
+
 
 
 

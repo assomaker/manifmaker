@@ -13,12 +13,14 @@ Template.assignmentUsersList.helpers({
                 teamFilter
             ]
         }, {limit: 20}).fetch();
+        //console.error("user filter result n'est pas utilisé !!!")
         searchResult = UsersIndex.search(filterIndex, {limit: 20}).fetch();
         return _.intersectionObjects(searchResult, filterResult);
+        //return filterResult;
     },
 
-    "allTeams": function () {
-        return Teams.find();
+    team: function () {
+        return Teams.findOne({_id:this.toString()}).name;
     }
 });
 
@@ -49,7 +51,7 @@ Template.assignmentUsersList.events({
             case AssignmentType.USERTOTASK:
                 break;
             case AssignmentType.TASKTOUSER:
-                Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId);
+                Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
                 break;
         }
 
