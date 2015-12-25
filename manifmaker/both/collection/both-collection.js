@@ -1,9 +1,10 @@
 Users = new Mongo.Collection("users");
 Tasks = new Mongo.Collection("tasks");
 Assignments = new Mongo.Collection("assignment");
+Skills = new Mongo.Collection("skills");
 Teams = new Mongo.Collection("teams");
 Places = new Mongo.Collection("places");
-Groups = new Mongo.Collection("groups")
+Groups = new Mongo.Collection("groups");
 
 TasksIndex = new EasySearch.Index({
     collection: Tasks,

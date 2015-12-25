@@ -1,14 +1,11 @@
-PeopleNeed = {
-    JUNKRESP: "junkResp",
-    SOFT: "soft",
-    SOFTDRIVINGLICENSE: "softDrivingLicense"
-};
 
 AssignmentType = {
     USERTOTASK: "userToTask",
     TASKTOUSER: "taskToUser",
     ALL: "all"
 };
+
+ASSIGNMENTREADYTEAM = "assignmentReadyTeam"; //team de tous les users et toutes les taches prets pour affectation
 
 /**
  * 0.25 * one hour, 4 * one hour

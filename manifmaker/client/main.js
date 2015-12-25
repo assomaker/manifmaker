@@ -4,8 +4,8 @@ noneFilter = {none: "none"};
 UserFilter = new ReactiveVar(defaultFilter);
 SelectedUser = new ReactiveVar(null);
 TaskFilter = new ReactiveVar(defaultFilter);
-TaskIndexFilter = new ReactiveVar(defaultFilter);
-UserIndexFilter = new ReactiveVar(defaultFilter);
+TaskIndexFilter = new ReactiveVar(noSearchFilter);
+UserIndexFilter = new ReactiveVar(noSearchFilter);
 UserTeamFilter = new ReactiveVar(defaultFilter);
 TaskTeamFilter = new ReactiveVar(defaultFilter);
 UserSkillsFilter = new ReactiveVar(defaultFilter);
@@ -55,23 +55,22 @@ function preSelectedUserByUserName(name) {
 
 
 Meteor.startup(function () {
-
+    Meteor.subscribe("skills");
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("places");
     Meteor.subscribe("assignments");
     Meteor.subscribe("teams");
     Meteor.subscribe("groups");
+
+    //below will be client only
     Meteor.subscribe("calendarAccuracy");
     Meteor.subscribe("calendarDays");
     Meteor.subscribe("calendarHours");
     Meteor.subscribe("calendarQuarter");
 
 
-    //preSelecterTaskByTaskName("task2");
-
-
-//    preSelectedUserByUserName("user1");
-
+    //preSelecterTaskByTaskName("task1");
+    //preSelectedUserByUserName("user1");
 });
 

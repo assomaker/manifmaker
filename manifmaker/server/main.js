@@ -1,6 +1,5 @@
 Meteor.startup(function () {
     // code to run on server at startup
-
     Assignments.remove({});
     Users.remove({});
     Tasks.remove({});
@@ -11,6 +10,8 @@ Meteor.startup(function () {
     CalendarHours.remove({});
     CalendarQuarter.remove({});
     CalendarAccuracy.remove({});
+    Skills.remove({});
+    Teams.remove({});
 
 
     //  Assignments.before.insert( /*if we need to add user and task data to assignments*/);

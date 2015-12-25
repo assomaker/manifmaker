@@ -1,3 +1,4 @@
+
 <template name="assignmentTasksList">
     <h5 class="list-title">Tasks List</h5>
 
@@ -22,7 +23,7 @@
     <ul class="collapsible " data-collapsible="accordion">
 
         {{#each tasks}}
-            <li>
+            <li class="task" data-_id="{{_id}}">
                 <div class="collapsible-header">
                     <a class="href-assignment-task">{{name}}</a>
                 </div>
@@ -33,7 +34,22 @@
                             <li class="time-slot" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}
                                 <ul>
                                     {{#each peopleNeeded}}
-                                        <li>{{this}}</li>
+                                        <li class="peopleNeed">
+                                            Skills :
+                                            <ul>
+                                                {{#each skills}}
+                                                    <li>{{skillLabel}}</li>
+                                                {{else}}
+                                                    No specific skills
+                                                {{/each}}
+                                            </ul>
+                                            {{#if teamId}}
+                                                Team : {{team}}
+                                            {{/if}}
+                                            {{#if userId}}
+                                                User : {{user}}
+                                            {{/if}}
+                                        </li>
                                     {{/each}}
                                 </ul>
                             </li>

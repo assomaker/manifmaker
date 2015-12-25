@@ -1,3 +1,44 @@
+Template.assignmentMenu.events({
+    "click #userToTask": function (event) {
+        TaskFilter.set(noneFilter);
+        UserFilter.set(defaultFilter);
+        CurrentAssignmentType.set(AssignmentType.USERTOTASK);
+    },
+    "click #taskToUser": function (event) {
+        UserFilter.set(noneFilter);
+        TaskFilter.set(defaultFilter);
+        CurrentAssignmentType.set(AssignmentType.TASKTOUSER);
+    },
+    "click #all": function (event) {
+        TaskFilter.set(defaultFilter);
+        UserFilter.set(defaultFilter);
+        CurrentAssignmentType.set(AssignmentType.ALL);
+    },
+    "click #quarterHour": function (event) {
+        var accuracy = CalendarAccuracyEnum["0.25"];
+        Meteor.call("setCalendarAccuracy",accuracy);
+    },
+    "click #halfHour": function (event) {
+        var accuracy = CalendarAccuracyEnum["0.5"];
+        Meteor.call("setCalendarAccuracy",accuracy);
+    },
+    "click #oneHour": function (event) {
+        var accuracy = CalendarAccuracyEnum["1"];
+        Meteor.call("setCalendarAccuracy",accuracy);
+    },
+    "click #twoHour": function (event) {
+        var accuracy = CalendarAccuracyEnum["2"];
+        Meteor.call("setCalendarAccuracy",accuracy);
+    },
+    "click #fourHour": function (event) {
+        var accuracy = CalendarAccuracyEnum["4"];
+        Meteor.call("setCalendarAccuracy",accuracy);
+    },
+    "click #populate": function(event){
+        Meteor.call("populate");
+    }
+});
+
 Template.assignmentMenu.helpers({
     isSelected: function(mode){
         if(mode === CurrentAssignmentType.get()){
@@ -6,6 +47,7 @@ Template.assignmentMenu.helpers({
         return "";
     },
     breadCrumbAssignment: function () {
+        return [{label:"TODO",url:""}];
         var userFilter = UserFilter.get(),
             taskFilter = TaskFilter.get(),
             currentAssignmentType = CurrentAssignmentType.get(),
