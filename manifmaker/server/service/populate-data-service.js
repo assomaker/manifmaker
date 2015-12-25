@@ -100,19 +100,30 @@ populateData = function () {
 
     var task1 = new Task("task1", [
         new TimeSlot(getDateFromTime(2), getDateFromTime(4), [peopleNeed1,peopleNeed2]),
-        new TimeSlot(getDateFromTime(6), getDateFromTime(8), [peopleNeed1])
-    ]);
+        new TimeSlot(getDateFromTime(6), getDateFromTime(8), [peopleNeed1])],
+        [],
+        [],
+        team1._id);
     var task2 = new Task("task2", [
         new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed2]),
         new TimeSlot(getDateFromTime(14), getDateFromTime(22), [peopleNeed2])
-    ]);
+    ],
+        [],
+        [],
+        team2._id);
     var task3 = new Task("task3", [
         new TimeSlot(getDateFromTime(10), getDateFromTime(12), [peopleNeed1,peopleNeed2,peopleNeed3])
-    ]);
+    ],
+        [],
+        [],
+        team3._id);
 
     var task4 = new Task("task4", [
         new TimeSlot(getDateFromTime(14), getDateFromTime(16), [peopleNeed2,peopleNeed3])
-    ]);
+    ],
+        [],
+        [],
+        team4._id);
 
 
     task1 = insertAndFetch(Tasks, task1);
