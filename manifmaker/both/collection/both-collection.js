@@ -17,6 +17,15 @@ UsersIndex = new EasySearch.Index({
     engine: new EasySearch.Minimongo()
 });
 
+
+//using schema
+
+
+Tasks.attachSchema(Schemas.Tasks);
+
+
+
+
 //calendar, TODO client side only
 CalendarDays = new Mongo.Collection("days");
 CalendarHours = new Mongo.Collection("hours");
