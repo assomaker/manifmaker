@@ -3,15 +3,23 @@
 Schemas.Assignments = new SimpleSchema({
     userId: {
         type: String,
-        label: "Assignments User",
+        label: "Assignments UserId",
+        custom: function(){
+            if(!Users.findOne(this.value))
+                return "unknownId";
+        }
     },
     taskId: {
         type: String,
-        label: "Assignments taskId",
+        label: "Assignments TaskId",
+        custom: function(){
+            if(!Tasks.findOne(this.value))
+                return "unknownId";
+        }
     },
     timeSlotId: {
         type: String,
-        label: "Assignments timeSlotId",
+        label: "Assignments TimeSlotId",
         custom: function () {
             var task = Tasks.findOne(this.field('taskId').value);
             var found = TimeSlotService.getTimeSlot(task, this.value);
@@ -22,7 +30,7 @@ Schemas.Assignments = new SimpleSchema({
     },
     peopleNeedId :{
         type: String,
-        label: "Assignments peopleNeedId",
+        label: "Assignments PeopleNeedId",
         custom: function () {
             var task = Tasks.findOne(this.field('taskId').value);
             var found = TimeSlotService.getTimeSlot(task, this.field('timeSlotId').value);

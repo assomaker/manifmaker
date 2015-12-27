@@ -34,7 +34,11 @@ Schemas.PeopleNeed = new SimpleSchema({
         type: String,
         label: "People Need User",
         defaultValue: null,
-        optional: true
+        optional: true,
+        custom: function(){
+            if(!Users.findOne(this.value))
+                return "unknownId";
+        },
     },
     teamId:{
         type: SimpleSchema.RegEx.Id,

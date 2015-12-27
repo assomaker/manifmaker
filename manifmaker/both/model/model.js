@@ -32,7 +32,7 @@ class Availability {
     }
 }
 
-
+//************************************************ a son schema *************************************************//
 Task = //to export it to other namespace
 class Task {
     constructor(name, timeSlots, assignments = [], placeId, teamId, respManifId, description, _id) {
@@ -74,6 +74,7 @@ class Group {
     }
 }
 
+//************************************************ a son schema *************************************************//
 TimeSlot = //to export it to other namespace
 class TimeSlot { //must inherit Availabilty
     constructor(start, end, peopleNeeded,peopleNeededAssigned = [],_id) {
@@ -86,6 +87,7 @@ class TimeSlot { //must inherit Availabilty
     }
 }
 
+//************************************************ a son schema *************************************************//
 PeopleNeed =
 /**
  * By now, userId, teamId and skills can't be combined.
@@ -131,6 +133,7 @@ class Skill{
 }
 
 
+//************************************************ a son schema *************************************************//
 Assignment = //to export it to other namespace
 class Assignment {
     constructor(userId, taskId, timeSlotId, peopleNeed,_id) {
@@ -154,6 +157,7 @@ class UserAssignment { //stored along with a user to a direct access
 }
 
 
+//************************************************ a son schema *************************************************//
 TaskAssignment = //to export it to other namespace
 class TaskAssignment { //stored along with a task to a direct access
     constructor(userName, start, end, assignmentId) {
