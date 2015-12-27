@@ -6,6 +6,7 @@ Teams = new Mongo.Collection("teams");
 Places = new Mongo.Collection("places");
 Groups = new Mongo.Collection("groups");
 
+//to perform search by name
 TasksIndex = new EasySearch.Index({
     collection: Tasks,
     fields: ['name'],
@@ -19,9 +20,10 @@ UsersIndex = new EasySearch.Index({
 
 
 //using schema
-
-
 Tasks.attachSchema(Schemas.Tasks);
+Assignments.attachSchema(Schemas.Assignments);
+
+
 
 
 

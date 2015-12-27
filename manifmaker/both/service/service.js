@@ -299,6 +299,17 @@ PeopleNeedService =
             });
             return userHasAllSkills;
         }
+
+        static getPeopleNeedById(timeSlot, _id) {
+            var found;
+            timeSlot.peopleNeeded.forEach(function (peopleNeed, index) {
+                console.log(arguments);
+                if (peopleNeed._id === _id) {
+                    found = peopleNeed;
+                }
+            });
+            return found;
+        }
     }
 
 

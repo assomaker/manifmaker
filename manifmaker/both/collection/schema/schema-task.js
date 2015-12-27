@@ -1,21 +1,22 @@
+//order matters !
 
 Schemas.TaskAssignment = new SimpleSchema({
     userName : {
         type: String,
-        label: "Task assignment user name"
+        label: "Task assignment User Name"
     },
     start:{
         type: Date,
-        label: "Task Assignment Start date"
+        label: "Task Assignment Start Date"
     },
     end:{
         type: Date,
-        label: "Task Assignment End date"
+        label: "Task Assignment End Date"
     },
     assignmentId : {
         type: SimpleSchema.RegEx.Id,
         label: "Task assignment assignment id",
-        custom : function(){
+        custom : function(){ //validate data is same as the real assignment
             var assignment = Assignments.findOne(this.value);
             if(!assignment)
                 return "unknownId"
@@ -28,7 +29,7 @@ Schemas.TaskAssignment = new SimpleSchema({
 
 });
 
-Schemas.PeopleNeedSchema = new SimpleSchema({
+Schemas.PeopleNeed = new SimpleSchema({
     userId:{
         type: String,
         label: "People Need User",
@@ -45,19 +46,18 @@ Schemas.PeopleNeedSchema = new SimpleSchema({
                 return "unknownId";
         },
         autoValue: function(){
-            if(this.field('userId').isSet){
+            if(this.field('userId').isSet){ //if userId is set, teamId is not take into account
                 return null;
             }
             if(!this.isSet)
                 return null;
         }
-
     },
     skills:{
         label: "People Need Skills",
         type: [SimpleSchema.RegEx.Id],
         optional: true,
-        autoValue: function(){
+        autoValue: function(){ //if userId is set, skills is not take into account
             if(this.field('userId').isSet){
                 return [];
             }
@@ -78,16 +78,12 @@ Schemas.PeopleNeedSchema = new SimpleSchema({
         defaultValue: new Meteor.Collection.ObjectID()._str,
         denyUpdate: true
     }
-
-
-
 });
-
 
 Schemas.TimeSlot = new SimpleSchema({
     start:{
         type: Date,
-        label: "Start date",
+        label: "TimeSlot Start Date",
         custom: function () {
             if (new moment(this.value).isAfter(new moment(this.field('end').value))) {
                 return "startAfterEnd";
@@ -96,7 +92,7 @@ Schemas.TimeSlot = new SimpleSchema({
     },
     end:{
         type: Date,
-        label: "End date",
+        label: " TimeSlot End Date",
         custom: function () {
             if (new moment(this.value).isBefore(new moment(this.field('start').value))) {
                 return "endBeforeStart";
@@ -110,13 +106,13 @@ Schemas.TimeSlot = new SimpleSchema({
         denyUpdate: true
     },
     peopleNeeded : {
-        type: [Schemas.PeopleNeedSchema],
-        label: "People needs",
+        type: [Schemas.PeopleNeed],
+        label: "TimeSlot People needs",
         defaultValue : []
     },
     peopleNeededAssigned : {
-        type: [Schemas.PeopleNeedSchema],
-        label: "People needs assigned",
+        type: [Schemas.PeopleNeed],
+        label: "TimeSlot People needs assigned",
         defaultValue : []
     }
 });
@@ -124,17 +120,17 @@ Schemas.TimeSlot = new SimpleSchema({
 Schemas.Tasks = new SimpleSchema({
     name: {
         type: String,
-        label: "Name",
+        label: "Task Name",
         max: 100
     },
     description: {
         type: String,
-        label: "Description",
+        label: "Task Description",
         optional: true
     },
     teamId : {
         type: SimpleSchema.RegEx.Id,
-        label : "Team",
+        label : "Task Team",
         custom: function(){
             if(!Teams.findOne(this.value))
                 return "unknownId";
@@ -143,7 +139,7 @@ Schemas.Tasks = new SimpleSchema({
     },
     placeId : {
         type: SimpleSchema.RegEx.Id,
-        label : "Place",
+        label : "Task Place",
         custom: function(){
             if(!Places.findOne(this.value))
                 return "unknownId";
@@ -153,7 +149,7 @@ Schemas.Tasks = new SimpleSchema({
     },
     respManif : { //TODO il faut renommer ce champ
         type: SimpleSchema.RegEx.Id,
-        label : "Live event responsible",
+        label : "Task Live event responsible",
         custom: function(){
             if(!Users.findOne(this.value))
                 return "unknownId";
@@ -161,15 +157,13 @@ Schemas.Tasks = new SimpleSchema({
     },
     timeSlots: {
         type: [Schemas.TimeSlot],
-        label: "Time slots",
+        label: "Task Time slots",
         defaultValue: []
     },
-
     assignments : {
         type: [Schemas.TaskAssignment],
-        label: "Task assignments",
+        label: "Task Task assignments",
         defaultValue: []
     }
-
 });
 
