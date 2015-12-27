@@ -20,7 +20,7 @@ Schemas.TaskAssignment = new SimpleSchema({
             var assignment = Assignments.findOne(this.value);
             if(!assignment)
                 return "unknownId"
-            if (assignment.userName !== this.field(this.key.replace("assignmentId","")+"userName").value
+            if (Users.findOne(assignment.userId).name !== this.field(this.key.replace("assignmentId","")+"userName").value
                 || !new moment(assignment.start).isSame(new moment(this.field(this.key.replace("assignmentId","")+"start").value))
                 || !new moment(assignment.end).isSame(new moment(this.field(this.key.replace("assignmentId","")+"end").value)) )
                 return "taskAssignmentNotMatching"
@@ -166,7 +166,7 @@ Schemas.Tasks = new SimpleSchema({
     },
     assignments : {
         type: [Schemas.TaskAssignment],
-        label: "Task Task assignments",
+        label: "Task assignments",
         defaultValue: []
     }
 });

@@ -22,6 +22,7 @@ UsersIndex = new EasySearch.Index({
 //using schema
 Tasks.attachSchema(Schemas.Tasks);
 Assignments.attachSchema(Schemas.Assignments);
+Users.attachSchema(Schemas.Users);
 
 
 

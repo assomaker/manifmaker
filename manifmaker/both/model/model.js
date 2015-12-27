@@ -1,3 +1,4 @@
+//************************************************ a son schema *************************************************//
 User = //to export it to other namespace
 class User {
     constructor(name, teams = [],availabilities = [], skills = [], assignments = [], _id) {
@@ -23,7 +24,7 @@ class Team {
     }
 }
 
-
+//************************************************ a son schema *************************************************//
 Availability = //to export it to other namespace
 class Availability {
     constructor(start, end) {
@@ -145,7 +146,7 @@ class Assignment {
     }
 }
 
-
+//************************************************ a son schema *************************************************//
 UserAssignment = //to export it to other namespace
 class UserAssignment { //stored along with a user to a direct access
     constructor(taskName, start, end, assignmentId) {
