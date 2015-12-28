@@ -5,6 +5,8 @@ Schemas.Teams = new SimpleSchema({
         max: 100
     },
 });
+Teams = new Mongo.Collection("teams");
+Teams.attachSchema(Schemas.Teams);
 
 Schemas.Places = new SimpleSchema({
     name: {
@@ -13,6 +15,8 @@ Schemas.Places = new SimpleSchema({
         max: 100
     }
 });
+Places = new Mongo.Collection("places");
+Places.attachSchema(Schemas.Places);
 
 Schemas.Skills = new SimpleSchema({
     key: {

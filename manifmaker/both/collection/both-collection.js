@@ -2,8 +2,7 @@ Users = new Mongo.Collection("users");
 Tasks = new Mongo.Collection("tasks");
 Assignments = new Mongo.Collection("assignment");
 Skills = new Mongo.Collection("skills");
-Teams = new Mongo.Collection("teams");
-Places = new Mongo.Collection("places");
+
 Groups = new Mongo.Collection("groups");
 
 AllCollections = {
@@ -33,8 +32,7 @@ UsersIndex = new EasySearch.Index({
 Tasks.attachSchema(Schemas.Tasks);
 Assignments.attachSchema(Schemas.Assignments);
 Users.attachSchema(Schemas.Users);
-Teams.attachSchema(Schemas.Teams);
-Places.attachSchema(Schemas.Places);
+
 
 
 //calendar, TODO client side only
