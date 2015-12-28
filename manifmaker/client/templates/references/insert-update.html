@@ -1,0 +1,23 @@
+
+<template name="teamInsert">
+    {{# autoForm collection="Teams" id="insertTeamForm" type="insert"}}
+        <fieldset>
+            <legend>Add a Team</legend>
+            {{> afQuickField placeHolder="This team doesn't have a name yet" name='name'}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Insert</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+
+<template name="teamUpdate">
+    {{# autoForm collection="Teams" doc=document  id="updateTeamForm" type="update"}}
+        <fieldset>
+            <legend>Update {{document.name}}</legend>
+            {{> afQuickField name='name'}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+

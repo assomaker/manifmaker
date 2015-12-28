@@ -1,0 +1,8 @@
+<template name="teamsList">
+    {{#each teams}}
+        <li><a href="{{pathFor route='teams'}}">{{name}}</a></li>
+        <a href="/team/{{_id}}">Update Team</a >
+        <a href="/team/{{_id}}/delete">Delete team</a>
+    {{/each}}
+    <a href="/team">Create a new team</a>
+</template>

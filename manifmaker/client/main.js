@@ -13,6 +13,9 @@ SelectedTask = new ReactiveVar(null);
 SelectedTimeSlot = new ReactiveVar(null);
 SelectedDate = new ReactiveVar(null);
 
+//references collections
+TeamToUpdate = new ReactiveVar(null);
+
 selectedTimeslotId = null; //TODO mettre ca dans Session ?//TODO pas top
 selectedAvailability = null;//TODO pas top
 

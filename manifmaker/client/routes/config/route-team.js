@@ -1,33 +1,35 @@
-Router.route('/teams', function () {
-        this.render('teamsList', {to: 'mainContent'});
+var PLURAL_REFERENCE_URL = "teams";
+var REFERENCE_URL = "team";
+var REFERENCE_COLLECTION_NAME = "Teams";
+
+//get (list)
+Router.route('/' + PLURAL_REFERENCE_URL, function () {
+        this.render(PLURAL_REFERENCE_URL + 'List', {to: 'mainContent'});
     },
-    {name: 'team.list'}
+    {name: REFERENCE_URL + '.list'}
 );
 
-Router.route('/team', function () {
-        this.render('team', {to: 'mainContent'});
+//post
+Router.route('/' + REFERENCE_URL, function () {
+        this.render(REFERENCE_URL + 'Insert', {to: 'mainContent'});
     },
-    {name: 'team.create'}
-);
-Router.route('/team/:_id', function () {
-
-        this.render('team', {
-            data: function () {
-                var currentTeam = this.params._id;
-                return Teams.findOne({_id: currentTeam});
-            }
-        }, {to: 'mainContent'});
-    },
-    {name: 'team.read'}
+    {name: REFERENCE_URL + '.create'}
 );
 
-Router.route('/team/:_id/delete', function () {
-        this.render('teamsList', {
-            data: function () {
-                var currentTeam = this.params._id;
-                return Teams.remove({_id: currentTeam});
-            }
-        }, {to: 'mainContent'});
+//put
+Router.route('/' + REFERENCE_URL + '/:_id', function () {
+        var current = this.params._id;
+        TeamToUpdate.set(current);
+        this.render(REFERENCE_URL + 'Update', {to: 'mainContent'});
     },
-    {name: 'team.delete'}
+    {name: REFERENCE_URL + '.update'}
+);
+
+//delete
+Router.route('/' + REFERENCE_URL + '/:_id/delete', function () {
+        var current = this.params._id;
+        AllCollections[REFERENCE_COLLECTION_NAME].remove({_id: current});
+        this.redirect("/" + PLURAL_REFERENCE_URL);
+    },
+    {name: REFERENCE_URL + '.delete'}
 );
