@@ -64,7 +64,7 @@ Template.assignmentMenu.helpers({
                     url: ""
                 });
             } else  {
-                var userName = UserRepository.findOne(selectedUser._id).name;
+                var userName = Users.findOne(selectedUser._id).name;
                 result.push({
                     label: userName,
                     url: "/assignment/userToTask/" + selectedUser._id
@@ -99,7 +99,7 @@ Template.assignmentMenu.helpers({
                     url: ""
                 });
             } else  {
-                var taskName = TaskRepository.findOne(selectedTask._id).name;
+                var taskName = Tasks.findOne(selectedTask._id).name;
                 result.push({
                     label: taskName,
                     url: "/assignment/taskToUser/" + selectedTask._id

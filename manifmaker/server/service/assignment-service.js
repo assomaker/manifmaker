@@ -36,8 +36,8 @@ ServerAssingnmentService =
             var assignment = assignment;
             var updateUser = {},
                 updateTask = {},
-                user = UserRepository.findOne(assignment.userId),//Meteor.users.findOne(review.userId),
-                task = TaskRepository.findOne(assignment.taskId);
+                user = Users.findOne(assignment.userId),//Meteor.users.findOne(review.userId),
+                task = Tasks.findOne(assignment.taskId);
 
             updateUser.assignments = user.assignments;
             updateUser.assignments.pop(
