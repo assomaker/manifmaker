@@ -2,7 +2,16 @@
     {{#each teams}}
         <li><a href="{{pathFor route='teams'}}">{{name}}</a></li>
         <a href="/team/{{_id}}">Update Team</a >
-        <a href="/team/{{_id}}/delete">Delete team</a>
+        <a href="/team/{{_id}}/delete">Delete Team</a>
     {{/each}}
-    <a href="/team">Create a new team</a>
+    <a href="/team">Create a new Team</a>
+</template>
+
+<template name="placesList">
+    {{#each places}}
+        <li><a href="{{pathFor route='places'}}">{{name}}</a></li>
+        <a href="/place/{{_id}}">Update Place</a >
+        <a href="/place/{{_id}}/delete">Delete Place</a>
+    {{/each}}
+    <a href="/place">Create a new Place</a>
 </template>

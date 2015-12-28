@@ -34,6 +34,7 @@ Tasks.attachSchema(Schemas.Tasks);
 Assignments.attachSchema(Schemas.Assignments);
 Users.attachSchema(Schemas.Users);
 Teams.attachSchema(Schemas.Teams);
+Places.attachSchema(Schemas.Places);
 
 
 //calendar, TODO client side only

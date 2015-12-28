@@ -21,3 +21,26 @@
     {{/autoForm}}
 </template>
 
+
+<template name="placeInsert">
+    {{# autoForm collection="Places" id="insertPlaceForm" type="insert"}}
+        <fieldset>
+            <legend>Add a Place</legend>
+            {{> afQuickField placeHolder="This place doesn't have a name yet" name='name'}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Insert</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+
+<template name="placeUpdate">
+    {{# autoForm collection="Places" doc=document  id="updatePlaceForm" type="update"}}
+        <fieldset>
+            <legend>Update {{document.name}}</legend>
+            {{> afQuickField name='name'}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+

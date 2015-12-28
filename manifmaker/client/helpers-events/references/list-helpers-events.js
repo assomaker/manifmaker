@@ -4,3 +4,9 @@ Template.teamsList.helpers({
     }
 });
 
+Template.placesList.helpers({
+    places: function () {
+        return Places.find();
+    }
+});
+
