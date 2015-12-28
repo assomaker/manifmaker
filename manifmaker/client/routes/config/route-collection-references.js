@@ -2,24 +2,34 @@ var references = [
     {
         PLURAL_REFERENCE_URL: "places",
         REFERENCE_URL: "place",
-        REFERENCE_COLLECTION_NAME: "Places"
+        REFERENCE_COLLECTION_NAME: "Places",
+        REFERENCE_LABEL: "Place"
     },
     {
         PLURAL_REFERENCE_URL: "teams",
         REFERENCE_URL: "team",
-        REFERENCE_COLLECTION_NAME: "Teams"
+        REFERENCE_COLLECTION_NAME: "Teams",
+        REFERENCE_LABEL: "Team"
     }
 ];
 
 
-_.each(references,function(referenceOptions){
+_.each(references, function (referenceOptions) {
     var PLURAL_REFERENCE_URL = referenceOptions.PLURAL_REFERENCE_URL;
     var REFERENCE_URL = referenceOptions.REFERENCE_URL;
     var REFERENCE_COLLECTION_NAME = referenceOptions.REFERENCE_COLLECTION_NAME;
 
     //get (list)
     Router.route('/' + PLURAL_REFERENCE_URL, function () {
-            this.render(PLURAL_REFERENCE_URL + 'List', {to: 'mainContent'});
+            this.render('referenceList', {
+                data: {
+                    document: AllCollections[REFERENCE_COLLECTION_NAME].find({}),
+                    PLURAL_REFERENCE_URL: referenceOptions.PLURAL_REFERENCE_URL,
+                    REFERENCE_URL: referenceOptions.REFERENCE_URL,
+                    REFERENCE_COLLECTION_NAME: referenceOptions.REFERENCE_COLLECTION_NAME
+                },
+                to: 'mainContent'
+            });
         },
         {name: REFERENCE_URL + '.list'}
     );

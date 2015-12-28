@@ -1,12 +1,7 @@
-Template.teamsList.helpers({
-    teams: function () {
-        return Teams.find();
+Template.referenceList.helpers({
+    document: function () {
+        return AllCollections[this.REFERENCE_COLLECTION_NAME].find({});
     }
 });
 
-Template.placesList.helpers({
-    places: function () {
-        return Places.find();
-    }
-});
 
