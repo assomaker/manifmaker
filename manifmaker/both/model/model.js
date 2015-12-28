@@ -16,6 +16,7 @@ class User {
     }
 }
 
+//************************************************ a son schema *************************************************//
 Team = //to export it to other namespace
 class Team {
     constructor(name){
@@ -49,6 +50,7 @@ class Task {
     }
 }
 
+//************************************************ a son schema *************************************************//
 Place=
 class Place {
     constructor(name, _id){
@@ -57,6 +59,7 @@ class Place {
     }
 }
 
+//************************************************ a son schema *************************************************//
 Team=
 class Team {
     constructor(name, _id) {
@@ -125,6 +128,7 @@ class PeopleNeed {
     }
 }
 
+//************************************************ a son schema *************************************************//
 Skill =
 class Skill{
     constructor(key, label){
@@ -171,6 +175,7 @@ class TaskAssignment { //stored along with a task to a direct access
 
 
 //assignment calendar
+//************************************************ a son schema *************************************************//
 CalendarDay =
 class CalendarDay {
     constructor(date){

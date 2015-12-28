@@ -1,3 +1,20 @@
+newPopulateData = function(){
+    Assignments.remove({});
+    Users.remove({});
+    Tasks.remove({});
+    CalendarDays.remove({});
+    CalendarHours.remove({});
+    CalendarQuarter.remove({});
+    CalendarAccuracy.remove({});
+    Skills.remove({});
+    Teams.remove({});
+
+    Teams.insert({name:"team1"});
+    Teams.insert({name:"team2"});
+    Teams.insert({name:"team3"});
+
+};
+
 populateData = function () {
 
     Assignments.remove({});
