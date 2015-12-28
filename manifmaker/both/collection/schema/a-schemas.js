@@ -7,3 +7,18 @@ SimpleSchema.messages({
     taskAssignmentNotMatching: "Task assignment do not match real assignment",
     userAssignmentNotMatching: "User assignment do not match real assignment"
 });
+
+Schemas.helpers = {};
+
+Schemas.helpers.allTeamsOptions = function(){
+    var teams = Teams.find({}).fetch();
+    var result = [];
+    _.each(teams,function(team){
+        result.push({
+            label: team.name,
+            value: team._id
+        });
+    });
+
+    return result;
+};

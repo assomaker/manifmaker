@@ -72,5 +72,12 @@ Meteor.startup(function () {
 
     //preSelecterTaskByTaskName("task1");
     //preSelectedUserByUserName("user1");
+
+    SimpleSchema.debug = true;
+    AutoForm.addHooks(null, {
+        onError: function (name, error, template) {
+            console.log(name + " error:", error);
+        }
+    });
 });
 
