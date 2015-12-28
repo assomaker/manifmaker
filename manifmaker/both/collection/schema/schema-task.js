@@ -139,6 +139,11 @@ Schemas.Tasks = new SimpleSchema({
             if(!Teams.findOne(this.value))
                 return "unknownId";
             return 1
+        },
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allTeamsOptions
+            }
         }
     },
     placeId : {
@@ -151,9 +156,17 @@ Schemas.Tasks = new SimpleSchema({
         }
 
     },
-    respManif : { //TODO il faut renommer ce champ
+    liveEventMasterId : {
         type: SimpleSchema.RegEx.Id,
         label : "Task Live event responsible",
+        custom: function(){
+            if(!Users.findOne(this.value))
+                return "unknownId";
+        }
+    },
+    masterId : {
+        type: SimpleSchema.RegEx.Id,
+        label : "Task responsible",
         custom: function(){
             if(!Users.findOne(this.value))
                 return "unknownId";

@@ -6,6 +6,16 @@ Teams = new Mongo.Collection("teams");
 Places = new Mongo.Collection("places");
 Groups = new Mongo.Collection("groups");
 
+AllCollections = {
+    Users: Users,
+    Tasks: Tasks,
+    Assignments: Assignments,
+    Skills: Skills,
+    Teams: Teams,
+    Places: Places,
+    Groups: Groups
+};
+
 //to perform search by name
 TasksIndex = new EasySearch.Index({
     collection: Tasks,
@@ -23,10 +33,7 @@ UsersIndex = new EasySearch.Index({
 Tasks.attachSchema(Schemas.Tasks);
 Assignments.attachSchema(Schemas.Assignments);
 Users.attachSchema(Schemas.Users);
-
-
-
-
+Teams.attachSchema(Schemas.Teams);
 
 
 //calendar, TODO client side only
