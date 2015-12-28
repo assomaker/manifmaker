@@ -1,19 +1,21 @@
 <template name="tasksList">
     <div class="input-field col s12">
-        <select id="team_filter" multiple>
+        <select id="team_filter" class="browser-defaults">
             <option value="" disabled selected>Choose your option</option>
             {{#each teams}}
                 <option value="{{_id}}">{{name}}</option>
             {{/each}}
         </select>
-        <label>Filtre d'équipe</label>
+        <label>Team Filter</label>
     </div>
 
-    {{> reactiveTable settings=tasksList }}
-    {{#each tasks}}
+    {{> reactiveTable settings=tableSettings }}
 
-    {{/each}}
+    <a href="/task">Create a new Task</a>
+</template>
 
-    <a href="/task">Créer une nouvelle fiche tache</a>
 
+<template name="taskButtons">
+    <a class="btn btn-primary" href="/task/{{_id}}">Update</a>
+    {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete{{/quickRemoveButton}}
 </template>

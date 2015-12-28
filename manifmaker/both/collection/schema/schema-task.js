@@ -162,6 +162,11 @@ Schemas.Tasks = new SimpleSchema({
             if (!Places.findOne(this.value))
                 return "unknownId";
             return 1
+        },
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allPlacesOptions
+            }
         }
 
     },
@@ -171,6 +176,11 @@ Schemas.Tasks = new SimpleSchema({
         custom: function () {
             if (!Users.findOne(this.value))
                 return "unknownId";
+        },
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allUsersOptions
+            }
         }
     },
     masterId: {
@@ -179,6 +189,11 @@ Schemas.Tasks = new SimpleSchema({
         custom: function () {
             if (!Users.findOne(this.value))
                 return "unknownId";
+        },
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allUsersOptions
+            }
         }
     },
     timeSlots: {

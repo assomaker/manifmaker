@@ -47,7 +47,7 @@ Template.assignmentMenu.helpers({
         return "";
     },
     breadCrumbAssignment: function () {
-        return [{label:"TODO",url:""}];
+        return [{label:"TODO fix breadcrumb",url:""}];
         var userFilter = UserFilter.get(),
             taskFilter = TaskFilter.get(),
             currentAssignmentType = CurrentAssignmentType.get(),
