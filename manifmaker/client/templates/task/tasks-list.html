@@ -2,11 +2,12 @@
     <div class="input-field col s12">
         <select id="team_filter" class="browser-defaults">
             <option value="" disabled selected>Choose your option</option>
-            {{#each teams}}
+            {{#each allOptionsTeams}}
                 <option value="{{_id}}">{{name}}</option>
             {{/each}}
         </select>
         <label>Team Filter</label>
+
     </div>
 
     {{> reactiveTable settings=tableSettings }}

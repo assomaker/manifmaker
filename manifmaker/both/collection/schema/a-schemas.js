@@ -11,14 +11,17 @@ SimpleSchema.messages({
 Schemas.helpers = {};
 
 Schemas.helpers.allTeamsOptions = function () {
-    var teams = Teams.find({}).fetch();
+    var teams = Teams.find({
+        name: {
+            $ne: ASSIGNMENTREADYTEAM
+        }
+    }).fetch();
     var result = [];
     _.each(teams, function (team) {
-        if (team.name !== ASSIGNMENTREADYTEAM)
-            result.push({
-                label: team.name,
-                value: team._id
-            });
+        result.push({
+            label: team.name,
+            value: team._id
+        });
     });
 
     return result;

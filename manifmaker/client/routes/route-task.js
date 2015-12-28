@@ -2,7 +2,6 @@ Router.route('/tasks', function () {
         console.info("routing", "/tasks");
         this.render('tasksList', {
             data: {
-                teams: Teams.find(),
                 tableSettings: function () {
                     return {
                         collection: Tasks,

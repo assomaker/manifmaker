@@ -1,3 +1,29 @@
+Template.assignmentTasksList.helpers({
+    tasks: function () {
+        var filter = TaskFilter.get();
+        var filterIndex = TaskIndexFilter.get();
+        var teamFilter = TaskTeamFilter.get();
+
+        var searchResult;
+        var filterResult;
+
+        //filterResult = Tasks.find(filter);
+        filterResult = Tasks.find({
+            $and: [
+                filter,
+                teamFilter
+            ]
+        }, {limit: 20}).fetch();
+
+        //console.error("task filter result n'est pas utilisé !!!")
+        searchResult = TasksIndex.search(filterIndex).fetch();
+        return _.intersectionObjects(searchResult, filterResult);
+        //return filterResult;
+    },
+
+
+});
+
 
 Template.tasksList.rendered = function () {
     $(document).ready(function () {
