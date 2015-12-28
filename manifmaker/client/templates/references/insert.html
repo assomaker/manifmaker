@@ -9,18 +9,6 @@
     {{/autoForm}}
 </template>
 
-<template name="teamUpdate">
-    {{# autoForm collection="Teams" doc=document  id="updateTeamForm" type="update"}}
-        <fieldset>
-            <legend>Update {{document.name}}</legend>
-            {{> afQuickField name='name'}}
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="reset" class="btn btn-default">Reset</button>
-    {{/autoForm}}
-</template>
-
-
 <template name="placeInsert">
     {{# autoForm collection="Places" id="insertPlaceForm" type="insert"}}
         <fieldset>
@@ -32,18 +20,6 @@
     {{/autoForm}}
 </template>
 
-<template name="placeUpdate">
-    {{# autoForm collection="Places" doc=document  id="updatePlaceForm" type="update"}}
-        <fieldset>
-            <legend>Update {{document.name}}</legend>
-            {{> afQuickField name='name'}}
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="reset" class="btn btn-default">Reset</button>
-    {{/autoForm}}
-</template>
-
-
 <template name="skillInsert">
     {{# autoForm collection="Skills" id="insertSkillForm" type="insert"}}
         <fieldset>
@@ -52,18 +28,6 @@
             {{> afQuickField placeHolder="This skill doesn't have a label yet" name='label'}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Insert</button>
-        <button type="reset" class="btn btn-default">Reset</button>
-    {{/autoForm}}
-</template>
-
-<template name="skillUpdate">
-    {{# autoForm collection="Skills" doc=document  id="updateSkillForm" type="update"}}
-        <fieldset>
-            <legend>Update {{document.key}}</legend>
-            {{> afQuickField name='key'}}
-            {{> afQuickField name='label'}}
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Update</button>
         <button type="reset" class="btn btn-default">Reset</button>
     {{/autoForm}}
 </template>
@@ -78,15 +42,3 @@
         <button type="reset" class="btn btn-default">Reset</button>
     {{/autoForm}}
 </template>
-
-<template name="calendarDayUpdate">
-    {{# autoForm collection="AssignmentCalendarDay" doc=document  id="updateCalendarDayForm" type="update"}}
-        <fieldset>
-            <legend>Update {{document.date}}</legend>
-            {{> afFormGroup name="date" type="date" }}
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="reset" class="btn btn-default">Reset</button>
-    {{/autoForm}}
-</template>
-
