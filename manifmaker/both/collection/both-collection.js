@@ -12,7 +12,7 @@ AllCollections = {
     Teams: Teams,
     Places: Places,
     Groups: Groups,
-    CalendarDay: CalendarDay
+    AssignmentCalendarDay: AssignmentCalendarDay
 };
 
 //to perform search by name

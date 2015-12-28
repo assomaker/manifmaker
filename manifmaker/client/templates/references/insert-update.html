@@ -69,10 +69,10 @@
 </template>
 
 <template name="calendarDayInsert">
-    {{# autoForm collection="CalendarDay" id="insertCalendarDayForm" type="insert"}}
+    {{# autoForm collection="AssignmentCalendarDay" id="insertCalendarDayForm" type="insert"}}
         <fieldset>
             <legend>Add a Day</legend>
-            {{> afQuickField name='date'}}
+            {{> afFormGroup name="date" type="date" }}
         </fieldset>
         <button type="submit" class="btn btn-primary">Insert</button>
         <button type="reset" class="btn btn-default">Reset</button>
@@ -80,10 +80,10 @@
 </template>
 
 <template name="calendarDayUpdate">
-    {{# autoForm collection="CalendarDay" doc=document  id="updateCalendarDayForm" type="update"}}
+    {{# autoForm collection="AssignmentCalendarDay" doc=document  id="updateCalendarDayForm" type="update"}}
         <fieldset>
             <legend>Update {{document.date}}</legend>
-            {{> afFieldInput type=date name='date'}}
+            {{> afFormGroup name="date" type="date" }}
         </fieldset>
         <button type="submit" class="btn btn-primary">Update</button>
         <button type="reset" class="btn btn-default">Reset</button>

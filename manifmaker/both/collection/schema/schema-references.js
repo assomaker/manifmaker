@@ -36,12 +36,12 @@ Skills = new Mongo.Collection("skills");
 Skills.attachSchema(Schemas.Skills);
 
 
-Schemas.CalendarDay = new SimpleSchema({
+Schemas.AssignmentCalendarDay = new SimpleSchema({
     date: {
-        type: Date,
-        label: "Calendar date",
+        type: String,
+        label: "Date"
     }
 });
-CalendarDay = new Mongo.Collection("calendarDay");
-CalendarDay.attachSchema(Schemas.CalendarDay);
+AssignmentCalendarDay = new Mongo.Collection("assignmentCalendarDay");
+AssignmentCalendarDay.attachSchema(Schemas.AssignmentCalendarDay);
 

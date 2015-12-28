@@ -3,6 +3,7 @@ var references = [
         PLURAL_REFERENCE_URL: "places",
         REFERENCE_URL: "place",
         REFERENCE_COLLECTION_NAME: "Places",
+        REFERENCE_MONGO_COLLECTION_NAME: "places",
         REFERENCE_LABEL: "Place",
         TEMPLATE_ROW: "placeReferenceListRow"
     },
@@ -10,6 +11,7 @@ var references = [
         PLURAL_REFERENCE_URL: "teams",
         REFERENCE_URL: "team",
         REFERENCE_COLLECTION_NAME: "Teams",
+        REFERENCE_MONGO_COLLECTION_NAME: "teams",
         REFERENCE_LABEL: "Team",
         TEMPLATE_ROW: "teamReferenceListRow",
     },
@@ -17,13 +19,15 @@ var references = [
         PLURAL_REFERENCE_URL: "skills",
         REFERENCE_URL: "skill",
         REFERENCE_COLLECTION_NAME: "Skills",
+        REFERENCE_MONGO_COLLECTION_NAME: "skills",
         REFERENCE_LABEL: "Skill",
         TEMPLATE_ROW: "skillReferenceListRow"
     },
     {
         PLURAL_REFERENCE_URL: "calendar-days",
         REFERENCE_URL: "calendar-day",
-        REFERENCE_COLLECTION_NAME: "CalendarDay",
+        REFERENCE_COLLECTION_NAME: "AssignmentCalendarDay",
+        REFERENCE_MONGO_COLLECTION_NAME: "assignmentCalendarDay",
         REFERENCE_LABEL: "Calendar Day",
         TEMPLATE_ROW: "calendarDaysReferenceListRow"
     }
