@@ -7,6 +7,7 @@ Schemas.Teams = new SimpleSchema({
 });
 Teams = new Mongo.Collection("teams");
 Teams.attachSchema(Schemas.Teams);
+TeamToUpdate = new ReactiveVar(null);
 
 Schemas.Places = new SimpleSchema({
     name: {
@@ -17,6 +18,7 @@ Schemas.Places = new SimpleSchema({
 });
 Places = new Mongo.Collection("places");
 Places.attachSchema(Schemas.Places);
+PlaceToUpdate = new ReactiveVar(null);
 
 Schemas.Skills = new SimpleSchema({
     key: {
