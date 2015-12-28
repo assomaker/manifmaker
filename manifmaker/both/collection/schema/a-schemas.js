@@ -52,3 +52,16 @@ Schemas.helpers.allUsersOptions = function () {
     return result;
 };
 
+Schemas.helpers.allSkillsOptions = function () {
+    var skills = Skills.find({}).fetch();
+    var result = [];
+    _.each(skills, function (skill) {
+        result.push({
+            label: skill.label,
+            value: skill._id
+        });
+    });
+
+    return result;
+};
+

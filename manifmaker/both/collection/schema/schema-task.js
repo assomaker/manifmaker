@@ -1,5 +1,18 @@
 //order matters !
 
+Schemas.SkillsId = new SimpleSchema({
+    skillsId : {
+        type: SimpleSchema.RegEx.Id,
+        label: "People Need Skills",
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allSkillsOptions
+            }
+        }
+    }
+
+});
+
 Schemas.TaskAssignment = new SimpleSchema({
     userName: {
         type: String,
@@ -19,7 +32,7 @@ Schemas.TaskAssignment = new SimpleSchema({
         custom: function () { //validate data is same as the real assignment
             var assignment = Assignments.findOne(this.value);
             if (!assignment)
-                return "unknownId"
+                return "unknownId";
             var timeSlot = TimeSlotService.getTimeSlot(assignment.taskId,assignment.timeSlotId);
             if (Users.findOne(assignment.userId).name !== this.field(this.key.replace("assignmentId", "") + "userName").value
                 || !new moment(timeSlot.start).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "start").value))
@@ -41,6 +54,11 @@ Schemas.PeopleNeed = new SimpleSchema({
                 if (!Users.findOne(this.value))
                     return "unknownId";
         },
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allUsersOptions
+            }
+        }
     },
     teamId: {
         type: SimpleSchema.RegEx.Id,
@@ -57,6 +75,11 @@ Schemas.PeopleNeed = new SimpleSchema({
             }
             if (!this.isSet)
                 return null;
+        },
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allTeamsOptions
+            }
         }
     },
     skills: {
@@ -76,7 +99,11 @@ Schemas.PeopleNeed = new SimpleSchema({
                     return "skillsNotFound"
             });
         },
-
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allSkillsOptions
+            }
+        }
     },
     _id: {
         type: SimpleSchema.RegEx.Id,
@@ -86,6 +113,9 @@ Schemas.PeopleNeed = new SimpleSchema({
         autoValue: function () {
             if(!this.isSet)
                 return new Meteor.Collection.ObjectID()._str;
+        },
+        autoform: {
+            type: "hidden",
         }
     }
 });
@@ -98,6 +128,9 @@ Schemas.TimeSlot = new SimpleSchema({
             if (new moment(this.value).isAfter(new moment(this.key.replace("start", "") + this.field('end').value))) {
                 return "startAfterEnd";
             }
+        },
+        autoform: {
+            type: "datetime-local",
         }
     },
     end: {
@@ -107,17 +140,25 @@ Schemas.TimeSlot = new SimpleSchema({
             if (new moment(this.value).isBefore(new moment(this.field(this.key.replace("end", "") + 'start').value))) {
                 return "endBeforeStart";
             }
+        },
+        autoform: {
+            type: "datetime-local",
         }
     },
     peopleNeeded: {
         type: [Schemas.PeopleNeed],
         label: "TimeSlot People needs",
-        defaultValue: []
+        defaultValue: [],
+
     },
     peopleNeededAssigned: {
         type: [Schemas.PeopleNeed],
         label: "TimeSlot People needs assigned",
-        defaultValue: []
+        defaultValue: [],
+        optional: true,
+        autoform: {
+            type: "hidden",
+        }
     },
     _id: {
         type: SimpleSchema.RegEx.Id,
@@ -125,6 +166,9 @@ Schemas.TimeSlot = new SimpleSchema({
         autoValue: function () {
             if(!this.isSet)
                 return new Meteor.Collection.ObjectID()._str;
+        },
+        autoform: {
+            type: "hidden",
         }
         // denyUpdate: true
     }
@@ -204,7 +248,10 @@ Schemas.Tasks = new SimpleSchema({
     assignments: {
         type: [Schemas.TaskAssignment],
         label: "Task assignments",
-        defaultValue: []
+        defaultValue: [],
+        autoform: {
+            type: "hidden",
+        }
     }
 });
 

@@ -7,6 +7,9 @@ Schemas.UserAvailabilities = new SimpleSchema({
         custom: function () {
             if (new moment(this.value).isAfter(new moment(this.field(this.key.replace("start", "") + "end").value)))
                 return "startAfterEnd";
+        },
+        autoform: {
+            type: "datetime-local",
         }
     },
     end: {
@@ -15,6 +18,9 @@ Schemas.UserAvailabilities = new SimpleSchema({
         custom: function () {
             if (new moment(this.value).isSame(new moment(this.field(this.key.replace("end", "") + "start").value)))
                 return "endBeforeStart"
+        },
+        autoform: {
+            type: "datetime-local",
         }
     }
 });
@@ -93,6 +99,9 @@ Schemas.Users = new SimpleSchema({
     assignments: {
         type: [Schemas.UserAssignment],
         label: "User assignments",
-        defaultValue: []
+        defaultValue: [],
+        autoform: {
+            type: "hidden",
+        }
     }
 });

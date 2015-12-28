@@ -18,7 +18,7 @@
 <template name="updateTaskForm">
     {{# autoForm collection="Tasks" doc=this id="updateTaskForm" type="update"}}
         <fieldset>
-            <legend>Add a Task</legend>
+            <legend>Update Task {{this.name}}</legend>
             {{> afQuickField name='name'}}
             {{> afQuickField name='description'}}
             {{> afQuickField name="teamId"}}
@@ -27,7 +27,7 @@
             {{> afQuickField name="masterId"}}
             {{> afQuickField name="timeSlots"}}
         </fieldset>
-        <button type="submit" class="btn btn-primary">Insert</button>
+        <button type="submit" class="btn btn-primary">Update</button>
         {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete {{this.name}}{{/quickRemoveButton}}
     {{/autoForm}}
 </template>
