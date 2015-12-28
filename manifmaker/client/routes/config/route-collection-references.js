@@ -3,13 +3,29 @@ var references = [
         PLURAL_REFERENCE_URL: "places",
         REFERENCE_URL: "place",
         REFERENCE_COLLECTION_NAME: "Places",
-        REFERENCE_LABEL: "Place"
+        REFERENCE_LABEL: "Place",
+        TEMPLATE_ROW: "placeReferenceListRow"
     },
     {
         PLURAL_REFERENCE_URL: "teams",
         REFERENCE_URL: "team",
         REFERENCE_COLLECTION_NAME: "Teams",
-        REFERENCE_LABEL: "Team"
+        REFERENCE_LABEL: "Team",
+        TEMPLATE_ROW: "teamReferenceListRow",
+    },
+    {
+        PLURAL_REFERENCE_URL: "skills",
+        REFERENCE_URL: "skill",
+        REFERENCE_COLLECTION_NAME: "Skills",
+        REFERENCE_LABEL: "Skill",
+        TEMPLATE_ROW: "skillReferenceListRow"
+    },
+    {
+        PLURAL_REFERENCE_URL: "calendar-days",
+        REFERENCE_URL: "calendar-day",
+        REFERENCE_COLLECTION_NAME: "CalendarDay",
+        REFERENCE_LABEL: "Calendar Day",
+        TEMPLATE_ROW: "calendarDaysReferenceListRow"
     }
 ];
 
@@ -18,6 +34,8 @@ _.each(references, function (referenceOptions) {
     var PLURAL_REFERENCE_URL = referenceOptions.PLURAL_REFERENCE_URL;
     var REFERENCE_URL = referenceOptions.REFERENCE_URL;
     var REFERENCE_COLLECTION_NAME = referenceOptions.REFERENCE_COLLECTION_NAME;
+    var TEMPLATE_ROW = referenceOptions.TEMPLATE_ROW;
+
 
     //get (list)
     Router.route('/' + PLURAL_REFERENCE_URL, function () {
@@ -26,7 +44,8 @@ _.each(references, function (referenceOptions) {
                     document: AllCollections[REFERENCE_COLLECTION_NAME].find({}),
                     PLURAL_REFERENCE_URL: referenceOptions.PLURAL_REFERENCE_URL,
                     REFERENCE_URL: referenceOptions.REFERENCE_URL,
-                    REFERENCE_COLLECTION_NAME: referenceOptions.REFERENCE_COLLECTION_NAME
+                    REFERENCE_COLLECTION_NAME: referenceOptions.REFERENCE_COLLECTION_NAME,
+                    TEMPLATE_ROW: referenceOptions.TEMPLATE_ROW
                 },
                 to: 'mainContent'
             });
@@ -44,8 +63,15 @@ _.each(references, function (referenceOptions) {
 //put
     Router.route('/' + REFERENCE_URL + '/:_id', function () {
             var current = this.params._id;
-            TeamToUpdate.set(current);
-            this.render(REFERENCE_URL + 'Update', {to: 'mainContent'});
+            this.render(REFERENCE_URL + 'Update', {
+                data: {
+                    document: AllCollections[REFERENCE_COLLECTION_NAME].findOne(current),
+                    PLURAL_REFERENCE_URL: referenceOptions.PLURAL_REFERENCE_URL,
+                    REFERENCE_URL: referenceOptions.REFERENCE_URL,
+                    REFERENCE_COLLECTION_NAME: referenceOptions.REFERENCE_COLLECTION_NAME
+                },
+                to: 'mainContent'
+            });
         },
         {name: REFERENCE_URL + '.update'}
     );

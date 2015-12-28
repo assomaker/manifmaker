@@ -1,7 +1,6 @@
 Users = new Mongo.Collection("users");
 Tasks = new Mongo.Collection("tasks");
 Assignments = new Mongo.Collection("assignment");
-Skills = new Mongo.Collection("skills");
 
 Groups = new Mongo.Collection("groups");
 
@@ -12,7 +11,8 @@ AllCollections = {
     Skills: Skills,
     Teams: Teams,
     Places: Places,
-    Groups: Groups
+    Groups: Groups,
+    CalendarDay: CalendarDay
 };
 
 //to perform search by name

@@ -1,4 +1,3 @@
-
 <template name="teamInsert">
     {{# autoForm collection="Teams" id="insertTeamForm" type="insert"}}
         <fieldset>
@@ -38,6 +37,53 @@
         <fieldset>
             <legend>Update {{document.name}}</legend>
             {{> afQuickField name='name'}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+
+
+<template name="skillInsert">
+    {{# autoForm collection="Skills" id="insertSkillForm" type="insert"}}
+        <fieldset>
+            <legend>Add a Skill</legend>
+            {{> afQuickField placeHolder="This skill doesn't have a key yet" name='key'}}
+            {{> afQuickField placeHolder="This skill doesn't have a label yet" name='label'}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Insert</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+
+<template name="skillUpdate">
+    {{# autoForm collection="Skills" doc=document  id="updateSkillForm" type="update"}}
+        <fieldset>
+            <legend>Update {{document.key}}</legend>
+            {{> afQuickField name='key'}}
+            {{> afQuickField name='label'}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+
+<template name="calendarDayInsert">
+    {{# autoForm collection="CalendarDay" id="insertCalendarDayForm" type="insert"}}
+        <fieldset>
+            <legend>Add a Day</legend>
+            {{> afQuickField name='date'}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Insert</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+
+<template name="calendarDayUpdate">
+    {{# autoForm collection="CalendarDay" doc=document  id="updateCalendarDayForm" type="update"}}
+        <fieldset>
+            <legend>Update {{document.date}}</legend>
+            {{> afFieldInput type=date name='date'}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Update</button>
         <button type="reset" class="btn btn-default">Reset</button>
