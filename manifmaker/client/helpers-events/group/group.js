@@ -15,7 +15,9 @@ Template.group.events({
         event.preventDefault();
         var groupName = $('input[name=groupName]').val();
         var teamId = $('select[name=team]').val();
-        var group = new Group(groupName,[],teamId);
+        var group = {
+            name: groupName,
+        };
 
         if(this._id){ //already exist, we update it
             Groups.update({_id: this._id}, group, function(error,results){

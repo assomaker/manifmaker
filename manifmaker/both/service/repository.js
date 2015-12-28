@@ -10,8 +10,7 @@ class UserRepository {
 TaskRepository =
 class TaskRepository {
     static findOne(taskId) {
-        var task = Tasks.findOne(taskId);
-        return new Task(task.name, task.timeSlots, task.assignments, task.teams, task.respManif, task.places, task.description, task._id); //TODO trouver un moyen plus NoSQL de faire ca ?
+        return Tasks.findOne(taskId);
     }
 }
 
@@ -20,7 +19,6 @@ class TaskRepository {
 AssignmentRepository =
 class AssignmentRepository {
     static findOne(assignmentId) {
-        var assignment = Assignments.findOne(assignmentId);
-        return new Assignment(assignment.userId, assignment.taskId, assignment.timeSlotId, assignment.peopleNeeded, assignment._id);
+        return Assignments.findOne(assignmentId);
     }
 }

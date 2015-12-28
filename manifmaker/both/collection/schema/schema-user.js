@@ -1,22 +1,20 @@
 //order matters !
 
 Schemas.UserAvailabilities = new SimpleSchema({
-    start:{
+    start: {
         type: Date,
         label: "User Availabilities Start Date",
         custom: function () {
-            if (new moment(this.value).isAfter(new moment(this.field('end').value))) {
+            if (new moment(this.value).isAfter(new moment(this.field(this.key.replace("start", "") + "end").value)))
                 return "startAfterEnd";
-            }
         }
     },
-    end:{
+    end: {
         type: Date,
         label: "User Availabilities End Date",
         custom: function () {
-            if (new moment(this.value).isBefore(new moment(this.field('start').value))) {
-                return "endBeforeStart";
-            }
+            if (new moment(this.value).isSame(new moment(this.field(this.key.replace("end", "") + "start").value)))
+                return "endBeforeStart"
         }
     }
 });
@@ -41,9 +39,10 @@ Schemas.UserAssignment = new SimpleSchema({
             var assignment = Assignments.findOne(this.value);
             if (!assignment)
                 return "unknownId"
+            var timeSlot = TimeSlotService.getTimeSlot(assignment.taskId,assignment.timeSlotId);
             if (Tasks.findOne(assignment.taskId).name !== this.field(this.key.replace("assignmentId", "") + "taskName").value
-                || !new moment(assignment.start).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "start").value))
-                || !new moment(assignment.end).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "end").value)))
+                || !new moment(timeSlot.start).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "start").value))
+                || !new moment(timeSlot.end).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "end").value)))
                 return "userAssignmentNotMatching"
         }
     }
@@ -58,6 +57,7 @@ Schemas.Users = new SimpleSchema({
     teams: {
         label: "User teams",
         type: [SimpleSchema.RegEx.Id],
+        optional: true,
         custom: function () {
             _.each(this.value, function (teamId) {
                 if (!Teams.findOne(teamId))
@@ -67,8 +67,10 @@ Schemas.Users = new SimpleSchema({
         autoValue: function () {
             if (this.isInsert) {
                 //trick pour les filtres, tous les users appartiennement au moins à l'équipe ASSIGNMENTREADYTEAM
-                var ASSIGNMENTREADYTEAM = Teams.findOne({name: ASSIGNMENTREADYTEAM});
-                return this.value.push(ASSIGNMENTREADYTEAM);
+                var assignmentReadyTeam = Teams.findOne({name: ASSIGNMENTREADYTEAM});
+                if(!this.value) this.value = [];
+                this.value.push(assignmentReadyTeam._id);
+                return this.value;
             }
         }
     },

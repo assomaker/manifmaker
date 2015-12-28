@@ -1,11 +1,9 @@
 TimeSlotService =
     class TimeSlotService {
-        static read(timeSlot) {
-            return new TimeSlot(timeSlot.start, timeSlot.end, timeSlot.peopleNeeded, timeSlot.peopleNeededAssigned, timeSlot._id);
-        }
-
         static getTimeSlot(task, timeSlotId) {
             console.info("TimeSlotService.getTimeSlot timeSlot", timeSlotId, "for task", task);
+            if (typeof task !== "object")
+                task = Tasks.findOne(task);
             var found;
             task.timeSlots.forEach(timeSlot => {
                 if (timeSlot._id === timeSlotId) {
@@ -77,9 +75,6 @@ TimeSlotService =
 
 AvailabilityService =
     class AvailabilityService {
-        static read(availability) {
-            return new Availability(availability.start, availability.end);
-        }
 
         static getSurroundingAvailability(user, start, end) {
             console.info("AvailabilityService.getAvailability start:", start, "end", end, "for user", user);
@@ -94,7 +89,7 @@ AvailabilityService =
                 var availabilityEnd = new moment(availability.end);
                 if (( availabilityStart.isBefore(start) || availabilityStart.isSame(start))
                     && (availabilityEnd.isAfter(end) || availabilityEnd.isSame(end) )) {
-                    found = AvailabilityService.read(availability);
+                    found = availability;
                     return false;
                 }
             });
@@ -130,9 +125,15 @@ AvailabilityService =
             var availability = availabilities.splice(availabilityIndex, 1)[0];
             //add new availabilities and prevent creating a 0minutes availability
             if (!new moment(availability.start).isSame(new moment(start)))
-                availabilities.push(new Availability(availability.start, start));
+                availabilities.push({
+                    start: availability.start,
+                    end: start
+                });
             if (!new moment(end).isSame(new moment(availability.end)))
-                availabilities.push(new Availability(end, availability.end));
+                availabilities.push({
+                    start: end,
+                    end: availability.end
+                });
 
             Users.update({_id: user._id}, {$set: {availabilities: availabilities}});
 
@@ -145,7 +146,7 @@ AvailabilityService =
 
             user.availabilities.forEach(function (availability, index, availabilities) {
                 var availabilityEnd = new moment(availability.end);
-                if (availabilityEnd.isSame(start) ){
+                if (availabilityEnd.isSame(start)) {
                     found = index;
                     return false;
                 }
@@ -160,7 +161,7 @@ AvailabilityService =
 
             user.availabilities.forEach(function (availability, index, availabilities) {
                 var availabilityStart = new moment(availability.start);
-                if (availabilityStart.isSame(end) ){
+                if (availabilityStart.isSame(end)) {
                     found = index;
                     return false;
                 }
@@ -171,34 +172,34 @@ AvailabilityService =
         static restoreAvailabilities(user, start, end) {
             console.info("AvailabilityService.restoreAvailabilities for user", user, " from", start, "to", end);
             var availabilities = user.availabilities;
-            var previousAvailability,nextAvailability;
+            var previousAvailability, nextAvailability;
 
             //if exits, get direct previous availabilty
-            var previousAvailabilityIndex = AvailabilityService.getIndexOfAvailabilityWhichEndWhenParamStart(user,start);
+            var previousAvailabilityIndex = AvailabilityService.getIndexOfAvailabilityWhichEndWhenParamStart(user, start);
 
             //if exits, get direct next availabilty
-            var nextAvailabilityIndex = AvailabilityService.getIndexOfAvailabilityWhichStartWhenParamEnd(user,end);
+            var nextAvailabilityIndex = AvailabilityService.getIndexOfAvailabilityWhichStartWhenParamEnd(user, end);
 
 
             //if possible
 
             //remove old availability(ies)
-            if(previousAvailabilityIndex){
+            if (previousAvailabilityIndex) {
                 previousAvailability = availabilities.splice(previousAvailabilityIndex, 1)[0];
             }
-            if(nextAvailabilityIndex){
+            if (nextAvailabilityIndex) {
                 nextAvailability = availabilities.splice(nextAvailabilityIndex, 1)[0];
             }
 
             var newAvailability = {};
 
             //merge availability
-            if(previousAvailability){
+            if (previousAvailability) {
                 newAvailability.start = previousAvailability.start;
             } else {
                 newAvailability.start = start;
             }
-            if(nextAvailability){
+            if (nextAvailability) {
                 nextAvailability.end = nextAvailability.end;
             } else {
                 newAvailability.end = end;
@@ -229,8 +230,6 @@ AvailabilityService =
 
 PeopleNeedService =
     class PeopleNeedService {
-        static read(availability) {
-        }
 
         static getPeopleNeedIndex(timeSlot, peopleNeedHunter) {
             var found;
@@ -315,14 +314,11 @@ PeopleNeedService =
 
 AssignmentService =
     class AssignmentService {
-        static read(assigment) {
-            return new Assignment(assigment.userId, assigment.taskId, assigment.timeSlotId, assigment.peopleNeeded, assigment._id);
-        }
 
         static getTimeSlot(task, timeSlotId) {
             for (var timeSlot in task.timeSlots) {
                 if (timeSlot._id === timeSlotId) {
-                    return new TimeSlot();
+                    return timeSlot;
                 }
             }
             return null;

@@ -29,8 +29,8 @@ Meteor.startup(function () {
         return Places.find({});
     });
 
-    Meteor.publish("calendarDays", function () {
-        return CalendarDays.find({});
+    Meteor.publish("AssignmentCalendarDay", function () {
+        return AssignmentCalendarDay.find({});
     });
 
     Meteor.publish("calendarHours", function () {

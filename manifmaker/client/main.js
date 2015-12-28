@@ -65,7 +65,7 @@ Meteor.startup(function () {
 
     //below will be client only
     Meteor.subscribe("calendarAccuracy");
-    Meteor.subscribe("calendarDays");
+    Meteor.subscribe("AssignmentCalendarDay");
     Meteor.subscribe("calendarHours");
     Meteor.subscribe("calendarQuarter");
 

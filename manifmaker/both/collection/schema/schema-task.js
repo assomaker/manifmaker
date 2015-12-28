@@ -1,28 +1,29 @@
 //order matters !
 
 Schemas.TaskAssignment = new SimpleSchema({
-    userName : {
+    userName: {
         type: String,
         label: "Task assignment User Name"
     },
-    start:{
+    start: {
         type: Date,
         label: "Task Assignment Start Date"
     },
-    end:{
+    end: {
         type: Date,
         label: "Task Assignment End Date"
     },
-    assignmentId : {
+    assignmentId: {
         type: SimpleSchema.RegEx.Id,
         label: "Task assignment assignment id",
-        custom : function(){ //validate data is same as the real assignment
+        custom: function () { //validate data is same as the real assignment
             var assignment = Assignments.findOne(this.value);
-            if(!assignment)
+            if (!assignment)
                 return "unknownId"
-            if (Users.findOne(assignment.userId).name !== this.field(this.key.replace("assignmentId","")+"userName").value
-                || !new moment(assignment.start).isSame(new moment(this.field(this.key.replace("assignmentId","")+"start").value))
-                || !new moment(assignment.end).isSame(new moment(this.field(this.key.replace("assignmentId","")+"end").value)) )
+            var timeSlot = TimeSlotService.getTimeSlot(assignment.taskId,assignment.timeSlotId);
+            if (Users.findOne(assignment.userId).name !== this.field(this.key.replace("assignmentId", "") + "userName").value
+                || !new moment(timeSlot.start).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "start").value))
+                || !new moment(timeSlot.end).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "end").value)))
                 return "taskAssignmentNotMatching"
         }
     }
@@ -30,47 +31,48 @@ Schemas.TaskAssignment = new SimpleSchema({
 });
 
 Schemas.PeopleNeed = new SimpleSchema({
-    userId:{
+    userId: {
         type: String,
         label: "People Need User",
         defaultValue: null,
         optional: true,
-        custom: function(){
-            if(!Users.findOne(this.value))
-                return "unknownId";
+        custom: function () {
+            if (this.value)
+                if (!Users.findOne(this.value))
+                    return "unknownId";
         },
     },
-    teamId:{
+    teamId: {
         type: SimpleSchema.RegEx.Id,
         label: "People Need Team",
         optional: true,
-        custom: function(){
-            if(!this.value) return 1;//autoValue already dit its job
-            if(!Teams.findOne(this.value))
+        custom: function () {
+            if (!this.value) return 1;//autoValue already dit its job
+            if (!Teams.findOne(this.value))
                 return "unknownId";
         },
-        autoValue: function(){
-            if(this.field('userId').isSet){ //if userId is set, teamId is not take into account
+        autoValue: function () {
+            if (this.field('userId').isSet) { //if userId is set, teamId is not take into account
                 return null;
             }
-            if(!this.isSet)
+            if (!this.isSet)
                 return null;
         }
     },
-    skills:{
+    skills: {
         label: "People Need Skills",
         type: [SimpleSchema.RegEx.Id],
         optional: true,
-        autoValue: function(){ //if userId is set, skills is not take into account
-            if(this.field('userId').isSet){
+        autoValue: function () { //if userId is set, skills is not take into account
+            if (this.field('userId').isSet) {
                 return [];
             }
-            if(!this.isSet)
+            if (!this.isSet)
                 return [];
         },
-        custom: function(){
-            _.each(this.value,function(skill){
-                if(!Skills.findOne(skill._id))
+        custom: function () {
+            _.each(this.value, function (skill) {
+                if (!Skills.findOne(skill._id))
                     return "skillsNotFound"
             });
         },
@@ -78,46 +80,53 @@ Schemas.PeopleNeed = new SimpleSchema({
     },
     _id: {
         type: SimpleSchema.RegEx.Id,
-        label: "_id",
-        defaultValue: new Meteor.Collection.ObjectID()._str,
-        denyUpdate: true
+        label: "People Need _id",
+        defaultValue: function(){return new Meteor.Collection.ObjectID()._str},
+       // denyUpdate: true
+        autoValue: function () {
+            if(!this.isSet)
+                return new Meteor.Collection.ObjectID()._str;
+        }
     }
 });
 
 Schemas.TimeSlot = new SimpleSchema({
-    start:{
+    start: {
         type: Date,
         label: "TimeSlot Start Date",
         custom: function () {
-            if (new moment(this.value).isAfter(new moment(this.field('end').value))) {
+            if (new moment(this.value).isAfter(new moment(this.key.replace("start", "") + this.field('end').value))) {
                 return "startAfterEnd";
             }
         }
     },
-    end:{
+    end: {
         type: Date,
         label: " TimeSlot End Date",
         custom: function () {
-            if (new moment(this.value).isBefore(new moment(this.field('start').value))) {
+            if (new moment(this.value).isBefore(new moment(this.field(this.key.replace("end", "") + 'start').value))) {
                 return "endBeforeStart";
             }
         }
     },
-    _id:{
-        type: SimpleSchema.RegEx.Id,
-        label: "_id",
-        defaultValue: new Meteor.Collection.ObjectID()._str,
-        denyUpdate: true
-    },
-    peopleNeeded : {
+    peopleNeeded: {
         type: [Schemas.PeopleNeed],
         label: "TimeSlot People needs",
-        defaultValue : []
+        defaultValue: []
     },
-    peopleNeededAssigned : {
+    peopleNeededAssigned: {
         type: [Schemas.PeopleNeed],
         label: "TimeSlot People needs assigned",
-        defaultValue : []
+        defaultValue: []
+    },
+    _id: {
+        type: SimpleSchema.RegEx.Id,
+        label: "TimeSlot _id",
+        autoValue: function () {
+            if(!this.isSet)
+                return new Meteor.Collection.ObjectID()._str;
+        }
+        // denyUpdate: true
     }
 });
 
@@ -132,11 +141,11 @@ Schemas.Tasks = new SimpleSchema({
         label: "Task Description",
         optional: true
     },
-    teamId : {
+    teamId: {
         type: SimpleSchema.RegEx.Id,
-        label : "Task Team",
-        custom: function(){
-            if(!Teams.findOne(this.value))
+        label: "Task Team",
+        custom: function () {
+            if (!Teams.findOne(this.value))
                 return "unknownId";
             return 1
         },
@@ -146,29 +155,29 @@ Schemas.Tasks = new SimpleSchema({
             }
         }
     },
-    placeId : {
+    placeId: {
         type: SimpleSchema.RegEx.Id,
-        label : "Task Place",
-        custom: function(){
-            if(!Places.findOne(this.value))
+        label: "Task Place",
+        custom: function () {
+            if (!Places.findOne(this.value))
                 return "unknownId";
             return 1
         }
 
     },
-    liveEventMasterId : {
+    liveEventMasterId: {
         type: SimpleSchema.RegEx.Id,
-        label : "Task Live event responsible",
-        custom: function(){
-            if(!Users.findOne(this.value))
+        label: "Task Live event responsible",
+        custom: function () {
+            if (!Users.findOne(this.value))
                 return "unknownId";
         }
     },
-    masterId : {
+    masterId: {
         type: SimpleSchema.RegEx.Id,
-        label : "Task responsible",
-        custom: function(){
-            if(!Users.findOne(this.value))
+        label: "Task responsible",
+        custom: function () {
+            if (!Users.findOne(this.value))
                 return "unknownId";
         }
     },
@@ -177,7 +186,7 @@ Schemas.Tasks = new SimpleSchema({
         label: "Task Time slots",
         defaultValue: []
     },
-    assignments : {
+    assignments: {
         type: [Schemas.TaskAssignment],
         label: "Task assignments",
         defaultValue: []

@@ -7,7 +7,15 @@ Router.route('/tasks', function () {
 
 Router.route('/task', function () {
         console.info("routing", "/task");
-        this.render('task', {to: 'mainContent'});
+
+        this.wait(Meteor.subscribe('teams'));
+
+        if (this.ready()) {
+            this.render('insertTaskForm', {to: 'mainContent'});
+        } else {
+            console.log("waiting team data"); //TODO add a spinner
+        }
+
     },
     {name: 'task.create'}
 );

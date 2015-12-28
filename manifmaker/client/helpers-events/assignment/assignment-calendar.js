@@ -14,7 +14,7 @@ Template.assignmentCalendar.helpers({
         return CurrentAssignmentType.get();
     },
     days: function () {
-        return CalendarDays.find({});
+        return AssignmentCalendarDay.find({});
     },
     hours: function () {
         return CalendarHours.find({});

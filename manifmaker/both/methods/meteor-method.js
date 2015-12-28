@@ -1,4 +1,3 @@
-
 Meteor.methods({
     setCalendarAccuracy: function (accuracy) {
         if (Meteor.isServer) {
@@ -65,20 +64,25 @@ Meteor.methods({
         }
 
 
-        var assignment = new Assignment(userId, taskId, timeSlotId, peopleNeed);
-        Assignments.insert(assignment);
+        var assignmentId = Assignments.insert({
+            userId: userId,
+            taskId: taskId,
+            timeSlotId: timeSlotId,
+            peopleNeedId: peopleNeed._id
+        });
+
 
         AvailabilityService.removeAvailabilities(user, timeSlot.start, timeSlot.end);
         PeopleNeedService.removePeopleNeed(task, timeSlot, peopleNeed, userId);
 
 
-        return assignment;
+        return assignmentId;
 
     },
 
 
-    populate: function(){
-        if(Meteor.isServer){
+    populate: function () {
+        if (Meteor.isServer) {
             populateData();
         }
     }
