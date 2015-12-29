@@ -92,13 +92,15 @@ Template.assignmentUsersList.events({
     },
 
     "change #filter_skills_user": function (event) {
-        var _id = $(event.target).val();
-        if (_id === "") {
+        var _ids = $(event.target).val();
+        if (_ids[0] === "") {
             UserSkillsFilter.set(defaultFilter);
             $("#filter_skills_user_option_advice_all").text("Choose a skill"); //TODO label
         } else {
             UserSkillsFilter.set({
-                skills: _id
+                skills: {
+                    $all: _ids
+                }
             });
             $("#filter_skills_user_option_advice_all").text("All skills"); //TODO label
         }

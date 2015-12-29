@@ -73,7 +73,7 @@ populateData = function () {
     var user3Id = Users.insert({
         name: "user3",
         //teams: [team3Id],
-        skills: [skill3Id],
+        skills: [skill2Id,skill3Id],
         availabilities: [
             {
                 start: getDateFromTime(10),
@@ -149,7 +149,7 @@ populateData = function () {
                 peopleNeeded : [
                     {
                         teamId: team1Id,
-                        skills: [skill2Id]
+                        skills: [skill1Id,skill2Id]
                     }
                 ]
             }

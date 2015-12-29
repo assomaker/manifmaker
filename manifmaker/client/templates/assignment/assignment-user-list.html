@@ -19,7 +19,7 @@
         </div>
 
         <div class="input-field col s12">
-            <select id="filter_skills_user" class="browser-default">
+            <select id="filter_skills_user" multiple class="browser-default">
                 <option id="filter_skills_user_option_advice_all" value="" selected>Choose a skill</option>
                 {{#each allOptionsSkills}}
                     <option value="{{_id}}">{{key}} - {{label}}</option>
