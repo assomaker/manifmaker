@@ -78,7 +78,12 @@ Template.assignmentUsersList.events({
 
     "change #filter_team_user": function (event) {
         var _id = $(event.target).val();
-        //TODO
-        console.debug("TODO");
+        UserTeamFilter.set({
+            teams: _id
+        });
     }
 });
+
+
+
+

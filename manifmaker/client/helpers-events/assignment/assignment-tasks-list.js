@@ -168,7 +168,7 @@ Template.assignmentTasksList.events({
             $("#filter_team_task_option_advice_all").text("Choose a team"); //TODO label
         } else {
             TaskTeamFilter.set({
-                team: _id
+                teamId: _id
             });
             $("#filter_team_task_option_advice_all").text("All teams"); //TODO label
         }
