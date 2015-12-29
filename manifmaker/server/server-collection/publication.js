@@ -33,20 +33,4 @@ Meteor.startup(function () {
         return AssignmentTerms.find({});
     });
 
-
-
-    //TODO dumb collections
-    Meteor.publish("calendarHours", function () {
-        return CalendarHours.find({});
-    });
-
-    Meteor.publish("calendarQuarter", function () {
-        return CalendarQuarter.find({});
-    });
-
-    Meteor.publish("calendarAccuracy", function () {
-        return CalendarAccuracy.find({});
-    });
-
-
 });

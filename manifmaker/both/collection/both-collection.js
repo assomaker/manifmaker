@@ -32,10 +32,3 @@ UsersIndex = new EasySearch.Index({
 Tasks.attachSchema(Schemas.Tasks);
 Assignments.attachSchema(Schemas.Assignments);
 Users.attachSchema(Schemas.Users);
-
-
-
-//calendar, TODO client side only TODO dumb collections
-CalendarHours = new Mongo.Collection("hours");
-CalendarQuarter = new Mongo.Collection("quarters");
-CalendarAccuracy = new Mongo.Collection("accuracy");

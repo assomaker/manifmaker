@@ -6,11 +6,13 @@ Meteor.startup(function () {
     Places.remove({});
     Teams.remove({});
     Groups.remove({});
-    CalendarHours.remove({});
-    CalendarQuarter.remove({});
-    CalendarAccuracy.remove({});
     Skills.remove({});
     Teams.remove({});
+
+    //AssignmentCalendarDisplayedDays.remove({});
+    //AssignmentCalendarDisplayedHours.remove({});
+    //AssignmentCalendarDisplayedQuarter.remove({});
+    //AssignmentCalendarDisplayedAccuracy.remove({});
 
 
     //  Assignments.before.insert( /*if we need to add user and task data to assignments*/);

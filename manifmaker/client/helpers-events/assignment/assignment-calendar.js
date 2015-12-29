@@ -14,13 +14,13 @@ Template.assignmentCalendar.helpers({
         return CurrentAssignmentType.get();
     },
     days: function () {
-        return AssignmentCalendarDay.find({});
+        return AssignmentCalendarDisplayedDays.find({});
     },
     hours: function () {
-        return CalendarHours.find({});
+        return AssignmentCalendarDisplayedHours.find({});
     },
     quarter: function () {
-        return CalendarQuarter.find({});
+        return AssignmentCalendarDisplayedQuarter.find({});
     },
     displayCalendarTitleDate: function (date) {
         return new moment(date).format("dddd DD/MM");
@@ -67,7 +67,7 @@ Template.assignmentCalendar.helpers({
                 }
 
                 var baseOneHourHeight = 40;
-                var accuracy = CalendarAccuracy.findOne().accuracy;
+                var accuracy = AssignmentCalendarDisplayedAccuracy.findOne().accuracy;
 
                 var data = {}, founded;
 
@@ -105,7 +105,7 @@ Template.assignmentCalendar.helpers({
 
 
                 var baseOneHourHeight = 40;
-                var accuracy = CalendarAccuracy.findOne().accuracy;
+                var accuracy = AssignmentCalendarDisplayedAccuracy.findOne().accuracy;
 
                 var data = {}, founded;
 
@@ -150,7 +150,7 @@ Template.assignmentCalendar.helpers({
         return [data];  //le css ne sait pas encore gerer deux data timeSlot sur un meme calendar timeSlot
     },
     sideHoursHeight: function () {
-        switch (CalendarAccuracy.findOne({}).accuracy) {
+        switch (AssignmentCalendarDisplayedAccuracy.findOne({}).accuracy) {
             case 0.25 :
                 return "oneHour";
             case  0.5 :
@@ -164,7 +164,7 @@ Template.assignmentCalendar.helpers({
         }
     },
     quarterHeight: function () {
-        switch (CalendarAccuracy.findOne({}).accuracy) {
+        switch (AssignmentCalendarDisplayedAccuracy.findOne({}).accuracy) {
             case 0.25 :
                 return "quarterHour";
             case  0.5 :

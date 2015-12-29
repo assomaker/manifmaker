@@ -126,9 +126,6 @@ populateData = function () {
         ]
     });
 
-
-    var accuracy = CalendarAccuracyEnum["1"];
-    Meteor.call("setCalendarAccuracy", accuracy);
 };
 
 insertAndFetch = function (Collection, data) {

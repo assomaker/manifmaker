@@ -62,14 +62,16 @@ Meteor.startup(function () {
     Meteor.subscribe("assignments");
     Meteor.subscribe("teams");
     Meteor.subscribe("groups");
-    Meteor.subscribe("assignment-terms");
+    Meteor.subscribe("assignment-terms",function(){
+        AssignmentServiceClient.setCalendarTerms();
+    });
 
 
     //below will be client only
-    Meteor.subscribe("calendarAccuracy");
-    Meteor.subscribe("AssignmentCalendarD");
-    Meteor.subscribe("calendarHours");
-    Meteor.subscribe("calendarQuarter");
+    //Meteor.subscribe("AssignmentCalendarDisplayedDays");
+    //Meteor.subscribe("AssignmentCalendarDisplayedHours");
+    //Meteor.subscribe("AssignmentCalendarDisplayedQuarter");
+    //Meteor.subscribe("AssignmentCalendarDisplayedAccuracy");
 
 
     //preSelecterTaskByTaskName("task1");
@@ -81,5 +83,10 @@ Meteor.startup(function () {
             console.log(name + " error:", error);
         }
     });
+
+    var accuracy = CalendarAccuracyEnum["1"];
+    AssignmentServiceClient.setCalendarAccuracy(accuracy);
+
+
 });
 
