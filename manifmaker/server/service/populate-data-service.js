@@ -32,8 +32,14 @@ populateData = function () {
 
     //assignmentCalendarDay
     AssignmentTerms.insert({
+        name: "Terms 1",
         start: getDateFromDate(13, 5 - 1),
-        end: getDateFromDate(14, 5 - 1)
+        end: getDateFromDate(15, 5 - 1)
+    });
+    AssignmentTerms.insert({
+        name: "Terms 2",
+        start: getDateFromDate(10, 5 - 1),
+        end: getDateFromDate(11, 5 - 1)
     });
 
     //users

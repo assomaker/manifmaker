@@ -8,15 +8,39 @@ nav#top-left-menu {
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
 
+    .breadcrumb-top-bar {
+      height: 100%;
+      transform: translateY(-50%);
+    }
+    .breadcrumb-top-bar, .select-assignment-terms-top-bar, .action-button-top-bar {
+      height: 100%;
+      transform: translateY(-50%);
+    }
+
+    .select-assignment-terms-top-bar, .action-button-top-bar {
+      display: inline-block;
+    }
+    .select-assignment-terms-top-bar {
+      width: calc(~'33.33333333% - 40.5px'); //40.5px is the button-collapse-left-menu width
+      select {
+        background-color: rgba(255,255,255,0.1);
+      }
+    }
     .action-button-top-bar {
+      width: 33.33333333%;
       text-align: center;
     }
 
-    .breadcrumb-top-bar, .action-button-top-bar {
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
+    .breadcrumb-top-bar {
+      .breadcrumb {
+        background-color: inherit;
+      }
+    }
 
+    .select-assignment-terms-top-bar {
+      #assignments-terms-select {
+        height: 28px;
+      }
     }
 
     .action-button-top-bar {
@@ -24,11 +48,6 @@ nav#top-left-menu {
         height: 28px;
         line-height: 100%;
         padding: 0.5em 2em;
-      }
-    }
-    .breadcrumb-top-bar {
-      .breadcrumb {
-        background-color: inherit;
       }
     }
 

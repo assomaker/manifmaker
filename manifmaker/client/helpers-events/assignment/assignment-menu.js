@@ -40,6 +40,9 @@ Template.assignmentMenu.events({
 });
 
 Template.assignmentMenu.helpers({
+    assignmentTerms: function(){
+        return AssignmentTerms.find({});
+    },
     isSelected: function(mode){
         if(mode === CurrentAssignmentType.get()){
             return "active";

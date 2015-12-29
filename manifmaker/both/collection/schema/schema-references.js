@@ -35,8 +35,13 @@ Schemas.Skills = new SimpleSchema({
 Skills = new Mongo.Collection("skills");
 Skills.attachSchema(Schemas.Skills);
 
-
+//TODO les assignments terms ne peuvent pas se chevaucher
 Schemas.AssignmentTerms = new SimpleSchema({
+    name: {
+        type: String,
+        label: "Assignment terms Name",
+        max: 100
+    },
     start: {
         type: Date,
         label: "Assignment terms Start",

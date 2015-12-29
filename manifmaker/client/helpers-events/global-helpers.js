@@ -4,6 +4,11 @@ Template.registerHelper(
     }
 );
 Template.registerHelper(
+    "displayDateTime", function (date) {
+        return new moment(date).format("ddd DD MMM HH[h]");
+    }
+);
+Template.registerHelper(
     "skillLabel", function () {
         return Skills.findOne({_id: this.toString()}).label;
     }

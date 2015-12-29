@@ -2,13 +2,13 @@ AssignmentServiceClient =
     class AssignmentServiceClient {
         static setCalendarAccuracy(accuracy) {
 
-            _.each(AssignmentCalendarDisplayedHours.find().fetch(),function(doc){
+            _.each(AssignmentCalendarDisplayedHours.find().fetch(), function (doc) {
                 AssignmentCalendarDisplayedHours.remove(doc._id)
             });
-            _.each(AssignmentCalendarDisplayedQuarter.find().fetch(),function(doc){
+            _.each(AssignmentCalendarDisplayedQuarter.find().fetch(), function (doc) {
                 AssignmentCalendarDisplayedQuarter.remove(doc._id)
             });
-            _.each(AssignmentCalendarDisplayedAccuracy.find().fetch(),function(doc){
+            _.each(AssignmentCalendarDisplayedAccuracy.find().fetch(), function (doc) {
                 AssignmentCalendarDisplayedAccuracy.remove(doc._id)
             });
 
@@ -25,15 +25,25 @@ AssignmentServiceClient =
         }
 
         static setCalendarTerms() {
-            _.each(AssignmentCalendarDisplayedDays.find().fetch(),function(doc){
+            _.each(AssignmentCalendarDisplayedDays.find().fetch(), function (doc) {
                 AssignmentCalendarDisplayedDays.remove(doc._id)
             });
 
             var terms = AssignmentTerms.find({}).fetch();
+            //which is default ?
+            var displayedTerm = terms[0];
 
-            AssignmentCalendarDisplayedDays.insert({
-                date: terms[0].start
-            });
+
+            var start = new moment(displayedTerm.start);
+            var end = new moment(displayedTerm.end);
+
+            while (start.isBefore(end)) {
+                AssignmentCalendarDisplayedDays.insert({
+                    date: start
+                });
+                start.add(1,'days');
+            }
+
         }
     }
 
