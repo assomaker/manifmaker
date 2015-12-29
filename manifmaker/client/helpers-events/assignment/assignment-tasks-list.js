@@ -21,16 +21,16 @@ Template.assignmentTasksList.helpers({
         //return filterResult;
     },
     team: function () {
-        return Teams.findOne({_id:this.teamId}).name;
+        return Teams.findOne({_id: this.teamId}).name;
     },
     user: function () {
-        return Users.findOne({_id:this.userId}).name;
+        return Users.findOne({_id: this.userId}).name;
     },
 
-    timeSlots: function(){
+    timeSlots: function () {
         var task = this;
         var timeSlots = task.timeSlots;
-        if(CurrentAssignmentType.get() === AssignmentType.USERTOTASK) {
+        if (CurrentAssignmentType.get() === AssignmentType.USERTOTASK) {
             var result = [];
             _.each(timeSlots, (timeSlot) => {
                 var date = selectedDateUserToTask;
@@ -47,18 +47,18 @@ Template.assignmentTasksList.helpers({
         }
     },
 
-    peopleNeeded: function(){
+    peopleNeeded: function () {
         var peopleNeeded = this.peopleNeeded;
 
-        if(CurrentAssignmentType.get() === AssignmentType.USERTOTASK) {
+        if (CurrentAssignmentType.get() === AssignmentType.USERTOTASK) {
             var result = [];
 
             _.each(peopleNeeded, (peopleNeed) => {
                 var selectedUser = Users.findOne(SelectedUser.get());
 
                 //userId : if existing, selected user must be the one
-                if(peopleNeeded.userId){
-                    if(peopleNeed.userId === selectedUser._id){
+                if (peopleNeeded.userId) {
+                    if (peopleNeed.userId === selectedUser._id) {
                         result.push(peopleNeed);
                         return;
                     }
@@ -67,26 +67,26 @@ Template.assignmentTasksList.helpers({
 
 
                 //teamId : if existing, selected user must at least have the required team
-                if(peopleNeed.teamId){
-                    if(!_.contains(selectedUser.teams,peopleNeed.teamId)){
+                if (peopleNeed.teamId) {
+                    if (!_.contains(selectedUser.teams, peopleNeed.teamId)) {
                         return;
                     }
                 }
 
                 //if no skills required, we don't care about the user's skills
-                if(peopleNeed.skills.length === 0){
+                if (peopleNeed.skills.length === 0) {
                     result.push(peopleNeed);
                     return;
                 }
 
                 //skills : if not empty, user must have all the required skill
                 var userHaveAllRequiredSkills = true;
-                _.each(peopleNeed.skills,(skill) => {
-                   if(!_.contains(selectedUser.skills,skill)){
-                       userHaveAllRequiredSkills = false;
-                   }
+                _.each(peopleNeed.skills, (skill) => {
+                    if (!_.contains(selectedUser.skills, skill)) {
+                        userHaveAllRequiredSkills = false;
+                    }
                 });
-                if(userHaveAllRequiredSkills){
+                if (userHaveAllRequiredSkills) {
                     result.push(peopleNeed);
                     return;
                 }
@@ -99,10 +99,8 @@ Template.assignmentTasksList.helpers({
         }
 
 
-
         var skills = timeSlot.skills;
     }
-
 
 
 });
@@ -114,10 +112,10 @@ Template.assignmentTasksList.events({
     },
 
 
-
     "click li.peopleNeed": function (event) {
         event.stopPropagation();
         var currentAssignmentType = CurrentAssignmentType.get();
+        var isUnassignment = IsUnassignment.get();
         var target = $(event.target);
         var _idTask, _idTimeSlot;
         if (target.hasClass("task"))
@@ -127,15 +125,19 @@ Template.assignmentTasksList.events({
 
         selectedPeopleNeed = this;
 
+
+        if (target.hasClass("time-slot"))
+            _idTimeSlot = target.data("_id");
+        else
+            _idTimeSlot = target.parents(".time-slot").data("_id");
+
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
-
-                if (target.hasClass("time-slot"))
-                    _idTimeSlot = target.data("_id");
-                else
-                    _idTimeSlot = target.parents(".time-slot").data("_id");
-
-                Meteor.call("assignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot,selectedPeopleNeed);
+                if (isUnassignment) {
+                    Meteor.call("removeAssignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
+                    IsUnassignment.set(false);
+                } else
+                    Meteor.call("assignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
                 break;
             case AssignmentType.TASKTOUSER:
                 break;
@@ -164,7 +166,7 @@ Template.assignmentTasksList.events({
         if (_id === "") {
             TaskTeamFilter.set(defaultFilter);
             $("#filter_team_task_option_advice_all").text("Choose a team"); //TODO label
-        }else {
+        } else {
             TaskTeamFilter.set({
                 team: _id
             });

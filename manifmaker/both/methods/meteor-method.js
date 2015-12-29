@@ -4,19 +4,32 @@ Meteor.methods({
 
         var user = Users.findOne({_id: userId});
         var task = Tasks.findOne({_id: taskId});
-        var timeSlot = TimeSlotService.getTimeSlot(task, timeSlotId);
+
+        var timeSlot;
+        if (timeSlotId) {
+            console.info("removeAssignUserToTaskTimeSlot","timeSlotId is null, we get it from the assignment");
+            //find it by its assignment, less secure
+            var assignment = Assignments.findOne({
+                userId: userId,
+                taskId: taskId,
+                peopleNeedId: peopleNeed._id
+            });
+            timeSlotId = assignment.timeSlotId;
+        }
+
+        timeSlot = TimeSlotService.getTimeSlot(task, timeSlotId);
 
 
         var assignment = Assignments.findOne({
             userId: userId,
             taskId: taskId,
             timeSlotId: timeSlotId,
-            'peopleNeed._id': peopleNeed._id
+            peopleNeedId: peopleNeed._id
         });
         Assignments.remove(assignment._id);
 
         AvailabilityService.restoreAvailabilities(user, timeSlot.start, timeSlot.end);
-        //PeopleNeedService.restorePeopleNeed(task, timeSlot, peopleNeed);
+        PeopleNeedService.restorePeopleNeed(task, timeSlot, peopleNeed, userId);
         //TODO don't forget to remove assignedUserId when restoring people need from the available one
         console.error("!!!!  TODO PeopleNeedService.restorePeopleNeed(task, timeSlot, peopleNeed);");
 

@@ -4,7 +4,18 @@ PeopleNeedService =
         static getPeopleNeedIndex(timeSlot, peopleNeedHunter) {
             var found;
             timeSlot.peopleNeeded.forEach(function (peopleNeed, index) {
-                console.log(arguments);
+                if (peopleNeed._id === peopleNeedHunter._id) {
+                    found = index;
+                }
+            });
+            return found;
+
+
+        }
+
+        static getAssignedPeopleNeedIndex(timeSlot, peopleNeedHunter) {
+            var found;
+            timeSlot.peopleNeededAssigned.forEach(function (peopleNeed, index) {
                 if (peopleNeed._id === peopleNeedHunter._id) {
                     found = index;
                 }
@@ -78,5 +89,34 @@ PeopleNeedService =
                 }
             });
             return found;
+        }
+
+        static restorePeopleNeed(task, timeSlot, peopleNeed, userId) {
+            console.info("PeopleNeedService.restorePeopleNeed for task", task, "when", timeSlot, "and need", peopleNeed);
+            //we have the task
+            var timeSlots = task.timeSlots; //all its timeslots
+            //var peopleNeeded = timeSlot.peopleNeeded; //all its peopleNeed
+
+
+            var updatedTimeslot = timeSlot;
+
+            //attention a ne pas pas perdre les poineteurs de tableau et du conteu des tableaux
+
+
+            var timeSlotToUpdateIndex = TimeSlotService.getTimeSlotIndex(task, timeSlot._id);
+            var timeSlotToUpdate = timeSlots[timeSlotToUpdateIndex];
+
+
+            //remove peopleNeed assigned
+            var assignedPeopleNeedToRemoveIndex = PeopleNeedService.getAssignedPeopleNeedIndex(timeSlotToUpdate, peopleNeed);
+            timeSlotToUpdate.peopleNeededAssigned.splice(assignedPeopleNeedToRemoveIndex, 1);
+
+
+            //restore peopleNeed
+            delete peopleNeed.assignedUserId;
+            timeSlotToUpdate.peopleNeeded.push(peopleNeed);
+
+
+            Tasks.update({_id: task._id}, {$set: {timeSlots: timeSlots}});
         }
     }

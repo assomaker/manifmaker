@@ -18,6 +18,7 @@ selectedAvailability = null;//TODO pas top
 
 AssignmentFilter = new ReactiveVar(defaultFilter);
 CurrentAssignmentType = new ReactiveVar(AssignmentType.ALL);
+IsUnassignment = new ReactiveVar(false);
 
 
 function preSelecterTaskByTaskName(name) {

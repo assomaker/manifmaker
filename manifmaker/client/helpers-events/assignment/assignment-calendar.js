@@ -193,7 +193,7 @@ selectedPeopleNeed = null;
 var peopleNeedAssignedClick = 0;
 
 Template.assignmentCalendar.events({
-    "click .peopleNeed:not(.assigned)": function (event) {
+    "click .peopleNeed": function (event) {
         selectedPeopleNeed = this;
 
         //event should bubbles to .creneau
@@ -203,28 +203,43 @@ Template.assignmentCalendar.events({
         event.stopPropagation();
         peopleNeedAssignedClick++;
         if (peopleNeedAssignedClick == 1) {
-            setTimeout(function () {
+            setTimeout(_.bind(function () {
                 if (peopleNeedAssignedClick == 1) {
                     console.info("click on peopleNeed.assigned : double click to perform remove assignment");
                 } else {
                     console.info("dblclick on peopleNeed.assigned : TODO remove assignment");
-                    //TODO remove assignment
-                    //
-                    //Meteor.call("assignUserToTaskTimeSlot",
-                    //    SelectedUser.get()._id,
-                    //    SelectedTask.get()._id,  //ok
-                    //    selectedTimeslotId,
-                    //    selectedPeopleNeed);
+
+                    var currentAssignmentType = CurrentAssignmentType.get();
+
+                    switch (currentAssignmentType) {
+                        case AssignmentType.USERTOTASK:
+                            console.error("Template.assignmentCalendar.events.dblclick .creneau", "User can't normally dlb click on this kind of element when in userToTask");
+                            return;
+                            break;
+                        case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
+                            var peopleNeeded = selectedPeopleNeed;
+
+                            var assignment = Assignments.findOne({
+                                peopleNeedId: peopleNeeded._id
+                            });
+
+                            var newFilter = {
+                                _id: assignment.userId
+                            };
+
+                            UserFilter.set(newFilter);
+                            IsUnassignment.set(true);
+                            break;
+                    }
                 }
                 peopleNeedAssignedClick = 0;
-            }, 300);
+            },this), 300);
         }
 
     },
 
     //taskToUser (we click on a complete task time slot)
     "click .creneau": function (event) {
-        //TODO gerer le double click pour la desaffectation
 
         var currentAssignmentType = CurrentAssignmentType.get();
 

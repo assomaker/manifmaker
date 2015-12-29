@@ -20,7 +20,7 @@ Template.assignmentUsersList.helpers({
     },
 
     team: function () {
-        return Teams.findOne({_id:this.toString()}).name;
+        return Teams.findOne({_id: this.toString()}).name;
     }
 });
 
@@ -40,6 +40,7 @@ Template.assignmentUsersList.events({
 
         //Template.parentData() ne fonctionne pas, alors j'utilise un trick de poney pour stocker dans le dom les _id
         var currentAssignmentType = CurrentAssignmentType.get();
+        var isUnassignment = IsUnassignment.get();
         var target = $(event.target);
         var _id;
         if (target.hasClass("user"))
@@ -51,7 +52,11 @@ Template.assignmentUsersList.events({
             case AssignmentType.USERTOTASK:
                 break;
             case AssignmentType.TASKTOUSER:
-                Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
+                if (isUnassignment) {
+                    Meteor.call("removeAssignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
+                    IsUnassignment.set(false)
+                } else
+                    Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
                 break;
         }
 
@@ -71,7 +76,7 @@ Template.assignmentUsersList.events({
         }
     },
 
-    "change #filter_team_user" : function(event){
+    "change #filter_team_user": function (event) {
         var _id = $(event.target).val();
         //TODO
         console.debug("TODO");
