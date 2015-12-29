@@ -211,15 +211,12 @@ Template.assignmentTasksList.events({
 
     "change #filter_skills_task": function (event) {
         var _ids = $(event.target).val();
-        if (_ids[0] === "") {
+        if (!_ids) {
             TaskSkillsFilter.set(null);
-            $("#filter_skills_task_option_advice_all").text("Choose a skill"); //TODO label
         } else if (_ids[0] === "noSkills") {
             TaskSkillsFilter.set([]);
-            $("#filter_skills_task_option_advice_all").text("All skills"); //TODO label
         } else {
             TaskSkillsFilter.set(_ids);
-            $("#filter_skills_task_option_advice_all").text("All skills"); //TODO label
         }
     }
 });

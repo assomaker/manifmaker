@@ -18,6 +18,16 @@ AssignmentController = RouteController.extend({
         //} else {
         //    console.log("waiting teams data"); //TODO add a spinner
         //}
+    },
+
+    onAfterAction: function () {
+        console.info("AssignmentControler on after action");
+
+        //trick to perform the following on another 'thread' which has access to DOM
+        setTimeout(function () {
+            AssignmentServiceClient.initAssignmentSkillsFilter();
+        }, 200);
+
     }
 });
 

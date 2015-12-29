@@ -56,25 +56,17 @@ function preSelectedUserByUserName(name) {
 
 }
 
-
 Meteor.startup(function () {
-    Meteor.subscribe("skills");
+     Meteor.subscribe("skills");
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("places");
     Meteor.subscribe("assignments");
     Meteor.subscribe("teams");
     Meteor.subscribe("groups");
-    Meteor.subscribe("assignment-terms",function(){
+    Meteor.subscribe("assignment-terms", function () {
         AssignmentServiceClient.setCalendarTerms();
     });
-
-
-    //below will be client only
-    //Meteor.subscribe("AssignmentCalendarDisplayedDays");
-    //Meteor.subscribe("AssignmentCalendarDisplayedHours");
-    //Meteor.subscribe("AssignmentCalendarDisplayedQuarter");
-    //Meteor.subscribe("AssignmentCalendarDisplayedAccuracy");
 
 
     //preSelecterTaskByTaskName("task1");

@@ -1,3 +1,59 @@
 .caret {
   border-top: 0px; //reset Bootstrap
 }
+
+
+.reset-materialize-multiple-select{
+  .btn-group {
+    width: 100%;
+    .btn {
+      text-transform: inherit;
+      width: 100%;
+    }
+  }
+
+  .multiselect-item.filter{
+    input[type=text]{
+      height: 2em;
+
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .input-group-addon{
+      padding-bottom: 0px;
+      padding-top: 0px;
+      border-radius: 2px;
+      background-color: #26a69a;
+      color: white;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+
+    .input-group-btn{
+      .multiselect-clear-filter{
+        height: 31px;
+        width: 39px;
+        line-height: inherit;
+        padding: inherit;
+        i {
+          font-size: inherit;
+        }
+      }
+    }
+  }
+
+  label {
+    color: #151515;
+    position: inherit;
+    top: 0px;
+    left: 0px;
+
+    [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+      left: 0px;
+      visibility: inherit;
+      margin-left: 10px;
+    }
+
+  }
+}

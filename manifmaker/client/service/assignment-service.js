@@ -49,5 +49,27 @@ AssignmentServiceClient =
             }
 
         }
+
+        static initAssignmentSkillsFilter () {
+            //init skills filter for assignment if we are on the assignment page
+            $(document).ready(function () {
+                $('#filter_skills_user').multiselect({
+                    enableFiltering: true,
+                    filterPlaceholder: 'Search for skills...',
+                    numberDisplayed: 2,
+                    nonSelectedText: 'Choose some skills',
+                    nSelectedText: ' skills selected'
+                });
+            });
+            $(document).ready(function () {
+                $('#filter_skills_task').multiselect({
+                    enableFiltering: true,
+                    filterPlaceholder: 'Search for skills...',
+                    numberDisplayed: 2,
+                    nonSelectedText: 'Choose some skills',
+                    nSelectedText: ' skills selected'
+                });
+            });
+        }
     }
 

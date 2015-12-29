@@ -29,6 +29,10 @@ populateData = function () {
         key: "RESP_TASK_3",
         label: "Responsable tache 3"
     });
+    var skill4Id = Skills.insert({
+        key: "RESP_TASK_4",
+        label: "Responsable tache 4"
+    });
 
     //assignmentCalendarDay
     AssignmentTerms.insert({

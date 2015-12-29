@@ -29,12 +29,11 @@
             </select>
         </div>
 
-        <div class="input-field col s12">
-            <select id="filter_skills_task" multiple class="browser-default">
-                <option id="filter_skills_task_option_advice_all" value="" selected>Choose a skill</option>
+        <div class="input-field col s12 reset-materialize-multiple-select">
+            <select id="filter_skills_task" multiple="multiple" class="browser-default">
                 <option value="noSkills">Without any skills</option>
                 {{#each allOptionsSkills}}
-                    <option value="{{_id}}">{{key}} - {{label}}</option>
+                    <option value="{{_id}}">{{label}}</option>
                 {{/each}}
             </select>
         </div>
