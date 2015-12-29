@@ -8,11 +8,7 @@ nav#top-left-menu {
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
 
-    .breadcrumb-top-bar {
-      height: 100%;
-      transform: translateY(-50%);
-    }
-    .breadcrumb-top-bar, .select-assignment-terms-top-bar, .action-button-top-bar {
+    .breadcrumb, .select-assignment-terms-top-bar, .action-button-top-bar {
       height: 100%;
       transform: translateY(-50%);
     }
@@ -23,7 +19,7 @@ nav#top-left-menu {
     .select-assignment-terms-top-bar {
       width: calc(~'33.33333333% - 40.5px'); //40.5px is the button-collapse-left-menu width
       select {
-        background-color: rgba(255,255,255,0.1);
+        background-color: rgba(255, 255, 255, 0.1);
       }
     }
     .action-button-top-bar {
@@ -32,6 +28,7 @@ nav#top-left-menu {
     }
 
     .breadcrumb-top-bar {
+      height: 100%;
       .breadcrumb {
         background-color: inherit;
       }

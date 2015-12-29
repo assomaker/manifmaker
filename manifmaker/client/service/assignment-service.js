@@ -24,14 +24,18 @@ AssignmentServiceClient =
 
         }
 
-        static setCalendarTerms() {
+        static setCalendarTerms(_idTerms) {
             _.each(AssignmentCalendarDisplayedDays.find().fetch(), function (doc) {
                 AssignmentCalendarDisplayedDays.remove(doc._id)
             });
 
-            var terms = AssignmentTerms.find({}).fetch();
-            //which is default ?
-            var displayedTerm = terms[0];
+            var displayedTerm;
+            if(!_idTerms){
+                var terms = AssignmentTerms.find({}).fetch();
+                displayedTerm = terms[0];           //TODO which is default ?
+            } else {
+                displayedTerm = AssignmentTerms.findOne(_idTerms)
+            }
 
 
             var start = new moment(displayedTerm.start);

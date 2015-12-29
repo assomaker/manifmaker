@@ -34,23 +34,27 @@ Template.assignmentMenu.events({
         var accuracy = CalendarAccuracyEnum["4"];
         AssignmentServiceClient.setCalendarAccuracy(accuracy);
     },
-    "click #populate": function(event){
+    "click #populate": function (event) {
         Meteor.call("populate");
+    },
+    "change #assignments-terms-select": function (event) {
+        var _id = $(event.target).val();
+        AssignmentServiceClient.setCalendarTerms(_id);
     }
 });
 
 Template.assignmentMenu.helpers({
-    assignmentTerms: function(){
+    assignmentTerms: function () {
         return AssignmentTerms.find({});
     },
-    isSelected: function(mode){
-        if(mode === CurrentAssignmentType.get()){
+    isSelected: function (mode) {
+        if (mode === CurrentAssignmentType.get()) {
             return "active";
         }
         return "";
     },
     breadCrumbAssignment: function () {
-        return [{label:"TODO fix breadcrumb",url:""}];
+        return [{label: "TODO fix breadcrumb", url: ""}];
         var userFilter = UserFilter.get(),
             taskFilter = TaskFilter.get(),
             currentAssignmentType = CurrentAssignmentType.get(),
@@ -66,7 +70,7 @@ Template.assignmentMenu.helpers({
                     label: "Select a user",
                     url: ""
                 });
-            } else  {
+            } else {
                 var userName = Users.findOne(selectedUser._id).name;
                 result.push({
                     label: userName,
@@ -84,7 +88,7 @@ Template.assignmentMenu.helpers({
                         url: "/assignment/userToTask/" + selectedUser._id + "/" + selectedDate.format('x')
                     });
 
-                    if(true){ //if pas de task/people need selected
+                    if (true) { //if pas de task/people need selected
                         result.push({
                             label: "Select one of the available task [and a people need]",
                             url: ""
@@ -101,7 +105,7 @@ Template.assignmentMenu.helpers({
                     label: "Select a task",
                     url: ""
                 });
-            } else  {
+            } else {
                 var taskName = Tasks.findOne(selectedTask._id).name;
                 result.push({
                     label: taskName,
@@ -116,15 +120,15 @@ Template.assignmentMenu.helpers({
                 } else {
 
                     var task = Tasks.findOne(selectedTask);
-                    var timeSlot = TimeSlotService.getTimeSlot(task,selectedTimeSlot._id);
+                    var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
 
 
                     result.push({
-                        label: new moment(timeSlot.start).format("HH:mm") + " to " +  new moment(timeSlot.end).format("HH:mm"),
+                        label: new moment(timeSlot.start).format("HH:mm") + " to " + new moment(timeSlot.end).format("HH:mm"),
                         url: "/assignment/taskToUser/" + selectedTask._id + "/" + selectedTimeSlot._id
                     });
 
-                    if(true){ //if pas de task/people need selected
+                    if (true) { //if pas de task/people need selected
                         result.push({
                             label: "Select one of the available user",
                             url: ""
@@ -135,7 +139,7 @@ Template.assignmentMenu.helpers({
             return result;
         }
 
-        if(currentAssignmentType == AssignmentType.ALL){
+        if (currentAssignmentType == AssignmentType.ALL) {
             result.push({
                 label: "Welcome, start by selecting an assignment mode",
                 url: ""

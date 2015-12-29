@@ -41,6 +41,11 @@ populateData = function () {
         start: getDateFromDate(10, 5 - 1),
         end: getDateFromDate(11, 5 - 1)
     });
+    AssignmentTerms.insert({
+        name: "Terms 3",
+        start: getDateFromDate(15, 5 - 1),
+        end: getDateFromDate(27, 5 - 1)
+    });
 
     //users
     var user1Id = Users.insert({
