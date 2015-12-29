@@ -37,6 +37,12 @@ Template.registerHelper(
     }
 );
 
+Template.registerHelper(
+    "allOptionsSkills", function () {
+        return Skills.find({});
+    }
+);
+
 
 Template.registerHelper('ifNotEmpty', function (item, options) {
     if (item) {

@@ -1,4 +1,4 @@
-Template.assignmentTasksList.helpers({
+Template.tasksList.helpers({
     tasks: function () {
         var filter = TaskFilter.get();
         var filterIndex = TaskIndexFilter.get();

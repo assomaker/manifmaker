@@ -3,6 +3,7 @@ Template.assignmentUsersList.helpers({
         var filter = UserFilter.get();
         var filterIndex = UserIndexFilter.get();
         var teamFilter = UserTeamFilter.get();
+        var skillsFilter = UserSkillsFilter.get();
 
         var searchResult;
         var filterResult;
@@ -10,7 +11,8 @@ Template.assignmentUsersList.helpers({
         filterResult = Users.find({
             $and: [
                 filter,
-                teamFilter
+                teamFilter,
+                skillsFilter
             ]
         }, {limit: 20}).fetch();
         //console.error("user filter result n'est pas utilisé !!!")
@@ -78,9 +80,28 @@ Template.assignmentUsersList.events({
 
     "change #filter_team_user": function (event) {
         var _id = $(event.target).val();
-        UserTeamFilter.set({
-            teams: _id
-        });
+        if (_id === "") {
+            UserTeamFilter.set(defaultFilter);
+            $("#filter_team_user_option_advice_all").text("Choose a team"); //TODO label
+        } else {
+            UserTeamFilter.set({
+                teams: _id
+            });
+            $("#filter_team_user_option_advice_all").text("All teams"); //TODO label
+        }
+    },
+
+    "change #filter_skills_user": function (event) {
+        var _id = $(event.target).val();
+        if (_id === "") {
+            UserSkillsFilter.set(defaultFilter);
+            $("#filter_skills_user_option_advice_all").text("Choose a skill"); //TODO label
+        } else {
+            UserSkillsFilter.set({
+                skills: _id
+            });
+            $("#filter_skills_user_option_advice_all").text("All skills"); //TODO label
+        }
     }
 });
 

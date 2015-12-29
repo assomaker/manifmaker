@@ -3,6 +3,7 @@ Template.assignmentTasksList.helpers({
         var filter = TaskFilter.get();
         var filterIndex = TaskIndexFilter.get();
         var teamFilter = TaskTeamFilter.get();
+        var skillsFilter = TaskSkillsFilter.get();
 
         var searchResult;
         var filterResult;
@@ -11,7 +12,8 @@ Template.assignmentTasksList.helpers({
         filterResult = Tasks.find({
             $and: [
                 filter,
-                teamFilter
+                teamFilter,
+                skillsFilter
             ]
         }, {limit: 20}).fetch();
 
@@ -165,12 +167,36 @@ Template.assignmentTasksList.events({
         var _id = $(event.target).val();
         if (_id === "") {
             TaskTeamFilter.set(defaultFilter);
-            $("#filter_team_task_option_advice_all").text("Choose a team"); //TODO label
+            $("#filter_team_task_option_advice_all").text("Choose a responsible team"); //TODO label
         } else {
             TaskTeamFilter.set({
                 teamId: _id
             });
             $("#filter_team_task_option_advice_all").text("All teams"); //TODO label
+        }
+    },
+
+    "change #filter_skills_task": function (event) {
+        var _id = $(event.target).val();
+        if (_id === "") {
+            TaskSkillsFilter.set(defaultFilter);
+            $("#filter_skills_task_option_advice_all").text("Choose a skill"); //TODO label
+        } else {
+            TaskSkillsFilter.set(
+                { //skills filter
+                    timeSlots: {
+                        $elemMatch: {
+                            //skills filter
+                            peopleNeeded: {
+                                $elemMatch: {
+                                    skills: _id
+                                }
+                            }
+                        }
+                    }
+                }
+            );
+            $("#filter_skills_task_option_advice_all").text("All skills"); //TODO label
         }
     }
 });

@@ -12,12 +12,31 @@
 
         <div class="input-field col s12">
             <select id="filter_team_task" class="browser-default">
-                <option id="filter_team_task_option_advice_all" value="" selected>Choose a team</option>
+                <option id="filter_team_task_option_advice_all" value="" selected>Choose a responsible team</option>
                 {{#each allOptionsTeams}}
                     <option value="{{_id}}">{{name}}</option>
                 {{/each}}
             </select>
         </div>
+
+        <div class="input-field col s12">
+            <select id="filter_needed_team_task" class="browser-default">
+                <option id="filter_needed_team_task_option_advice_all" value="" selected>TODO Choose a needed team</option>
+                {{#each allOptionsTeams}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div class="input-field col s12">
+            <select id="filter_skills_task" class="browser-default">
+                <option id="filter_skills_task_option_advice_all" value="" selected>Choose a skill</option>
+                {{#each allOptionsSkills}}
+                    <option value="{{_id}}">{{key}} - {{label}}</option>
+                {{/each}}
+            </select>
+        </div>
+
     </form>
 
     <ul class="collapsible " data-collapsible="accordion">
