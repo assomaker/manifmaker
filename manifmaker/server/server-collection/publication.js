@@ -29,10 +29,13 @@ Meteor.startup(function () {
         return Places.find({});
     });
 
-    Meteor.publish("AssignmentCalendarDay", function () {
-        return AssignmentCalendarDay.find({});
+    Meteor.publish("assignment-terms", function () {
+        return AssignmentTerms.find({});
     });
 
+
+
+    //TODO dumb collections
     Meteor.publish("calendarHours", function () {
         return CalendarHours.find({});
     });

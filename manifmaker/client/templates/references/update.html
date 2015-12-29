@@ -1,4 +1,4 @@
-<template name="teamUpdate">
+<template name="team-update">
     {{# autoForm collection="Teams" doc=document  id="updateTeamForm" type="update"}}
         <fieldset>
             <legend>Update {{document.name}}</legend>
@@ -9,7 +9,7 @@
     {{/autoForm}}
 </template>
 
-<template name="placeUpdate">
+<template name="place-update">
     {{# autoForm collection="Places" doc=document  id="updatePlaceForm" type="update"}}
         <fieldset>
             <legend>Update {{document.name}}</legend>
@@ -20,7 +20,7 @@
     {{/autoForm}}
 </template>
 
-<template name="skillUpdate">
+<template name="skill-update">
     {{# autoForm collection="Skills" doc=document  id="updateSkillForm" type="update"}}
         <fieldset>
             <legend>Update {{document.key}}</legend>
@@ -32,11 +32,12 @@
     {{/autoForm}}
 </template>
 
-<template name="calendarDayUpdate">
-    {{# autoForm collection="AssignmentCalendarDay" doc=document  id="updateCalendarDayForm" type="update"}}
+<template name="assignment-term-update">
+    {{# autoForm collection="AssignmentTerms" doc=document  id="updateAssignmentTerm" type="update"}}
         <fieldset>
             <legend>Update {{document.date}}</legend>
-            {{> afFormGroup name="date" type="date" }}
+            {{> afQuickField name="start"}}
+            {{> afQuickField name="end"}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Update</button>
         <button type="reset" class="btn btn-default">Reset</button>

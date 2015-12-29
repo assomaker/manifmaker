@@ -24,12 +24,12 @@ var references = [
         TEMPLATE_ROW: "skillReferenceListRow"
     },
     {
-        PLURAL_REFERENCE_URL: "calendar-days",
-        REFERENCE_URL: "calendar-day",
-        REFERENCE_COLLECTION_NAME: "AssignmentCalendarDay",
-        REFERENCE_MONGO_COLLECTION_NAME: "assignmentCalendarDay",
-        REFERENCE_LABEL: "Calendar Day",
-        TEMPLATE_ROW: "calendarDaysReferenceListRow"
+        PLURAL_REFERENCE_URL: "assignment-terms",
+        REFERENCE_URL: "assignment-term",
+        REFERENCE_COLLECTION_NAME: "AssignmentTerms",
+        REFERENCE_MONGO_COLLECTION_NAME: "assignment-terms",
+        REFERENCE_LABEL: "Assignment Term",
+        TEMPLATE_ROW: "assignmentTermReferenceListRow"
     }
 ];
 
@@ -59,7 +59,7 @@ _.each(references, function (referenceOptions) {
 
 //post
     Router.route('/' + REFERENCE_URL, function () {
-            this.render(REFERENCE_URL + 'Insert', {to: 'mainContent'});
+            this.render(REFERENCE_URL + '-insert', {to: 'mainContent'});
         },
         {name: REFERENCE_URL + '.create'}
     );
@@ -67,7 +67,7 @@ _.each(references, function (referenceOptions) {
 //put
     Router.route('/' + REFERENCE_URL + '/:_id', function () {
             var current = this.params._id;
-            this.render(REFERENCE_URL + 'Update', {
+            this.render(REFERENCE_URL + '-update', {
                 data: {
                     document: AllCollections[REFERENCE_COLLECTION_NAME].findOne(current),
                     PLURAL_REFERENCE_URL: referenceOptions.PLURAL_REFERENCE_URL,

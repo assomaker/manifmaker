@@ -31,8 +31,9 @@ populateData = function () {
     });
 
     //assignmentCalendarDay
-    AssignmentCalendarDay.insert({
-        date: getDateFromDate(13, 5 - 1)
+    AssignmentTerms.insert({
+        start: getDateFromDate(13, 5 - 1),
+        end: getDateFromDate(14, 5 - 1)
     });
 
     //users

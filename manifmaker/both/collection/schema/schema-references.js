@@ -36,12 +36,32 @@ Skills = new Mongo.Collection("skills");
 Skills.attachSchema(Schemas.Skills);
 
 
-Schemas.AssignmentCalendarDay = new SimpleSchema({
-    date: {
-        type: String,
-        label: "Date"
+Schemas.AssignmentTerms = new SimpleSchema({
+    start: {
+        type: Date,
+        label: "Assignment terms Start",
+        custom: function () {
+            if (new moment(this.value).isAfter(new moment(this.key.replace("start", "") + this.field('end').value))) {
+                return "startAfterEnd";
+            }
+        },
+        autoform: {
+            type: "datetime-local"
+        }
+    },
+    end: {
+        type: Date,
+        label: "Assignment terms  End (not include)",
+        autoform: {
+            type: "datetime-local"
+        },
+        custom: function () {
+            if (new moment(this.value).isBefore(new moment(this.field(this.key.replace("end", "") + 'start').value))) {
+                return "endBeforeStart";
+            }
+        }
     }
 });
-AssignmentCalendarDay = new Mongo.Collection("assignmentCalendarDay");
-AssignmentCalendarDay.attachSchema(Schemas.AssignmentCalendarDay);
+AssignmentTerms = new Mongo.Collection("assignment-terms");
+AssignmentTerms.attachSchema(Schemas.AssignmentTerms);
 

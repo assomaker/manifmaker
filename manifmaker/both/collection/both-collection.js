@@ -12,7 +12,7 @@ AllCollections = {
     Teams: Teams,
     Places: Places,
     Groups: Groups,
-    AssignmentCalendarDay: AssignmentCalendarDay
+    AssignmentTerms: AssignmentTerms
 };
 
 //to perform search by name
@@ -35,8 +35,7 @@ Users.attachSchema(Schemas.Users);
 
 
 
-//calendar, TODO client side only
-CalendarDays = new Mongo.Collection("days");
+//calendar, TODO client side only TODO dumb collections
 CalendarHours = new Mongo.Collection("hours");
 CalendarQuarter = new Mongo.Collection("quarters");
 CalendarAccuracy = new Mongo.Collection("accuracy");

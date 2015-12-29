@@ -1,4 +1,4 @@
-<template name="teamInsert">
+<template name="team-insert">
     {{# autoForm collection="Teams" id="insertTeamForm" type="insert"}}
         <fieldset>
             <legend>Add a Team</legend>
@@ -9,7 +9,7 @@
     {{/autoForm}}
 </template>
 
-<template name="placeInsert">
+<template name="place-insert">
     {{# autoForm collection="Places" id="insertPlaceForm" type="insert"}}
         <fieldset>
             <legend>Add a Place</legend>
@@ -20,7 +20,7 @@
     {{/autoForm}}
 </template>
 
-<template name="skillInsert">
+<template name="skill-insert">
     {{# autoForm collection="Skills" id="insertSkillForm" type="insert"}}
         <fieldset>
             <legend>Add a Skill</legend>
@@ -32,11 +32,12 @@
     {{/autoForm}}
 </template>
 
-<template name="calendarDayInsert">
-    {{# autoForm collection="AssignmentCalendarDay" id="insertCalendarDayForm" type="insert"}}
+<template name="assignment-term-insert">
+    {{# autoForm collection="AssignmentTerms" id="insertAssignmentTerm" type="insert"}}
         <fieldset>
-            <legend>Add a Day</legend>
-            {{> afFormGroup name="date" type="date" }}
+            <legend>Add a term</legend>
+            {{> afQuickField name="start"}}
+            {{> afQuickField name="end"}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Insert</button>
         <button type="reset" class="btn btn-default">Reset</button>

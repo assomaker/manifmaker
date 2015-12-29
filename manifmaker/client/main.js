@@ -62,10 +62,12 @@ Meteor.startup(function () {
     Meteor.subscribe("assignments");
     Meteor.subscribe("teams");
     Meteor.subscribe("groups");
+    Meteor.subscribe("assignment-terms");
+
 
     //below will be client only
     Meteor.subscribe("calendarAccuracy");
-    Meteor.subscribe("AssignmentCalendarDay");
+    Meteor.subscribe("AssignmentCalendarD");
     Meteor.subscribe("calendarHours");
     Meteor.subscribe("calendarQuarter");
 
