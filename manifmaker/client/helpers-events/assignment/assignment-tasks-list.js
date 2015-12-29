@@ -3,7 +3,29 @@ Template.assignmentTasksList.helpers({
         var filter = TaskFilter.get();
         var filterIndex = TaskIndexFilter.get();
         var teamFilter = TaskTeamFilter.get();
+
         var skillsFilter = TaskSkillsFilter.get();
+        var neededTeamFilter = TaskNeededTeamFilter.get();
+        var skillsAndNeededTeamFilter = {
+            timeSlots: {
+                $elemMatch: {
+                    peopleNeeded: {
+                        $elemMatch: {
+                            //skills: skillsFilter,
+                            //teamId: neededTeamFilter
+                        }
+                    }
+                }
+            }
+        };
+        if (skillsFilter)
+            skillsAndNeededTeamFilter.timeSlots.$elemMatch.peopleNeeded.$elemMatch.skills = skillsFilter;
+        if (neededTeamFilter) {
+            if (neededTeamFilter === "noNeededTeam")
+                skillsAndNeededTeamFilter.timeSlots.$elemMatch.peopleNeeded.$elemMatch.teamId = null;
+            else
+                skillsAndNeededTeamFilter.timeSlots.$elemMatch.peopleNeeded.$elemMatch.teamId = neededTeamFilter;
+        }
 
         var searchResult;
         var filterResult;
@@ -13,7 +35,7 @@ Template.assignmentTasksList.helpers({
             $and: [
                 filter,
                 teamFilter,
-                skillsFilter
+                skillsAndNeededTeamFilter
             ]
         }, {limit: 20}).fetch();
 
@@ -175,27 +197,31 @@ Template.assignmentTasksList.events({
             $("#filter_team_task_option_advice_all").text("All teams"); //TODO label
         }
     },
+    "change #filter_needed_team_task": function (event) {
+        var _id = $(event.target).val();
+        if (_id === "") {
+            TaskNeededTeamFilter.set(null);
+            $("#filter_needed_team_task_option_advice_all").text("Choose a needed team"); //TODO label
+        } else if (_id === "noNeededTeam") {
+            TaskNeededTeamFilter.set("noNeededTeam");
+            $("#filter_needed_team_task_option_advice_all").text("All teams"); //TODO label
+        }
+        else {
+            TaskNeededTeamFilter.set(_id);
+            $("#filter_needed_team_task_option_advice_all").text("All teams"); //TODO label
+        }
+    },
 
     "change #filter_skills_task": function (event) {
         var _id = $(event.target).val();
         if (_id === "") {
-            TaskSkillsFilter.set(defaultFilter);
+            TaskSkillsFilter.set(null);
             $("#filter_skills_task_option_advice_all").text("Choose a skill"); //TODO label
+        } else if (_id === "noSkills") {
+            TaskSkillsFilter.set([]);
+            $("#filter_skills_task_option_advice_all").text("All skills"); //TODO label
         } else {
-            TaskSkillsFilter.set(
-                { //skills filter
-                    timeSlots: {
-                        $elemMatch: {
-                            //skills filter
-                            peopleNeeded: {
-                                $elemMatch: {
-                                    skills: _id
-                                }
-                            }
-                        }
-                    }
-                }
-            );
+            TaskSkillsFilter.set(_id);
             $("#filter_skills_task_option_advice_all").text("All skills"); //TODO label
         }
     }

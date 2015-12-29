@@ -136,6 +136,26 @@ populateData = function () {
             }
         ]
     });
+    var task2d = Tasks.insert({
+        name: "task3",
+        teamId: team3Id,
+        placeId: place2Id,
+        liveEventMasterId: user2Id,
+        masterId: user2Id,
+        timeSlots : [
+            {
+                start: getDateFromTime(10),
+                end: getDateFromTime(12),
+                peopleNeeded : [
+                    {
+                        teamId: team1Id,
+                        skills: [skill2Id]
+                    }
+                ]
+            }
+        ]
+    });
+
 
 };
 

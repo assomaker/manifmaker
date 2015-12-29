@@ -8,6 +8,7 @@ TaskIndexFilter = new ReactiveVar(noSearchFilter);
 UserIndexFilter = new ReactiveVar(noSearchFilter);
 UserTeamFilter = new ReactiveVar(defaultFilter);
 TaskTeamFilter = new ReactiveVar(defaultFilter);
+TaskNeededTeamFilter = new ReactiveVar(null);
 TaskSkillsFilter = new ReactiveVar(defaultFilter);
 UserSkillsFilter = new ReactiveVar(defaultFilter);
 SelectedTask = new ReactiveVar(null);

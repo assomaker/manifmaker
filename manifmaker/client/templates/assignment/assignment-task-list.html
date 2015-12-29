@@ -21,7 +21,8 @@
 
         <div class="input-field col s12">
             <select id="filter_needed_team_task" class="browser-default">
-                <option id="filter_needed_team_task_option_advice_all" value="" selected>TODO Choose a needed team</option>
+                <option id="filter_needed_team_task_option_advice_all" value="" selected>Choose a needed team</option>
+                <option value="noNeededTeam">Without any needed team</option>
                 {{#each allOptionsTeams}}
                     <option value="{{_id}}">{{name}}</option>
                 {{/each}}
@@ -31,6 +32,7 @@
         <div class="input-field col s12">
             <select id="filter_skills_task" class="browser-default">
                 <option id="filter_skills_task_option_advice_all" value="" selected>Choose a skill</option>
+                <option value="noSkills">Without any skills</option>
                 {{#each allOptionsSkills}}
                     <option value="{{_id}}">{{key}} - {{label}}</option>
                 {{/each}}
