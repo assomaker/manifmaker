@@ -1,12 +1,12 @@
 Meteor.methods({
     removeAssignUserToTaskTimeSlot: function (userId, taskId, timeSlotId, peopleNeed) {
-        console.info("removeAssignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId, "with people need", peopleNeed);
+        console.info("removeAssignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslotId", timeSlotId, "with people need", peopleNeed);
 
         var user = Users.findOne({_id: userId});
         var task = Tasks.findOne({_id: taskId});
 
         var timeSlot;
-        if (timeSlotId) {
+        if (!timeSlotId) {
             console.info("removeAssignUserToTaskTimeSlot","timeSlotId is null, we get it from the assignment");
             //find it by its assignment, less secure
             var assignment = Assignments.findOne({

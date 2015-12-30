@@ -1,7 +1,6 @@
 TimeSlotService =
     class TimeSlotService {
         static getTimeSlot(task, timeSlotId) {
-            console.info("TimeSlotService.getTimeSlot timeSlot", timeSlotId, "for task", task);
             if (typeof task !== "object")
                 task = Tasks.findOne(task);
             var found;
@@ -15,7 +14,6 @@ TimeSlotService =
         }
 
         static getTimeSlotIndex(task, timeSlotId) {
-            console.info("TimeSlotService.getTimeSlot timeSlot", timeSlotId, "for task", task);
             var found;
             var i = 0;
             task.timeSlots.forEach(timeSlot => {

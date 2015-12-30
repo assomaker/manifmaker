@@ -187,19 +187,17 @@ Template.assignmentCalendar.helpers({
 
 });
 
-selectedPeopleNeed = null;
-
 
 var peopleNeedAssignedClick = 0;
 
 Template.assignmentCalendar.events({
-    "click .peopleNeed": function () {
+    "click .on-calendar .peopleNeed": function () {
         selectedPeopleNeed = this;
 
         //event should bubbles to .creneau
     },
 
-    "click .peopleNeed.assigned": function (event) {
+    "click .on-calendar .peopleNeed.assigned": function (event) {
         event.stopPropagation();
         peopleNeedAssignedClick++;
         if (peopleNeedAssignedClick == 1) {
@@ -238,9 +236,9 @@ Template.assignmentCalendar.events({
 
     },
 
-    "hover .creneau": function () {
-        selectedTimeSlot = this;
-    },
+    //"hover .creneau": function () {
+    //    selectedTimeSlot = this;
+    //},
 
     //taskToUser (we click on a complete task time slot)
     "click .creneau": function () {

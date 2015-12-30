@@ -69,8 +69,8 @@ populateData = function () {
         skills: [skill2Id],
         availabilities: [
             {
-                start: getDateFromTime(12),
-                end: getDateFromTime(20)
+                start: getDateFromTime(2),
+                end: getDateFromTime(16)
             }
         ]
     });
@@ -168,7 +168,7 @@ populateData = function () {
             }
         ]
     });
-    var task2d = Tasks.insert({
+    var task3d = Tasks.insert({
         name: "task3",
         teamId: team3Id,
         placeId: place2Id,
@@ -181,7 +181,7 @@ populateData = function () {
                 peopleNeeded : [
                     {
                         teamId: team1Id,
-                        skills: [skill1Id,skill2Id]
+                        skills: [skill1Id]
                     }
                 ]
             }

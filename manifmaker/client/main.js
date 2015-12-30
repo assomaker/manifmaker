@@ -57,7 +57,7 @@ function preSelectedUserByUserName(name) {
 }
 
 Meteor.startup(function () {
-     Meteor.subscribe("skills");
+    Meteor.subscribe("skills");
     Meteor.subscribe("users");
     Meteor.subscribe("tasks");
     Meteor.subscribe("places");
@@ -84,21 +84,21 @@ Meteor.startup(function () {
 
 
     var originalLeave = $.fn.popover.Constructor.prototype.leave;
-    $.fn.popover.Constructor.prototype.leave = function(obj){
+    $.fn.popover.Constructor.prototype.leave = function (obj) {
         var self = obj instanceof this.constructor ?
             obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
         var container, timeout;
 
         originalLeave.call(this, obj);
 
-        if(obj.currentTarget) {
+        if (obj.currentTarget) {
             container = $(obj.currentTarget).siblings('.popover')
             timeout = self.timeout;
-            container.one('mouseenter', function(){
+            container.one('mouseenter', function () {
                 //We entered the actual popover – call off the dogs
                 clearTimeout(timeout);
                 //Let's monitor popover content instead
-                container.one('mouseleave', function(){
+                container.one('mouseleave', function () {
                     $.fn.popover.Constructor.prototype.leave.call(self, self);
                 });
             })
@@ -106,11 +106,73 @@ Meteor.startup(function () {
     };
 
 
-    $('body').popover({ html:true, selector: '[data-popover]', trigger: 'click hover', placement: 'auto', delay: {show: 50, hide: 400}});
+    $('body').popover({html: true, selector: '[data-popover]', trigger: 'click hover', placement: 'auto', delay: {show: 50, hide: 400}});
 
-    $(document).on("click",".peopleNeed",function(event){
-        var dom = $($(event.target).parents(".peopleNeed"));
-        var peopleNeedId = dom.data('_id');
+
+    $(document).on("click", ".popover .peopleNeed.assigned", function (event) {
+        var target = $(event.target);
+
+        var peopleNeedId;
+        if(target.data('_id')){
+            peopleNeedId = target.data('_id');
+        } else {
+            peopleNeedId= $(target.parents(".peopleNeed")).data('_id');
+        }
+        var task = Tasks.findOne({
+            timeSlots: {
+                $elemMatch: {
+                    peopleNeededAssigned: {
+                        $elemMatch: {
+                            _id: peopleNeedId
+                        }
+                    },
+                }
+            }
+        });
+
+        var ret = PeopleNeedService.getAssignedPeopleNeedByIdAndTask(peopleNeedId, task);
+        var peopleNeeded = ret.peopleNeed;
+        selectedPeopleNeed = peopleNeeded;
+        selectedTimeslotId =  ret.timeSlotId;
+
+        var selectedTimeSlot = {
+            _id: ret.timeSlotId
+        };
+
+        var currentAssignmentType = CurrentAssignmentType.get();
+
+        switch (currentAssignmentType) {
+            case AssignmentType.USERTOTASK:
+                console.error("Template.assignmentCalendar.events.dblclick .creneau", "User can't normally dlb click on this kind of element when in userToTask");
+                return;
+                break;
+            case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
+
+                var assignment = Assignments.findOne({
+                    peopleNeedId: peopleNeeded._id
+                });
+
+                var newFilter = {
+                    _id: assignment.userId
+                };
+
+                UserFilter.set(newFilter);
+                IsUnassignment.set(true);
+                break;
+        }
+
+    });
+
+
+    $(document).on("click", ".popover .peopleNeed:not(.assigned)", function (event) {
+        var target = $(event.target);
+
+        var peopleNeedId;
+        if(target.data('_id')){
+            peopleNeedId = target.data('_id');
+        } else {
+            peopleNeedId= $(target.parents(".peopleNeed")).data('_id');
+        }
         var task = Tasks.findOne({
             timeSlots: {
                 $elemMatch: {
@@ -123,11 +185,14 @@ Meteor.startup(function () {
             }
         });
 
-        var ret = PeopleNeedService.getPeopleNeedByIdAndTask(peopleNeedId,task);
+        var ret = PeopleNeedService.getPeopleNeedByIdAndTask(peopleNeedId, task);
         var peopleNeeded = ret.peopleNeed;
+        selectedPeopleNeed = peopleNeeded;
+        selectedTimeslotId =  ret.timeSlotId;
+
 
         var selectedTimeSlot = {
-            _id : ret.timeSlotId
+            _id: ret.timeSlotId
         };
 
 
@@ -211,10 +276,7 @@ Meteor.startup(function () {
         }
 
 
-
-
     })
-
 
 
 });

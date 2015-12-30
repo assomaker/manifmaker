@@ -48,6 +48,31 @@ Template.assignmentTasksList.helpers({
         return Users.findOne({_id: this.userId}).name;
     },
 
+    timeSlotsInfo: function(){
+        var task = this;
+        var timeSlots = task.timeSlots;
+        if (CurrentAssignmentType.get() === AssignmentType.USERTOTASK) {
+            var result = [];
+            _.each(timeSlots, (timeSlot) => {
+                var date = selectedDateUserToTask;
+                var start = new moment(timeSlot.start);
+                var end = new moment(timeSlot.end);
+                if ((start.isBefore(date) || start.isSame(date)) &&
+                    (end.isAfter(date) || end.isSame(date))) {
+                    result.push(timeSlot);
+                }
+            });
+
+            var string = " - "
+            _.each(result,function(timeSlot){
+                string += `${new moment(timeSlot.start).format("H[h]mm")} - ${new moment(timeSlot.end).format("H[h]mm")}`;
+            });
+            return string;
+        } else {
+            return; //timeSlot infos can be directly see in the calendar
+        }
+    },
+
     timeSlots: function () {
         var task = this;
         var timeSlots = task.timeSlots;
@@ -64,7 +89,7 @@ Template.assignmentTasksList.helpers({
             });
             return result;
         } else {
-            return timeSlots;
+            return []; //timeSlot infos can be directly see in the calendar
         }
     },
 
