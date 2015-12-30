@@ -1,23 +1,25 @@
 Meteor.methods({
-    removeAssignUserToTaskTimeSlot: function (peopleNeedId, userId = null,  taskId = null, timeSlotId = null) {
-        console.info("removeAssignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslotId", timeSlotId, "with people need", peopleNeed);
+    removeAssignUserToTaskTimeSlot: function (peopleNeedId, userId,  taskId = null, timeSlotId = null) {
+        console.info("removeAssignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslotId", timeSlotId, "with people need", peopleNeedId);
 
-        console.info("assignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId, "with peopleNeedId", peopleNeedId);
 
         if(!peopleNeedId)
             throw new Meteor.Error(400,'assignUserToTaskTimeSlot peopleNeedId is null');
+        if(!userId)
+            throw new Meteor.Error(400,'assignUserToTaskTimeSlot userId is null');
 
-        var timeSlot = TimeSlotService.getTimeSlot(task, timeSlotId);
+        var ret = TimeSlotService.getTaskAndTimeSlotAndAssignedPeopleNeedByAssignedPeopleNeedId(peopleNeedId);
+        var timeSlot = ret.timeSlot;
+        var task = ret.task;
+        var peopleNeed = ret.peopleNeed;
 
-
-        var user = Users.findOne({_id: timeSlot.userId});
-        var task = Tasks.findOne({_id: timeSlot.taskId});
+        var user = Users.findOne({_id: userId});
 
 
         var assignment = Assignments.findOne({
             userId: userId,
-            taskId: taskId,
-            timeSlotId: timeSlotId,
+            taskId: task._id,
+            timeSlotId: timeSlot._id,
             peopleNeedId: peopleNeed._id
         });
         Assignments.remove(assignment._id);

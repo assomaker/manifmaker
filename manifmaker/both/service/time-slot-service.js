@@ -117,4 +117,32 @@ TimeSlotService =
                 peopleNeed: peopleNeedFound
             };
         }
+
+        static getTaskAndTimeSlotAndAssignedPeopleNeedByAssignedPeopleNeedId(peopleNeedId) {
+            var timeSlotFound;
+            var taskFound;
+            var peopleNeedFound;
+            Tasks.find().fetch().forEach(task => {
+                // if (!taskFound)
+                task.timeSlots.forEach(timeSlot => {
+                    //   if (!timeSlotFound)
+                    timeSlot.peopleNeededAssigned.forEach(peopleNeed => {
+                        //       if (!peopleNeed)
+                        if (peopleNeed._id === peopleNeedId) {
+                            peopleNeedFound = peopleNeed;
+                        }
+                    });
+                    if (!timeSlotFound && peopleNeedFound)
+                        timeSlotFound = timeSlot;
+                });
+                if (!taskFound && timeSlotFound)
+                    taskFound = task;
+            });
+
+            return {
+                timeSlot: timeSlotFound,
+                task: taskFound,
+                peopleNeed: peopleNeedFound
+            };
+        }
     }
