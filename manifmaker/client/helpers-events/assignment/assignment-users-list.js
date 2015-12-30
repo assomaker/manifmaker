@@ -66,10 +66,10 @@ Template.assignmentUsersList.events({
                 break;
             case AssignmentType.TASKTOUSER:
                 if (isUnassignment) {
-                    Meteor.call("removeAssignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
+                    Meteor.call("removeAssignUserToTaskTimeSlot", selectedPeopleNeed._id, _id);//, SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
                     IsUnassignment.set(false)
                 } else
-                    Meteor.call("assignUserToTaskTimeSlot", _id, SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
+                    Meteor.call("assignUserToTaskTimeSlot", selectedPeopleNeed._id, _id);//., SelectedTask.get()._id, selectedTimeslotId, selectedPeopleNeed);
                 break;
         }
 

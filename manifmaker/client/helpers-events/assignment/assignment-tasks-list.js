@@ -65,7 +65,7 @@ Template.assignmentTasksList.helpers({
 
             var string = " - "
             _.each(result,function(timeSlot){
-                string += `${new moment(timeSlot.start).format("H[h]mm")} - ${new moment(timeSlot.end).format("H[h]mm")}`;
+                string += new moment(timeSlot.start).format("H[h]mm")+" - "+new moment(timeSlot.end).format("H[h]mm");
             });
             return string;
         } else {
@@ -171,6 +171,8 @@ Template.assignmentTasksList.events({
 
         selectedPeopleNeed = this;
 
+        var userId = SelectedUser.get()._id;
+
 
         if (target.hasClass("time-slot"))
             _idTimeSlot = target.data("_id");
@@ -180,10 +182,10 @@ Template.assignmentTasksList.events({
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
                 if (isUnassignment) {
-                    Meteor.call("removeAssignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
+                    Meteor.call("removeAssignUserToTaskTimeSlot", selectedPeopleNeed._id, userId);//SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
                     IsUnassignment.set(false);
                 } else
-                    Meteor.call("assignUserToTaskTimeSlot", SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
+                    Meteor.call("assignUserToTaskTimeSlot", selectedPeopleNeed._id, userId);//SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
                 break;
             case AssignmentType.TASKTOUSER:
                 break;

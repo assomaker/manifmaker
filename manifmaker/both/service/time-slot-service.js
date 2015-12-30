@@ -69,4 +69,52 @@ TimeSlotService =
         }
 
 
+        static getTimeSlotById(timeSlotId) {
+            var found;
+            var taskFound;
+            Tasks.find().fetch().forEach(task => {
+                task.timeSlots.forEach(timeSlot => {
+                    if (timeSlot._id === timeSlotId) {
+                        found = timeSlot;//TimeSlotService.read(timeSlot);
+                    }
+                });
+                if (!taskFound && found)
+                    taskFound = task;
+
+            });
+
+
+            return {
+                timeSlot: found,
+                task: taskFound
+            };
+        }
+
+        static getTaskAndTimeSlotAndPeopleNeedByPeopleNeedId(peopleNeedId) {
+            var timeSlotFound;
+            var taskFound;
+            var peopleNeedFound;
+            Tasks.find().fetch().forEach(task => {
+               // if (!taskFound)
+                    task.timeSlots.forEach(timeSlot => {
+                     //   if (!timeSlotFound)
+                            timeSlot.peopleNeeded.forEach(peopleNeed => {
+                         //       if (!peopleNeed)
+                                    if (peopleNeed._id === peopleNeedId) {
+                                        peopleNeedFound = peopleNeed;
+                                    }
+                            });
+                        if (!timeSlotFound && peopleNeedFound)
+                            timeSlotFound = timeSlot;
+                    });
+                if (!taskFound && timeSlotFound)
+                    taskFound = task;
+            });
+
+            return {
+                timeSlot: timeSlotFound,
+                task: taskFound,
+                peopleNeed: peopleNeedFound
+            };
+        }
     }

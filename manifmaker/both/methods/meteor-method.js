@@ -1,23 +1,17 @@
 Meteor.methods({
-    removeAssignUserToTaskTimeSlot: function (userId, taskId, timeSlotId, peopleNeed) {
+    removeAssignUserToTaskTimeSlot: function (peopleNeedId, userId = null,  taskId = null, timeSlotId = null) {
         console.info("removeAssignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslotId", timeSlotId, "with people need", peopleNeed);
 
-        var user = Users.findOne({_id: userId});
-        var task = Tasks.findOne({_id: taskId});
+        console.info("assignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId, "with peopleNeedId", peopleNeedId);
 
-        var timeSlot;
-        if (!timeSlotId) {
-            console.info("removeAssignUserToTaskTimeSlot","timeSlotId is null, we get it from the assignment");
-            //find it by its assignment, less secure
-            var assignment = Assignments.findOne({
-                userId: userId,
-                taskId: taskId,
-                peopleNeedId: peopleNeed._id
-            });
-            timeSlotId = assignment.timeSlotId;
-        }
+        if(!peopleNeedId)
+            throw new Meteor.Error(400,'assignUserToTaskTimeSlot peopleNeedId is null');
 
-        timeSlot = TimeSlotService.getTimeSlot(task, timeSlotId);
+        var timeSlot = TimeSlotService.getTimeSlot(task, timeSlotId);
+
+
+        var user = Users.findOne({_id: timeSlot.userId});
+        var task = Tasks.findOne({_id: timeSlot.taskId});
 
 
         var assignment = Assignments.findOne({
@@ -35,13 +29,20 @@ Meteor.methods({
     },
 
 
-    assignUserToTaskTimeSlot: function (userId, taskId, timeSlotId, peopleNeed) {
-        console.info("assignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId, "with people need", peopleNeed);
+    assignUserToTaskTimeSlot: function (peopleNeedId, userId , taskId = null, timeSlotId = null) {
+        console.info("assignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId, "with peopleNeedId", peopleNeedId);
+
+        if(!peopleNeedId)
+            throw new Meteor.Error(400,'assignUserToTaskTimeSlot peopleNeedId is null');
+        if(!userId)
+            throw new Meteor.Error(400,'assignUserToTaskTimeSlot userId is null');
+
+        var ret = TimeSlotService.getTaskAndTimeSlotAndPeopleNeedByPeopleNeedId(peopleNeedId);
+        var timeSlot = ret.timeSlot;
+        var task = ret.task;
+        var peopleNeed = ret.peopleNeed;
 
         var user = Users.findOne({_id: userId});
-        var task = Tasks.findOne({_id: taskId});
-        var timeSlot = TimeSlotService.getTimeSlot(task, timeSlotId);
-
 
         if (!AvailabilityService.checkUserAvailabilty(user, timeSlot.start, timeSlot.end)) {
             throw new Meteor.Error(500, `User ${user.name} is not available from ${timeSlot.start} to ${timeSlot.end}`);
@@ -55,8 +56,8 @@ Meteor.methods({
 
         var assignmentId = Assignments.insert({
             userId: userId,
-            taskId: taskId,
-            timeSlotId: timeSlotId,
+            taskId: task._id,
+            timeSlotId: timeSlot._id,
             peopleNeedId: peopleNeed._id
         });
 
