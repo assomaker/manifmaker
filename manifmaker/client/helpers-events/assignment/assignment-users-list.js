@@ -23,7 +23,18 @@ Template.assignmentUsersList.helpers({
 
     team: function () {
         return Teams.findOne({_id: this.toString()}).name;
+    },
+    userTeamsWithoutGlobalTeam: function () {
+        var teams = this.teams;
+        var result = [];
+        var assignmentReadyTeam = Teams.findOne({name: ASSIGNMENTREADYTEAM});
+        teams.forEach(teamId => {
+            if (teamId !== assignmentReadyTeam._id)
+                result.push(teamId)
+        });
+        return result;
     }
+
 });
 
 

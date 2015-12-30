@@ -193,7 +193,7 @@ selectedPeopleNeed = null;
 var peopleNeedAssignedClick = 0;
 
 Template.assignmentCalendar.events({
-    "click .peopleNeed": function (event) {
+    "click .peopleNeed": function () {
         selectedPeopleNeed = this;
 
         //event should bubbles to .creneau
@@ -238,8 +238,12 @@ Template.assignmentCalendar.events({
 
     },
 
+    "hover .creneau": function () {
+        selectedTimeSlot = this;
+    },
+
     //taskToUser (we click on a complete task time slot)
-    "click .creneau": function (event) {
+    "click .creneau": function () {
 
         var currentAssignmentType = CurrentAssignmentType.get();
 
@@ -249,7 +253,7 @@ Template.assignmentCalendar.events({
                 return;
                 break;
             case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
-                var selectedTimeSlot = this;
+                selectedTimeSlot = this;
                 selectedTimeslotId = selectedTimeSlot._id;
 
                 //Template.parentData() doesn't work so we use a trick to retrieve taskId

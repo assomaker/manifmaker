@@ -78,7 +78,7 @@ Template.assignmentTasksList.helpers({
                 var selectedUser = Users.findOne(SelectedUser.get());
 
                 //userId : if existing, selected user must be the one
-                if (peopleNeeded.userId) {
+                if (peopleNeed.userId) {
                     if (peopleNeed.userId === selectedUser._id) {
                         result.push(peopleNeed);
                         return;

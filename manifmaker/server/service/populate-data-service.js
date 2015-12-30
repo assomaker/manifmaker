@@ -59,7 +59,7 @@ populateData = function () {
         availabilities: [
             {
                 start: getDateFromTime(2),
-                end: getDateFromTime(12)
+                end: getDateFromTime(14)
             }
         ]
     });
@@ -81,7 +81,22 @@ populateData = function () {
         availabilities: [
             {
                 start: getDateFromTime(10),
-                end: getDateFromTime(12)
+                end: getDateFromTime(14)
+            },
+            {
+                start: getDateFromTime(14),
+                end: getDateFromTime(18)
+            }
+        ]
+    });
+    var user4Id = Users.insert({
+        name: "user4",
+        //teams: [team3Id],
+        skills: [skill2Id,skill3Id,skill1Id,skill4Id],
+        availabilities: [
+            {
+                start: getDateFromTime(10),
+                end: getDateFromTime(14)
             },
             {
                 start: getDateFromTime(14),
@@ -109,13 +124,26 @@ populateData = function () {
             },
             {
                 start: getDateFromTime(10),
-                end: getDateFromTime(12),
+                end: getDateFromTime(14),
                 peopleNeeded : [
                     {
-                        teamId: team1Id
+                        userId: user2Id
+                    },
+                    {
+                        userId: user4Id
+                    },
+                    {
+                        userId: user1Id
+                    },
+                    {
+                        teamId: team1Id,
+                        skills: [skill1Id]
                     },
                     {
                         skills: [skill1Id]
+                    },
+                    {
+                        skills: [skill1Id,skill2Id]
                     }
                 ],
             }

@@ -36,32 +36,33 @@
                     <a class="href-assignment-user">{{name}}</a>
                 </div>
 
-                <div class="collapsible-body">
-                    Teams :
-                    <ul>
-                        {{#each teams}}
-                            <li>{{team}}</li>
-                        {{/each}}
-                    </ul>
-                    Availabilities :
-                    <ul>
-                        {{#each availabilities}}
-                            <li>from {{displayHours start}} to {{displayHours end}}</li>
-                        {{/each}}
-                    </ul>
-                    Skills :
-                    <ul>
-                        {{#each skills}}
-                            <li>{{skillLabel}}</li>
-                        {{/each}}
-                    </ul>
-                    Assignments :
-                    <ul>
-                        {{#each assignments}}
-                            <li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>
-                        {{/each}}
-                    </ul>
-                </div>
+                    <div class="collapsible-body">
+                        <div>
+                            {{#each userTeamsWithoutGlobalTeam}}
+                                <div class="chip">{{team}}</div>
+                            {{else}}
+                                <div class="chip">User don't have any teams</div>
+                            {{/each}}
+                        </div>
+                        <!--Availabilities :-->
+                        <!--<ul>-->
+                            <!--{{#each availabilities}}-->
+                        <!--<li>from {{displayHours start}} to {{displayHours end}}</li>-->
+                            <!--{{/each}}-->
+                        <!--</ul>-->
+
+                        <div>
+                            {{#each skills}}
+                                <div class="chip">{{skillLabel}}</div>
+                            {{/each}}
+                        </div>
+                        <!--Assignments :-->
+                        <!--<ul>-->
+                            <!--{{#each assignments}}-->
+                        <!--<li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>-->
+                            <!--{{/each}}-->
+                        <!--</ul>-->
+                    </div>
             </li>
         {{/each}}
     </ul>

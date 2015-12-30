@@ -22,8 +22,35 @@
                                      quarter="{{quarterDate ../../date ../date}}">
 
                                     {{#each timeSlot  ../../date ../date this}}
-                                        <div class="creneau usedByTask {{state}}"
-                                             style="height: {{height}};">
+                                        <div class="creneau usedByTask {{state}} hasPopover" data-popover="true"
+                                             style="height: {{height}};"
+                                             data-toggle="popover" title="{{start}} to {{end}}"
+                                             data-content='
+                                             <div class="collection">
+                                             {{#each peopleNeeded}}
+                                                        <div class="peopleNeed collection-item"
+                                                        data-_id="{{_id}}"
+                                                        >
+                                                        {{#if userId }}
+                                                            <div class="user">{{userName}}</div>{{/if}}
+                                                 {{#if teamId}}
+                                                            <div class="team">{{teamName}}</div>{{/if}}
+                                                        <div>
+                                                            {{#each skills}}
+                                                                <div class="skill">{{labelSkills}}</div>
+                                                            {{/each}}
+                                                        </div>
+                                                    </div>
+                                                {{/each}}
+                                                </div>
+                                             '>
+
+                                            <!-- your popup hidden content -->
+                                            <div id="popover_content_wrapper" style="display: none">This <p>
+                                                cdcd
+                                            </p>is your div content</div>
+
+                                            <div class="wrapper">
 
                                                 {{#if taskName}}
                                                     <span>Assigned to task {{taskName}}</span>
@@ -31,7 +58,8 @@
 
 
                                                 {{#each peopleNeeded}}
-                                                    <div class="peopleNeed" style="height: {{../height}};">
+                                                    <!--<div class="peopleNeed" style="height: {{../height}};">-->
+                                                        <div class="peopleNeed">
                                                         {{#if userId }}
                                                             <div class="user">{{userName}}</div>{{/if}}
                                                         {{#if teamId}}
@@ -46,7 +74,8 @@
                                                     </div>
                                                 {{/each}}
                                                 {{#each peopleNeededAssigned}}
-                                                    <div class="peopleNeed assigned" style="height: {{../height}};">
+                                                    <!--<div class="peopleNeed assigned" style="height: {{../height}};">-->
+                                                        <div class="peopleNeed assigned">
                                                         <span>Assigned to {{displayUser assignedUserId}}</span>
                                                         {{#if userId }}
                                                             <div class="user">{{userName}}</div>{{/if}}
@@ -61,7 +90,7 @@
                                                             <!--{{/ifNotEmpty}}-->
                                                     </div>
                                                 {{/each}}
-
+                                            </div>
                                         </div>
                                     {{/each}}
 

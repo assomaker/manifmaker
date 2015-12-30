@@ -48,26 +48,26 @@
                     <a class="href-assignment-task">{{name}}</a>
                 </div>
                 <div class="collapsible-body">
-                    Timeslots :
+                    <!--Timeslots :-->
                     <ul>
                         {{#each timeSlots}}
-                            <li class="time-slot" data-_id="{{_id}}">from {{displayHours start}} to {{displayHours end}}
-                                <ul>
+                            <li class="time-slot" data-_id="{{_id}}">
+                                <!--from {{displayHours start}} to {{displayHours end}}-->
+                                <ul class="collection">
                                     {{#each peopleNeeded}}
-                                        <li class="peopleNeed">
-                                            Skills :
-                                            <ul>
+                                        <li class="peopleNeed collection-item">
+                                            <div>
                                                 {{#each skills}}
-                                                    <li>{{skillLabel}}</li>
+                                                    <div class="chip">{{skillLabel}}</div>
                                                 {{else}}
-                                                    No specific skills
+                                                    <div class="chip">No specific skills</div>
                                                 {{/each}}
-                                            </ul>
+                                            </div>
                                             {{#if teamId}}
-                                                Team : {{team}}
+                                                <div class="chip">{{team}}</div>
                                             {{/if}}
                                             {{#if userId}}
-                                                User : {{user}}
+                                                <div class="chip">{{user}}</div>
                                             {{/if}}
                                         </li>
                                     {{/each}}
@@ -75,12 +75,12 @@
                             </li>
                         {{/each}}
                     </ul>
-                    Assignments :
-                    <ul>
-                        {{#each assignments}}
-                            <li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>
-                        {{/each}}
-                    </ul>
+                    <!--Assignments :-->
+                    <!--<ul>-->
+                        <!--{{#each assignments}}-->
+                            <!--<li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>-->
+                        <!--{{/each}}-->
+                    <!--</ul>-->
                 </div>
             </li>
         {{/each}}

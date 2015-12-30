@@ -222,20 +222,32 @@
               width: 100%;
               table-layout: fixed;
 
-              .peopleNeed {
-                display: table-cell;
-                text-align: center;
-                overflow-y: scroll;
-                width: 2%;
-                overflow: hidden;
-                height:100%;
 
-                &.assigned {
-                  background: rgba(158, 100, 0, 0.8);
+              .hasPopover {
+                .peopleNeed {
+
                 }
+              }
 
-                div {
-                  pointer-events: none; //in order to allow selecting a below calendar time slot instead of the whole user availability
+              .wrapper {
+                -webkit-transform: rotate(90deg);
+
+                .peopleNeed {
+                  //display: table-cell;
+                  border-bottom: solid 1px black;
+                  text-align: center;
+                  overflow-y: scroll;
+                  width: 100%;
+                  overflow: hidden;
+                  //height: 1%;
+
+                  &.assigned {
+                    background: rgba(158, 100, 0, 0.8);
+                  }
+
+                  div {
+                    pointer-events: none; //in order to allow selecting a below calendar time slot instead of the whole user availability
+                  }
                 }
               }
             }

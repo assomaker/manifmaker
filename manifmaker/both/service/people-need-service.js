@@ -13,6 +13,29 @@ PeopleNeedService =
 
         }
 
+        static getPeopleNeedByIdAndTask(peopleNeedId,task) {
+            var found;
+            var timeSlotIdFound;
+
+            task.timeSlots.forEach(timeSlot => {
+                timeSlot.peopleNeeded.forEach(function (peopleNeed, index) {
+                    if (peopleNeed._id === peopleNeedId) {
+                        found = peopleNeed;
+                    }
+                });
+                if(!timeSlotIdFound && found)
+                    timeSlotIdFound = timeSlot._id;
+
+            });
+
+            return {
+                timeSlotId: timeSlotIdFound,
+                peopleNeed: found
+            };
+
+
+        }
+
         static getAssignedPeopleNeedIndex(timeSlot, peopleNeedHunter) {
             var found;
             timeSlot.peopleNeededAssigned.forEach(function (peopleNeed, index) {
