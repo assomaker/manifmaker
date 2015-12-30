@@ -50,7 +50,7 @@ Already Assigned
 <div class="collection">
     {{#each peopleNeededAssigned}}
         <div class="peopleNeed assigned  collection-item" data-_id="{{_id}}">
-            Assigned to {{displayUser assignedUserId}} with the people need :
+            Assigned to {{displayUser}} with the people need :
             {{#if userId }}
                 <div class="user">{{userName}}</div>
             {{/if}}
@@ -95,7 +95,8 @@ Already Assigned
                                                 {{#each peopleNeededAssigned}}
                                                     <!--<div class="peopleNeed assigned" style="height: {{../height}};">-->
                                                         <div class="peopleNeed assigned">
-                                                        <span>Assigned to {{displayUser assignedUserId}}</span> with the people need :
+                                                        <span>Assigned to {{displayUser}}</span>
+                                                            <i>
                                                         {{#if userId }}
                                                             <div class="user">{{userName}}</div>{{/if}}
                                                         {{#if teamId}}
@@ -107,6 +108,7 @@ Already Assigned
                                                             {{/each}}
                                                         </div>
                                                             <!--{{/ifNotEmpty}}-->
+                                                                </i>
                                                     </div>
                                                 {{/each}}
                                             </div>

@@ -21,7 +21,10 @@ Template.registerHelper(
 
 Template.registerHelper(
     "displayUser", function () {
-        return Users.findOne({_id: this.assignedUserId}).name;
+        var assignment = Assignments.findOne({
+            peopleNeedId: this._id
+        }); //TODO normalement je stocke un assignedUserId...
+        return Users.findOne({_id: assignment.userId}).name;
     }
 );
 
