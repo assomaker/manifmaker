@@ -4,6 +4,11 @@ Template.registerHelper(
     }
 );
 Template.registerHelper(
+    "displayHoursMinute", function (date) {
+        return new moment(date).format("H[h]mm");
+    }
+);
+Template.registerHelper(
     "displayDateTime", function (date) {
         return new moment(date).format("ddd DD MMM HH[h]");
     }

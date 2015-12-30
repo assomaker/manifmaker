@@ -24,7 +24,7 @@
                                     {{#each timeSlot  ../../date ../date this}}
                                         <div class="creneau usedByTask {{state}} hasPopover" data-popover="true"
                                              style="height: {{height}};"
-                                             data-toggle="popover" title="{{start}} to {{end}}"
+                                             data-toggle="popover" title="{{displayHoursMinute start}} to {{displayHoursMinute end}}"
                                              data-content='
                                              <div class="collection">
                                              {{#each peopleNeeded}}
