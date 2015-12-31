@@ -185,7 +185,15 @@ Template.assignmentTasksList.events({
                     Meteor.call("removeAssignUserToTaskTimeSlot", selectedPeopleNeed._id, userId);//SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
                     IsUnassignment.set(false);
                 } else
-                    Meteor.call("assignUserToTaskTimeSlot", selectedPeopleNeed._id, userId);//SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
+                    Meteor.call("assignUserToTaskTimeSlot", selectedPeopleNeed._id, userId, function(error, result){
+                        if(!error){
+                            //we have to reset the task list this way because once assigned, the task can't propose any peopleNeed for the user as he is
+                            //no longer available but the task can still be theoretically assigned to him because we didn't recompute the TaskFilter job done
+                            //by the event on the calendar.
+                            //we don't need to do that for the mode TASKTOUSER as the user naturally disappears from the list once assigned
+                            TaskFilter.set(noneFilter);
+                        }
+                    });//SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
                 break;
             case AssignmentType.TASKTOUSER:
                 break;

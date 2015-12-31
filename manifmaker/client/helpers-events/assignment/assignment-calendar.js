@@ -381,11 +381,11 @@ Template.assignmentCalendar.events({
                                         $elemMatch: {
                                             userId: user._id
                                         }
-                                    }
+                                    },
+                                    //availabilities filter
+                                    start: {$gte: availability.start, $lte: selectedDate.toDate()},
+                                    end: {$gt: selectedDate.toDate(), $lte: availability.end}
                                 },
-                                //availabilities filter
-                                // start: {$gte: availability.start, $lte: selectedDate.toDate()},
-                                // end: {$gt: selectedDate.toDate(), $lte: availability.end}
                             }
                         },
                         {
