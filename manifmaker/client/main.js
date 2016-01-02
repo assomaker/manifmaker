@@ -23,6 +23,8 @@ AssignmentFilter = new ReactiveVar(defaultFilter);
 CurrentAssignmentType = new ReactiveVar(AssignmentType.ALL);
 IsUnassignment = new ReactiveVar(false);
 
+TaskListTeamFilter = new ReactiveVar(defaultFilter);
+
 
 function preSelecterTaskByTaskName(name) {
     UserFilter.set(noneFilter);

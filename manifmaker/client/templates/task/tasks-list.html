@@ -1,6 +1,6 @@
 <template name="tasksList">
-    <div class="input-field col s12">
-        <select id="team_filter" class="browser-defaults">
+    <div class="team-filter-wrapper input-field col s12">
+        <select id="team_filter" name="selectTeamFilter" >
             <option value="" disabled selected>Choose your option</option>
             {{#each allOptionsTeams}}
                 <option value="{{_id}}">{{name}}</option>
@@ -10,7 +10,7 @@
 
     </div>
 
-    {{> reactiveTable settings=tableSettings }}
+    {{> reactiveTable settings=tasksList }}
 
     <a href="/task">Create a new Task</a>
 </template>

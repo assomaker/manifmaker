@@ -107,7 +107,7 @@ populateData = function () {
 
     //tasks
     var task1d = Tasks.insert({
-        name: "task1",
+        name: "task 1",
         teamId: team1Id,
         placeId: place1Id,
         liveEventMasterId: user1Id,
@@ -150,7 +150,7 @@ populateData = function () {
         ]
     });
     var task2d = Tasks.insert({
-        name: "task2",
+        name: "task 2",
         teamId: team2Id,
         placeId: place2Id,
         liveEventMasterId: user2Id,
@@ -169,7 +169,7 @@ populateData = function () {
         ]
     });
     var task3d = Tasks.insert({
-        name: "task3",
+        name: "task 3",
         teamId: team3Id,
         placeId: place2Id,
         liveEventMasterId: user2Id,
