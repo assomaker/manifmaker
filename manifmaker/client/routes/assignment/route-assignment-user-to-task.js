@@ -29,7 +29,7 @@ Router.route('/assignment/userToTask/:userId/:selectedDate', function () {
         }
 
         SelectedDate.set(selectedDate);
-        selectedAvailability = availability;
+        SelectedAvailability.set(availability);
 
         /*
          Task whose have at least one timeSlot (to begin, just one) as
@@ -63,7 +63,7 @@ Router.route('/assignment/userToTask/:userId', function () {
         SelectedUser.set({_id: this.params.userId});
         TaskFilter.set(noneFilter);
 
-        selectedAvailability = null; //TODO pas top
+        SelectedAvailability.set(null);
         UserFilter.set(defaultFilter);
         //TODO reduire la liste à ses amis
 

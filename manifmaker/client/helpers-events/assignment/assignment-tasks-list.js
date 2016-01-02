@@ -54,7 +54,7 @@ Template.assignmentTasksList.helpers({
         if (CurrentAssignmentType.get() === AssignmentType.USERTOTASK) {
             var result = [];
             _.each(timeSlots, (timeSlot) => {
-                var date = selectedDateUserToTask;
+                var date = SelectedDate.get();
                 var start = new moment(timeSlot.start);
                 var end = new moment(timeSlot.end);
                 if ((start.isBefore(date) || start.isSame(date)) &&
@@ -79,7 +79,7 @@ Template.assignmentTasksList.helpers({
         if (CurrentAssignmentType.get() === AssignmentType.USERTOTASK) {
             var result = [];
             _.each(timeSlots, (timeSlot) => {
-                var date = selectedDateUserToTask;
+                var date = SelectedDate.get();
                 var start = new moment(timeSlot.start);
                 var end = new moment(timeSlot.end);
                 if ((start.isBefore(date) || start.isSame(date)) &&
@@ -157,6 +157,10 @@ Template.assignmentTasksList.events({
         Router.go("/assignment/task/" + this._id);
     },
 
+    "click .task": function(event){
+        console.log("clicked on task");
+        SelectedTaskBreadCrumb.set(this);
+    },
 
     "click li.peopleNeed": function (event) {
         event.stopPropagation();
@@ -192,6 +196,9 @@ Template.assignmentTasksList.events({
                             //by the event on the calendar.
                             //we don't need to do that for the mode TASKTOUSER as the user naturally disappears from the list once assigned
                             TaskFilter.set(noneFilter);
+
+                            //reset workflow
+                            SelectedAvailability.set(null);
                         }
                     });//SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
                 break;

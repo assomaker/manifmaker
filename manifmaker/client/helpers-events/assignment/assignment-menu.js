@@ -54,12 +54,12 @@ Template.assignmentMenu.helpers({
         return "";
     },
     breadCrumbAssignment: function () {
-        return [{label: "TODO fix breadcrumb", url: ""}];
         var userFilter = UserFilter.get(),
             taskFilter = TaskFilter.get(),
             currentAssignmentType = CurrentAssignmentType.get(),
             selectedUser = SelectedUser.get(),
             selectedTask = SelectedTask.get(),
+            selectedTaskBreadCrumb = SelectedTaskBreadCrumb.get(),
             selectedDate = SelectedDate.get(),
             selectedTimeSlot = SelectedTimeSlot.get(),
             result = [];
@@ -77,20 +77,33 @@ Template.assignmentMenu.helpers({
                     url: "/assignment/userToTask/" + selectedUser._id
                 });
 
-                if (selectedAvailability === null) {//TODO pas top
+                if (SelectedAvailability.get() === null) {//TODO pas top
                     result.push({
                         label: "Select one of the availability",
                         url: ""
                     });
+                    SelectedTaskBreadCrumb.set(null);
+                    //apres de amples reflexion, disons que je vois pas ou reinit ce SelectedTaskBreadcrum
+                    //ca risque d'avoir des effets de bords pénibles, mais l'avantage c'est que ca ne fait
+                    //que planter le breadcrumb, d'ou le pertinence de ce code ici
                 } else {
                     result.push({
                         label: selectedDate.format("ddd D HH:mm"),
                         url: "/assignment/userToTask/" + selectedUser._id + "/" + selectedDate.format('x')
                     });
 
-                    if (true) { //if pas de task/people need selected
+                    if(!selectedTaskBreadCrumb) {
                         result.push({
-                            label: "Select one of the available task [and a people need]",
+                            label: "Select one of the available task",
+                            url: ""
+                        });
+                    } else {
+                        result.push({
+                            label: selectedTaskBreadCrumb.name,
+                            url: ""
+                        });
+                        result.push({
+                            label: "Select one of the people need",
                             url: ""
                         });
                     }
@@ -122,18 +135,16 @@ Template.assignmentMenu.helpers({
                     var task = Tasks.findOne(selectedTask);
                     var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
 
-
                     result.push({
                         label: new moment(timeSlot.start).format("HH:mm") + " to " + new moment(timeSlot.end).format("HH:mm"),
                         url: "/assignment/taskToUser/" + selectedTask._id + "/" + selectedTimeSlot._id
                     });
 
-                    if (true) { //if pas de task/people need selected
-                        result.push({
-                            label: "Select one of the available user",
-                            url: ""
-                        });
-                    }
+                    result.push({
+                        label: "Select one of the available user",
+                        url: ""
+                    });
+
                 }
             }
             return result;

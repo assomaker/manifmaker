@@ -12,11 +12,12 @@ TaskNeededTeamFilter = new ReactiveVar(null);
 TaskSkillsFilter = new ReactiveVar(null);
 UserSkillsFilter = new ReactiveVar(defaultFilter);
 SelectedTask = new ReactiveVar(null);
+SelectedTaskBreadCrumb = new ReactiveVar(null); //TODO voir si on peut la merger avec SelectedTask
 SelectedTimeSlot = new ReactiveVar(null);
 SelectedDate = new ReactiveVar(null);
 
 selectedTimeslotId = null; //TODO mettre ca dans Session ?//TODO pas top
-selectedAvailability = null;//TODO pas top
+SelectedAvailability = new ReactiveVar(null);
 
 AssignmentFilter = new ReactiveVar(defaultFilter);
 CurrentAssignmentType = new ReactiveVar(AssignmentType.ALL);
@@ -49,7 +50,7 @@ function preSelectedUserByUserName(name) {
     var handle = query.observeChanges({
         added: function (_id, task) {
             SelectedUser.set({_id: _id});
-            selectedAvailability = null;//TODO pas top
+            SelectedAvailability.set(null);
             TaskFilter.set(noneFilter);
         }
     });

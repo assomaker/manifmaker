@@ -346,7 +346,7 @@ Template.assignmentCalendar.events({
                 } else if (typeof $target.attr("quarter") !== "undefined") {
                     selectedDate = new moment(new Date($target.attr("quarter")));
                 }
-                selectedDateUserToTask = selectedDate;
+                SelectedDate.set(selectedDate);
 
 
                 var userId = SelectedUser.get()._id;
@@ -357,7 +357,7 @@ Template.assignmentCalendar.events({
                     console.error("Template.assignmentCalendar.events.click .heure, .quart_heure", "User can't normally click on this kind of element when in userToTask");
                     return;
                 }
-                selectedAvailability = availability;
+                SelectedAvailability.set(availability);
 
 
                 /*
