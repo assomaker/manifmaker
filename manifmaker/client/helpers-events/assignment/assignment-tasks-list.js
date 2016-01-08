@@ -146,6 +146,18 @@ Template.assignmentTasksList.helpers({
 
 
         var skills = timeSlot.skills;
+    },
+
+    neededTeamOptions : function(){
+        return {
+            chooseLabel: "Choose a needed team",
+        };
+    },
+
+    responsibleTeamOptions : function(){
+        return {
+            chooseLabel: "Choose a responsible team",
+        };
     }
 
 
@@ -224,30 +236,26 @@ Template.assignmentTasksList.events({
         }
     },
 
-    "change #filter_team_task": function (event) {
+    "change .filter_team": function (event) {
         var _id = $(event.target).val();
         if (_id === "") {
             TaskTeamFilter.set(defaultFilter);
-            $("#filter_team_task_option_advice_all").text("Choose a responsible team"); //TODO label
         } else {
             TaskTeamFilter.set({
                 teamId: _id
             });
-            $("#filter_team_task_option_advice_all").text("All teams"); //TODO label
         }
     },
+
     "change #filter_needed_team_task": function (event) {
         var _id = $(event.target).val();
         if (_id === "") {
             TaskNeededTeamFilter.set(null);
-            $("#filter_needed_team_task_option_advice_all").text("Choose a needed team"); //TODO label
         } else if (_id === "noNeededTeam") {
             TaskNeededTeamFilter.set("noNeededTeam");
-            $("#filter_needed_team_task_option_advice_all").text("All teams"); //TODO label
         }
         else {
             TaskNeededTeamFilter.set(_id);
-            $("#filter_needed_team_task_option_advice_all").text("All teams"); //TODO label
         }
     },
 

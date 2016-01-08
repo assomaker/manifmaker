@@ -9,14 +9,7 @@
             </div>
         </div>
 
-        <div class="input-field col s12">
-            <select id="filter_team_user" class="browser-default">
-                <option id="filter_team_user_option_advice_all" value="" selected>Choose a team</option>
-                {{#each allOptionsTeams}}
-                    <option value="{{_id}}">{{name}}</option>
-                {{/each}}
-            </select>
-        </div>
+        {{> commonTeamListDropdown}}
 
         <div class="input-field col s12 reset-materialize-multiple-select">
             <select id="filter_skills_user" multiple="multiple" class="browser-default">

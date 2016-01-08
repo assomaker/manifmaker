@@ -89,16 +89,14 @@ Template.assignmentUsersList.events({
         }
     },
 
-    "change #filter_team_user": function (event) {
+    "change .filter_team": function (event) {
         var _id = $(event.target).val();
         if (_id === "") {
             UserTeamFilter.set(defaultFilter);
-            $("#filter_team_user_option_advice_all").text("Choose a team"); //TODO label
         } else {
             UserTeamFilter.set({
                 teams: _id
             });
-            $("#filter_team_user_option_advice_all").text("All teams"); //TODO label
         }
     },
 
