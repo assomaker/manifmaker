@@ -1,17 +1,14 @@
 <template name="tasksList">
     <div class="team-filter-wrapper input-field col s12">
 
-        <select id="team_filter" name="selectTeamFilter" >
-            <option value="" disabled selected>Choose your option</option>
-            {{#each allOptionsTeams}}
-                <option value="{{_id}}">{{name}}</option>
-            {{/each}}
-        </select>
-        <label>Team Filter</label>
+
+        {{> commonTeamListDropdown id="task-list-team-selector"}}
+
 
     </div>
 
     {{> reactiveTable settings=tasksList }}
+
 
     <a href="/task">Create a new Task</a>
 </template>

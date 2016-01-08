@@ -1,6 +1,6 @@
 <template name="commonTeamListDropdown">
     <div class="input-field col s12">
-        <select class="filter_team browser-default">
+        <select id="{{id}}" class="filter_team browser-default">
             <option class="filter_team_option_advice_all"
                     data-alllabel="{{#if options.allLabel}}{{options.allLabel}}{{else}}All team{{/if}}"
                     data-chooselabel="{{#if options.chooseLabel}}{{options.chooseLabel}}{{else}}Choose a team{{/if}}"

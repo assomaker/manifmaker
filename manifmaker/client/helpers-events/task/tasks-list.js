@@ -1,39 +1,12 @@
 Template.tasksList.helpers({
-    tasks: function () {
-        //todo ce helpers n'est plus utilisé
-        var filter = TaskFilter.get();
-        var filterIndex = TaskIndexFilter.get();
-        var teamFilter = TaskTeamFilter.get();
-
-        var searchResult;
-        var filterResult;
-
-        //filterResult = Tasks.find(filter);
-        filterResult = Tasks.find({
-            $and: [
-                filter,
-                teamFilter
-            ]
-        }, {limit: 20}).fetch();
-
-        //console.error("task filter result n'est pas utilisé !!!")
-        searchResult = TasksIndex.search(filterIndex).fetch();
-        return _.intersectionObjects(searchResult, filterResult);
-        //return filterResult;
-    },
     tasksList: function () {
-
-       // var teamFilter = TaskTeamFilter.get();
-
 
         return {
             collection: Tasks,//.find(teamFilter),
             rowsPerPage: 10,
             showFilter: true,
             showRowCount: true,
-            columnPerPage: 5,
-            multiColumnSort: true,
-            filters:['teamFilterId'],
+            filters:['task-list-team-filter'],
             fields: [
                 {
                     key: 'name',
@@ -44,6 +17,7 @@ Template.tasksList.helpers({
                     key: 'teamId',
                     label: 'Team',
                     fnAdjustColumnSizing: true,
+                    searchable: false, //TODO doesn't work (try with a teamId)
                     fn: function (teamId, Task) {
                         return Teams.findOne(teamId).name;
                     }
@@ -51,6 +25,7 @@ Template.tasksList.helpers({
                 {
                     key: 'timeSlots',
                     label: 'Time slots count',
+                    searchable: false, //TODO doesn't work (try with a teamId)
                     sortable: false,
                     fn: function (timeSlots, Task) {
                         return timeSlots.length;
@@ -59,6 +34,7 @@ Template.tasksList.helpers({
                 },
                 {
                     label: 'Actions',
+                    searchable: false, //TODO doesn't work (try with a teamId)
                     tmpl: Template.taskButtons,
                     fnAdjustColumnSizing: true
                 }
@@ -76,20 +52,14 @@ Template.tasksList.rendered = function () {
 };
 
 Template.tasksList.created = function () {
-    //TODO que quoi ?
-    this.filter = new ReactiveTable.Filter('teamFilterId', ['teamId']);
+    this.taskListTeamFilter = new ReactiveTable.Filter("task-list-team-filter", ["teamId"]);
 };
 
 Template.tasksList.events({
-    "change #team_filter": function (event, template) {
+    "change #task-list-team-selector": function (event, template) {
         event.preventDefault();
         var _id = $(event.target).val();
-
-        //TODO il doit falloir agir sur le datatable...
-        TaskTeamFilter.set({
-            teamId : _id
-        });
-
+        template.taskListTeamFilter.set(_id);
     },
     "click .team-filter-wrapper" : function(){
         //TODO voir si c'est la place et la maniere la plus pertinente
