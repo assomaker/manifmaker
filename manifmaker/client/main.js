@@ -86,6 +86,7 @@ Meteor.startup(function () {
     AssignmentServiceClient.setCalendarAccuracy(accuracy);
 
 
+    //TODO mettre ca ailleurs
     var originalLeave = $.fn.popover.Constructor.prototype.leave;
     $.fn.popover.Constructor.prototype.leave = function (obj) {
         var self = obj instanceof this.constructor ?
@@ -108,10 +109,10 @@ Meteor.startup(function () {
         }
     };
 
-
+    //TODO mettre ca ailleurs
     $('body').popover({html: true, selector: '[data-popover]', trigger: 'click hover', placement: 'auto', delay: {show: 50, hide: 400}});
 
-
+    //TODO mettre ca ailleurs
     $(document).on("click", ".popover .peopleNeed.assigned", function (event) {
         var target = $(event.target);
 
@@ -166,7 +167,7 @@ Meteor.startup(function () {
 
     });
 
-
+    //TODO mettre ca ailleurs
     $(document).on("click", ".popover .peopleNeed:not(.assigned)", function (event) {
         var target = $(event.target);
 
