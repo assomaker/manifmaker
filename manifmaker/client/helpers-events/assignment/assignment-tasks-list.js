@@ -185,7 +185,7 @@ Template.assignmentTasksList.events({
         else
             _idTask = target.parents(".task").data("_id");
 
-        selectedPeopleNeed = this;
+        SelectedPeopleNeed.set(this);
 
         var userId = SelectedUser.get()._id;
 
@@ -198,10 +198,10 @@ Template.assignmentTasksList.events({
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
                 if (isUnassignment) {
-                    Meteor.call("removeAssignUserToTaskTimeSlot", selectedPeopleNeed._id, userId);//SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
+                    Meteor.call("removeAssignUserToTaskTimeSlot", SelectedPeopleNeed.get()._id, userId);
                     IsUnassignment.set(false);
                 } else
-                    Meteor.call("assignUserToTaskTimeSlot", selectedPeopleNeed._id, userId, function(error, result){
+                    Meteor.call("assignUserToTaskTimeSlot", SelectedPeopleNeed.get()._id, userId, function(error, result){
                         if(!error){
                             //we have to reset the task list this way because once assigned, the task can't propose any peopleNeed for the user as he is
                             //no longer available but the task can still be theoretically assigned to him because we didn't recompute the TaskFilter job done
@@ -212,7 +212,7 @@ Template.assignmentTasksList.events({
                             //reset workflow
                             SelectedAvailability.set(null);
                         }
-                    });//SelectedUser.get()._id, _idTask, _idTimeSlot, selectedPeopleNeed);
+                    });
                 break;
             case AssignmentType.TASKTOUSER:
                 break;
