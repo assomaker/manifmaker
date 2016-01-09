@@ -58,6 +58,50 @@ function preSelectedUserByUserName(name) {
 
 }
 
+function readSelectedPeopleNeedAndTimeSlotFromPopover(event, isAssigned) {
+    var target = $(event.target);
+
+    var peopleNeedId;
+    if (target.data('_id')) {
+        peopleNeedId = target.data('_id');
+    } else {
+        peopleNeedId = $(target.parents(".peopleNeed")).data('_id');
+    }
+
+    var task, ret;
+    if(isAssigned){
+        task = Tasks.findOne({
+            timeSlots: {
+                $elemMatch: {
+                    peopleNeededAssigned: {
+                        $elemMatch: {
+                            _id: peopleNeedId
+                        }
+                    },
+                }
+            }
+        });
+        ret = PeopleNeedService.getAssignedPeopleNeedByIdAndTask(peopleNeedId, task);
+    } else {
+        task = Tasks.findOne({
+            timeSlots: {
+                $elemMatch: {
+                    peopleNeeded: {
+                        $elemMatch: {
+                            _id: peopleNeedId
+                        }
+                    },
+                }
+            }
+        });
+        ret = PeopleNeedService.getPeopleNeedByIdAndTask(peopleNeedId, task);
+    }
+
+    var peopleNeeded = ret.peopleNeed;
+    var timeSlot = TimeSlotService.getTimeSlot(task, ret.timeSlotId);
+    SelectedPeopleNeed.set(peopleNeeded);
+    SelectedTimeSlot.set(timeSlot);
+}
 Meteor.startup(function () {
     Meteor.subscribe("skills");
     Meteor.subscribe("users");
@@ -113,87 +157,17 @@ Meteor.startup(function () {
 
     //TODO mettre ca ailleurs
     $(document).on("click", ".popover .peopleNeed.assigned", function (event) {
-        var target = $(event.target);
-
-        var peopleNeedId;
-        if(target.data('_id')){
-            peopleNeedId = target.data('_id');
-        } else {
-            peopleNeedId= $(target.parents(".peopleNeed")).data('_id');
-        }
-        var task = Tasks.findOne({
-            timeSlots: {
-                $elemMatch: {
-                    peopleNeededAssigned: {
-                        $elemMatch: {
-                            _id: peopleNeedId
-                        }
-                    },
-                }
-            }
-        });
-
-        var ret = PeopleNeedService.getAssignedPeopleNeedByIdAndTask(peopleNeedId, task);
-        var peopleNeeded = ret.peopleNeed;
-        SelectedPeopleNeed.set(peopleNeeded);
-
-        var selectedTimeSlot = {
-            _id: ret.timeSlotId
-        };
+        readSelectedPeopleNeedAndTimeSlotFromPopover(event, true);
 
         taskToUserPerformUserFilterRemoveAssignment();
-
 
     });
 
     //TODO mettre ca ailleurs
     $(document).on("click", ".popover .peopleNeed:not(.assigned)", function (event) {
-        var target = $(event.target);
+        readSelectedPeopleNeedAndTimeSlotFromPopover(event, false);
 
-        var peopleNeedId;
-        if(target.data('_id')){
-            peopleNeedId = target.data('_id');
-        } else {
-            peopleNeedId= $(target.parents(".peopleNeed")).data('_id');
-        }
-        var task = Tasks.findOne({
-            timeSlots: {
-                $elemMatch: {
-                    peopleNeeded: {
-                        $elemMatch: {
-                            _id: peopleNeedId
-                        }
-                    },
-                }
-            }
-        });
-
-        var ret = PeopleNeedService.getPeopleNeedByIdAndTask(peopleNeedId, task);
-        var peopleNeeded = ret.peopleNeed;
-        SelectedPeopleNeed.set(peopleNeeded);
-
-
-        var selectedTimeSlot = {
-            _id: ret.timeSlotId
-        };
-
-
-        var currentAssignmentType = CurrentAssignmentType.get();
-
-        switch (currentAssignmentType) {
-            case AssignmentType.USERTOTASK:
-                console.error("Template.assignmentCalendar.events.click .creneau", "User can't normally click on this kind of element when in userToTask");
-                return;
-                break;
-            case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
-
-                var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
-
-                taskToUserPerformUserFilter(timeSlot);
-                break;
-        }
-
-
+        taskToUserPerformUserFilter();
     })
 
 

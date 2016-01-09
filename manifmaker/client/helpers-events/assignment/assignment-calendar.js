@@ -190,7 +190,7 @@ Template.assignmentCalendar.helpers({
 
 var peopleNeedAssignedClick = 0;
 
-taskToUserPerformUserFilter = function(timeSlot) {
+taskToUserPerformUserFilter = function() {
     /**
      *
      * By now, userId, teamId and skills can't be combined.
@@ -203,6 +203,8 @@ taskToUserPerformUserFilter = function(timeSlot) {
      *
      */
         var peopleNeeded = SelectedPeopleNeed.get();
+    var timeSlot = SelectedTimeSlot.get();
+
     var askingSpecificNeedAndSkills = [];
     if (peopleNeeded.userId) { //prior above teamId an skills
         askingSpecificNeedAndSkills.push({
@@ -297,7 +299,7 @@ Template.assignmentCalendar.events({
                 if (peopleNeedAssignedClick == 1) {
                     console.info("click on peopleNeed.assigned : double click to perform remove assignment");
                 } else {
-                    console.info("dblclick on peopleNeed.assigned : TODO remove assignment");
+                    console.info("dblclick on peopleNeed.assigned");
 
                     taskToUserPerformUserFilterRemoveAssignment();
                 }
@@ -306,10 +308,6 @@ Template.assignmentCalendar.events({
         }
 
     },
-
-    //"hover .creneau": function () {
-    //    selectedTimeSlot = this;
-    //},
 
     //taskToUser (we click on a complete task time slot)
     "click .creneau": function () {
@@ -322,14 +320,9 @@ Template.assignmentCalendar.events({
                 return;
                 break;
             case AssignmentType.TASKTOUSER: //only display users that have at least one availability matching the selected time slot
-                selectedTimeSlot = this;
+                SelectedTimeSlot.set(this);
 
-                //Template.parentData() doesn't work so we use a trick to retrieve taskId
-                var task = Tasks.findOne({_id: selectedTimeSlot.taskId});
-                var timeSlot = TimeSlotService.getTimeSlot(task, selectedTimeSlot._id);
-
-                taskToUserPerformUserFilter(timeSlot);
-
+                taskToUserPerformUserFilter();
                 break;
         }
     },
