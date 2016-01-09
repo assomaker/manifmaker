@@ -62,7 +62,15 @@ Template.assignmentMenu.helpers({
             selectedTaskBreadCrumb = SelectedTaskBreadCrumb.get(),
             selectedDate = SelectedDate.get(),
             selectedTimeSlot = SelectedTimeSlot.get(),
+            isUnassignment = IsUnassignment.get(),
             result = [];
+
+        if(isUnassignment){
+            result.push({
+                label: "! Remove assignment !",
+                url: ""
+            });
+        }
 
         if (currentAssignmentType === AssignmentType.USERTOTASK) {
             if (selectedUser === null) {
@@ -127,7 +135,7 @@ Template.assignmentMenu.helpers({
 
                 if (selectedTimeSlot === null) {//TODO pas top
                     result.push({
-                        label: "Select one of the time slot [and a people need]",
+                        label: "Select one of the time slot and a people need",
                         url: ""
                     });
                 } else {
@@ -140,10 +148,16 @@ Template.assignmentMenu.helpers({
                         url: "/assignment/taskToUser/" + selectedTask._id + "/" + selectedTimeSlot._id
                     });
 
-                    result.push({
-                        label: "Select one of the available user",
-                        url: ""
-                    });
+                    if(isUnassignment)
+                        result.push({
+                            label: "Select one of the assigned user",
+                            url: ""
+                        });
+                    else
+                        result.push({
+                            label: "Select one of the available user",
+                            url: ""
+                        });
 
                 }
             }

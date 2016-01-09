@@ -204,6 +204,7 @@ taskToUserPerformUserFilter = function() {
      */
         var peopleNeeded = SelectedPeopleNeed.get();
     var timeSlot = SelectedTimeSlot.get();
+    IsUnassignment.set(false);
 
     var askingSpecificNeedAndSkills = [];
     if (peopleNeeded.userId) { //prior above teamId an skills
@@ -279,6 +280,7 @@ taskToUserPerformUserFilterRemoveAssignment = function() {
                 _id: assignment.userId
             };
 
+            SelectedTimeSlot.set(TimeSlotService.getTaskAndTimeSlotAndAssignedPeopleNeedByAssignedPeopleNeedId(peopleNeeded._id).timeSlot);
             UserFilter.set(newFilter);
             IsUnassignment.set(true);
             break;

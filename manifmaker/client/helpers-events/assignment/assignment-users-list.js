@@ -70,6 +70,7 @@ Template.assignmentUsersList.events({
                     IsUnassignment.set(false)
                 } else
                     Meteor.call("assignUserToTaskTimeSlot", SelectedPeopleNeed.get()._id, _id);
+                    SelectedTimeSlot.set(null);
                 break;
         }
 
