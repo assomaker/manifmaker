@@ -3,14 +3,41 @@ Template.assignmentTasksList.helpers({
         var filter = TaskFilter.get();
         var filterIndex = TaskIndexFilter.get();
         var teamFilter = TaskTeamFilter.get();
+        var displayAssignedTask = DisplayAssignedTask.get();
 
         var skillsFilter = TaskSkillsFilter.get();
         var neededTeamFilter = TaskNeededTeamFilter.get();
+        var skillsAndNeededTeamFilterForAssigned = {};
+
+        if(displayAssignedTask){
+            skillsAndNeededTeamFilterForAssigned = {
+                timeSlots: {
+                    $elemMatch: {
+                        peopleNeededAssigned: {
+                            $elemMatch: {
+                                //below attributes will be added just after as it
+                                //skills: skillsFilter,
+                                //teamId: neededTeamFilter
+                            }
+                        }
+                    }
+                }
+            };
+            if (skillsFilter)
+                skillsAndNeededTeamFilter.timeSlots.$elemMatch.peopleNeededAssigned.$elemMatch.skills = {$all: skillsFilter};
+            if (neededTeamFilter) {
+                if (neededTeamFilter === "noNeededTeam")
+                    skillsAndNeededTeamFilter.timeSlots.$elemMatch.peopleNeededAssigned.$elemMatch.teamId = null;
+                else
+                    skillsAndNeededTeamFilter.timeSlots.$elemMatch.peopleNeededAssigned.$elemMatch.teamId = neededTeamFilter;
+            }
+        }
         var skillsAndNeededTeamFilter = {
             timeSlots: {
                 $elemMatch: {
                     peopleNeeded: {
                         $elemMatch: {
+                            //below attributes will be added just after as it
                             //skills: skillsFilter,
                             //teamId: neededTeamFilter
                         }
@@ -30,13 +57,28 @@ Template.assignmentTasksList.helpers({
         var searchResult;
         var filterResult;
 
-        filterResult = Tasks.find({
-            $and: [
-                filter,
-                teamFilter,
-                skillsAndNeededTeamFilter
-            ]
-        }, {limit: 20}).fetch();
+        if(displayAssignedTask) {
+            filterResult = Tasks.find({
+                $and: [
+                    filter,
+                    teamFilter,
+                    {
+                        $or: [
+                            skillsAndNeededTeamFilter,
+                            skillsAndNeededTeamFilterForAssigned
+                        ]
+                    }
+                ]
+            }, {limit: 20}).fetch();
+        }else {
+            filterResult = Tasks.find({
+                $and: [
+                    filter,
+                    teamFilter,
+                    skillsAndNeededTeamFilter,
+                ]
+            }, {limit: 20}).fetch();
+        }
 
         searchResult = TasksIndex.search(filterIndex, {limit: 20}).fetch();
         return _.intersectionObjects(searchResult, filterResult);
@@ -268,5 +310,9 @@ Template.assignmentTasksList.events({
         } else {
             TaskSkillsFilter.set(_ids);
         }
+    },
+
+    "change #display-assigned-task-checkbox": function(event){
+        DisplayAssignedTask.set($($(event.target)[0]).is(':checked'));
     }
 });
