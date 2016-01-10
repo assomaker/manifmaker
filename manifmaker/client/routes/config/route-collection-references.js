@@ -1,36 +1,5 @@
-var references = [
-    {
-        PLURAL_REFERENCE_URL: "places",
-        REFERENCE_URL: "place",
-        REFERENCE_COLLECTION_NAME: "Places",
-        REFERENCE_MONGO_COLLECTION_NAME: "places",
-        REFERENCE_LABEL: "Place",
-    },
-    {
-        PLURAL_REFERENCE_URL: "teams",
-        REFERENCE_URL: "team",
-        REFERENCE_COLLECTION_NAME: "Teams",
-        REFERENCE_MONGO_COLLECTION_NAME: "teams",
-        REFERENCE_LABEL: "Team",
-    },
-    {
-        PLURAL_REFERENCE_URL: "skills",
-        REFERENCE_URL: "skill",
-        REFERENCE_COLLECTION_NAME: "Skills",
-        REFERENCE_MONGO_COLLECTION_NAME: "skills",
-        REFERENCE_LABEL: "Skill",
-    },
-    {
-        PLURAL_REFERENCE_URL: "assignment-terms",
-        REFERENCE_URL: "assignment-term",
-        REFERENCE_COLLECTION_NAME: "AssignmentTerms",
-        REFERENCE_MONGO_COLLECTION_NAME: "assignment-terms",
-        REFERENCE_LABEL: "Assignment Term",
-    }
-];
 
-
-_.each(references, function (referenceOptions) {
+_.each(Schemas.references.options, function (referenceOptions) {
     var PLURAL_REFERENCE_URL = referenceOptions.PLURAL_REFERENCE_URL;
     var REFERENCE_URL = referenceOptions.REFERENCE_URL;
     var REFERENCE_COLLECTION_NAME = referenceOptions.REFERENCE_COLLECTION_NAME;

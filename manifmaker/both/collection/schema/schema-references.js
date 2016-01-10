@@ -1,6 +1,14 @@
 
 Schemas.references = {};
+Schemas.references.options = {};
 
+Schemas.references.options.Teams = {
+    PLURAL_REFERENCE_URL: "teams",
+    REFERENCE_URL: "team",
+    REFERENCE_COLLECTION_NAME: "Teams",
+    REFERENCE_MONGO_COLLECTION_NAME: "teams",
+    REFERENCE_LABEL: "Team",
+};
 Schemas.references.Teams = new SimpleSchema({
     name: {
         type: String,
@@ -11,6 +19,13 @@ Schemas.references.Teams = new SimpleSchema({
 Teams = new Mongo.Collection("teams");
 Teams.attachSchema(Schemas.references.Teams);
 
+Schemas.references.options.Places = {
+    PLURAL_REFERENCE_URL: "places",
+    REFERENCE_URL: "place",
+    REFERENCE_COLLECTION_NAME: "Places",
+    REFERENCE_MONGO_COLLECTION_NAME: "places",
+    REFERENCE_LABEL: "Place",
+};
 Schemas.references.Places = new SimpleSchema({
     name: {
         type: String,
@@ -31,6 +46,13 @@ Schemas.references.Places = new SimpleSchema({
 Places = new Mongo.Collection("places");
 Places.attachSchema(Schemas.references.Places);
 
+Schemas.references.options.Skills = {
+    PLURAL_REFERENCE_URL: "skills",
+    REFERENCE_URL: "skill",
+    REFERENCE_COLLECTION_NAME: "Skills",
+    REFERENCE_MONGO_COLLECTION_NAME: "skills",
+    REFERENCE_LABEL: "Skill",
+};
 Schemas.references.Skills = new SimpleSchema({
     key: {
         type: String,
@@ -59,6 +81,13 @@ Skills = new Mongo.Collection("skills");
 Skills.attachSchema(Schemas.references.Skills);
 
 //TODO les assignments terms ne peuvent pas se chevaucher
+Schemas.references.options.AssignmentTerms = {
+    PLURAL_REFERENCE_URL: "assignment-terms",
+    REFERENCE_URL: "assignment-term",
+    REFERENCE_COLLECTION_NAME: "AssignmentTerms",
+    REFERENCE_MONGO_COLLECTION_NAME: "assignment-terms",
+    REFERENCE_LABEL: "Assignment Term",
+};
 Schemas.references.AssignmentTerms = new SimpleSchema({
     name: {
         type: String,
