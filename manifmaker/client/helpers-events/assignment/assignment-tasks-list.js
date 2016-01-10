@@ -4,12 +4,13 @@ Template.assignmentTasksList.helpers({
         var filterIndex = TaskIndexFilter.get();
         var teamFilter = TaskTeamFilter.get();
         var displayAssignedTask = DisplayAssignedTask.get();
+        var assignmentType = CurrentAssignmentType.get();
 
         var skillsFilter = TaskSkillsFilter.get();
         var neededTeamFilter = TaskNeededTeamFilter.get();
         var skillsAndNeededTeamFilterForAssigned = {};
 
-        if(displayAssignedTask){
+        if(displayAssignedTask && assignmentType === AssignmentType.TASKTOUSER){
             skillsAndNeededTeamFilterForAssigned = {
                 timeSlots: {
                     $elemMatch: {
@@ -57,7 +58,7 @@ Template.assignmentTasksList.helpers({
         var searchResult;
         var filterResult;
 
-        if(displayAssignedTask) {
+        if(displayAssignedTask && assignmentType === AssignmentType.TASKTOUSER) {
             filterResult = Tasks.find({
                 $and: [
                     filter,

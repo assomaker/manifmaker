@@ -34,6 +34,8 @@ AssignmentController = RouteController.extend({
             AssignmentServiceClient.initAssignmentSkillsFilter();
             AssignmentServiceClient.initAssignmentPopover();
 
+            AssignmentServiceClient.disableDisplayAssignedCheckbox();
+
         }, 200);
     }
 });

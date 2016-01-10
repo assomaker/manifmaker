@@ -108,5 +108,26 @@ AssignmentServiceClient =
                 AssignmentService.taskToUserPerformUserFilter();
             });
         }
+
+        static disableDisplayAssignedCheckbox(){
+            var currentAssignmentType = CurrentAssignmentType.get();
+            var checkbox = $("#display-assigned-task-checkbox");
+            var label = $("#display-assigned-task-checkbox-label");
+            switch (currentAssignmentType) {
+                case AssignmentType.USERTOTASK:
+                    checkbox.attr("disabled", true);
+                    label.css("opacity",0.3);
+                    break;
+                case AssignmentType.TASKTOUSER:
+                    checkbox.removeAttr("disabled");
+                    label.css("opacity",1);
+                    break;
+                case AssignmentType.ALL:
+                    checkbox.removeAttr("disabled");
+                    label.css("opacity",1);
+                    break;
+            }
+
+        }
     }
 
