@@ -1,24 +1,37 @@
-Schemas.Teams = new SimpleSchema({
+
+Schemas.references = {};
+
+Schemas.references.Teams = new SimpleSchema({
     name: {
         type: String,
         label: "Team Name",
         max: 100
-    },
+    }
 });
 Teams = new Mongo.Collection("teams");
-Teams.attachSchema(Schemas.Teams);
+Teams.attachSchema(Schemas.references.Teams);
 
-Schemas.Places = new SimpleSchema({
+Schemas.references.Places = new SimpleSchema({
     name: {
         type: String,
         label: "Place Name",
         max: 100
+    },
+    type: {  //TODO pas possible d'etre saisie par le user
+        type: String,
+        label: "Places type",
+        defaultValue: "Places",
+    },
+    baseUrl: { //TODO pas possible d'etre saisie par le user
+        type: String,
+        label: "Places base URL",
+        defaultValue: "place",
     }
 });
 Places = new Mongo.Collection("places");
-Places.attachSchema(Schemas.Places);
+Places.attachSchema(Schemas.references.Places);
 
-Schemas.Skills = new SimpleSchema({
+Schemas.references.Skills = new SimpleSchema({
     key: {
         type: String,
         label: "Skill key",
@@ -30,13 +43,23 @@ Schemas.Skills = new SimpleSchema({
         type: String,
         label: "Skill Name",
         max: 100
+    },
+    type: {  //TODO pas possible d'etre saisie par le user
+        type: String,
+        label: "Skills type",
+        defaultValue: "Skills"
+    },
+    baseUrl: { //TODO pas possible d'etre saisie par le user
+        type: String,
+        label: "Skills base URL",
+        defaultValue: "skill"
     }
 });
 Skills = new Mongo.Collection("skills");
-Skills.attachSchema(Schemas.Skills);
+Skills.attachSchema(Schemas.references.Skills);
 
 //TODO les assignments terms ne peuvent pas se chevaucher
-Schemas.AssignmentTerms = new SimpleSchema({
+Schemas.references.AssignmentTerms = new SimpleSchema({
     name: {
         type: String,
         label: "Assignment terms Name",
@@ -65,8 +88,18 @@ Schemas.AssignmentTerms = new SimpleSchema({
                 return "endBeforeStart";
             }
         }
+    },
+    type: {  //TODO pas possible d'etre saisie par le user
+        type: String,
+        label: "Assignment terms type",
+        defaultValue: "AssignmentTerms"
+    },
+    baseUrl: { //TODO pas possible d'etre saisie par le user
+        type: String,
+        label: "Assignment terms base URL",
+        defaultValue: "assignment-term"
     }
 });
 AssignmentTerms = new Mongo.Collection("assignment-terms");
-AssignmentTerms.attachSchema(Schemas.AssignmentTerms);
+AssignmentTerms.attachSchema(Schemas.references.AssignmentTerms);
 

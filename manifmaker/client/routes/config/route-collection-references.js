@@ -5,7 +5,6 @@ var references = [
         REFERENCE_COLLECTION_NAME: "Places",
         REFERENCE_MONGO_COLLECTION_NAME: "places",
         REFERENCE_LABEL: "Place",
-        TEMPLATE_ROW: "placeReferenceListRow"
     },
     {
         PLURAL_REFERENCE_URL: "teams",
@@ -13,7 +12,6 @@ var references = [
         REFERENCE_COLLECTION_NAME: "Teams",
         REFERENCE_MONGO_COLLECTION_NAME: "teams",
         REFERENCE_LABEL: "Team",
-        TEMPLATE_ROW: "teamReferenceListRow",
     },
     {
         PLURAL_REFERENCE_URL: "skills",
@@ -21,7 +19,6 @@ var references = [
         REFERENCE_COLLECTION_NAME: "Skills",
         REFERENCE_MONGO_COLLECTION_NAME: "skills",
         REFERENCE_LABEL: "Skill",
-        TEMPLATE_ROW: "skillReferenceListRow"
     },
     {
         PLURAL_REFERENCE_URL: "assignment-terms",
@@ -29,7 +26,6 @@ var references = [
         REFERENCE_COLLECTION_NAME: "AssignmentTerms",
         REFERENCE_MONGO_COLLECTION_NAME: "assignment-terms",
         REFERENCE_LABEL: "Assignment Term",
-        TEMPLATE_ROW: "assignmentTermReferenceListRow"
     }
 ];
 
@@ -38,18 +34,45 @@ _.each(references, function (referenceOptions) {
     var PLURAL_REFERENCE_URL = referenceOptions.PLURAL_REFERENCE_URL;
     var REFERENCE_URL = referenceOptions.REFERENCE_URL;
     var REFERENCE_COLLECTION_NAME = referenceOptions.REFERENCE_COLLECTION_NAME;
-    var TEMPLATE_ROW = referenceOptions.TEMPLATE_ROW;
 
+
+    //generate fields a partir de schema-references
+    var schemaFields = Schemas.references[REFERENCE_COLLECTION_NAME]._schema;
+    var reactiveTableFields = [];
+
+    _.each(schemaFields,(field, key) => {
+        if (key === "baseUrl" || key === "type") //pas moyen de faire mieux, SchemasCollection n'accepte aucun attribut en trop
+            return;
+        reactiveTableFields.push(
+            {
+                key: key,
+                label: field.label,
+                fnAdjustColumnSizing: true
+            }
+        );
+
+    });
+
+    //last column buttons
+    reactiveTableFields.push({
+        label: 'Actions',
+        tmpl: Template.collectionReferenceButtons,
+        fnAdjustColumnSizing: true
+    });
 
     //get (list)
     Router.route('/' + PLURAL_REFERENCE_URL, function () {
             this.render('referenceList', {
                 data: {
-                    document: AllCollections[REFERENCE_COLLECTION_NAME].find({}),
-                    PLURAL_REFERENCE_URL: referenceOptions.PLURAL_REFERENCE_URL,
-                    REFERENCE_URL: referenceOptions.REFERENCE_URL,
-                    REFERENCE_COLLECTION_NAME: referenceOptions.REFERENCE_COLLECTION_NAME,
-                    TEMPLATE_ROW: referenceOptions.TEMPLATE_ROW
+                    REFERENCE_URL: REFERENCE_URL,
+                    //new with datatable
+                    reactiveTableSettings: {
+                        collection: AllCollections[REFERENCE_COLLECTION_NAME],
+                        rowsPerPage: 5,
+                        showFilter: true,
+                        showRowCount: true,
+                        fields: reactiveTableFields
+                    }
                 },
                 to: 'mainContent'
             });
@@ -90,4 +113,11 @@ _.each(references, function (referenceOptions) {
     );
 
 });
+
+
+Template.collectionReferenceButtons.helpers({
+    pouet: function(){
+        console.log(arguments,this);
+    }
+})
 

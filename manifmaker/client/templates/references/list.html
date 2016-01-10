@@ -1,30 +1,13 @@
 <template name="referenceList">
-    {{#each document}}
-        <li>
-            {{> UI.dynamic template=../TEMPLATE_ROW}}
-        <a href="/{{../REFERENCE_URL}}/{{_id}}">Update {{REFERENCE_LABEL}}</a>
-        <a href="/{{../REFERENCE_URL}}/{{_id}}/delete">Delete {{REFERENCE_LABEL}}</a>
-        </li>
-    {{/each}}
+
+    {{> reactiveTable settings=reactiveTableSettings }}
+
     <a href="/{{REFERENCE_URL}}">Create a new {{REFERENCE_LABEL}}</a>
 </template>
 
 
-<template name="placeReferenceListRow">
-    {{name}}
+<template name="collectionReferenceButtons">
+    <a class="btn btn-primary"  href="/{{baseUrl}}/{{_id}}">Update</a>
+    {{#quickRemoveButton class="btn btn-default" collection=type  _id=this._id}}Delete{{/quickRemoveButton}}
 </template>
 
-
-<template name="teamReferenceListRow">
-    {{name}}
-</template>
-
-
-<template name="skillReferenceListRow">
-    {{key}} - {{label}}
-</template>
-
-
-<template name="assignmentTermReferenceListRow">
-    {{start}} to {{end}}
-</template>
