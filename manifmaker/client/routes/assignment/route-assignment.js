@@ -6,6 +6,14 @@ AssignmentController = RouteController.extend({
             this.render('AssignmentHome', {to: 'mainContent'});
             this.render("assignmentMenu", {to: "topNavBar"})
             assignmentCalendarIsRendered = true;
+
+
+
+
+
+
+
+
         }
 
         this.next();
@@ -24,6 +32,8 @@ AssignmentController = RouteController.extend({
         //trick to perform the following on another 'thread' which has access to DOM
         setTimeout(function () {
             AssignmentServiceClient.initAssignmentSkillsFilter();
+            AssignmentServiceClient.initAssignmentPopover();
+
         }, 200);
     }
 });
