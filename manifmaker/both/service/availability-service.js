@@ -109,10 +109,10 @@ AvailabilityService =
             //if possible
 
             //remove old availability(ies)
-            if (previousAvailabilityIndex) {
+            if (typeof previousAvailabilityIndex !== "undefined") {
                 previousAvailability = availabilities.splice(previousAvailabilityIndex, 1)[0];
             }
-            if (nextAvailabilityIndex) {
+            if (typeof nextAvailabilityIndex !== "undefined") {
                 nextAvailability = availabilities.splice(nextAvailabilityIndex, 1)[0];
             }
 
@@ -125,10 +125,12 @@ AvailabilityService =
                 newAvailability.start = start;
             }
             if (nextAvailability) {
-                nextAvailability.end = nextAvailability.end;
+                newAvailability.end = nextAvailability.end;
             } else {
                 newAvailability.end = end;
             }
+
+            availabilities.push(newAvailability);
 
             Users.update({_id: user._id}, {$set: {availabilities: availabilities}});
 
