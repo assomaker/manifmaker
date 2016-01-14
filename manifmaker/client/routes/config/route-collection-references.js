@@ -1,4 +1,26 @@
 
+
+
+//get (list)
+Router.route('/conf-maker', function () {
+        this.render('confMaker', {
+            data: {
+                REFERENCE_URL: REFERENCE_URL,
+                //new with datatable
+                reactiveTableSettings: {
+                    collection: AllCollections[REFERENCE_COLLECTION_NAME],
+                    rowsPerPage: 5,
+                    showFilter: true,
+                    showRowCount: true,
+                    fields: reactiveTableFields
+                }
+            },
+            to: 'mainContent'
+        });
+    },
+    {name: 'confMaker'}
+);
+
 _.each(Schemas.references.options, function (referenceOptions) {
     var PLURAL_REFERENCE_URL = referenceOptions.PLURAL_REFERENCE_URL;
     var REFERENCE_URL = referenceOptions.REFERENCE_URL;

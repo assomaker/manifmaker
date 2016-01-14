@@ -1,4 +1,15 @@
+/**
+ * @summary Meteor methods
+ * @namespace MeteorMethods
+ */
 Meteor.methods({
+
+    /**
+     * @summary Constructor for a Collection
+     * @locus Anywhere
+     * @namespace MeteorMethods
+     * @name removeAssignUserToTaskTimeSlot
+     */
     removeAssignUserToTaskTimeSlot: function (peopleNeedId, userId,  taskId = null, timeSlotId = null) {
         console.info("removeAssignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslotId", timeSlotId, "with people need", peopleNeedId);
 
