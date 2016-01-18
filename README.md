@@ -24,3 +24,11 @@ Add your specific template to each of the files in /client/templates/references/
 
 
 and add your new Collection to publish/subscribe policy
+
+
+
+file watchers
+======
+https://github.com/thomasfl/filewatcher
+
+filewatcher '**/*.js' 'echo buidling docs; meteor-jsdoc build'

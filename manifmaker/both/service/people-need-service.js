@@ -1,6 +1,14 @@
 PeopleNeedService =
     class PeopleNeedService {
 
+        /**
+         * @memberOf PeopleNeedService
+         * @summary For a give timeSlot, user peopleNeedHunter._id to get the index of the people need.
+         * @locus Anywhere
+         * @param {timeSlot} timeSlot
+         * @param {peopleNeed} peopleNeedHunter
+         * @returns {peopleNeed|null}
+         */
         static getPeopleNeedIndex(timeSlot, peopleNeedHunter) {
             var found;
             timeSlot.peopleNeeded.forEach(function (peopleNeed, index) {
@@ -13,6 +21,14 @@ PeopleNeedService =
 
         }
 
+        /**
+         * @memberOf PeopleNeedService
+         * @summary Find people need and time slot id for a given task by people need id.
+         * @locus Anywhere
+         * @param {MongoId} peopleNeedId
+         * @param {Task} task
+         * @returns {{timeSlotId: {MongoId}, peopleNeed: {PeopleNeed}}}
+         */
         static getPeopleNeedByIdAndTask(peopleNeedId,task) {
             var found;
             var timeSlotIdFound;
@@ -36,6 +52,14 @@ PeopleNeedService =
 
         }
 
+        /**
+         * @memberOf PeopleNeedService
+         * @summary Find people need assigned and time slot id for a given task by people need id.
+         * @locus Anywhere
+         * @param {MongoId} peopleNeedId
+         * @param {Task} task
+         * @returns {{timeSlotId: {MongoId}, peopleNeed: {PeopleNeed}}}
+         */
         static getAssignedPeopleNeedByIdAndTask(peopleNeedId,task) {
             var found;
             var timeSlotIdFound;
@@ -60,6 +84,14 @@ PeopleNeedService =
         }
 
 
+        /**
+         * @memberOf PeopleNeedService
+         * @summary For a given timeSlot, user peopleNeedHunter._id to get the people need.
+         * @locus Anywhere
+         * @param {timeSlot} timeSlot
+         * @param {peopleNeed} peopleNeedHunter
+         * @returns {peopleNeed|null}
+         */
         static getAssignedPeopleNeedIndex(timeSlot, peopleNeedHunter) {
             var found;
             timeSlot.peopleNeededAssigned.forEach(function (peopleNeed, index) {
@@ -73,6 +105,16 @@ PeopleNeedService =
         }
 
 
+        /**
+         * @memberOf PeopleNeedService
+         * @summary Move people need from task's peopleNeeded to task's peopleNeededAssigned
+         * @locus Anywhere
+         * @param {timeSlot} timeSlot
+         * @param {Task} task
+         * @param {TimeSlot} timeSlot
+         * @param {PeopleNeed} peopleNeed
+         * @param {MongoId} userId
+         */
         static removePeopleNeed(task, timeSlot, peopleNeed, userId) {
             console.info("PeopleNeedService.removePeopleNeed for task", task, "when", timeSlot, "and need", peopleNeed);
             //we have the task
@@ -100,6 +142,17 @@ PeopleNeedService =
 
         }
 
+        /**
+         * @memberOf PeopleNeedService
+         * @summary Check if people need match user (userId or teamId and/or skills). True is user match people need.
+         * @locus Anywhere
+         * @param {timeSlot} timeSlot
+         * @param {Task} task
+         * @param {TimeSlot} timeSlot
+         * @param {PeopleNeed} peopleNeed
+         * @param {User} user
+         * @return {boolean}
+         */
         static checkPeopleNeedForUser(task, timeSlot, peopleNeed, user) {
             console.info("PeopleNeedService.checkPeopleNeed for task", task, "when", timeSlot, "and need", peopleNeed, "for user", user);
 
@@ -127,6 +180,15 @@ PeopleNeedService =
             return userHasAllSkills;
         }
 
+        /**
+         * @memberOf PeopleNeedService
+         * @summary Find people need by _id from time slot
+         * @locus Anywhere
+         * @param {timeSlot} timeSlot
+         * @param {TimeSlot} timeSlot
+         * @param {MongoId} peopleNeed
+         * @return {PeopleNeed}
+         */
         static getPeopleNeedById(timeSlot, _id) {
             var found;
             timeSlot.peopleNeeded.forEach(function (peopleNeed, index) {
@@ -138,6 +200,15 @@ PeopleNeedService =
             return found;
         }
 
+        /**
+         * @memberOf PeopleNeedService
+         * @summary Move back people need from task's peopleNeededAssigned to task's peopleNeeded
+         * @locus Anywhere
+         * @param {Task} task
+         * @param {timeSlot} timeSlot
+         * @param {PeopleNeed} peopleNeed
+         * @param {MongoId} userId
+         */
         static restorePeopleNeed(task, timeSlot, peopleNeed, userId) {
             console.info("PeopleNeedService.restorePeopleNeed for task", task, "when", timeSlot, "and need", peopleNeed);
             //we have the task

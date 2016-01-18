@@ -1,6 +1,14 @@
 AvailabilityService =
     class AvailabilityService {
-
+        /**
+         * @memberOf AvailabilityService
+         * @summary For a giver user get availability which start at least before param start and end at most after end param.
+         * @locus Anywhere
+         * @param {User} user
+         * @param {Date}start
+         * @param {Date} end
+         * @returns {availability|null}
+         */
         static getSurroundingAvailability(user, start, end) {
             console.info("AvailabilityService.getAvailability start:", start, "end", end, "for user", user);
             var found;
@@ -21,6 +29,15 @@ AvailabilityService =
             return found;
         }
 
+        /**
+         * @memberOf AvailabilityService
+         * @summary For a giver user get availability index which start at least before param start and end at most after end param.
+         * @locus Anywhere
+         * @param {User} user
+         * @param {Date}start
+         * @param {Date} end
+         * @returns {availabilityId|null}
+         */
         static getIndexOfSurroundingAvailability(user, start, end) {
             console.info("AvailabilityService.getAvailability start:", start, "end", end, "for user", user);
             var found;
@@ -41,6 +58,14 @@ AvailabilityService =
             return found;
         }
 
+        /**
+         * @memberOf AvailabilityService
+         * @summary For a giver user splice and merge availabilities in order to make him unavailable between start and end params.
+         * @locus Anywhere
+         * @param {User} user
+         * @param {Date}start
+         * @param {Date} end
+         */
         static removeAvailabilities(user, start, end) {
             console.info("AvailabilityService.splitAvailabilities for user", user, " from", start, "to", end);
             var availabilities = user.availabilities;
@@ -64,6 +89,14 @@ AvailabilityService =
 
         }
 
+        /**
+         * @memberOf AvailabilityService
+         * @summary Read the name...
+         * @locus Anywhere
+         * @param {User} user
+         * @param {Date}start
+         * @returns {availability|null}
+         */
         static getIndexOfAvailabilityWhichEndWhenParamStart(user, start) {
             console.info("AvailabilityService.getIndexOfAvailabilityWhichEndWhenParamStart start:", start, "for user", user);
             var found;
@@ -79,6 +112,14 @@ AvailabilityService =
             return found;
         }
 
+        /**
+         * @memberOf AvailabilityService
+         * @summary Read the name...
+         * @locus Anywhere
+         * @param {User} user
+         * @param {Date}start
+         * @returns {availabilityId|null}
+         */
         static getIndexOfAvailabilityWhichStartWhenParamEnd(user, end) {
             console.info("AvailabilityService.getIndexOfAvailabilityWhichStartWhenParamEnd end:", end, "for user", user);
             var found;
@@ -94,6 +135,14 @@ AvailabilityService =
             return found;
         }
 
+        /**
+         * @memberOf AvailabilityService
+         * @summary For a giver user add and merge availabilities in order to make him available between start and end params.
+         * @locus Anywhere
+         * @param {User} user
+         * @param {Date}start
+         * @param {Date} end
+         */
         static restoreAvailabilities(user, start, end) {
             console.info("AvailabilityService.restoreAvailabilities for user", user, " from", start, "to", end);
             var availabilities = user.availabilities;
@@ -136,10 +185,27 @@ AvailabilityService =
 
         }
 
+        /**
+         * @memberOf AvailabilityService
+         * @summary Proxy for TimeSlotService.getTimeSlotByStart
+         * @locus Anywhere
+         * @param {Array<Availability>} availabilities
+         * @param {Date}start
+         * @return {timeSlot|null}
+         */
         static getAvailabilityByStart(availabilities, start) {
             return TimeSlotService.getTimeSlotByStart(availabilities, start);
         }
 
+        /**
+         * @memberOf AvailabilityService
+         * @summary Return true if user is available between start and end params.
+         * @locus Anywhere
+         * @param {Array<Availability>} availabilities
+         * @param {Date}start
+         * @param {Date} end
+         * @return {boolean}
+         */
         static checkUserAvailabilty(user, start, end) {
             console.info("AvailabilityService.checkUserAvailabilty for user", user, " from", start, "to", end);
             var availabilities = user.availabilities;
