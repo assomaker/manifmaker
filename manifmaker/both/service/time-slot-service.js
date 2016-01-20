@@ -50,8 +50,8 @@ TimeSlotService =
          * @locus Anywhere
          * @param availabilitiesOrTimeSlotsOrAssignments {Array<Availability|TimeSlot|Assignment>}
          * @param start {Date}
-         * @param several {boolean = false}
-         * @returns {Array<?> or ? |*}
+         * @param several (default = false) {boolean}
+         * @returns {Array<TimeSlot> | TimeSlot  | null}
          */
         static getTimeSlotByStart(availabilitiesOrTimeSlotsOrAssignments, start, several = false) {
             if (several) {
@@ -108,7 +108,7 @@ TimeSlotService =
          * @summary Give a people need _id, looks over all Tasks to find and return people need, time slot and task
          * @locus Anywhere
          * @param peopleNeedId {MondoId}
-         * @returns {{timeSlot: <TimeSlot>, task: <Task>, peopleNeed: <PeopleNeed>}}
+         * @returns {{timeSlot: TimeSlot, task: Task, peopleNeed: PeopleNeed}}
          */
         static getTaskAndTimeSlotAndPeopleNeedByPeopleNeedId(peopleNeedId) {
             var timeSlotFound;
@@ -143,7 +143,7 @@ TimeSlotService =
          * @summary Give a people need assigned _id, looks over all Tasks to find and return people need assigned, time slot and task
          * @locus Anywhere
          * @param peopleNeedId {MondoId}
-         * @returns {{timeSlot: <TimeSlot>, task: <Task>, peopleNeed: <PeopleNeed>}}
+         * @returns {{timeSlot: TimeSlot, task: Task, peopleNeed: PeopleNeed}}
          */
         static getTaskAndTimeSlotAndAssignedPeopleNeedByAssignedPeopleNeedId(peopleNeedId) {
             var timeSlotFound;

@@ -16,8 +16,8 @@ Meteor.startup(function () {
 
 
     //  Assignments.before.insert( /*if we need to add user and task data to assignments*/);
-    Assignments.after.insert(ServerAssingnmentService.propagateAssignment);
-    Assignments.after.remove(ServerAssingnmentService.removeAssignment);
+    Assignments.after.insert(ServerAssignmentService.propagateAssignment);
+    Assignments.after.remove(ServerAssignmentService.removeAssignment);
 
     populateData();
 

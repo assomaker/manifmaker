@@ -88,18 +88,6 @@ Meteor.methods({
 
 
         return assignmentId;
-    },
-
-
-    /**
-     * @memberOf Meteor.call
-     * @locus anywhere
-     * @summary Populate data
-     */
-    populate: function () {
-        if (Meteor.isServer) {
-            populateData();
-        }
     }
 });
 
