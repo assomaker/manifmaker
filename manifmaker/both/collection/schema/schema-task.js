@@ -140,6 +140,31 @@ Schemas.TimeSlot = new SimpleSchema({
             if (new moment(this.value).isBefore(new moment(this.field(this.key.replace("end", "") + 'start').value))) {
                 return "endBeforeStart";
             }
+
+            var start = this.field(this.key.replace("end", "") + 'start').value;
+
+            var currentStart = new moment(start);
+            var currentEnd = new moment(this.value);
+            var currentId = this.field(this.key.replace("end", "") + '_id').value;
+
+            //check if timeSlot don't lap
+            var timeSlots = this.field("timeSlots").value;
+            var okGod = true;
+            console.info("timeSlots", timeSlots, okGod);
+            timeSlots.forEach(_.bind(function (timeSlot) {
+                if (!okGod || timeSlot._id === currentId)
+                    return;
+                console.info("timeSlot", timeSlot);
+
+
+                if (new moment(currentStart).isBetween(timeSlot.start, timeSlot.end) ||
+                    new moment(currentEnd).isBetween(timeSlot.start, timeSlot.end))
+                    okGod = false;
+
+            }, this));
+
+            if (!okGod)
+                return "timeSlotConflictDate";
         },
         autoform: {
             type: "datetime-local",
