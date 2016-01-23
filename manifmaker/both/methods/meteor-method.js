@@ -1,4 +1,14 @@
 Meteor.methods({
+    /**
+     * @memberOf Meteor.call
+     * @locus anywhere
+     * @summary Remove assignment for a user. Restore users' availabilities and restore task's people need to task's people need assigned.
+     * @param {MongoId} peopleNeedId
+     * @param {MongoId} userId
+     * @param {MongoId} taskId
+     * @param {MongoId} timeSlotId
+     * @returns {assignment}
+     */
     removeAssignUserToTaskTimeSlot: function (peopleNeedId, userId,  taskId = null, timeSlotId = null) {
         console.info("removeAssignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslotId", timeSlotId, "with people need", peopleNeedId);
 
@@ -30,7 +40,16 @@ Meteor.methods({
         return assignment;
     },
 
-
+    /**
+     * @memberOf Meteor.call
+     * @locus anywhere
+     * @summary Assign a specific people need to a user. Remove users' availabilities and move task's people need.
+     * @param {MongoId} peopleNeedId
+     * @param {MongoId} userId
+     * @param {MongoId} taskId
+     * @param {MongoId} timeSlotId
+     * @returns {MongoId} assignmentId
+     */
     assignUserToTaskTimeSlot: function (peopleNeedId, userId , taskId = null, timeSlotId = null) {
         console.info("assignUserToTaskTimeSlot to user", userId, "task", taskId, "timeslot", timeSlotId, "with peopleNeedId", peopleNeedId);
 
@@ -69,13 +88,6 @@ Meteor.methods({
 
 
         return assignmentId;
-    },
-
-
-    populate: function () {
-        if (Meteor.isServer) {
-            populateData();
-        }
     }
 });
 

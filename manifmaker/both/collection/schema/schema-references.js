@@ -16,6 +16,12 @@ Schemas.references.Teams = new SimpleSchema({
         max: 100
     }
 });
+/**
+ * @memberOf Models
+ * @summary Teams collection
+ * @locus Anywhere
+ * @instancename collection
+ */
 Teams = new Mongo.Collection("teams");
 Teams.attachSchema(Schemas.references.Teams);
 
@@ -43,6 +49,12 @@ Schemas.references.Places = new SimpleSchema({
         defaultValue: "place",
     }
 });
+/**
+ * @memberOf Models
+ * @summary Places collection
+ * @locus Anywhere
+ * @instancename collection
+ */
 Places = new Mongo.Collection("places");
 Places.attachSchema(Schemas.references.Places);
 
@@ -77,6 +89,12 @@ Schemas.references.Skills = new SimpleSchema({
         defaultValue: "skill"
     }
 });
+/**
+ * @memberOf Models
+ * @summary Skills collection
+ * @locus Anywhere
+ * @instancename collection
+ */
 Skills = new Mongo.Collection("skills");
 Skills.attachSchema(Schemas.references.Skills);
 
@@ -129,6 +147,12 @@ Schemas.references.AssignmentTerms = new SimpleSchema({
         defaultValue: "assignment-term"
     }
 });
+/**
+ * @memberOf Models
+ * @summary AssignmentTerms collection
+ * @locus Anywhere
+ * @instancename collection
+ */
 AssignmentTerms = new Mongo.Collection("assignment-terms");
 AssignmentTerms.attachSchema(Schemas.references.AssignmentTerms);
 

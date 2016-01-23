@@ -1,5 +1,15 @@
 TimeSlotService =
     class TimeSlotService {
+
+
+        /**
+         * @memberOf TimeSlotService
+         * @summary For a given task, get time slot by _id
+         * @locus Anywhere
+         * @param task
+         * @param timeSlotId
+         * @returns {TimeSlot|null}
+         */
         static getTimeSlot(task, timeSlotId) {
             if (typeof task !== "object")
                 task = Tasks.findOne(task);
@@ -13,6 +23,14 @@ TimeSlotService =
             return found;
         }
 
+        /**
+         * @memberOf TimeSlotService
+         * @summary For a given task, get time slot index by _id
+         * @locus Anywhere
+         * @param task
+         * @param timeSlotId
+         * @returns {MongoId|null}
+         */
         static getTimeSlotIndex(task, timeSlotId) {
             var found;
             var i = 0;
@@ -26,6 +44,15 @@ TimeSlotService =
             return found;
         }
 
+        /**
+         * @memberOf TimeSlotService
+         * @summary Get one (several = false) or an array (several = true) of all item of availabilitiesOrTimeSlotsOrAssignments that start date is the same as start param
+         * @locus Anywhere
+         * @param availabilitiesOrTimeSlotsOrAssignments {Array<Availability|TimeSlot|Assignment>}
+         * @param start {Date}
+         * @param several (default = false) {boolean}
+         * @returns {Array<TimeSlot> | TimeSlot  | null}
+         */
         static getTimeSlotByStart(availabilitiesOrTimeSlotsOrAssignments, start, several = false) {
             if (several) {
                 var found = [];
@@ -47,28 +74,14 @@ TimeSlotService =
             return found;
         }
 
-        static getTimeSlotAssignedByStart(availabilitiesOrTimeSlotsOrAssignments, start, several = false) {
-            if (several) {
-                var found = [];
-            } else {
-                var found = null;
-            }
-            var startDate = new moment(new Date(start));
-            availabilitiesOrTimeSlotsOrAssignments.forEach(thing => {
-                //we only take the first matching timeSlot, le css ne sait aps encore gerer deux data timeSlot sur un meme calendar timeSlot
-                if (startDate.isSame(new moment(new Date(thing.start)))) {
-                    if (several) {
-                        found.push(thing)
-                    } else {
-                        found = thing;
-                        return false;
-                    }
-                }
-            });
-            return found;
-        }
 
-
+        /**
+         * @memberOf TimeSlotService
+         * @summary Get time slot by _id over all the Tasks (not very effective)
+         * @locus Anywhere
+         * @param timeSlotId {MondoId}
+         * @returns {{timeSlot: *, task: *}}
+         */
         static getTimeSlotById(timeSlotId) {
             var found;
             var taskFound;
@@ -90,6 +103,13 @@ TimeSlotService =
             };
         }
 
+        /**
+         * @memberOf TimeSlotService
+         * @summary Give a people need _id, looks over all Tasks to find and return people need, time slot and task
+         * @locus Anywhere
+         * @param peopleNeedId {MondoId}
+         * @returns {{timeSlot: TimeSlot, task: Task, peopleNeed: PeopleNeed}}
+         */
         static getTaskAndTimeSlotAndPeopleNeedByPeopleNeedId(peopleNeedId) {
             var timeSlotFound;
             var taskFound;
@@ -118,6 +138,13 @@ TimeSlotService =
             };
         }
 
+        /**
+         * @memberOf TimeSlotService
+         * @summary Give a people need assigned _id, looks over all Tasks to find and return people need assigned, time slot and task
+         * @locus Anywhere
+         * @param peopleNeedId {MondoId}
+         * @returns {{timeSlot: TimeSlot, task: Task, peopleNeed: PeopleNeed}}
+         */
         static getTaskAndTimeSlotAndAssignedPeopleNeedByAssignedPeopleNeedId(peopleNeedId) {
             var timeSlotFound;
             var taskFound;

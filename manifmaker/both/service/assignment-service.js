@@ -1,6 +1,14 @@
 AssignmentService =
     class AssignmentService {
 
+        /**
+         * @memberOf AssignmentService
+         * @summary Get time slot by _id from a task
+         * @locus Anywhere
+         * @param task
+         * @param timeSlotId
+         * @returns {timeSlot|null}
+         */
         static getTimeSlot(task, timeSlotId) {
             for (var timeSlot in task.timeSlots) {
                 if (timeSlot._id === timeSlotId) {
@@ -10,10 +18,29 @@ AssignmentService =
             return null;
         }
 
+        /**
+         * @memberOf AssignmentService
+         * @summary Proxy for TimeSlotService.getTimeSlotByStart
+         * @locus Anywhere
+         * @param assignment
+         * @param start
+         * @param several
+         * @returns {timeSlot|null}
+         */
         static getAssignmentByStart(assignment, start, several) {
             return TimeSlotService.getTimeSlotByStart(assignment, start, several);
         }
 
+        /**
+         * @memberOf AssignmentService
+         * @summary Filter user list in task to user mode only remove assignment only.
+         * Reactive Var :
+         *  - Get ReactiveVar SelectedPeopleNeed
+         *  - Set SelectedTimeSlot
+         *  - Set IsUnassignment
+         * @locus Anywhere
+         * @returns {timeSlot|null}
+         */
         static taskToUserPerformUserFilterRemoveAssignment() {
             var currentAssignmentType = CurrentAssignmentType.get();
 
@@ -40,6 +67,16 @@ AssignmentService =
             }
         }
 
+        /**
+         * @memberOf AssignmentService
+         * @summary Filter user list in task to user mode only.
+         * Reactive Var :
+         *  - Get ReactiveVar SelectedPeopleNeed
+         *  - Set SelectedTimeSlot
+         *  - Set IsUnassignment
+         * @locus Anywhere
+         * @returns {timeSlot|null}
+         */
         static taskToUserPerformUserFilter() {
             /**
              *
@@ -112,6 +149,15 @@ AssignmentService =
             UserFilter.set(newFilter);
         }
 
+        /**
+         * @memberOf AssignmentService
+         * @summary Read from popover to perform filter on user list in task to user mode only.
+         * Reactive Var :
+         *  - Set SelectedPeopleNeed
+         *  - Set SelectedTimeSlot
+         * @locus Anywhere
+         * @returns {timeSlot|null}
+         */
         static readSelectedPeopleNeedAndTimeSlotFromPopover(event, isAssigned) {
         var target = $(event.target);
 
