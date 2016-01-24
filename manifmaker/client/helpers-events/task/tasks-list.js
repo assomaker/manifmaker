@@ -48,16 +48,17 @@ Template.tasksList.helpers({
 });
 
 Template.validationStateForList.helpers({
-    lastComment: function () {
+    lastComment: function (attribute, type) {
+        console.log("!!"+type);
         var lastComment;
-        this.timeSlotValidation.comments.forEach(comment => {
+        this[type].comments.forEach(comment => {
             if (!lastComment)
                 lastComment = comment;
             if (new moment(comment.creationDate).isAfter(new moment(lastComment.creationDate))) {
                 lastComment = comment
             }
         });
-        return lastComment;
+        return lastComment[attribute];
     }
 });
 

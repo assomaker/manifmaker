@@ -5,6 +5,13 @@ ValidationState = {
     "READY": "READY"
 };
 
+DisplayedValidationState = {
+    "OPEN": "open",
+    "TOBEVALIDATED": "to be validated",
+    "REFUSED": "refused",
+    "READY": "ready"
+};
+
 ValidationStateUrl= {
     "open":"OPEN",
     "to-be-validated": "TOBEVALIDATED",

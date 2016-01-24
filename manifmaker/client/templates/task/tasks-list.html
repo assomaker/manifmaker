@@ -20,13 +20,13 @@
         Time slots are <b>open</b> for anything
     {{/if}}
     {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
-        Time slots has been <b>submitted</b> to validation by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+        Time slots has been <b>submitted</b> to validation by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "timeSlotValidation"}}"
     {{/if}}
     {{#if equals timeSlotValidation.currentState "REFUSED"}}
-        Time slots has been <b>refused</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+        Time slots has been <b>refused</b> by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "timeSlotValidation"}}"
     {{/if}}
     {{#if equals timeSlotValidation.currentState "READY"}}
-        Time slots has been <b>validated</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
+        Time slots has been <b>validated</b> by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
     {{/if}}
 
     <br>
@@ -35,13 +35,13 @@
         Access pass are <b>open</b> for anything
     {{/if}}
     {{#if equals accessPassValidation.currentState "TOBEVALIDATED"}}
-        Access pass has been <b>submitted</b> to validation by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+        Access pass has been <b>submitted</b> to validation by {{lastComment "author"  "accessPassValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "accessPassValidation"}}"
     {{/if}}
     {{#if equals accessPassValidation.currentState "REFUSED"}}
-        Access pass has been <b>refused</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+        Access pass has been <b>refused</b> by {{lastComment "author" "accessPassValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "accessPassValidation"}}"
     {{/if}}
     {{#if equals accessPassValidation.currentState "READY"}}
-        Access pass has been <b>validated</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
+        Access pass has been <b>validated</b> by {{lastComment "author" "accessPassValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
     {{/if}}
 
     <br>
@@ -50,13 +50,13 @@
         Equipments are <b>open</b> for anything
     {{/if}}
     {{#if equals equipmentValidation.currentState "TOBEVALIDATED"}}
-        Equipments has been <b>submitted</b> to validation by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+        Equipments has been <b>submitted</b> to validation by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "equipmentValidation"}}"
     {{/if}}
     {{#if equals equipmentValidation.currentState "REFUSED"}}
-        Equipments has been <b>refused</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+        Equipments has been <b>refused</b> by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "equipmentValidation"}}"
     {{/if}}
     {{#if equals equipmentValidation.currentState "READY"}}
-        Equipments has been <b>validated</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
+        Equipments has been <b>validated</b> by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
     {{/if}}
 
 </template>

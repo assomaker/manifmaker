@@ -10,7 +10,16 @@ Schemas.ValidationComment = new SimpleSchema({
     creationDate:{
         type: Date,
         label: "Comment creation date"
+    },
+    stateBefore:{
+        type: ValidationState,
+        label: "Before Validation State"
+    },
+    stateAfter:{
+        type: ValidationState,
+        label: "After Validation State"
     }
+
 });
 
 Schemas.Validation = new SimpleSchema({

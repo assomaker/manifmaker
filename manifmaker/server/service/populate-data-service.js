@@ -157,7 +157,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "good",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         },
@@ -168,7 +170,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "good",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         },
@@ -179,7 +183,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "good",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         }
@@ -209,7 +215,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "Dumbass, do you're fucking grammar",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         },
@@ -220,7 +228,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "Dumbass, do you're fucking grammar",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         },
@@ -231,7 +241,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "Dumbass, do you're fucking grammar",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         }
@@ -261,7 +273,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "send in validation",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         },
@@ -272,7 +286,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "send in validation",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         },
@@ -283,7 +299,9 @@ populateData = function () {
                 {
                     author: "Gerard",
                     content: "send in validation",
-                    creationDate: now
+                    creationDate: now,
+                    stateBefore: ValidationState.OPEN,
+                    stateAfter: ValidationState.OPEN,
                 }
             ]
         }

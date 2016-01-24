@@ -2,19 +2,21 @@ ValidationService =
     class ValidationService {
 
 
-        static updateValidation(taskId, validationStateAsked, validationType) {
+        static updateValidation(taskId, validationStateAsked, validationType, comment) {
             var task = Tasks.findOne(taskId);
             var validationState = task[validationType];
-            //TODO check workflow
 
             var now = new Date();
-            validationState.currentState = ValidationStateUrl[validationStateAsked];
-            validationState.lastUpdateDate = now;
             validationState.comments.push({
                 author: "Moi",
-                content: "!!!!!!!!!",
-                creationDate: now
+                content: comment,
+                creationDate: now,
+                stateBefore: validationState.currentState,
+                stateAfter: validationStateAsked
             });
+            validationState.currentState = ValidationStateUrl[validationStateAsked];
+            validationState.lastUpdateDate = now;
+
 
             switch (validationType){
                 case ValidationTypeUrl["time-slot"]:

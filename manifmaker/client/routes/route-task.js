@@ -69,7 +69,10 @@ Router.route('/task/:_id', function () {
 Router.route('/task/validation/:validationType/:_id/:state', function () {
         console.info("routing", "/task/validation/"+this.params.validationType+"/" + this.params._id + "/" + this.params.state);
 
-        ValidationService.updateValidation(this.params._id,this.params.state, ValidationTypeUrl[this.params.validationType]);
+        var comment = $("#"+this.params.validationType+"-validation-new-comment").val();
+        $("#"+this.params.validationType+"-validation-new-comment").val("");
+
+        ValidationService.updateValidation(this.params._id,this.params.state, ValidationTypeUrl[this.params.validationType],comment);
 
         this.redirect("/task/"+this.params._id);
 
