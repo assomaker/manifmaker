@@ -13,3 +13,53 @@
     <a class="btn btn-primary" href="/task/{{_id}}">Update</a>
     {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete{{/quickRemoveButton}}
 </template>
+
+<template name="validationStateForList">
+
+    {{#if equals timeSlotValidation.currentState "OPEN"}}
+        Time slots are <b>open</b> for anything
+    {{/if}}
+    {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
+        Time slots has been <b>submitted</b> to validation by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+    {{/if}}
+    {{#if equals timeSlotValidation.currentState "REFUSED"}}
+        Time slots has been <b>refused</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+    {{/if}}
+    {{#if equals timeSlotValidation.currentState "READY"}}
+        Time slots has been <b>validated</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
+    {{/if}}
+
+    <br>
+
+    {{#if equals accessPassValidation.currentState "OPEN"}}
+        Access pass are <b>open</b> for anything
+    {{/if}}
+    {{#if equals accessPassValidation.currentState "TOBEVALIDATED"}}
+        Access pass has been <b>submitted</b> to validation by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+    {{/if}}
+    {{#if equals accessPassValidation.currentState "REFUSED"}}
+        Access pass has been <b>refused</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+    {{/if}}
+    {{#if equals accessPassValidation.currentState "READY"}}
+        Access pass has been <b>validated</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
+    {{/if}}
+
+    <br>
+
+    {{#if equals equipmentValidation.currentState "OPEN"}}
+        Equipments are <b>open</b> for anything
+    {{/if}}
+    {{#if equals equipmentValidation.currentState "TOBEVALIDATED"}}
+        Equipments has been <b>submitted</b> to validation by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+    {{/if}}
+    {{#if equals equipmentValidation.currentState "REFUSED"}}
+        Equipments has been <b>refused</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment.content}}"
+    {{/if}}
+    {{#if equals equipmentValidation.currentState "READY"}}
+        Equipments has been <b>validated</b> by {{lastComment.author}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
+    {{/if}}
+
+</template>
+
+
+

@@ -1,4 +1,3 @@
-
 /**
  * @memberOf Models
  * @summary Enum assignment type
@@ -26,9 +25,11 @@ ASSIGNMENTREADYTEAM = "assignmentReadyTeam"; //team de tous les users et toutes 
  * @locus Anywhere
  */
 CalendarAccuracyEnum = {
-    "0.25" : 0.25,
-    "0.5" : 0.5,
+    "0.25": 0.25,
+    "0.5": 0.5,
     "1": 1,
     "2": 2,
     "4": 4
 };
+
+

@@ -16,6 +16,59 @@
 </template>
 
 <template name="updateTaskForm">
+
+    {{#if equals timeSlotValidation.currentState "OPEN"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/to-be-validated"><i class="material-icons left">schedule</i>Time slots validation : ask for validation</a>
+    {{/if}}
+    {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/refuse"><i class="material-icons left">schedule</i>Time slots validation : refuse</a>
+        <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/ready"><i class="material-icons left">schedule</i>Time slots validation : set ready to assignment</a>
+    {{/if}}
+    {{#if equals timeSlotValidation.currentState "REFUSED"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/to-be-validated"><i class="material-icons left">schedule</i>Time slots validation : ask for validation</a>
+    {{/if}}
+    {{#if equals timeSlotValidation.currentState "READY"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/refuse"><i class="material-icons left">schedule</i>Time slots validation : refuse</a>
+    {{/if}}
+
+
+    {{#if equals accessPassValidation.currentState "OPEN"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/access-pass/{{this._id}}/to-be-validated"><i class="material-icons left">cloud</i>Access pass validation : ask for validation</a>
+    {{/if}}
+    {{#if equals accessPassValidation.currentState "TOBEVALIDATED"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/access-pass/{{this._id}}/refuse"><i class="material-icons left">cloud</i>Access pass validation : refuse</a>
+        <a class="waves-effect waves-light btn-large" href="/task/validation/access-pass/{{this._id}}/ready"><i class="material-icons left">cloud</i>Access pass validation : close</a>
+    {{/if}}
+    {{#if equals accessPassValidation.currentState "REFUSED"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/access-pass/{{this._id}}/to-be-validated"><i class="material-icons left">cloud</i>Access pass validation : ask for validation</a>
+    {{/if}}
+    {{#if equals accessPassValidation.currentState "READY"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/access-pass/{{this._id}}/refuse"><i class="material-icons left">cloud</i>Access pass validation : refuse</a>
+    {{/if}}
+
+
+
+    {{#if equals equipmentValidation.currentState "OPEN"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/equipment/{{this._id}}/to-be-validated"><i class="material-icons left">settings</i>Equipments validation : ask for validation</a>
+    {{/if}}
+    {{#if equals equipmentValidation.currentState "TOBEVALIDATED"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/equipment/{{this._id}}/refuse"><i class="material-icons left">settings</i>Equipments validation : refuse</a>
+        <a class="waves-effect waves-light btn-large" href="/task/validation/equipment/{{this._id}}/ready"><i class="material-icons left">settings</i>Equipments validation : close</a>
+    {{/if}}
+    {{#if equals equipmentValidation.currentState "REFUSED"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/equipment/{{this._id}}/to-be-validated"><i class="material-icons left">settings</i>Equipments validation : ask for validation</a>
+    {{/if}}
+    {{#if equals equipmentValidation.currentState "READY"}}
+        <a class="waves-effect waves-light btn-large" href="/task/validation/equipment/{{this._id}}/refuse"><i class="material-icons left">settings</i>Equipments validation : refuse</a>
+    {{/if}}
+
+
+
+
+
+
+
+
     {{# autoForm collection="Tasks" doc=this id="updateTaskForm" type="update"}}
         <fieldset>
             <legend>Update Task {{this.name}}</legend>

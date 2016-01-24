@@ -277,6 +277,34 @@ Schemas.Tasks = new SimpleSchema({
         autoform: {
             type: "hidden",
         }
+    },
+    timeSlotValidation: {
+        type: Schemas.Validation,
+        label: "Task Time slots validation",
+        //defaultValue: Schemas.Validation,
+        optional: true,//TODO je ne sais pas si c'est une bonne idée de faire ca
+        autoform: {
+            type: "hidden",
+        }
+    },
+    accessPassValidation: {
+        type: Schemas.Validation,
+        label: "Task access pass validation",
+        //defaultValue: Schemas.Validation,
+        optional: true,//TODO je ne sais pas si c'est une bonne idée de faire ca
+        autoform: {
+            type: "hidden",
+        }
+    },
+    equipmentValidation: {
+        type: Schemas.Validation,
+        label: "Task equipments validation",
+        //defaultValue: Schemas.Validation,
+        optional: true,//TODO je ne sais pas si c'est une bonne idée de faire ca
+        autoform: {
+            type: "hidden",
+        }
     }
+
 });
 

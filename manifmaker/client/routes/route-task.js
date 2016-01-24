@@ -65,3 +65,24 @@ Router.route('/task/:_id', function () {
     {name: 'task.read'}
 );
 
+
+Router.route('/task/validation/:validationType/:_id/:state', function () {
+        console.info("routing", "/task/validation/"+this.params.validationType+"/" + this.params._id + "/" + this.params.state);
+
+        ValidationService.updateValidation(this.params._id,this.params.state, ValidationTypeUrl[this.params.validationType]);
+
+        this.redirect("/task/"+this.params._id);
+
+    },
+    {name: 'task.validation.timeSlot'}
+);
+
+
+
+
+
+
+
+
+
+

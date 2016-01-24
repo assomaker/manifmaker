@@ -36,9 +36,28 @@ Template.tasksList.helpers({
                     searchable: false, //TODO doesn't work (try with a teamId)
                     tmpl: Template.taskButtons,
                     fnAdjustColumnSizing: true
+                },
+                {
+                    label: 'Validation',
+                    searchable: false, //TODO doesn't work (try with a teamId)
+                    tmpl: Template.validationStateForList,
                 }
             ]
         }
+    }
+});
+
+Template.validationStateForList.helpers({
+    lastComment: function () {
+        var lastComment;
+        this.timeSlotValidation.comments.forEach(comment => {
+            if (!lastComment)
+                lastComment = comment;
+            if (new moment(comment.creationDate).isAfter(new moment(lastComment.creationDate))) {
+                lastComment = comment
+            }
+        });
+        return lastComment;
     }
 });
 

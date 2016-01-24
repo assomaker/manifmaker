@@ -105,6 +105,8 @@ populateData = function () {
         ]
     });
 
+    var now = new Date();
+    var aDayAgo = new moment().add("days",-1).toDate();
     //tasks
     var task1d = Tasks.insert({
         name: "task 1",
@@ -147,7 +149,40 @@ populateData = function () {
                     }
                 ],
             }
-        ]
+        ],
+        timeSlotValidation: {
+            currentState: ValidationState.READY,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "good",
+                    creationDate: now
+                }
+            ]
+        },
+        accessPassValidation: {
+            currentState: ValidationState.READY,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "good",
+                    creationDate: now
+                }
+            ]
+        },
+        equipmentValidation: {
+            currentState: ValidationState.READY,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "good",
+                    creationDate: now
+                }
+            ]
+        }
     });
     var task2d = Tasks.insert({
         name: "task 2",
@@ -166,7 +201,40 @@ populateData = function () {
                     }
                 ]
             }
-        ]
+        ],
+        timeSlotValidation: {
+            currentState: ValidationState.REFUSED,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "Dumbass, do you're fucking grammar",
+                    creationDate: now
+                }
+            ]
+        },
+        accessPassValidation: {
+            currentState: ValidationState.REFUSED,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "Dumbass, do you're fucking grammar",
+                    creationDate: now
+                }
+            ]
+        },
+        equipmentValidation: {
+            currentState: ValidationState.REFUSED,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "Dumbass, do you're fucking grammar",
+                    creationDate: now
+                }
+            ]
+        }
     });
     var task3d = Tasks.insert({
         name: "task 3",
@@ -185,7 +253,40 @@ populateData = function () {
                     }
                 ]
             }
-        ]
+        ],
+        timeSlotValidation: {
+            currentState: ValidationState.TOBEVALIDATED,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "send in validation",
+                    creationDate: now
+                }
+            ]
+        },
+        accessPassValidation: {
+            currentState: ValidationState.TOBEVALIDATED,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "send in validation",
+                    creationDate: now
+                }
+            ]
+        },
+        equipmentValidation: {
+            currentState: ValidationState.TOBEVALIDATED,
+            lastUpdateDate:now,
+            comments: [
+                {
+                    author: "Gerard",
+                    content: "send in validation",
+                    creationDate: now
+                }
+            ]
+        }
     });
     var task3d = Tasks.insert({
         name: "autre tache",
@@ -204,7 +305,23 @@ populateData = function () {
                     }
                 ]
             }
-        ]
+        ],
+        timeSlotValidation: {
+            currentState: ValidationState.OPEN,
+            lastUpdateDate:now,
+            comments: []
+        },
+        accessPassValidation: {
+            currentState: ValidationState.OPEN,
+            lastUpdateDate:now,
+            comments: []
+        },
+        equipmentValidation: {
+            currentState: ValidationState.OPEN,
+            lastUpdateDate:now,
+            comments: []
+        }
+
     });
 
 
