@@ -1,5 +1,12 @@
 AssignmentServiceClient =
     class AssignmentServiceClient {
+
+        /**
+         * @memberOf AssignmentServiceClient
+         * @summary On the assignment calendar, display more or less hours accuracy
+         * @locus client
+         * @param accuracy {CalendarAccuracy}
+         */
         static setCalendarAccuracy(accuracy) {
 
             _.each(AssignmentCalendarDisplayedHours.find().fetch(), function (doc) {
@@ -24,6 +31,12 @@ AssignmentServiceClient =
 
         }
 
+        /**
+         * @memberOf AssignmentServiceClient
+         * @summary On the assignment calendar, all the days covered by the given assignment term
+         * @locus client
+         * @param _idAssignmentTerms {AssignmentTerms}
+         */
         static setCalendarTerms(_idTerms) {
             _.each(AssignmentCalendarDisplayedDays.find().fetch(), function (doc) {
                 AssignmentCalendarDisplayedDays.remove(doc._id)
@@ -50,6 +63,11 @@ AssignmentServiceClient =
 
         }
 
+        /**
+         * @memberOf AssignmentServiceClient
+         * @summary Init Materialize multiselect HTML component on assignment page
+         * @locus client
+         */
         static initAssignmentSkillsFilter () {
             //init skills filter for assignment if we are on the assignment page
             $(document).ready(function () {
@@ -72,7 +90,11 @@ AssignmentServiceClient =
             });
         }
 
-
+        /**
+         * @memberOf AssignmentServiceClient
+         * @summary Init Materialize popover HTML component on assignment page
+         * @locus client
+         */
         static initAssignmentPopover() {
             var originalLeave = $.fn.popover.Constructor.prototype.leave;
             $.fn.popover.Constructor.prototype.leave = function (obj) {
@@ -109,6 +131,11 @@ AssignmentServiceClient =
             });
         }
 
+        /**
+         * @memberOf AssignmentServiceClient
+         * @summary Manage the task list checkbox "display assigned task" according to ReactiveVar CurrentAssignmentType
+         * @locus client
+         */
         static disableDisplayAssignedCheckbox(){
             var currentAssignmentType = CurrentAssignmentType.get();
             var checkbox = $("#display-assigned-task-checkbox");
