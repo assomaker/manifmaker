@@ -2,6 +2,15 @@ ValidationService =
     class ValidationService {
 
 
+        /**
+         * @memberOf ValidationService
+         * @summary Add a new comment and update validation status of a given task. Does't do any security check as we can basically reach every state from every state
+         * @locus Anywhere
+         * @param taskId
+         * @param validationStateAsked
+         * @param validationType
+         * @param comment 
+         */
         static updateValidation(taskId, validationStateAsked, validationType, comment) {
             var task = Tasks.findOne(taskId);
             var validationState = task[validationType];
