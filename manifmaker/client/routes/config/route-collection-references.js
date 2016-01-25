@@ -51,6 +51,12 @@ _.each(Schemas.references.options, function (referenceOptions) {
         fnAdjustColumnSizing: true
     });
 
+    /**
+     * @memberOf Route
+     * @summary Display References Collection list (with filter and search soon)
+     * @locus client
+     * @name  [collRefPluralUrl].list /[collRefPluralUrl]
+     */
     //get (list)
     Router.route('/' + PLURAL_REFERENCE_URL, function () {
             this.render('referenceList', {
@@ -71,6 +77,12 @@ _.each(Schemas.references.options, function (referenceOptions) {
         {name: REFERENCE_URL + '.list'}
     );
 
+    /**
+     * @memberOf Route
+     * @summary Display the create References Collection form
+     * @locus client
+     * @name  [collRefName].create /[collReflUrl]
+     */
 //post
     Router.route('/' + REFERENCE_URL, function () {
             this.render(REFERENCE_URL + '-insert', {to: 'mainContent'});
@@ -78,6 +90,12 @@ _.each(Schemas.references.options, function (referenceOptions) {
         {name: REFERENCE_URL + '.create'}
     );
 
+    /**
+     * @memberOf Route
+     * @summary Display the update References Collection form
+     * @locus client
+     * @name  [collRefName].update /[collReflUrl]/_id
+     */
 //put
     Router.route('/' + REFERENCE_URL + '/:_id', function () {
             var current = this.params._id;
@@ -94,21 +112,7 @@ _.each(Schemas.references.options, function (referenceOptions) {
         {name: REFERENCE_URL + '.update'}
     );
 
-//delete
-    Router.route('/' + REFERENCE_URL + '/:_id/delete', function () {
-            var current = this.params._id;
-            AllCollections[REFERENCE_COLLECTION_NAME].remove({_id: current});
-            this.redirect("/" + PLURAL_REFERENCE_URL);
-        },
-        {name: REFERENCE_URL + '.delete'}
-    );
-
 });
 
 
-Template.collectionReferenceButtons.helpers({
-    pouet: function(){
-        console.log(arguments,this);
-    }
-})
 

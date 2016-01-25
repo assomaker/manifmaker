@@ -1,3 +1,9 @@
+/**
+ * @memberOf Route
+ * @summary Display the task list with filter and search
+ * @locus client
+ * @name task.list  /tasks
+ */
 Router.route('/tasks', function () {
         console.info("routing", "/tasks");
         this.render('tasksList', {
@@ -36,6 +42,12 @@ Router.route('/tasks', function () {
     {name: 'task.list'}
 );
 
+/**
+ * @memberOf Route
+ * @summary Display the create task form without time slots and validation workflow
+ * @locus client
+ * @name task.create  /task
+ */
 Router.route('/task', function () {
         console.info("routing", "/task");
 
@@ -53,6 +65,13 @@ Router.route('/task', function () {
     {name: 'task.create'}
 );
 
+/**
+ * @memberOf Route
+ * @summary Display the task update form by it's MongoId
+ * @locus client
+ * @param taskId
+ * @name task.read  /task/:_id
+ */
 Router.route('/task/:_id', function () {
         console.info("routing", "/task/" + this.params._id);
         this.render('updateTaskForm', {
@@ -65,7 +84,15 @@ Router.route('/task/:_id', function () {
     {name: 'task.read'}
 );
 
-
+/**
+ * @memberOf Route
+ * @summary Update validation state for one the task part
+ * @locus client
+ * @param validationType
+ * @param taskId
+ * @param validationState
+ * @name task.validation.timeSlot  /task/validation/:validationType/:_id/:state
+ */
 Router.route('/task/validation/:validationType/:_id/:state', function () {
         console.info("routing", "/task/validation/"+this.params.validationType+"/" + this.params._id + "/" + this.params.state);
 

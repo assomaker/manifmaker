@@ -1,6 +1,24 @@
-
+/**
+ * @memberOf Route
+ * @summary References collections URL
+ *
+ * Collection Name => URL
+ *
+ * Teams => team
+ *
+ * Places => place
+ *
+ * Skills => skill
+ *
+ * AssignmentTerms => assignment-term
+ *
+ * @locus client
+ * @name Collection References
+ */
+var forDocOnly = {};
 Schemas.references = {};
 Schemas.references.options = {};
+
 
 Schemas.references.options.Teams = {
     PLURAL_REFERENCE_URL: "teams",

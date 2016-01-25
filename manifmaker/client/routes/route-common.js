@@ -32,7 +32,13 @@ Router.onAfterAction(function () {
     }
 );
 
-
+/**
+ * @memberOf Route
+ * @summary Homepage
+ * @locus client
+ * @name home  /
+ */
+var justForDoc = {};
 Router.route('/', function () {
         this.render('home', {to: 'mainContent'});
     },

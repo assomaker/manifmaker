@@ -9,7 +9,7 @@ ValidationService =
          * @param taskId
          * @param validationStateAsked
          * @param validationType
-         * @param comment 
+         * @param comment
          */
         static updateValidation(taskId, validationStateAsked, validationType, comment) {
             var task = Tasks.findOne(taskId);
