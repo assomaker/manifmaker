@@ -48,7 +48,7 @@ function preSelectedUserByUserName(name) {
     TaskFilter.set(noneFilter);
     CurrentAssignmentType.set(AssignmentType.USERTOTASK);
 
-    var query = Meteor.users.find({name: name});
+    var query = Users.find({name: name});
     var handle = query.observeChanges({
         added: function (_id, task) {
             SelectedUser.set({_id: _id});

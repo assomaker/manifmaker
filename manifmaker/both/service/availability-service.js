@@ -85,7 +85,7 @@ AvailabilityService =
                     end: availability.end
                 });
 
-            Meteor.users.update({_id: user._id}, {$set: {availabilities: availabilities}});
+            Users.update({_id: user._id}, {$set: {availabilities: availabilities}});
 
         }
 
@@ -181,7 +181,7 @@ AvailabilityService =
 
             availabilities.push(newAvailability);
 
-            Meteor.users.update({_id: user._id}, {$set: {availabilities: availabilities}});
+            Users.update({_id: user._id}, {$set: {availabilities: availabilities}});
 
         }
 

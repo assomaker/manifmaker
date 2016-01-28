@@ -5,7 +5,7 @@ Schemas.Assignments = new SimpleSchema({
         type: String,
         label: "Assignments UserId",
         custom: function(){
-            if(!Meteor.users.findOne(this.value))
+            if(!Users.findOne(this.value))
                 return "unknownId";
         }
     },

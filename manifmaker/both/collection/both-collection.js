@@ -45,7 +45,7 @@ Groups = new Mongo.Collection("groups");
  * @instancename object
  */
 AllCollections = {
-    Users: Meteor.users,
+    Users: Users,
     Tasks: Tasks,
     Assignments: Assignments,
     Skills: Skills,
@@ -73,7 +73,7 @@ TasksIndex = new EasySearch.Index({
  * @instancename object
  */
 UsersIndex = new EasySearch.Index({
-    collection: Meteor.users,
+    collection: Users,
     fields: ['name'],
     engine: new EasySearch.Minimongo()
 });
@@ -82,4 +82,4 @@ UsersIndex = new EasySearch.Index({
 //using schema
 Tasks.attachSchema(Schemas.Tasks);
 Assignments.attachSchema(Schemas.Assignments);
-//Meteor.users.attachSchema(Schemas.Users);
+Users.attachSchema(Schemas.Users);

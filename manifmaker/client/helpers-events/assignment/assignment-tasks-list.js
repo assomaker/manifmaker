@@ -88,7 +88,7 @@ Template.assignmentTasksList.helpers({
         return Teams.findOne({_id: this.teamId}).name;
     },
     user: function () {
-        return Meteor.users.findOne({_id: this.userId}).name;
+        return Users.findOne({_id: this.userId}).name;
     },
 
     timeSlotsInfo: function(){
@@ -143,7 +143,7 @@ Template.assignmentTasksList.helpers({
             var result = [];
 
             _.each(peopleNeeded, (peopleNeed) => {
-                var selectedUser = Meteor.users.findOne(SelectedUser.get());
+                var selectedUser = Users.findOne(SelectedUser.get());
 
                 //userId : if existing, selected user must be the one
                 if (peopleNeed.userId) {

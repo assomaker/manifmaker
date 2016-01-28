@@ -37,7 +37,7 @@ Template.assignmentCalendar.helpers({
     },
 
     userName: function () {
-        return Meteor.users.findOne({_id: this.userId}).name;
+        return Users.findOne({_id: this.userId}).name;
     },
 
     teamName: function () {
@@ -53,7 +53,7 @@ Template.assignmentCalendar.helpers({
 
         switch (currentAssignmentType) {
             case AssignmentType.USERTOTASK:
-                var user = SelectedUser.get() == null ? null : Meteor.users.findOne(SelectedUser.get());
+                var user = SelectedUser.get() == null ? null : Users.findOne(SelectedUser.get());
                 if (user === null) return [];
 
 
@@ -255,7 +255,7 @@ Template.assignmentCalendar.events({
 
 
                 var userId = SelectedUser.get()._id;
-                var user = Meteor.users.findOne({_id: userId});
+                var user = Users.findOne({_id: userId});
                 var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
 
                 if (typeof availability === "undefined") {

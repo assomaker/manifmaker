@@ -24,7 +24,7 @@ Template.registerHelper(
         var assignment = Assignments.findOne({
             peopleNeedId: this._id
         }); //TODO normalement je stocke un assignedUserId...
-        return Meteor.users.findOne({_id: assignment.userId}).name;
+        return Users.findOne({_id: assignment.userId}).name;
     }
 );
 

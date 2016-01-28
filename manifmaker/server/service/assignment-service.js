@@ -14,7 +14,7 @@ ServerAssignmentService =
             var assignment = assignment;
             var updateUser = {},
                 updateTask = {},
-                user = Meteor.users.findOne(assignment.userId),
+                user = Users.findOne(assignment.userId),
                 task = Tasks.findOne(assignment.taskId);
 
             var timeSlot = TimeSlotService.getTimeSlot(task, assignment.timeSlotId);
@@ -26,7 +26,7 @@ ServerAssignmentService =
                 end: timeSlot.end,
                 assignmentId: assignment._id
             });
-            Meteor.users.update(assignment.userId, {$set: updateUser});
+            Users.update(assignment.userId, {$set: updateUser});
 
             updateTask.assignments = task.assignments;
             updateTask.assignments.push({
@@ -51,7 +51,7 @@ ServerAssignmentService =
             var assignment = assignment;
             var updateUser = {},
                 updateTask = {},
-                user = Meteor.users.findOne(assignment.userId),//Meteor.users.findOne(review.userId),
+                user = Users.findOne(assignment.userId),//Meteor.users.findOne(review.userId),
                 task = Tasks.findOne(assignment.taskId);
 
             updateUser.assignments = user.assignments;
@@ -62,7 +62,7 @@ ServerAssignmentService =
                     )
                 )
             );
-            Meteor.users.update(assignment.userId, {$set: updateUser});
+            Users.update(assignment.userId, {$set: updateUser});
 
             updateTask.assignments = task.assignments;
             updateTask.assignments.pop(

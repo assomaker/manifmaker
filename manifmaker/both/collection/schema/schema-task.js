@@ -34,7 +34,7 @@ Schemas.TaskAssignment = new SimpleSchema({
             if (!assignment)
                 return "unknownId";
             var timeSlot = TimeSlotService.getTimeSlot(assignment.taskId,assignment.timeSlotId);
-            if (Meteor.users.findOne(assignment.userId).name !== this.field(this.key.replace("assignmentId", "") + "userName").value
+            if (Users.findOne(assignment.userId).name !== this.field(this.key.replace("assignmentId", "") + "userName").value
                 || !new moment(timeSlot.start).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "start").value))
                 || !new moment(timeSlot.end).isSame(new moment(this.field(this.key.replace("assignmentId", "") + "end").value)))
                 return "taskAssignmentNotMatching"
@@ -51,7 +51,7 @@ Schemas.PeopleNeed = new SimpleSchema({
         optional: true,
         custom: function () {
             if (this.value)
-                if (!Meteor.users.findOne(this.value))
+                if (!Users.findOne(this.value))
                     return "unknownId";
         },
         autoform: {
@@ -243,7 +243,7 @@ Schemas.Tasks = new SimpleSchema({
         type: SimpleSchema.RegEx.Id,
         label: "Task Live event responsible",
         custom: function () {
-            if (!Meteor.users.findOne(this.value))
+            if (!Users.findOne(this.value))
                 return "unknownId";
         },
         autoform: {
@@ -256,7 +256,7 @@ Schemas.Tasks = new SimpleSchema({
         type: SimpleSchema.RegEx.Id,
         label: "Task responsible",
         custom: function () {
-            if (!Meteor.users.findOne(this.value))
+            if (!Users.findOne(this.value))
                 return "unknownId";
         },
         autoform: {

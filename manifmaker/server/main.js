@@ -15,8 +15,8 @@ Meteor.startup(function () {
     Assignments.after.insert(ServerAssignmentService.propagateAssignment);
     Assignments.after.remove(ServerAssignmentService.removeAssignment);
 
-    initAccessRightData();
-    populateData();
+    //initAccessRightData();
+    //populateData();
 
 
 });

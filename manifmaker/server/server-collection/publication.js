@@ -7,7 +7,7 @@ Meteor.startup(function () {
      * @returns {Collection}
      */
     Meteor.publish("users", function () {
-        return Meteor.users.find({});
+        return Users.find({});
     });
 
     /**

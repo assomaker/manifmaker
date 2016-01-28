@@ -8,7 +8,7 @@ Template.assignmentUsersList.helpers({
         var searchResult;
         var filterResult;
 
-        filterResult = Meteor.users.find({
+        filterResult = Users.find({
             $and: [
                 filter,
                 teamFilter,
