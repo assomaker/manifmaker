@@ -79,7 +79,7 @@ Template.assignmentMenu.helpers({
                     url: ""
                 });
             } else {
-                var userName = Users.findOne(selectedUser._id).name;
+                var userName = Meteor.users.findOne(selectedUser._id).name;
                 result.push({
                     label: userName,
                     url: "/assignment/userToTask/" + selectedUser._id

@@ -23,7 +23,7 @@ Meteor.methods({
         var task = ret.task;
         var peopleNeed = ret.peopleNeed;
 
-        var user = Users.findOne({_id: userId});
+        var user = Meteor.users.findOne({_id: userId});
 
 
         var assignment = Assignments.findOne({
@@ -63,7 +63,7 @@ Meteor.methods({
         var task = ret.task;
         var peopleNeed = ret.peopleNeed;
 
-        var user = Users.findOne({_id: userId});
+        var user = Meteor.users.findOne({_id: userId});
 
         if (!AvailabilityService.checkUserAvailabilty(user, timeSlot.start, timeSlot.end)) {
             throw new Meteor.Error(500, `User ${user.name} is not available from ${timeSlot.start} to ${timeSlot.end}`);

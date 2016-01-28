@@ -40,7 +40,7 @@ initAccessRightData =  function(){
     Accounts.createUser({
         username: "admin",
         email: "admin@yopmail.com",
-        password: "admin"
+        password: "admin",
     });
     Accounts.createUser({
         username: "hard",
@@ -71,7 +71,6 @@ initAccessRightData =  function(){
 
 populateData = function () {
     Assignments.remove({});
-    Users.remove({});
     Tasks.remove({});
     Places.remove({});
     Teams.remove({});
@@ -131,29 +130,52 @@ populateData = function () {
     });
 
     //users
-    var user1Id = Users.insert({
-        name: "user1",
-        teams: [team1Id],
-        skills: [skill1Id],
-        availabilities: [
-            {
-                start: getDateFromTime(2),
-                end: getDateFromTime(14)
-            }
-        ]
+    Accounts.createUser({
+        username: "user1",
+        email: "user1@yopmail.com",
+        password: "user1"
     });
-    var user2Id = Users.insert({
-        name: "user2",
-        teams: [team2Id],
-        skills: [skill2Id],
-        availabilities: [
-            {
-                start: getDateFromTime(2),
-                end: getDateFromTime(16)
-            }
-        ]
+    var user1Id = Meteor.users.findOne({username:"user1"})._id;
+    Meteor.users.update(user1Id, {
+        $set: {
+            name: "user1",
+            teams: [team1Id],
+            skills: [skill1Id],
+            availabilities: [
+                {
+                    start: getDateFromTime(2),
+                    end: getDateFromTime(14)
+                }
+            ]
+        }
     });
-    var user3Id = Users.insert({
+    Accounts.createUser({
+        username: "user2",
+        email: "user2@yopmail.com",
+        password: "user2"
+    });
+    var user2Id = Meteor.users.findOne({username:"user2"})._id;
+    Meteor.users.update(user2Id, {
+        $set: {
+            name: "user2",
+            teams: [team2Id],
+            skills: [skill2Id],
+            availabilities: [
+                {
+                    start: getDateFromTime(2),
+                    end: getDateFromTime(16)
+                }
+            ]
+        }
+    });
+    Accounts.createUser({
+        username: "user3",
+        email: "user3@yopmail.com",
+        password: "user3"
+    });
+    var user3Id = Meteor.users.findOne({username:"user3"})._id;
+    Meteor.users.update(user3Id, {
+        $set: {
         name: "user3",
         //teams: [team3Id],
         skills: [skill2Id,skill3Id],
@@ -167,21 +189,30 @@ populateData = function () {
                 end: getDateFromTime(18)
             }
         ]
+    }
     });
-    var user4Id = Users.insert({
-        name: "user4",
-        //teams: [team3Id],
-        skills: [skill2Id,skill3Id,skill1Id,skill4Id],
-        availabilities: [
-            {
-                start: getDateFromTime(10),
-                end: getDateFromTime(14)
-            },
-            {
-                start: getDateFromTime(14),
-                end: getDateFromTime(18)
-            }
-        ]
+    Accounts.createUser({
+        username: "user4",
+        email: "user4@yopmail.com",
+        password: "user4"
+    });
+    var user4Id = Meteor.users.findOne({username:"user4"})._id;
+    Meteor.users.update(user4Id, {
+        $set: {
+            name: "user4",
+            //teams: [team3Id],
+            skills: [skill2Id, skill3Id, skill1Id, skill4Id],
+            availabilities: [
+                {
+                    start: getDateFromTime(10),
+                    end: getDateFromTime(14)
+                },
+                {
+                    start: getDateFromTime(14),
+                    end: getDateFromTime(18)
+                }
+            ]
+        }
     });
 
     var now = new Date();

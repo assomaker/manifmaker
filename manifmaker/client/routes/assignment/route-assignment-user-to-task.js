@@ -20,7 +20,7 @@ Router.route('/assignment/userToTask/:userId/:selectedDate', function () {
         var selectedDate = parseInt(this.params.selectedDate);
         selectedDate = new moment(selectedDate);
         var userId = SelectedUser.get()._id;
-        var user = Users.findOne({_id: userId});
+        var user = Meteor.users.findOne({_id: userId});
         var availability = AvailabilityService.getSurroundingAvailability(user, selectedDate);
 
         if (typeof availability === "undefined") {
