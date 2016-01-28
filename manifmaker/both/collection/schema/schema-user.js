@@ -60,6 +60,10 @@ Schemas.Users = new SimpleSchema({
         label: "Users Name",
         max: 100
     },
+    loginUserId: {
+        label: "User login link to collection managed by Account package",
+        type: SimpleSchema.RegEx.Id,
+    },
     teams: {
         label: "User teams",
         type: [SimpleSchema.RegEx.Id],

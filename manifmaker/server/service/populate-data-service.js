@@ -131,8 +131,14 @@ populateData = function () {
     });
 
     //users
+    Accounts.createUser({
+        username: "user1",
+        email: "user1@yopmail.com",
+        password: "user1"
+    });
     var user1Id = Users.insert({
         name: "user1",
+        loginUserId: Meteor.users.findOne({username:"user1"})._id,
         teams: [team1Id],
         skills: [skill1Id],
         availabilities: [
@@ -142,8 +148,14 @@ populateData = function () {
             }
         ]
     });
+    Accounts.createUser({
+        username: "user2",
+        email: "user2@yopmail.com",
+        password: "user2"
+    });
     var user2Id = Users.insert({
         name: "user2",
+        loginUserId: Meteor.users.findOne({username:"user1"})._id,
         teams: [team2Id],
         skills: [skill2Id],
         availabilities: [
@@ -153,8 +165,14 @@ populateData = function () {
             }
         ]
     });
+    Accounts.createUser({
+        username: "user3",
+        email: "user3@yopmail.com",
+        password: "user3"
+    });
     var user3Id = Users.insert({
         name: "user3",
+        loginUserId: Meteor.users.findOne({username:"user1"})._id,
         //teams: [team3Id],
         skills: [skill2Id,skill3Id],
         availabilities: [
@@ -168,8 +186,14 @@ populateData = function () {
             }
         ]
     });
+    Accounts.createUser({
+        username: "user4",
+        email: "user4@yopmail.com",
+        password: "user4"
+    });
     var user4Id = Users.insert({
         name: "user4",
+        loginUserId: Meteor.users.findOne({username:"user1"})._id,
         //teams: [team3Id],
         skills: [skill2Id,skill3Id,skill1Id,skill4Id],
         availabilities: [
