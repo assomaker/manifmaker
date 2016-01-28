@@ -1,17 +1,8 @@
 Meteor.startup(function () {
     // code to run on server at startup
-    Assignments.remove({});
-    Users.remove({});
-    Tasks.remove({});
-    Places.remove({});
-    Teams.remove({});
-    Groups.remove({});
-    Skills.remove({});
-    Teams.remove({});
 
-    Meteor.roles.remove({});
-    GroupRoles.remove({});
-    Meteor.users.remove({});
+
+
 
 
     //AssignmentCalendarDisplayedDays.remove({});
@@ -24,8 +15,8 @@ Meteor.startup(function () {
     Assignments.after.insert(ServerAssignmentService.propagateAssignment);
     Assignments.after.remove(ServerAssignmentService.removeAssignment);
 
-    initAccessRightData();
-    populateData();
+    //initAccessRightData();
+    //populateData();
 
 
 });

@@ -1,4 +1,8 @@
 initAccessRightData =  function(){
+    Meteor.roles.remove({});
+    GroupRoles.remove({});
+    Meteor.users.remove({});
+
     //create roles
     var equipmentValidation = "equipmentValidation";
     Roles.createRole(equipmentValidation);
@@ -12,17 +16,16 @@ initAccessRightData =  function(){
     Roles.createRole(taskWrite);
     var taskDelete = "taskDelete";
     Roles.createRole(taskDelete);
+    var role = "role";
+    Roles.createRole(role);
 
 
     //create groups and add roles to groups
-    var superAdminGroup = GroupRoles.insert({name: "super-admin",
-        roles : [equipmentValidation,assignmentValidation,accessPassValidation,taskRead,taskWrite,taskDelete]
-    });
     var admin = GroupRoles.insert({name: "admin",
-        roles : [equipmentValidation,assignmentValidation,accessPassValidation,taskRead,taskWrite,taskDelete]
+        roles : [equipmentValidation,assignmentValidation,accessPassValidation,taskRead,taskWrite,taskDelete,role]
     });
     var bureau = GroupRoles.insert({name: "bureau",
-        roles : [taskRead,taskWrite,taskDelete]
+        roles : [taskRead,taskWrite,taskDelete,role]
     });
     var hard = GroupRoles.insert({name: "hard",
         roles : [taskRead,taskWrite]
@@ -67,6 +70,14 @@ initAccessRightData =  function(){
 
 
 populateData = function () {
+    Assignments.remove({});
+    Users.remove({});
+    Tasks.remove({});
+    Places.remove({});
+    Teams.remove({});
+    Groups.remove({});
+    Skills.remove({});
+    Teams.remove({});
 
     _.each(AllCollections, function (coll) {
         coll.remove({});
