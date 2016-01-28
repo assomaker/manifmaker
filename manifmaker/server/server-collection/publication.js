@@ -80,4 +80,14 @@ Meteor.startup(function () {
         return AssignmentTerms.find({});
     });
 
+    /**
+     * @memberOf Meteor Publish
+     * @locus server
+     * @summary GroupRoles publication. No query, publish all AssignmentTerms data.
+     * @returns {Collection}
+     */
+    Meteor.publish("group-roles", function () {
+        return GroupRoles.find({});
+    });
+
 });

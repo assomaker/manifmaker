@@ -4,7 +4,17 @@
  * @locus Anywhere
  * @instancename collection
  */
-Users = new Mongo.Collection("users");
+Users = new Mongo.Collection("users_custom"); //TODO utiliser la meme collection que le package accounts ?
+
+/**
+ * @memberOf Models
+ * @summary GroupsRoles collection
+ * @locus Anywhere
+ * @instancename collection
+ */
+GroupRoles = new Mongo.Collection("group_roles");
+
+
 /**
  * @memberOf Models
  * @summary Task collection

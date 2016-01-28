@@ -1,3 +1,71 @@
+initAccessRightData =  function(){
+    //create roles
+    var equipmentValidation = "equipmentValidation";
+    Roles.createRole(equipmentValidation);
+    var assignmentValidation = "assignmentValidation";
+    Roles.createRole(assignmentValidation);
+    var accessPassValidation = "accessPassValidation";
+    Roles.createRole(accessPassValidation);
+    var taskRead = "taskRead";
+    Roles.createRole(taskRead);
+    var taskWrite = "taskWrite";
+    Roles.createRole(taskWrite);
+    var taskDelete = "taskDelete";
+    Roles.createRole(taskDelete);
+
+
+    //create groups and add roles to groups
+    var superAdminGroup = GroupRoles.insert({name: "super-admin",
+        roles : [equipmentValidation,assignmentValidation,accessPassValidation,taskRead,taskWrite,taskDelete]
+    });
+    var admin = GroupRoles.insert({name: "admin",
+        roles : [equipmentValidation,assignmentValidation,accessPassValidation,taskRead,taskWrite,taskDelete]
+    });
+    var bureau = GroupRoles.insert({name: "bureau",
+        roles : [taskRead,taskWrite,taskDelete]
+    });
+    var hard = GroupRoles.insert({name: "hard",
+        roles : [taskRead,taskWrite]
+    });
+    var soft = GroupRoles.insert({name: "soft",
+        roles : [taskRead]
+    });
+    var resplog = GroupRoles.insert({name: "admin",
+        roles : [equipmentValidation]
+    });
+
+    Accounts.createUser({
+        username: "admin",
+        email: "admin@yopmail.com",
+        password: "admin"
+    });
+    Accounts.createUser({
+        username: "hard",
+        email: "hard@yopmail.com",
+        password: "hardhard"
+    });
+    Accounts.createUser({
+        username: "resplog",
+        email: "resplog@yopmail.com",
+        password: "resplogresplog"
+    });
+    Accounts.createUser({
+        username: "soft",
+        email: "soft@yopmail.com",
+        password: "softsoft"
+    });
+
+
+    addUsersToRoles(Meteor.users.findOne({username:"admin"}),admin);
+    addUsersToRoles(Meteor.users.findOne({username:"hard"}),hard);
+    addUsersToRoles(Meteor.users.findOne({username:"resplog"}),resplog);
+    addUsersToRoles(Meteor.users.findOne({username:"soft"}),soft);
+
+
+
+};
+
+
 populateData = function () {
 
     _.each(AllCollections, function (coll) {

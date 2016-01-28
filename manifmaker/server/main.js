@@ -9,6 +9,11 @@ Meteor.startup(function () {
     Skills.remove({});
     Teams.remove({});
 
+    Meteor.roles.remove({});
+    GroupRoles.remove({});
+    Meteor.users.remove({});
+
+
     //AssignmentCalendarDisplayedDays.remove({});
     //AssignmentCalendarDisplayedHours.remove({});
     //AssignmentCalendarDisplayedQuarter.remove({});
@@ -19,7 +24,9 @@ Meteor.startup(function () {
     Assignments.after.insert(ServerAssignmentService.propagateAssignment);
     Assignments.after.remove(ServerAssignmentService.removeAssignment);
 
+    initAccessRightData();
     populateData();
+
 
 });
 
