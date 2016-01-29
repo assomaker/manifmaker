@@ -63,6 +63,12 @@ Schemas.Users = new SimpleSchema({
     loginUserId: {
         label: "User login link to collection managed by Account package",
         type: SimpleSchema.RegEx.Id,
+        optional: true
+    },
+    roles: {
+        label: "User login roles by Account package, copied from Meteor.users each time updated",
+        type: [String],
+        optional: true
     },
     teams: {
         label: "User teams",

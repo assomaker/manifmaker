@@ -1,0 +1,19 @@
+<template name="usersList">
+    <div class="user-list-filter-wrapper input-field col s12">
+        {{> commonTeamListDropdown id="user-list-team-selector"}}
+    </div>
+
+    {{> reactiveTable settings=usersList }}
+
+    <a href="/user">Create a new User</a>
+</template>
+
+
+<template name="userButtons">
+    <a class="btn btn-primary" href="/user/{{_id}}">Update</a>
+    {{#quickRemoveButton class="btn btn-default" collection="Users" _id=this._id}}Delete{{/quickRemoveButton}}
+</template>
+
+
+
+

@@ -1,7 +1,24 @@
 Meteor.startup(function () {
     // code to run on server at startup
 
+    Meteor.roles.remove({});
+    GroupRoles.remove({});
+    Meteor.users.remove({});
 
+    Users.remove({});
+
+    Assignments.remove({});
+    Tasks.remove({});
+    Places.remove({});
+    Teams.remove({});
+    Groups.remove({});
+    Skills.remove({});
+    Teams.remove({});
+
+
+    _.each(AllCollections, function (coll) {
+        coll.remove({});
+    });
 
 
 

@@ -1,7 +1,7 @@
 initAccessRightData =  function(){
-    Meteor.roles.remove({});
-    GroupRoles.remove({});
-    Meteor.users.remove({});
+
+    var assignmentReadyTeam = Teams.insert({name: ASSIGNMENTREADYTEAM});
+
 
     //create roles
     var equipmentValidation = "equipmentValidation";
@@ -42,20 +42,36 @@ initAccessRightData =  function(){
         email: "admin@yopmail.com",
         password: "admin"
     });
+    Users.insert({
+        name: "admin",
+        loginUserId: Meteor.users.findOne({username: "admin"})._id
+    });
     Accounts.createUser({
         username: "hard",
         email: "hard@yopmail.com",
         password: "hardhard"
+    });
+    Users.insert({
+        name: "hard",
+        loginUserId: Meteor.users.findOne({username: "hard"})._id
     });
     Accounts.createUser({
         username: "resplog",
         email: "resplog@yopmail.com",
         password: "resplogresplog"
     });
+    Users.insert({
+        name: "resplog",
+        loginUserId: Meteor.users.findOne({username: "resplog"})._id
+    });
     Accounts.createUser({
         username: "soft",
         email: "soft@yopmail.com",
         password: "softsoft"
+    });
+    Users.insert({
+        name: "soft",
+        loginUserId: Meteor.users.findOne({username: "soft"})._id
     });
 
 
@@ -70,24 +86,13 @@ initAccessRightData =  function(){
 
 
 populateData = function () {
-    Assignments.remove({});
-    Users.remove({});
-    Tasks.remove({});
-    Places.remove({});
-    Teams.remove({});
-    Groups.remove({});
-    Skills.remove({});
-    Teams.remove({});
 
-    _.each(AllCollections, function (coll) {
-        coll.remove({});
-    });
+
 
     //teams
     var team1Id = Teams.insert({name: "team1"});
     var team2Id = Teams.insert({name: "team2"});
     var team3Id = Teams.insert({name: "team3"});
-    var assignmentReadyTeam = Teams.insert({name: ASSIGNMENTREADYTEAM});
 
 
     //places
@@ -156,7 +161,7 @@ populateData = function () {
     var user2Id = Users.insert({
         name: "user2",
         loginUserId: Meteor.users.findOne({username:"user1"})._id,
-        teams: [team2Id],
+        teams: [team2Id,team3Id],
         skills: [skill2Id],
         availabilities: [
             {

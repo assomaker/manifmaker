@@ -7,6 +7,7 @@ Meteor.startup(function () {
      * @returns {Collection}
      */
     Meteor.publish("users", function () {
+        //TODO ne pas envoyer les roles des users si pas le role 'user'
         return Users.find({});
     });
 
