@@ -3,6 +3,7 @@
         <fieldset>
             <legend>Add a User</legend>
             {{> afQuickField name='name'}}
+            {{> afQuickField name="teams"}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Insert</button>
         <button type="reset" class="btn btn-default">Reset</button>
@@ -15,6 +16,7 @@
         <fieldset>
             <legend>Update User {{this.name}}</legend>
             {{> afQuickField name='name'}}
+            {{> afQuickField name="teams"}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Update</button>
         {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete {{this.name}}{{/quickRemoveButton}}

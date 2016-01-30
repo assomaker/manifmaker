@@ -75,10 +75,9 @@ Schemas.Users = new SimpleSchema({
         type: [SimpleSchema.RegEx.Id],
         optional: true,
         custom: function () {
-            _.each(this.value, function (teamId) {
-                if (!Teams.findOne(teamId))
-                    return "unknownId"
-            });
+            if(Teams.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
+                return "unknownIdOrDuplicateId"
+
         },
         autoValue: function () {
             if (this.isInsert) {
@@ -87,6 +86,13 @@ Schemas.Users = new SimpleSchema({
                 if(!this.value) this.value = [];
                 this.value.push(assignmentReadyTeam._id);
                 return this.value;
+            }
+        },
+    },
+    'teams.$': {
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allTeamsOptions
             }
         }
     },
