@@ -101,10 +101,15 @@ Schemas.Users = new SimpleSchema({
         type: [SimpleSchema.RegEx.Id],
         optional: true,
         custom: function () {
-            _.each(this.value, function (skill) {
-                if (!Skills.findOne(skill._id))
-                    return "unknownId"
-            });
+            if(Skills.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
+                return "unknownIdOrDuplicateId"
+        }
+    },
+    'skills.$': {
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allSkillsOptions
+            }
         }
     },
     availabilities: {
