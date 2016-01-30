@@ -66,9 +66,36 @@ Schemas.Users = new SimpleSchema({
         optional: true
     },
     roles: {
-        label: "User login roles by Account package, copied from Meteor.users each time updated",
+        label: "User roles to gain less or more data and features for a specific use",
         type: [String],
-        optional: true
+        optional: true,
+        custom: function () {
+            if(Meteor.roles.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
+                return "unknownIdOrDuplicateId"
+        }
+    },
+    'roles.$': {
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allRolesOptions
+            }
+        }
+    },
+    groupRoles: {
+        label: "User roles to gain a set of less or more data and features",
+        type: [SimpleSchema.RegEx.Id],
+        optional: true,
+        custom: function () {
+            if(GroupRoles.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
+                return "unknownIdOrDuplicateId"
+        }
+    },
+    'groupRoles.$': {
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allGroupRolesOptions
+            }
+        }
     },
     teams: {
         label: "User teams",
@@ -77,7 +104,6 @@ Schemas.Users = new SimpleSchema({
         custom: function () {
             if(Teams.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
                 return "unknownIdOrDuplicateId"
-
         },
         autoValue: function () {
             if (this.isInsert) {

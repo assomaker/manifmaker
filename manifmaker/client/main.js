@@ -73,6 +73,7 @@ Meteor.startup(function () {
     Meteor.subscribe("teams");
     Meteor.subscribe("groups");
     Meteor.subscribe("group-roles");
+    Meteor.subscribe("roles");
     Meteor.subscribe("assignment-terms", function () {
         AssignmentServiceClient.setCalendarTerms();
     });

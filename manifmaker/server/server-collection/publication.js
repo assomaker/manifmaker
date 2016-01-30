@@ -84,11 +84,22 @@ Meteor.startup(function () {
     /**
      * @memberOf Meteor Publish
      * @locus server
-     * @summary GroupRoles publication. No query, publish all AssignmentTerms data.
+     * @summary GroupRoles publication. No query, publish all GroupRoles data.
      * @returns {Collection}
      */
     Meteor.publish("group-roles", function () {
         return GroupRoles.find({});
+    });
+
+    /**
+     * @memberOf Meteor Publish
+     * @locus server
+     * @summary Roles publication. No query, publish all Roles data.
+     * @returns {Collection}
+     */
+    Meteor.publish("roles", function () {
+        //TODO limit to user with role 'role'
+        return Meteor.roles.find({});
     });
 
 });

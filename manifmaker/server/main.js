@@ -1,6 +1,4 @@
-Meteor.startup(function () {
-    // code to run on server at startup
-
+function deleteAll() {
     Meteor.roles.remove({});
     GroupRoles.remove({});
     Meteor.users.remove({});
@@ -19,6 +17,9 @@ Meteor.startup(function () {
     _.each(AllCollections, function (coll) {
         coll.remove({});
     });
+}
+Meteor.startup(function () {
+    // code to run on server at startup
 
 
 
@@ -32,8 +33,9 @@ Meteor.startup(function () {
     Assignments.after.insert(ServerAssignmentService.propagateAssignment);
     Assignments.after.remove(ServerAssignmentService.removeAssignment);
 
-    initAccessRightData();
-    populateData();
+    //deleteAll();
+    //initAccessRightData();
+    //populateData();
 
 
 });

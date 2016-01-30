@@ -19,6 +19,12 @@
             {{> afQuickField name='name'}}
             {{> afQuickField name="teams"}}
             {{> afQuickField name="skills"}}
+            <!--{{#if isInRole 'role'}}-->
+                {{> afQuickField name="roles"}}
+            <!--{{/if}}-->
+                <!--{{#if isInRole 'role'}}-->
+            {{> afQuickField name="groupRoles"}}
+                <!--{{/if}}-->
         </fieldset>
         <button type="submit" class="btn btn-primary">Update</button>
         {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete {{this.name}}{{/quickRemoveButton}}

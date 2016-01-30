@@ -9,3 +9,8 @@ Assignments.allow({
         return true;
     }
 });
+
+
+
+//TODO user.roles.update => modifier les roles du account lié
+//TODO user.groupRoles.update => modifier les roles du account lié
