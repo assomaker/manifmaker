@@ -4,7 +4,6 @@
             <legend>Add a User</legend>
             {{> afQuickField name='name'}}
             {{> afQuickField name="teams"}}
-            {{> afQuickField name="skills"}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Insert</button>
         <button type="reset" class="btn btn-default">Reset</button>
@@ -19,9 +18,6 @@
             {{> afQuickField name='name'}}
             {{> afQuickField name="teams"}}
             {{> afQuickField name="skills"}}
-            <!--{{#if isInRole 'role'}}-->
-                {{> afQuickField name="roles"}}
-            <!--{{/if}}-->
                 <!--{{#if isInRole 'role'}}-->
             {{> afQuickField name="groupRoles"}}
                 <!--{{/if}}-->

@@ -33,7 +33,7 @@ initAccessRightData =  function(){
     var soft = GroupRoles.insert({name: "soft",
         roles : [taskRead]
     });
-    var resplog = GroupRoles.insert({name: "admin",
+    var resplog = GroupRoles.insert({name: "respLog",
         roles : [equipmentValidation]
     });
 
@@ -42,7 +42,7 @@ initAccessRightData =  function(){
         email: "admin@yopmail.com",
         password: "admin"
     });
-    Users.insert({
+    var adminId = Users.insert({
         name: "admin",
         loginUserId: Meteor.users.findOne({username: "admin"})._id
     });
@@ -51,7 +51,7 @@ initAccessRightData =  function(){
         email: "hard@yopmail.com",
         password: "hardhard"
     });
-    Users.insert({
+    var hardId = Users.insert({
         name: "hard",
         loginUserId: Meteor.users.findOne({username: "hard"})._id
     });
@@ -60,7 +60,7 @@ initAccessRightData =  function(){
         email: "resplog@yopmail.com",
         password: "resplogresplog"
     });
-    Users.insert({
+    var respLogId = Users.insert({
         name: "resplog",
         loginUserId: Meteor.users.findOne({username: "resplog"})._id
     });
@@ -69,16 +69,16 @@ initAccessRightData =  function(){
         email: "soft@yopmail.com",
         password: "softsoft"
     });
-    Users.insert({
+    var softId = Users.insert({
         name: "soft",
         loginUserId: Meteor.users.findOne({username: "soft"})._id
     });
 
 
-    addUsersToRoles(Meteor.users.findOne({username:"admin"}),admin);
-    addUsersToRoles(Meteor.users.findOne({username:"hard"}),hard);
-    addUsersToRoles(Meteor.users.findOne({username:"resplog"}),resplog);
-    addUsersToRoles(Meteor.users.findOne({username:"soft"}),soft);
+    _setGroupRolesToUsers(adminId,admin);
+    _setGroupRolesToUsers(hardId,hard);
+    _setGroupRolesToUsers(respLogId,resplog);
+    _setGroupRolesToUsers(softId,soft);
 
 
 

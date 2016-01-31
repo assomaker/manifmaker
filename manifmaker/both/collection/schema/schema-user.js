@@ -65,24 +65,6 @@ Schemas.Users = new SimpleSchema({
         type: SimpleSchema.RegEx.Id,
         optional: true
     },
-    roles: {
-        label: "User roles to gain less or more data and features for a specific use",
-        type: [String],
-        optional: true,
-        custom: function () {
-            if(!this.value) return;
-            this.value = _.compact(this.value);
-            if(Meteor.roles.find({name:{$in:this.value}}).fetch().length !== this.value.length)
-                return "unknownIdOrDuplicateId";
-        }
-    },
-    'roles.$': {
-        autoform: {
-            afFieldInput: {
-                options: Schemas.helpers.allRolesOptions
-            }
-        }
-    },
     groupRoles: {
         label: "User roles to gain a set of less or more data and features",
         type: [SimpleSchema.RegEx.Id],

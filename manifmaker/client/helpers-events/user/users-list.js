@@ -31,7 +31,13 @@ Template.usersList.helpers({
                     searchable: false,
                     fn: function (nothing, user) {
                         if(!user.loginUserId) return "User don't have a associated login account";
-                        return user.roles;
+                        var groups = GroupRoles.find({_id:{$in:user.groupRoles}}).fetch(); //get all related roles
+                        var result = []; //reduce to get only the roles array
+                        groups.forEach(group => {
+                            result.push(group.roles);
+                        });
+                        var allGroupRolesMerged = _.uniq(_.flatten(result)); //obtain a single array
+                        return allGroupRolesMerged;
                     }
                 },
                 {

@@ -19,9 +19,8 @@ function deleteAll() {
     });
 }
 Meteor.startup(function () {
+
     // code to run on server at startup
-
-
 
     //AssignmentCalendarDisplayedDays.remove({});
     //AssignmentCalendarDisplayedHours.remove({});
@@ -33,6 +32,9 @@ Meteor.startup(function () {
     Assignments.after.insert(ServerAssignmentService.propagateAssignment);
     Assignments.before.update(ServerAssignmentService.preventUpdate);
     Assignments.after.remove(ServerAssignmentService.removeAssignment);
+
+    Users.after.insert(ServerUserService.propagateRoles);
+    Users.after.update(ServerUserService.propagateRoles);
 
     deleteAll();
     initAccessRightData();
