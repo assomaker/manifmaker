@@ -31,11 +31,12 @@ Meteor.startup(function () {
 
     //  Assignments.before.insert( /*if we need to add user and task data to assignments*/);
     Assignments.after.insert(ServerAssignmentService.propagateAssignment);
+    Assignments.before.update(ServerAssignmentService.preventUpdate);
     Assignments.after.remove(ServerAssignmentService.removeAssignment);
 
-    //deleteAll();
-    //initAccessRightData();
-    //populateData();
+    deleteAll();
+    initAccessRightData();
+    populateData();
 
 
 });

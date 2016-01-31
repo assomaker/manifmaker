@@ -70,8 +70,10 @@ Schemas.Users = new SimpleSchema({
         type: [String],
         optional: true,
         custom: function () {
-            if(Meteor.roles.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
-                return "unknownIdOrDuplicateId"
+            if(!this.value) return;
+            this.value = _.compact(this.value);
+            if(Meteor.roles.find({name:{$in:this.value}}).fetch().length !== this.value.length)
+                return "unknownIdOrDuplicateId";
         }
     },
     'roles.$': {
@@ -86,6 +88,7 @@ Schemas.Users = new SimpleSchema({
         type: [SimpleSchema.RegEx.Id],
         optional: true,
         custom: function () {
+            this.value = _.compact(this.value);
             if(GroupRoles.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
                 return "unknownIdOrDuplicateId"
         }
@@ -102,6 +105,7 @@ Schemas.Users = new SimpleSchema({
         type: [SimpleSchema.RegEx.Id],
         optional: true,
         custom: function () {
+            this.value = _.compact(this.value);
             if(Teams.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
                 return "unknownIdOrDuplicateId"
         },
@@ -127,6 +131,7 @@ Schemas.Users = new SimpleSchema({
         type: [SimpleSchema.RegEx.Id],
         optional: true,
         custom: function () {
+            this.value = _.compact(this.value);
             if(Skills.find({_id:{$in:this.value}}).fetch().length !== this.value.length)
                 return "unknownIdOrDuplicateId"
         }

@@ -70,3 +70,28 @@ Schemas.helpers.allSkillsOptions = function () {
     return result;
 };
 
+Schemas.helpers.allRolesOptions = function () {
+    var skills = Meteor.roles.find({}).fetch();
+    var result = [];
+    _.each(skills, function (role) {
+        result.push({
+            label: role.name,
+            value: role.name
+        });
+    });
+
+    return result;
+};
+
+Schemas.helpers.allGroupRolesOptions = function () {
+    var skills = GroupRoles.find({}).fetch();
+    var result = [];
+    _.each(skills, function (groupRole) {
+        result.push({
+            label: groupRole.name + " : " +groupRole.roles,
+            value: groupRole._id
+        });
+    });
+
+    return result;
+};
