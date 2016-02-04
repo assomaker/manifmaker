@@ -95,8 +95,10 @@ Schemas.Users = new SimpleSchema({
             if (this.isInsert) {
                 //trick pour les filtres, tous les users appartiennement au moins à l'équipe ASSIGNMENTREADYTEAM
                 var assignmentReadyTeam = Teams.findOne({name: ASSIGNMENTREADYTEAM});
-                if(!this.value) this.value = [];
-                this.value.push(assignmentReadyTeam._id);
+                if(!this.value)
+                    this.value = [];
+                else if (!_.contains(this.value,assignmentReadyTeam._id)) //we don't add it we it already have it (when autoform do the check several times)
+                    this.value.push(assignmentReadyTeam._id);
                 return this.value;
             }
         },
