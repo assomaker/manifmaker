@@ -18,9 +18,13 @@
             {{> afQuickField name='name'}}
             {{> afQuickField name="teams"}}
             {{> afQuickField name="skills"}}
-                <!--{{#if isInRole 'role'}}-->
-            {{> afQuickField name="groupRoles"}}
-                <!--{{/if}}-->
+            {{#if isInRole 'role'}}
+                {{#if this.loginUserId}}
+                    {{> afQuickField name="groupRoles"}}
+                {{else}}
+                    User don't have a associated login account, can't add roles.
+                {{/if}}
+            {{/if}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Update</button>
         {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete {{this.name}}{{/quickRemoveButton}}

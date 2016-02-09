@@ -8,15 +8,6 @@ Users = new Mongo.Collection("users_custom"); //TODO utiliser la meme collection
 
 /**
  * @memberOf Models
- * @summary GroupsRoles collection
- * @locus Anywhere
- * @instancename collection
- */
-GroupRoles = new Mongo.Collection("group_roles");
-
-
-/**
- * @memberOf Models
  * @summary Task collection
  * @locus Anywhere
  * @instancename collectiono
@@ -52,7 +43,8 @@ AllCollections = {
     Teams: Teams,
     Places: Places,
     Groups: Groups,
-    AssignmentTerms: AssignmentTerms
+    AssignmentTerms: AssignmentTerms,
+    GroupRoles: GroupRoles
 };
 
 /**

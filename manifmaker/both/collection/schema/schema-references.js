@@ -174,3 +174,48 @@ Schemas.references.AssignmentTerms = new SimpleSchema({
 AssignmentTerms = new Mongo.Collection("assignment-terms");
 AssignmentTerms.attachSchema(Schemas.references.AssignmentTerms);
 
+Schemas.references.options.GroupRoles = {
+    PLURAL_REFERENCE_URL: "group-roles",
+    REFERENCE_URL: "group-role",
+    REFERENCE_COLLECTION_NAME: "GroupRoles",
+    REFERENCE_MONGO_COLLECTION_NAME: "group_roles",
+    REFERENCE_LABEL: "Group Role",
+};
+Schemas.references.GroupRoles = new SimpleSchema({
+    name: {
+        type: String,
+        label: "Group role Name",
+        max: 100
+    },
+    roles: {
+        type: [String],
+        label: "Group role roles",
+        custom: function () {
+            Roles.getAllRoles();
+            this.value = _.compact(this.value);
+            if(_.uniq(this.value).length !== this.value.length)
+                return "duplicate"
+        }
+    },
+    'roles.$': {
+        autoform: {
+            afFieldInput: {
+                options: Schemas.helpers.allRolesOptions
+            }
+        }
+    },
+    baseUrl: { //TODO pas possible d'etre saisie par le user
+        type: String,
+        label: "Group roles base URL",
+        defaultValue: "group-role"
+    }
+});
+/**
+ * @memberOf Models
+ * @summary Teams collection
+ * @locus Anywhere
+ * @instancename collection
+ */
+GroupRoles = new Mongo.Collection("group_roles");
+GroupRoles.attachSchema(Schemas.references.GroupRoles);
+

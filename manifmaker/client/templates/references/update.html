@@ -44,3 +44,16 @@
     {{/autoForm}}
 </template>
 
+<template name="group-role-update">
+    {{# autoForm collection="GroupRoles" doc=document  id="updateGroupRole" type="update"}}
+        <fieldset>
+            <legend>Update {{document.date}}</legend>
+            {{> afQuickField name="name"}}
+            {{> afQuickField name="roles"}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
+
+

@@ -43,3 +43,16 @@
         <button type="reset" class="btn btn-default">Reset</button>
     {{/autoForm}}
 </template>
+
+
+<template name="group-role-insert">
+    {{# autoForm collection="GroupRoles" id="insertGroupRole" type="insert"}}
+        <fieldset>
+            <legend>Add a Group Role</legend>
+            {{> afQuickField name="name"}}
+            {{> afQuickField name="roles"}}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Insert</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    {{/autoForm}}
+</template>
