@@ -31,24 +31,6 @@ Groups = new Mongo.Collection("groups");
 
 /**
  * @memberOf Models
- * @summary References of all the MongoDB collections
- * @locus Anywhere
- * @instancename object
- */
-AllCollections = {
-    Users: Users,
-    Tasks: Tasks,
-    Assignments: Assignments,
-    Skills: Skills,
-    Teams: Teams,
-    Places: Places,
-    Groups: Groups,
-    AssignmentTerms: AssignmentTerms,
-    GroupRoles: GroupRoles
-};
-
-/**
- * @memberOf Models
  * @summary EasySearch settings to perform search by name on Task
  * @locus Anywhere
  * @instancename object

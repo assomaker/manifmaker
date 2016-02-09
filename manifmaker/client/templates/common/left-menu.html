@@ -25,10 +25,10 @@
                 </div>
             </li>
             <li><a href="{{pathFor route='assignment.calendar'}}">Assignment</a></li>
-            {{#if isInRole 'role'}}
-                <li><a href="{{pathFor route='role.list'}}">Roles</a></li>
-            {{/if}}
             <li><a href="{{pathFor route='user.list'}}">Users</a></li>
+            {{#if isInRole 'confMaker'}}
+                <li><a href="{{pathFor route='confMaker'}}">ConfMaker</a></li>
+            {{/if}}
 
         </ul>
         <a href="#" id="button-collapse-left-menu" data-activates="left-menu" class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a>

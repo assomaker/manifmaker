@@ -13,10 +13,6 @@ function deleteAll() {
     Skills.remove({});
     Teams.remove({});
 
-
-    _.each(AllCollections, function (coll) {
-        coll.remove({});
-    });
 }
 Meteor.startup(function () {
 

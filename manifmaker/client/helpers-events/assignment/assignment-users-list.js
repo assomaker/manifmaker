@@ -116,5 +116,9 @@ Template.assignmentUsersList.events({
 });
 
 
+Template.assignmentUsersList.rendered = function(){
+    $('#assignment-user-list-collapsible').collapsible({});
+};
+
 
 

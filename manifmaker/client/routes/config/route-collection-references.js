@@ -1,30 +1,25 @@
 
+/**
+ * @memberOf Models
+ * @summary References of all the MongoDB collections used as references
+ * @locus Anywhere
+ * @instancename object
+ */
+AllCollections = {
+    Skills: Skills,
+    Teams: Teams,
+    Places: Places,
+    AssignmentTerms: AssignmentTerms,
+    GroupRoles: GroupRoles
+};
 
-
-//get (list)
-Router.route('/conf-maker', function () {
-        this.render('confMaker', {
-            data: {
-                REFERENCE_URL: REFERENCE_URL,
-                //new with datatable
-                reactiveTableSettings: {
-                    collection: AllCollections[REFERENCE_COLLECTION_NAME],
-                    rowsPerPage: 5,
-                    showFilter: true,
-                    showRowCount: true,
-                    fields: reactiveTableFields
-                }
-            },
-            to: 'mainContent'
-        });
-    },
-    {name: 'confMaker'}
-);
+var confMakerReactiveTables = [];
 
 _.each(Schemas.references.options, function (referenceOptions) {
     var PLURAL_REFERENCE_URL = referenceOptions.PLURAL_REFERENCE_URL;
     var REFERENCE_URL = referenceOptions.REFERENCE_URL;
     var REFERENCE_COLLECTION_NAME = referenceOptions.REFERENCE_COLLECTION_NAME;
+    var REFERENCE_LABEL = referenceOptions.REFERENCE_LABEL;
 
 
     //generate fields a partir de schema-references
@@ -51,6 +46,19 @@ _.each(Schemas.references.options, function (referenceOptions) {
         fnAdjustColumnSizing: true
     });
 
+    var item = {
+        REFERENCE_URL: REFERENCE_URL,
+        REFERENCE_LABEL: REFERENCE_LABEL,
+        reactiveTableSettings: {
+            collection: AllCollections[REFERENCE_COLLECTION_NAME],
+            rowsPerPage: 5,
+            showFilter: true,
+            showRowCount: true,
+            fields: reactiveTableFields
+        }
+    };
+    confMakerReactiveTables.push(item);
+
     /**
      * @memberOf Route
      * @summary Display References Collection list (with filter and search soon)
@@ -60,17 +68,7 @@ _.each(Schemas.references.options, function (referenceOptions) {
     //get (list)
     Router.route('/' + PLURAL_REFERENCE_URL, function () {
             this.render('referenceList', {
-                data: {
-                    REFERENCE_URL: REFERENCE_URL,
-                    //new with datatable
-                    reactiveTableSettings: {
-                        collection: AllCollections[REFERENCE_COLLECTION_NAME],
-                        rowsPerPage: 5,
-                        showFilter: true,
-                        showRowCount: true,
-                        fields: reactiveTableFields
-                    }
-                },
+                data: item,
                 to: 'mainContent'
             });
         },
@@ -114,5 +112,23 @@ _.each(Schemas.references.options, function (referenceOptions) {
 
 });
 
+
+//get (list)
+Router.route('/conf-maker', function () {
+
+        this.render('confMaker', {
+            data: {
+                confMakerReactiveTables : confMakerReactiveTables
+            },
+            to: 'mainContent'
+        });
+    },
+    {name: 'confMaker'}
+);
+
+Template.confMaker.rendered = function(){
+    $('#conf-maker-wrapper').collapsible({
+    });
+};
 
 

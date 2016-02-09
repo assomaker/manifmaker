@@ -18,11 +18,13 @@ initAccessRightData =  function(){
     Roles.createRole(taskDelete);
     var role = "role";
     Roles.createRole(role);
+    var confMaker = "confMaker";
+    Roles.createRole(confMaker);
 
 
     //create groups and add roles to groups
     var admin = GroupRoles.insert({name: "admin",
-        roles : [equipmentValidation,assignmentValidation,accessPassValidation,taskRead,taskWrite,taskDelete,role]
+        roles : [equipmentValidation,assignmentValidation,accessPassValidation,taskRead,taskWrite,taskDelete,role,confMaker]
     });
     var bureau = GroupRoles.insert({name: "bureau",
         roles : [taskRead,taskWrite,taskDelete,role]

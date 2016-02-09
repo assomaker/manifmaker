@@ -317,3 +317,8 @@ Template.assignmentTasksList.events({
         DisplayAssignedTask.set($($(event.target)[0]).is(':checked'));
     }
 });
+
+Template.assignmentTasksList.rendered = function(){
+    $('#assignment-task-list-collapsible').collapsible({});
+};
+

@@ -12,6 +12,8 @@
  *
  * AssignmentTerms => assignment-term
  *
+ * GroupRoles => group-role
+ *
  * @locus client
  * @name Collection References
  */
