@@ -1,6 +1,34 @@
 ServerUserService =
     class ServerUserService {
 
+        /*
+         * @memberOf ServerUserService
+         * @summary GroupRoles.after.update hook
+         *
+         * If group roles' roles are updated user roles are update as well.
+         *
+         * @locus server
+         * @param userId
+         * @param doc
+         * @param fieldNames
+         * @param modifier
+         * @param options
+         */
+        static propagateGroupRoles(userId, doc, fieldNames, modifier, options){
+            if( _.contains(fieldNames,"roles")){
+
+                //users having the updated groupRole
+                var users = Users.find({groupRoles: doc._id }).fetch();
+                users.forEach(user => {
+                    //update user roles, Account roles will be update by hooks
+                    var modifier = {
+                        $set : {groupRoles : user.groupRoles}
+                    };
+                    //will fire the Users after hook and call propagateRoles
+                    Users.update(user._id,modifier);
+                });
+            }
+        }
 
         /**
          * @memberOf ServerUserService

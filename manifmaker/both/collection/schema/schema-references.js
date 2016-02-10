@@ -197,6 +197,9 @@ Schemas.references.GroupRoles = new SimpleSchema({
             this.value = _.compact(this.value);
             if(_.uniq(this.value).length !== this.value.length)
                 return "duplicate"
+        },
+        autoValue: function () {
+            return _.compact(this.value);
         }
     },
     'roles.$': {

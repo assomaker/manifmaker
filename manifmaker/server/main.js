@@ -32,6 +32,8 @@ Meteor.startup(function () {
     Users.after.insert(ServerUserService.propagateRoles);
     Users.after.update(ServerUserService.propagateRoles);
 
+    GroupRoles.after.update(ServerUserService.propagateGroupRoles);
+
     deleteAll();
     initAccessRightData();
     populateData();
