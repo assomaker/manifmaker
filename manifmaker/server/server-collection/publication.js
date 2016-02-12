@@ -15,10 +15,12 @@ Meteor.startup(function () {
      * @memberOf Meteor Publish
      * @locus server
      * @summary Tasks publication. No query, publish all Tasks data.
+     *
+     * Role required : read
      * @returns {Collection}
      */
     Meteor.publish("tasks", function () {
-        if(SecurityService.grantAccessToCollection(this.userId,RolesEnum.TASKREAD,"Task"))
+        if(SecurityServiceServer.grantAccessToCollection(this.userId,RolesEnum.TASKREAD,"Task"))
             return Tasks.find({});
         else
             return [];

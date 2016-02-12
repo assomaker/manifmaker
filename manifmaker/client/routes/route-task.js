@@ -5,37 +5,10 @@
  * @name task.list  /tasks
  */
 Router.route('/tasks', function () {
+        SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.TASKREAD);
         console.info("routing", "/tasks");
+
         this.render('tasksList', {
-            //data: {
-            //    tableSettings: function () {
-            //        return {
-            //            collection: Tasks,
-            //            rowsPerPage: 10,
-            //            showFilter: true,
-            //            showRowCount: true,
-            //            columnPerPage: 5,
-            //            multiColumnSort: true,
-            //            fields: [
-            //                {key: 'name', label: 'Task name', fnAdjustColumnSizing: true},
-            //
-            //                {
-            //                    key: 'teamId', label: 'Team', fnAdjustColumnSizing: true, fn: function (teamId, Task) {
-            //                    return Teams.findOne(teamId).name;
-            //                }
-            //                },
-            //                {
-            //                    key: 'timeSlots', label: 'Time slots count', sortable: false, fn: function (timeSlots, Task) {
-            //                    return timeSlots.length;
-            //                }, fnAdjustColumnSizing: true
-            //                },
-            //                {label: 'Actions', tmpl: Template.taskButtons, fnAdjustColumnSizing: true}
-            //
-            //            ]
-            //
-            //        };
-            //    }
-            //},
             to: 'mainContent'
         });
     },
@@ -49,9 +22,8 @@ Router.route('/tasks', function () {
  * @name task.create  /task
  */
 Router.route('/task', function () {
+        SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.TASKWRITE);
         console.info("routing", "/task");
-
-        this.wait(Meteor.subscribe('teams'));
 
         if (this.ready()) {
             this.render('insertTaskForm', {
@@ -73,7 +45,9 @@ Router.route('/task', function () {
  * @name task.read  /task/:_id
  */
 Router.route('/task/:_id', function () {
+        SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.TASKREAD);
         console.info("routing", "/task/" + this.params._id);
+
         this.render('updateTaskForm', {
             data: function () {
                 var currentTask = this.params._id;
@@ -94,14 +68,21 @@ Router.route('/task/:_id', function () {
  * @name task.validation.timeSlot  /task/validation/:validationType/:_id/:state
  */
 Router.route('/task/validation/:validationType/:_id/:state', function () {
-        console.info("routing", "/task/validation/"+this.params.validationType+"/" + this.params._id + "/" + this.params.state);
+        var validationType = this.params.validationType;
+        if (validationType === "time-slot")
+            SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.ASSIGNMENTVALIDATION, "time slot validation");
+        if (validationType === "access-pass")
+            SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.ACCESSPASSVALIDATION, "access pass validation");
+        if (validationType === "equipment")
+            SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.EQUIPEMENTVALIDATION, "equipment validation");
+        console.info("routing", "/task/validation/" + this.params.validationType + "/" + this.params._id + "/" + this.params.state);
 
-        var comment = $("#"+this.params.validationType+"-validation-new-comment").val();
-        $("#"+this.params.validationType+"-validation-new-comment").val("");
+        var comment = $("#" + this.params.validationType + "-validation-new-comment").val();
+        $("#" + this.params.validationType + "-validation-new-comment").val("");
 
-        ValidationService.updateValidation(this.params._id,this.params.state, ValidationTypeUrl[this.params.validationType],comment);
+        ValidationService.updateValidation(this.params._id, this.params.state, ValidationTypeUrl[this.params.validationType], comment);
 
-        this.redirect("/task/"+this.params._id);
+        this.redirect("/task/" + this.params._id);
 
     },
     {name: 'task.validation.timeSlot'}

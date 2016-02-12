@@ -1,5 +1,5 @@
-SecurityService =
-    class SecurityService {
+SecurityServiceServer =
+    class SecurityServiceServer {
 
         static grantAccessToItem(userId, neededRole, doc, type) {
             if (Roles.userIsInRole(userId, neededRole))
@@ -14,7 +14,6 @@ SecurityService =
                 console.info(`access granted with ${neededRole} on collection ${collection} for user ${userId}`);
                 return true;
             } else {
-                //throw new Meteor.Error("403", `Forbidden, user don't have access right`);
                 console.info(`access NOT granted with ${neededRole} on collection ${collection} for user ${userId}`);
                 return false;
             }
