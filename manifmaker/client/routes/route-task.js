@@ -45,10 +45,32 @@ Router.route('/task', function () {
  * @name task.read  /task/:_id
  */
 Router.route('/task/:_id', function () {
-        SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.TASKREAD);
+        SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.TASKWRITE);
         console.info("routing", "/task/" + this.params._id);
 
         this.render('updateTaskForm', {
+            data: function () {
+                var currentTask = this.params._id;
+                return Tasks.findOne({_id: currentTask});
+            }, to: 'mainContent'
+        });
+    },
+    {name: 'task.update'}
+);
+
+
+/**
+ * @memberOf Route
+ * @summary Display the task in read mode by it's MongoId
+ * @locus client
+ * @param taskId
+ * @name task.read  /task/:_id
+ */
+Router.route('/task/:_id/read', function () {
+        SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.TASKREAD);
+        console.info("routing", "/task/" + this.params._id);
+
+        this.render('readTaskForm', {
             data: function () {
                 var currentTask = this.params._id;
                 return Tasks.findOne({_id: currentTask});

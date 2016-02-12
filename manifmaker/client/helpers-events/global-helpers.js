@@ -84,3 +84,7 @@ Template.registerHelper("equals", function (a, b) {
 Template.registerHelper("displayValidationState",function(state){
         return DisplayedValidationState[state];
 });
+
+Template.registerHelper("RolesEnum",function(){
+    return RolesEnum;
+});

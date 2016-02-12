@@ -8,8 +8,8 @@
             {{> afQuickField name="placeId"}}
             {{> afQuickField name="liveEventMasterId"}}
             {{> afQuickField name="masterId"}}
-            <!--{{> afQuickField name="timeSlots"}}-->
         </fieldset>
+
         <button type="submit" class="btn btn-primary">Insert</button>
         <button type="reset" class="btn btn-default">Reset</button>
     {{/autoForm}}
@@ -21,7 +21,7 @@
 
         <ul class="collapsible popout" data-collapsible="accordion">
             <li>
-                <div class="collapsible-header"> <i class="material-icons">comment</i>Time slot validation comments</div>
+                <div class="collapsible-header"><i class="material-icons">comment</i>Time slot validation comments</div>
                 <div class="collapsible-body">
                     <ul class="collection">
                         {{#each timeSlotValidation.comments}}
@@ -38,15 +38,27 @@
         {{#if equals timeSlotValidation.currentState "OPEN"}}
             <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/to-be-validated"><i class="material-icons left">schedule</i>Time slots validation : ask for validation</a>
         {{/if}}
-        {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
-            <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/refuse"><i class="material-icons left">schedule</i>Time slots validation : refuse</a>
-            <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/ready"><i class="material-icons left">schedule</i>Time slots validation : set ready to assignment</a>
+        {{#if isInRole RolesEnum.ASSIGNMENTVALIDATION}}
+            {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
+                <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/refuse"><i class="material-icons left">schedule</i>Time slots validation : refuse</a>
+                <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/ready"><i class="material-icons left">schedule</i>Time slots validation : set ready to assignment</a>
+            {{/if}}
+        {{else}}
+            {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
+                    <div class="chip">In validation</div>
+            {{/if}}
         {{/if}}
         {{#if equals timeSlotValidation.currentState "REFUSED"}}
             <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/to-be-validated"><i class="material-icons left">schedule</i>Time slots validation : ask for validation</a>
         {{/if}}
-        {{#if equals timeSlotValidation.currentState "READY"}}
-            <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/refuse"><i class="material-icons left">schedule</i>Time slots validation : refuse</a>
+        {{#if isInRole RolesEnum.ASSIGNMENTVALIDATION}}
+            {{#if equals timeSlotValidation.currentState "READY"}}
+                <a class="waves-effect waves-light btn-large" href="/task/validation/time-slot/{{this._id}}/refuse"><i class="material-icons left">schedule</i>Time slots validation : refuse</a>
+            {{/if}}
+        {{else}}
+            {{#if equals timeSlotValidation.currentState "READY"}}
+            <div class="chip">Ready</div>
+            {{/if}}
         {{/if}}
 
     </div>
@@ -134,6 +146,25 @@
             {{> afQuickField name="timeSlots"}}
         </fieldset>
         <button type="submit" class="btn btn-primary">Update</button>
-        {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete {{this.name}}{{/quickRemoveButton}}
+        {{#if isInRole RolesEnum.TASKDELETE}}
+            {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete {{this.name}}{{/quickRemoveButton}}
+        {{/if}}
+    {{/autoForm}}
+</template>
+
+
+<template name="readTaskForm">
+
+    {{# autoForm collection="Tasks" doc=this id="readTaskForm" type="readonly"}}
+        <fieldset>
+            <legend>Update Task {{this.name}}</legend>
+            {{> afQuickField name='name'}}
+            {{> afQuickField name='description'}}
+            {{> afQuickField name="teamId"}}
+            {{> afQuickField name="placeId"}}
+            {{> afQuickField name="liveEventMasterId"}}
+            {{> afQuickField name="masterId"}}
+            {{> afQuickField name="timeSlots"}}
+        </fieldset>
     {{/autoForm}}
 </template>

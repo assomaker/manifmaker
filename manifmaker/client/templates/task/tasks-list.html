@@ -5,13 +5,23 @@
 
     {{> reactiveTable settings=tasksList }}
 
-    <a href="/task">Create a new Task</a>
+    {{#if isInRole RolesEnum.TASKWRITE}}
+        <a href="/task">Create a new Task</a>
+    {{/if}}
 </template>
 
 
 <template name="taskButtons">
-    <a class="btn btn-primary" href="/task/{{_id}}">Update</a>
-    {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete{{/quickRemoveButton}}
+    {{#if isInRole RolesEnum.TASKWRITE}}
+        <a class="btn btn-primary" href="/task/{{_id}}">Update</a>
+    {{else}}
+        {{#if isInRole RolesEnum.TASKREAD}}
+            <a class="btn btn-primary" href="/task/{{_id}}/read">Read</a>
+        {{/if}}
+    {{/if}}
+    {{#if isInRole RolesEnum.TASKDELETE}}
+        {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id}}Delete{{/quickRemoveButton}}
+    {{/if}}
 </template>
 
 <template name="validationStateForList">
