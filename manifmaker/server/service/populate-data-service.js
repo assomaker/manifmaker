@@ -11,7 +11,7 @@ initAccessRightData =  function(){
 
     //create groups and add roles to groups
     var admin = GroupRoles.insert({name: "admin",
-        roles : [RolesEnum.EQUIPEMENTVALIDATION,RolesEnum.ASSIGNMENTVALIDATION,RolesEnum.ACCESSPASSVALIDATION,RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE,RolesEnum.confMaker]
+        roles : [RolesEnum.EQUIPMENTVALIDATION,RolesEnum.ASSIGNMENTVALIDATION,RolesEnum.ACCESSPASSVALIDATION,RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE,RolesEnum.confMaker]
     });
     var bureau = GroupRoles.insert({name: "bureau",
         roles : [RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE]
@@ -23,7 +23,7 @@ initAccessRightData =  function(){
         roles : [RolesEnum.TASKREAD]
     });
     var resplog = GroupRoles.insert({name: "respLog",
-        roles : [RolesEnum.EQUIPEMENTVALIDATION]
+        roles : [RolesEnum.EQUIPMENTVALIDATION]
     });
 
     Accounts.createUser({

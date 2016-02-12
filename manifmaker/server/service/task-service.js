@@ -11,13 +11,23 @@ ServerTaskService =
             SecurityServiceServer.grantAccessToItem(userId,RolesEnum.TASKWRITE, doc,'task');
 
             if(_.contains(fieldNames,"accessPassValidation"))
-                SecurityServiceServer.grantAccessToItem(userId,RolesEnum.ACCESSPASSVALIDATION, doc,'task');
+                if(modifier.$set.accessPassValidation.currentState === ValidationState.TOBEVALIDATED)
+                    SecurityServiceServer.grantAccessToItem(userId, RolesEnum.TASKWRITE, doc, 'task');
+                else
+                    SecurityServiceServer.grantAccessToItem(userId, RolesEnum.ACCESSPASSVALIDATION, doc, 'task');
 
-            if(_.contains(fieldNames,"assignmentValidation"))
-                SecurityServiceServer.grantAccessToItem(userId,RolesEnum.ASSIGNMENTVALIDATION, doc,'task');
+            if(_.contains(fieldNames,"assignmentValidation")) {
+                if(modifier.$set.assignmentValidation.currentState === ValidationState.TOBEVALIDATED)
+                    SecurityServiceServer.grantAccessToItem(userId, RolesEnum.TASKWRITE, doc, 'task');
+                else
+                    SecurityServiceServer.grantAccessToItem(userId, RolesEnum.ASSIGNMENTVALIDATION, doc, 'task');
+            }
 
             if(_.contains(fieldNames,"equipmentValidation"))
-                SecurityServiceServer.grantAccessToItem(userId,RolesEnum.EQUIPEMENTVALIDATION, doc,'task');
+                if(modifier.$set.equipmentValidation.currentState === ValidationState.TOBEVALIDATED)
+                    SecurityServiceServer.grantAccessToItem(userId, RolesEnum.TASKWRITE, doc, 'task');
+                else
+                    SecurityServiceServer.grantAccessToItem(userId, RolesEnum.EQUIPMENTVALIDATION, doc, 'task');
         }
 
         static allowDelete(userId, doc){

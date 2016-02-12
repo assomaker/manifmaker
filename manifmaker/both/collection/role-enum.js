@@ -4,7 +4,7 @@ RolesEnum = {
     TASKWRITE: "taskWrite",
     TASKDELETE: "taskDelete",
     ACCESSPASSVALIDATION: "accessPassValidation",
-    EQUIPEMENTVALIDATION: "equipmentValidation",
+    EQUIPMENTVALIDATION: "equipmentValidation",
     ASSIGNMENTVALIDATION: "assignmentValidation",
 
     //conf

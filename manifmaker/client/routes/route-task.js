@@ -90,13 +90,17 @@ Router.route('/task/:_id/read', function () {
  * @name task.validation.timeSlot  /task/validation/:validationType/:_id/:state
  */
 Router.route('/task/validation/:validationType/:_id/:state', function () {
-        var validationType = this.params.validationType;
-        if (validationType === "time-slot")
-            SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.ASSIGNMENTVALIDATION, "time slot validation");
-        if (validationType === "access-pass")
-            SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.ACCESSPASSVALIDATION, "access pass validation");
-        if (validationType === "equipment")
-            SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.EQUIPEMENTVALIDATION, "equipment validation");
+        if (this.params.state === "to-be-validated") {
+            SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.TASKWRITE);
+        } else {
+            var validationType = this.params.validationType;
+            if (validationType === "time-slot")
+                SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.ASSIGNMENTVALIDATION, "time slot validation");
+            if (validationType === "access-pass")
+                SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.ACCESSPASSVALIDATION, "access pass validation");
+            if (validationType === "equipment")
+                SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.EQUIPMENTVALIDATION, "equipment validation");
+        }
         console.info("routing", "/task/validation/" + this.params.validationType + "/" + this.params._id + "/" + this.params.state);
 
         var comment = $("#" + this.params.validationType + "-validation-new-comment").val();
