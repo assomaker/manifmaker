@@ -4,39 +4,26 @@ initAccessRightData =  function(){
 
 
     //create roles
-    var equipmentValidation = "equipmentValidation";
-    Roles.createRole(equipmentValidation);
-    var assignmentValidation = "assignmentValidation";
-    Roles.createRole(assignmentValidation);
-    var accessPassValidation = "accessPassValidation";
-    Roles.createRole(accessPassValidation);
-    var taskRead = "taskRead";
-    Roles.createRole(taskRead);
-    var taskWrite = "taskWrite";
-    Roles.createRole(taskWrite);
-    var taskDelete = "taskDelete";
-    Roles.createRole(taskDelete);
-    var role = "role";
-    Roles.createRole(role);
-    var confMaker = "confMaker";
-    Roles.createRole(confMaker);
+    _.each(RolesEnum, function(role) {
+        Roles.createRole(role);
+    });
 
 
     //create groups and add roles to groups
     var admin = GroupRoles.insert({name: "admin",
-        roles : [equipmentValidation,assignmentValidation,accessPassValidation,taskRead,taskWrite,taskDelete,role,confMaker]
+        roles : [RolesEnum.EQUIPEMENTVALIDATION,RolesEnum.ASSIGNMENTVALIDATION,RolesEnum.ACCESSPASSVALIDATION,RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE,RolesEnum.confMaker]
     });
     var bureau = GroupRoles.insert({name: "bureau",
-        roles : [taskRead,taskWrite,taskDelete,role]
+        roles : [RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE]
     });
     var hard = GroupRoles.insert({name: "hard",
-        roles : [taskRead,taskWrite]
+        roles : [RolesEnum.TASKREAD,RolesEnum.TASKWRITE]
     });
     var soft = GroupRoles.insert({name: "soft",
-        roles : [taskRead]
+        roles : [RolesEnum.TASKREAD]
     });
     var resplog = GroupRoles.insert({name: "respLog",
-        roles : [equipmentValidation]
+        roles : [RolesEnum.EQUIPEMENTVALIDATION]
     });
 
     Accounts.createUser({

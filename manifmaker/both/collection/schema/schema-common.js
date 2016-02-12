@@ -5,7 +5,9 @@ Schemas.ValidationComment = new SimpleSchema({
     },
     content: {
         type: String,
-        label: "Comment content"
+        label: "Comment content",
+        defaultValue: "No content",
+        optional: true
     },
     creationDate:{
         type: Date,

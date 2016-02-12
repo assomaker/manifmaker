@@ -18,7 +18,10 @@ Meteor.startup(function () {
      * @returns {Collection}
      */
     Meteor.publish("tasks", function () {
-        return Tasks.find({});
+        if(SecurityService.grantAccessToCollection(this.userId,RolesEnum.TASKREAD,"Task"))
+            return Tasks.find({});
+        else
+            return [];
     });
 
     /**
