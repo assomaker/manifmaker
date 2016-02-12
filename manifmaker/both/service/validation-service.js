@@ -17,7 +17,7 @@ ValidationService =
 
             var now = new Date();
             validationState.comments.push({
-                author: "Moi",
+                author: Users.findOne(Meteor.userId).name,
                 content: comment,
                 creationDate: now,
                 stateBefore: validationState.currentState,
