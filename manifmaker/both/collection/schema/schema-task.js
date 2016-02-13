@@ -108,8 +108,6 @@ Schemas.PeopleNeed = new SimpleSchema({
     _id: {
         type: SimpleSchema.RegEx.Id,
         label: "People Need _id",
-        defaultValue: function(){return new Meteor.Collection.ObjectID()._str},
-       // denyUpdate: true
         autoValue: function () {
             if(!this.isSet)
                 return new Meteor.Collection.ObjectID()._str;
@@ -150,12 +148,9 @@ Schemas.TimeSlot = new SimpleSchema({
             //check if timeSlot don't lap
             var timeSlots = this.field("timeSlots").value;
             var okGod = true;
-            console.info("timeSlots", timeSlots, okGod);
             timeSlots.forEach(_.bind(function (timeSlot) {
                 if (!okGod || timeSlot._id === currentId)
                     return;
-                console.info("timeSlot", timeSlot);
-
 
                 if (new moment(currentStart).isBetween(timeSlot.start, timeSlot.end) ||
                     new moment(currentEnd).isBetween(timeSlot.start, timeSlot.end))

@@ -30,7 +30,7 @@ Router.route('/task', function () {
                 to: 'mainContent'
             });
         } else {
-            console.log("waiting team data"); //TODO add a spinner
+            console.log("Route /task : waiting team data"); //TODO add a spinner
         }
 
     },

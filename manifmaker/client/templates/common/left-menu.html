@@ -2,6 +2,8 @@
 
     <nav id="top-left-menu">
         <ul id="left-menu" class="side-nav collapsible-left-menu" data-collapsible="accordion">
+            <li>{{> loginButtons}}</li>
+            {{#if isInRole RolesEnum.MANIFMAKER}}
             <li><a class="home-link" href="{{pathFor route='home'}}">Assomaker</a></li>
             <li>
                 <div class="collapsible-header">Activity</div>
@@ -32,6 +34,9 @@
             <li><a href="{{pathFor route='user.list'}}">Users</a></li>
             {{#if isInRole RolesEnum.CONFMAKER}}
                 <li><a href="{{pathFor route='confMaker'}}">ConfMaker</a></li>
+            {{/if}}
+            {{else}}
+                You must be logged ...
             {{/if}}
 
         </ul>

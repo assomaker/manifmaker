@@ -85,7 +85,7 @@ Meteor.startup(function () {
     SimpleSchema.debug = true;
     AutoForm.addHooks(null, {
         onError: function (name, error, template) {
-            console.log(name + " error:", error);
+            console.log("AutoForm.addHooks : "+name + " error:", error);
         }
     });
 

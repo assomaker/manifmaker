@@ -143,7 +143,6 @@ AssignmentService =
                     userTeamsSkillsFilter
                 ]
             };
-            console.info("TASKTOUSER user filter", newFilter);
 
 
             UserFilter.set(newFilter);

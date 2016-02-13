@@ -213,7 +213,6 @@ Template.assignmentTasksList.events({
     },
 
     "click .task": function(event){
-        console.log("clicked on task");
         SelectedTaskBreadCrumb.set(this);
     },
 

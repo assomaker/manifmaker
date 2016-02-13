@@ -28,6 +28,12 @@ ServerTaskService =
                     SecurityServiceServer.grantAccessToItem(userId, RolesEnum.TASKWRITE, doc, 'task');
                 else
                     SecurityServiceServer.grantAccessToItem(userId, RolesEnum.EQUIPMENTVALIDATION, doc, 'task');
+
+            if(_.contains(fieldNames,"timeSlots")){
+                if(doc.timeSlotValidation.currentState !== ValidationState.OPEN && doc.timeSlotValidation.currentState !== ValidationState.REFUSED){
+                    throw new Meteor.Error("403","Can't update task time slot data if task is not open or refused");
+                }
+            }
         }
 
         static allowDelete(userId, doc){

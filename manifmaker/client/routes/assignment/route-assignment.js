@@ -52,7 +52,7 @@ Router.route('/assignment/user/:userId', function () {
         if (this.ready()) {
             Router.go("/assignment/userToTask/" + this.params.userId);
         } else {
-            console.log("waiting user data"); //TODO add a spinner
+            console.log("Route /assignemnt/user/:userId : waiting user data"); //TODO add a spinner
         }
 
     }, {
@@ -78,7 +78,7 @@ Router.route('/assignment/task/:taskId', function () {
         if (this.ready()) {
             Router.go("/assignment/taskToUser/" + this.params.taskId);
         } else {
-            console.log("waiting task data"); //TODO add a spinner
+            console.log("Route assignment/task/:taskId : waiting task data"); //TODO add a spinner
         }
 
     }, {

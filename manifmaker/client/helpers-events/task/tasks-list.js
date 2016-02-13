@@ -53,7 +53,6 @@ Template.tasksList.helpers({
 
 Template.validationStateForList.helpers({
     lastComment: function (attribute, type) {
-        console.log("!!"+type);
         var lastComment;
         this[type].comments.forEach(comment => {
             if (!lastComment)

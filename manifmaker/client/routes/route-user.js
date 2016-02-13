@@ -29,7 +29,7 @@ Router.route('/user', function () {
                 to: 'mainContent'
             });
         } else {
-            console.log("waiting team data"); //TODO add a spinner
+            console.log("Route /user : waiting team data"); //TODO add a spinner
         }
 
     },

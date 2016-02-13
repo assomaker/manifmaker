@@ -11,19 +11,19 @@ initAccessRightData =  function(){
 
     //create groups and add roles to groups
     var admin = GroupRoles.insert({name: "admin",
-        roles : [RolesEnum.EQUIPMENTVALIDATION,RolesEnum.ASSIGNMENTVALIDATION,RolesEnum.ACCESSPASSVALIDATION,RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE,RolesEnum.confMaker]
+        roles : [RolesEnum.MANIFMAKER,RolesEnum.EQUIPMENTVALIDATION,RolesEnum.ASSIGNMENTVALIDATION,RolesEnum.ACCESSPASSVALIDATION,RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE,RolesEnum.confMaker]
     });
     var bureau = GroupRoles.insert({name: "bureau",
-        roles : [RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE]
+        roles : [RolesEnum.MANIFMAKER,RolesEnum.TASKREAD,RolesEnum.TASKWRITE,RolesEnum.TASKDELETE,RolesEnum.ROLE]
     });
     var hard = GroupRoles.insert({name: "hard",
-        roles : [RolesEnum.TASKREAD,RolesEnum.TASKWRITE]
+        roles : [RolesEnum.MANIFMAKER,RolesEnum.TASKREAD,RolesEnum.TASKWRITE]
     });
     var soft = GroupRoles.insert({name: "soft",
-        roles : [RolesEnum.TASKREAD]
+        roles : [RolesEnum.MANIFMAKER,RolesEnum.TASKREAD]
     });
     var resplog = GroupRoles.insert({name: "respLog",
-        roles : [RolesEnum.EQUIPMENTVALIDATION]
+        roles : [RolesEnum.MANIFMAKER,RolesEnum.EQUIPMENTVALIDATION]
     });
 
     Accounts.createUser({
@@ -456,5 +456,5 @@ getDateFromDate = function (day, month, year) {
     var now = new Date();
     year = year || now.getYear();
     month = month || now.getMonth();
-    return new Date(year, month, day, 0, 0, 0);
+    return new moment(year +" "+ month +" "+ day +" 0 0 0" , "YYYY MM DD HH mm ss").toDate()
 };

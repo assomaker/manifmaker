@@ -203,10 +203,9 @@ Template.assignmentCalendar.events({
         if (peopleNeedAssignedClick == 1) {
             setTimeout(_.bind(function () {
                 if (peopleNeedAssignedClick == 1) {
-                    console.info("click on peopleNeed.assigned : double click to perform remove assignment");
+                    //TODO DISPLAY NOTIF
+                    console.debug("TODO DISPLAY NOTIF click on peopleNeed.assigned : double click to perform remove assignment");
                 } else {
-                    console.info("dblclick on peopleNeed.assigned");
-
                     AssignmentService.taskToUserPerformUserFilterRemoveAssignment();
                 }
                 peopleNeedAssignedClick = 0;

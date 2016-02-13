@@ -13,6 +13,8 @@ function deleteAll() {
     Skills.remove({});
     Teams.remove({});
 
+    AssignmentTerms.remove({});
+
 }
 Meteor.startup(function () {
 
@@ -40,6 +42,18 @@ Meteor.startup(function () {
     deleteAll();
     initAccessRightData();
     populateData();
+    console.info("**** Data init success ****");
+    console.info("Here are some infos what have been added");
+    console.info("Accounts Users collection size is "+Meteor.users.find().fetch().length);
+    console.info("Customs Users collection size is "+Users.find().fetch().length);
+    console.info("Tasks collection size is "+Tasks.find().fetch().length);
+    console.info("Assignments collection size is "+ Assignments.find().fetch().length);
+    console.info("Groups collection size is "+Groups.find().fetch().length);
+    console.info("Skills collection size is "+Skills.find().fetch().length);
+    console.info("Teams collection size is "+Teams.find().fetch().length);
+    console.info("Places collection size is "+Places.find().fetch().length);
+    console.info("AssignmentTerms collection size is "+AssignmentTerms.find().fetch().length);
+    console.info("GroupRoles collection size is "+GroupRoles.find().fetch().length);
 
     //allow/deny policy
     Tasks.before.insert(ServerTaskService.allowInsert);

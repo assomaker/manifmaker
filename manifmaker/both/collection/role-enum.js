@@ -1,4 +1,7 @@
 RolesEnum = {
+    //global
+    MANIFMAKER: "manifMaker",
+
     //task
     TASKREAD: "taskRead",
     TASKWRITE: "taskWrite",
