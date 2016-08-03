@@ -7,6 +7,7 @@ class TaskValidationComponent extends BlazeComponent{
         this.$('.collapse').collapse({toggle: false});
 
         this.$('.collapse').on('shown.bs.collapse	', _.bind(function () {
+            //TODO change this with the new icons
             var glyphicon = this.$("[data-target=#" + $(arguments[0].target).attr("id") + "] span.glyphicon");
             glyphicon.removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
         }, this));

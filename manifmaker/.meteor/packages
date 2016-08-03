@@ -22,7 +22,6 @@ momentjs:moment
 less
 mizzao:bootstrap-3
 iron:router
-materialize:materialize@0.97.3
 aslagle:reactive-table #DAtaTables
 easy:search
 
@@ -40,3 +39,5 @@ modules
 practicalmeteor:chai
 xolvio:cleaner
 practicalmeteor:mocha
+useraccounts:bootstrap
+dapearce:material-icons

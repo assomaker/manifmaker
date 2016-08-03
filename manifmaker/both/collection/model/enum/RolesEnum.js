@@ -7,33 +7,33 @@
  */
 RolesEnum = {
     /** global */
-    MANIFMAKER: "manifMaker",
+    MANIFMAKER: "MANIFMAKER",
 
     /** task */
-    TASKREAD: "taskRead",
+    TASKREAD: "TASKREAD",
     /** task */
-    TASKWRITE: "taskWrite",
+    TASKWRITE: "TASKWRITE",
     /** task */
-    TASKDELETE: "taskDelete",
+    TASKDELETE: "TASKDELETE",
     /** task */
-    ACCESSPASSVALIDATION: "accessPassValidation",
+    ACCESSPASSVALIDATION: "ACCESSPASSVALIDATION",
     /** task */
-    EQUIPMENTVALIDATION: "equipmentValidation",
+    EQUIPMENTVALIDATION: "EQUIPMENTVALIDATION",
     /** task */
-    ASSIGNMENTVALIDATION: "assignmentValidation",
+    ASSIGNMENTVALIDATION: "ASSIGNMENTVALIDATION",
 
     /** assignment */
-    ASSIGNMENTTASKUSER: "assignmentTaskUser",
+    ASSIGNMENTTASKUSER: "ASSIGNMENTTASKUSER",
 
     /** user */
-    USERREAD: "userRead",
+    USERREAD: "USERREAD",
     /** user */
-    USERWRITE: "userWrite",
+    USERWRITE: "USERWRITE",
     /** user */
-    USERDELETE: "userDelete",
+    USERDELETE: "USERDELETE",
 
     /** conf */
-    CONFMAKER: "confMaker",
+    CONFMAKER: "CONFMAKER",
     /** conf */
-    ROLE: "role"
+    ROLE: "ROLE"
 };

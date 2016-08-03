@@ -22,10 +22,7 @@ class AssignmentTasksList extends BlazeComponent {
             "change #display-assigned-task-checkbox": this.switchDisplayAssignedTask
         }]
     }
-
-    onRendered() {
-        $('#assignment-task-list-collapsible').collapsible({});
-    }
+    
 
     onClickTaskName(event) {
         console.info("routing", "/assignment/task/" + this.currentData()._id);

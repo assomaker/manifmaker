@@ -1,12 +1,10 @@
 <template name="taskValidation">
-    <div class="row">
-
-        <div class="row">
+        <div>
             <label>Equipment validation</label>
 
-            <ul class="collection">
-                <li class="collection-item" data-toggle="collapse" data-target="#collaspeEquipmentValidation" aria-expanded="false" aria-controls="collapseExample">
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            <ul>
+                <li data-toggle="collapse" data-target="#collaspeEquipmentValidation" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="mdi mdi-chevron-down mdi-inline"></i>
                     {{#if equipmentValidation.comments}}
                         {{equipmentValidation.comments.[0].author}} update equipment validation from <b>{{displayValidationState stateBefore}}</b> to <b>{{displayValidationState stateAfter}}</b> on {{displayDateTime creationDate}} with {{#if equipmentValidation.comments.[0].content}}"{{equipmentValidation.comments.[0].content}}"{{else}} no comment{{/if}}
                     {{else}}
@@ -17,7 +15,7 @@
                 <div class="collapse" id="collaspeEquipmentValidation">
                     {{#each equipmentValidation.comments}}
                         {{#unless equals @index 0}}
-                            <li class="collection-item">{{author}} update equipment validation from <b>{{displayValidationState stateBefore}}</b> to <b>{{displayValidationState stateAfter}}</b> on {{displayDateTime creationDate}} with {{#if content}}"{{content}}"{{else}}no comment{{/if}}</li>
+                            <li>{{author}} update equipment validation from <b>{{displayValidationState stateBefore}}</b> to <b>{{displayValidationState stateAfter}}</b> on {{displayDateTime creationDate}} with {{#if content}}"{{content}}"{{else}}no comment{{/if}}</li>
                         {{/unless}}
                     {{/each}}
                 </div>
@@ -37,7 +35,7 @@
                 {{/if}}
             {{else}}
                 {{#if equals equipmentValidation.currentState "TOBEVALIDATED"}}
-                    <div class="chip">In validation</div>
+                    <div>In validation</div>
                 {{/if}}
             {{/if}}
             {{#if equals equipmentValidation.currentState "REFUSED"}}
@@ -49,18 +47,17 @@
                 {{/if}}
             {{else}}
                 {{#if equals equipmentValidation.currentState "READY"}}
-                    <div class="chip">Closed</div>
+                    <div>Closed</div>
                 {{/if}}
             {{/if}}
         </div>
 
-
-        <div class="row">
+        <div>
             <label>Time slots validation</label>
 
-            <ul class="collection">
-                <li class="collection-item" data-toggle="collapse" data-target="#collaspeTimeSlotValidation" aria-expanded="false" aria-controls="collapseExample">
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            <ul>
+                <li data-toggle="collapse" data-target="#collaspeTimeSlotValidation" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="mdi mdi-chevron-down mdi-inline"></i>
                     {{#if timeSlotValidation.comments}}
                         {{timeSlotValidation.comments.[0].author}} update equipment validation from <b>{{displayValidationState timeSlotValidation.comments.[0].stateBefore}}</b> to <b>{{displayValidationState timeSlotValidation.comments.[0].stateAfter}}</b> on {{displayDateTime timeSlotValidation.comments.[0].creationDate}} with {{#if timeSlotValidation.comments.[0].content}}"{{timeSlotValidation.comments.[0].content}}"{{else}} no comment{{/if}}
                     {{else}}
@@ -71,7 +68,7 @@
                 <div class="collapse" id="collaspeTimeSlotValidation">
                     {{#each timeSlotValidation.comments}}
                         {{#unless equals @index 0}}
-                            <li class="collection-item">{{author}} update time slot validation from <b>{{displayValidationState stateBefore}}</b> to <b>{{displayValidationState stateAfter}}</b> on {{displayDateTime creationDate}} with {{#if content}}"{{content}}"{{else}}no comment{{/if}}</li>
+                            <li>{{author}} update time slot validation from <b>{{displayValidationState stateBefore}}</b> to <b>{{displayValidationState stateAfter}}</b> on {{displayDateTime creationDate}} with {{#if content}}"{{content}}"{{else}}no comment{{/if}}</li>
                         {{/unless}}
                     {{/each}}
                 </div>
@@ -91,7 +88,7 @@
                 {{/if}}
             {{else}}
                 {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
-                    <div class="chip">In validation</div>
+                    <div>In validation</div>
                 {{/if}}
             {{/if}}
             {{#if equals timeSlotValidation.currentState "REFUSED"}}
@@ -103,9 +100,8 @@
                 {{/if}}
             {{else}}
                 {{#if equals timeSlotValidation.currentState "READY"}}
-                    <div class="chip">Ready for assignment</div>
+                    <div>Ready for assignment</div>
                 {{/if}}
             {{/if}}
         </div>
-    </div>
 </template>

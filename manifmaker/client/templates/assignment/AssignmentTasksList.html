@@ -2,18 +2,25 @@
     <h5 class="list-title">Tasks List</h5>
 
     <form class="col s12">
+        <!--TODO ca va comme bar trop styley ?-->
         <div class="row">
-            <div class="input-field">
-                <input placeholder="" id="search_task_name" type="text" class="validate">
-                <label for="search_task_name"><i class="material-icons tiny">search</i>Task name..</label>
-            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" id="search_task_name" placeholder="Search task...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">
+                      <i class="mdi mdi-magnify mdi-inline"></i>
+                  </button>
+                </span>
+            </div><!-- /input-group -->
         </div>
 
+        <!--TODO sera remplacé par SingleCustomSelect-->
         {{> commonTeamListDropdown options=responsibleTeamOptions}}
 
+        <!--TODO sera remplacé par SingleCustomSelect-->
         {{> commonTeamListDropdown options=neededTeamOptions}}
 
-
+        <!--TODO sera remplacé par MultipleCustomSelect-->
         <div class="input-field col s12 reset-materialize-multiple-select">
             <select id="filter_skills_task" multiple="multiple" class="browser-default">
                 <option value="noSkills">Without any skills</option>
@@ -23,6 +30,7 @@
             </select>
         </div>
 
+        <!--TODO sera remplacé par MultipleCustomSelect-->
         <div class="input-field col s12 reset-materialize-multiple-select">
             <input type="checkbox"  id="display-assigned-task-checkbox" class="filled-in"/>
             <label  id="display-assigned-task-checkbox-label" for="display-assigned-task-checkbox">Also display fully assigned task</label>
@@ -31,50 +39,55 @@
 
     </form>
 
-    <ul  id="assignment-task-list-collapsible" class="collapsible " data-collapsible="accordion">
-
+    <div id="assignment-task-list-collapsible" class="panel-group">
         {{#each tasks}}
-            <li class="task" data-_id="{{_id}}">
-                <div class="collapsible-header">
-                    <a class="href-assignment-task">{{name}} {{timeSlotsInfo}}</a>
+            <div class="task panel panel-default" data-_id="{{_id}}">
+
+            <div class="panel-heading" data-toggle="collapse" data-parent="#assignment-task-list-collapsible"
+                     data-target="#{{_id}}">
+                    <h4 class="panel-title">
+                        <a class="href-assignment-task">{{name}} {{timeSlotsInfo}}</a>
+                    </h4>
                 </div>
-                <div class="collapsible-body">
-                    <!--Timeslots :-->
-                    <ul>
-                        {{#each timeSlots}}
-                            <li class="time-slot" data-_id="{{_id}}">
-                                <!--from {{displayHours start}} to {{displayHours end}}-->
-                                <ul class="collection">
-                                    {{#each peopleNeeded}}
-                                        <li class="peopleNeed collection-item">
-                                            <div>
-                                                {{#each skills}}
-                                                    <div class="chip">{{skillLabel}}</div>
-                                                {{else}}
-                                                    <div class="chip">No specific skills</div>
-                                                {{/each}}
-                                            </div>
-                                            {{#if teamId}}
-                                                <div class="chip">{{team}}</div>
-                                            {{/if}}
-                                            {{#if userId}}
-                                                <div class="chip">{{user}}</div>
-                                            {{/if}}
-                                        </li>
-                                    {{/each}}
-                                </ul>
-                            </li>
-                        {{/each}}
-                    </ul>
-                    <!--Assignments :-->
-                    <!--<ul>-->
-                        <!--{{#each assignments}}-->
-                            <!--<li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>-->
-                        <!--{{/each}}-->
-                    <!--</ul>-->
+                <div id="{{_id}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <!--Timeslots :-->
+                        <ul>
+                            {{#each timeSlots}}
+                                <li class="time-slot" data-_id="{{_id}}">
+                                    <!--from {{displayHours start}} to {{displayHours end}}-->
+                                    <ul>
+                                        {{#each peopleNeeded}}
+                                            <li class="peopleNeed">
+                                                <div>
+                                                    {{#each skills}}
+                                                        <div>{{skillLabel}}</div>
+                                                    {{else}}
+                                                        <div>No specific skills</div>
+                                                    {{/each}}
+                                                </div>
+                                                {{#if teamId}}
+                                                    <div>{{team}}</div>
+                                                {{/if}}
+                                                {{#if userId}}
+                                                    <div>{{user}}</div>
+                                                {{/if}}
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                </li>
+                            {{/each}}
+                        </ul>
+                        <!--Assignments :-->
+                        <!--<ul>-->
+                            <!--{{#each assignments}}-->
+                        <!--<li>{{userName}} from {{displayHours start}} to {{displayHours end}}</li>-->
+                            <!--{{/each}}-->
+                        <!--</ul>-->
+                    </div>
                 </div>
-            </li>
+            </div>
         {{/each}}
-    </ul>
+    </div>
 
 </template>

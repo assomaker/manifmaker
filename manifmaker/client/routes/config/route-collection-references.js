@@ -154,12 +154,7 @@ Router.route('/conf-maker', function () {
             to: 'mainContent'
         });
     },
-    {name: 'confMaker'}
+    {name: 'conf-maker'}
 );
-
-Template.confMaker.rendered = function(){
-    $('#conf-maker-wrapper').collapsible({
-    });
-};
 
 

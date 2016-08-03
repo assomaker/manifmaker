@@ -1,9 +1,13 @@
 import {MultipleNonMandatorySelectComponent} from "./MultipleNonMandatorySelectComponent"
 
-//TODO use mixin instead of copy paste code
 class MultipleNonMandatoryBulkSelectComponent extends MultipleNonMandatorySelectComponent {
     initializeData() {
         super.initializeData();
+
+        /**
+         * bulkPeopleNeededIds is used to update multiple peopleNeeded in a batch. There is no docs for this, read the code
+         * if needed.
+         */
         this.bulkPeopleNeededIds = this.data().bulkPeopleNeededIds;
 
         //reconstructing pathWithArray with only _id on the LAST path from bulk

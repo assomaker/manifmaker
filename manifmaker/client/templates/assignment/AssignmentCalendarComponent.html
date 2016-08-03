@@ -4,9 +4,9 @@
          data-toggle="popover" title="{{displayHoursMinute start}} to {{displayHoursMinute end}}"
          data-content='
                                                 <div>
-                                                    <div class="collection">
+                                                    <div>
                                                         {{#each peopleNeeded}}
-                                                            <div class="peopleNeed collection-item" data-_id="{{_id}}">
+                                                            <div class="peopleNeed" data-_id="{{_id}}">
                                                                 {{#if userId }}
                                                                     <div class="user">{{userName}}</div>
                                                                 {{/if}}
@@ -23,9 +23,9 @@
                                                     </div>
 
                                                     Already Assigned
-                                                    <div class="collection">
+                                                    <div>
                                                         {{#each peopleNeededAssigned}}
-                                                            <div class="peopleNeed assigned  collection-item" data-_id="{{_id}}">
+                                                            <div class="peopleNeed assigned" data-_id="{{_id}}">
                                                                 Assigned to {{displayAssignedUser}}
                                                                 <i>
                                                                 {{#if userId }}

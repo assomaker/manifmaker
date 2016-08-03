@@ -4,59 +4,193 @@
 
 
 <template name="taskListComponent">
-    <div class="task-list-filter-wrapper input-field col s12">
-        {{> commonTeamListDropdown id="task-list-team-selector"}}
+
+    {{validateForm}}
+
+    <div>
+        {{#if isInRole RolesEnum.TASKWRITE}}
+            <a class="btn btn-primary pull-right" href="/task">Create a new Task</a>
+        {{/if}}
+
+        <h1>Tasks List</h1>
+
     </div>
 
+    <div class="task-list-filter-wrapper">
+        <div class="row">
+
+            <div class="col-md-3">
+                <label>
+                    Task name :
+                </label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="search_task_name" placeholder="Search task...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">
+                              <i class="mdi mdi-magnify mdi-inline"></i>
+                          </button>
+                        </span>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-md-offset-1">
+                {{> SingleNonMandatorySelectComponent selectLabel="Task responsible" title="Task responsible"
+                optionCollection="Users" optionValueName="name" optionCollectionIndex="UsersIndex"
+                nothingSelectedLabel="No one" quickSelectLabel="select yourself" quickSelectId=currentUserId
+                updateCallback=filterResponsible
+                }}
+            </div>
+
+            <div class="col-md-3 col-md-offset-1">
+                {{> SingleNonMandatorySelectComponent selectLabel="Team" title="Select a team"
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCallback=filterTeam optionQuery=optionQueryTeamsWithoutAlreadyAssigned
+                }}
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-9">
+                <button class="btn btn-primary pull-right" id="advanced-search-button" href="">More <i class="mdi mdi-chevron-down mdi-inline"></i></button>
+                <br><br>
+            </div>
+        </div>
+
+        {{#if isSearchAdvanced}}
+            <div class="row">
+
+                {{#if isInRole RolesEnum.TASKWRITE}}
+                    <div class="col-md-3">
+                        <!-- TODO rendre fonctionnel le custom picker -->
+                        {{> SingleNonMandatorySelectComponent selectLabel="Validation Status"
+                        optionCollection=optionValidationStatus optionValueName="label"
+                        updateCallback=filterValidationStatus
+                        }}
+
+                    </div>
+                {{/if}}
+                <div class="col-md-3 col-md-offset-1">
+                    <label>
+                        <input type="checkbox"> After :
+                    </label>
+                    <!-- TODO rendre fonctionnel le custom picker -->
+                    {{>DateTimePickerComponent date=TODO updateDateCallback=TODO}}
+                    <label>
+                        <input type="checkbox"> Before :
+                    </label>
+                    <!-- TODO rendre fonctionnel le custom picker -->
+                    {{>DateTimePickerComponent date=TODO updateDateCallback=TODO}}
+                </div>
+
+                {{#if isInRole RolesEnum.ASSIGNMENTTASKUSER}}
+                    <div class="col-md-3 col-md-offset-1">
+                        <label>
+                            <!-- TODO rendre fonctionnel le custom picker -->
+                            Affectation priority
+                        </label>
+                        <br>
+                        <!--
+                        <label>
+                            Is critical
+                        </label>
+                        -->
+                    </div>
+                {{/if}}
+            </div>
+        {{/if}}
+        </div>
     {{> reactiveTable settings=tasksList }}
 
-    {{#if isInRole RolesEnum.TASKWRITE}}
-        <a href="/task">Create a new Task</a>
-    {{/if}}
 </template>
+
+
 
 
 <template name="taskButtons">
     {{#if isInRole RolesEnum.TASKWRITE}}
-        <a class="btn btn-primary" href="/task/{{_id}}">Update</a>
+        <a class="btn btn-primary" href="/task/{{_id}}" role="button" title="Edit"> <i class="mdi mdi-pencil"></i></a>
     {{else}}
         {{#if isInRole RolesEnum.TASKREAD}}
-            <a class="btn btn-primary" href="/task/{{_id}}/read">Read</a>
+            <a class="btn btn-primary" href="/task/{{_id}}/read" title="Read"> <i class="mdi mdi-chevron-right"></i></a>
         {{/if}}
     {{/if}}
     {{#if isInRole RolesEnum.TASKDELETE}}
-        {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id onSuccess=onDeleteSuccess beforeRemove=beforeRemove onError=onDeleteError}}Delete{{/quickRemoveButton}}
+        {{#quickRemoveButton class="btn btn-default" collection="Tasks" _id=this._id onSuccess=onDeleteSuccess beforeRemove=beforeRemove onError=onDeleteError}}
+            <span title="Delete">
+                <i class="mdi mdi-delete"></i>
+            </span>
+        {{/quickRemoveButton}}
     {{/if}}
 </template>
 
+
+
+
 <template name="validationStateForList">
+    <span class="task-list-filter-wrapper">
 
-    {{#if equals timeSlotValidation.currentState "OPEN"}}
-        Time slots are <b>open</b> for anything
-    {{/if}}
-    {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
-        Time slots has been <b>submitted</b> to validation by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "timeSlotValidation"}}"
-    {{/if}}
-    {{#if equals timeSlotValidation.currentState "REFUSED"}}
-        Time slots has been <b>refused</b> by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "timeSlotValidation"}}"
-    {{/if}}
-    {{#if equals timeSlotValidation.currentState "READY"}}
-        Time slots has been <b>validated</b> by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
-    {{/if}}
+        {{#if equals timeSlotValidation.currentState "OPEN"}}
+           <span class="open" title="Time slots are open for anything">
+               <i class="mdi mdi-clock mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals timeSlotValidation.currentState "TOBEVALIDATED"}}
+            <span class="tobevalidated"  title='Time slots has been submitted to validation by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "timeSlotValidation"}}"'>
+               <i class="mdi mdi-clock mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals timeSlotValidation.currentState "REFUSED"}}
+            <span class="refused" title='Time slots has been refused by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "timeSlotValidation"}}"'>
+               <i class="mdi mdi-clock mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals timeSlotValidation.currentState "READY"}}
+            <span class="ready" title='Time slots has been validated by {{lastComment "author" "timeSlotValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}'>
+               <i class="mdi mdi-clock mdi-big"></i>
+            </span>
+        {{/if}}
 
-    <br>
+        {{#if equals equipmentValidation.currentState "OPEN"}}
+            <span class="open" title="Equipments are open for anything">
+                <i class="mdi mdi-wrench mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals equipmentValidation.currentState "TOBEVALIDATED"}}
+            <span class="tobevalidated" title='Equipments has been submitted to validation by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime equipmentValidation.lastUpdateDate}} with "{{lastComment "content" "equipmentValidation"}}"'>
+                <i class="mdi mdi-wrench mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals equipmentValidation.currentState "REFUSED"}}
+            <span class="refused" title='Equipments has been refused by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime equipmentValidation.lastUpdateDate}} with "{{lastComment "content" "equipmentValidation"}}"'>
+                <i class="mdi mdi-wrench mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals equipmentValidation.currentState "READY"}}
+            <span class="ready" title='Equipments has been validated by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime equipmentValidation.lastUpdateDate}}'>
+                <i class="mdi mdi-wrench mdi-big"></i>
+            </span>
+        {{/if}}
 
-    {{#if equals equipmentValidation.currentState "OPEN"}}
-        Equipments are <b>open</b> for anything
-    {{/if}}
-    {{#if equals equipmentValidation.currentState "TOBEVALIDATED"}}
-        Equipments has been <b>submitted</b> to validation by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "equipmentValidation"}}"
-    {{/if}}
-    {{#if equals equipmentValidation.currentState "REFUSED"}}
-        Equipments has been <b>refused</b> by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}} with "{{lastComment "content" "equipmentValidation"}}"
-    {{/if}}
-    {{#if equals equipmentValidation.currentState "READY"}}
-        Equipments has been <b>validated</b> by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime timeSlotValidation.lastUpdateDate}}
-    {{/if}}
-
+        {{#if equals accessPassValidation.currentState "OPEN"}}
+            <span class="open" title="Access Pass are open for anything">
+                <i class="mdi mdi-alert mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals accessPassValidation.currentState "TOBEVALIDATED"}}
+            <span class="tobevalidated" title='Access Pass have been submitted to validation by {{lastComment "author" "accessPassValidation"}} on {{displayDateTime accessPassValidation.lastUpdateDate}} with "{{lastComment "content" "accessPassValidation"}}"'>
+                <i class="mdi mdi-alert mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals accessPassValidation.currentState "REFUSED"}}
+            <span class="refused" title='Access Pass have been refused by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime accessPassValidation.lastUpdateDate}} with "{{lastComment "content" "accessPassValidation"}}"'>
+                 <i class="mdi mdi-alert mdi-big"></i>
+            </span>
+        {{/if}}
+        {{#if equals accessPassValidation.currentState "READY"}}
+            <span class="ready" title='Access Pass have been validated by {{lastComment "author" "equipmentValidation"}} on {{displayDateTime accessPassValidation.lastUpdateDate}}'>
+                 <i class="mdi mdi-alert mdi-big"></i>
+            </span>
+        {{/if}}
+    </span>
 </template>

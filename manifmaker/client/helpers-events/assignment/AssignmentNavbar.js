@@ -1,7 +1,7 @@
 import {TimeSlotService} from "../../../both/service/TimeSlotService"
 import {AssignmentReactiveVars} from "../../../client/helpers-events/assignment/AssignmentReactiveVars"
 
-class AssignmentMenu extends BlazeComponent {
+class AssignmentNavbar extends BlazeComponent {
     events() {
         return [{
             "click #userToTask": this.onClickUserToTask,
@@ -153,5 +153,5 @@ class AssignmentMenu extends BlazeComponent {
 
 }
 
-AssignmentMenu.register("AssignmentMenu");
+AssignmentNavbar.register("AssignmentNavbar");
 

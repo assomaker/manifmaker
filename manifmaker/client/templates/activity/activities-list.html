@@ -38,7 +38,7 @@
                 {{/if}}
             {{else}}
                 {{#if equals accessPassValidation.currentState "TOBEVALIDATED"}}
-                    <div class="chip">In validation</div>
+                    <div>In validation</div>
                 {{/if}}
             {{/if}}
             {{#if equals accessPassValidation.currentState "REFUSED"}}
@@ -50,7 +50,7 @@
                 {{/if}}
             {{else}}
                 {{#if equals accessPassValidation.currentState "READY"}}
-                    <div class="chip">Closed</div>
+                    <div>Closed</div>
                 {{/if}}
             {{/if}}
         </div>

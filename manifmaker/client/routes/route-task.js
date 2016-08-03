@@ -13,12 +13,19 @@ import {SecurityServiceClient} from "../../client/service/SecurityServiceClient"
  * @name 'home'  /tasks
  */
 Router.route('/tasks', function () {
+        this.wait(Meteor.subscribe('users'));
+        this.wait(Meteor.subscribe('tasks'));
+
         SecurityServiceClient.grantAccessToPage(Meteor.userId(), RolesEnum.TASKREAD);
         console.info("routing", "/tasks");
 
-        this.render('tasksList', {
-            to: 'mainContent'
-        });
+        if (this.ready()) {
+            this.render('tasksList', {
+                to: 'mainContent'
+            });
+        } else {
+            console.log("Route /tasks : waiting users and tasks data"); //TODO add a spinner
+        }
     },
     {name: 'task.list'}
 )

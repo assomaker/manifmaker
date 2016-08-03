@@ -2,7 +2,7 @@
 
     {{reactiveConstructor}}
 
-    <div class="row">
+    <div class="col-md-12">
         {{>AssignmentTermSelectComponent}}
     </div>
 
@@ -51,6 +51,7 @@
                                     <div class="col-md-3">
                                         <span>{{count}}</span>
                                         {{#unless isTimeSlotsReadOnly}}
+                                            <!-- TODO changer les bootstrap icons vers des md icons -->
                                             <span class="glyphicon glyphicon-trash delete" data-peopleneededid="{{this._id}}" aria-hidden="true"></span>
                                             <span class="glyphicon glyphicon-file duplicate" data-peopleneededid="{{this._id}}" aria-hidden="true"></span>
                                         {{/unless}}

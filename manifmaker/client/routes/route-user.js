@@ -98,6 +98,19 @@ Router.route('/user/:_id/read', function () {
 );
 
 
+/**
+ * @memberOf Route.User
+ * @summary Logout usser
+ * @locus client
+ * @name 'logout'  /logout
+ */
+Router.route('/logout', function () {
+        Accounts.logout();
+        Router.go("/")
+    },
+    {name: 'logout'}
+);
+
 
 
 

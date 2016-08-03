@@ -4,6 +4,10 @@ export class MultipleNonMandatorySelectComponent extends MultipleSelectComponent
 
     initializeData() {
         super.initializeData();
+        /**
+         * default : "Clear all"
+         * @type {string}
+         */
         this.clearMessage = this.data().clearMessage || "Clear all";
     }
 

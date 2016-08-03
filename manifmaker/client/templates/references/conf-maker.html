@@ -1,15 +1,19 @@
 <template name="confMaker">
-
-    <ul id="conf-maker-wrapper" class="collapsible" data-collapsible="accordion">
-    {{#each confMakerReactiveTables}}
-
-        <li>
-            <div class="collapsible-header">{{REFERENCE_LABEL}}<a href="/{{REFERENCE_URL}}">Create a new {{REFERENCE_LABEL}}</a></div>
-            <div class="collapsible-body">
-                {{> reactiveTable settings=reactiveTableSettings}}
+    <div id="conf-maker-wrapper" class="panel-group">
+        {{#each confMakerReactiveTables}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title" data-toggle="collapse" data-parent="#conf-maker-wrapper"
+                        data-target="#{{REFERENCE_URL}}">
+                        {{REFERENCE_LABEL}}   <a href="/{{REFERENCE_URL}}">Create a new {{REFERENCE_LABEL}}</a>
+                    </h4>
+                </div>
+                <div id="{{REFERENCE_URL}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {{> reactiveTable settings=reactiveTableSettings}}
+                    </div>
+                </div>
             </div>
-        </li>
-    {{/each}}
-    </ul>
-
+        {{/each}}
+    </div>
 </template>

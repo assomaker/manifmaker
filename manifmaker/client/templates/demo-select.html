@@ -1,48 +1,170 @@
-<template name="demo-select">
+<template name="demoSelect">
 
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <h2>Live Custom Select demo</h2>
+        </div>
+    </div>
 
     <div class="form-group">
-        <div class="col-md-3">
-            {{> MultipleSelectComponent selectLabel="'user1' teams" filterPlaceHolder="Filter by team name..." title="Update teams..."
-            optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
-            updateCollection="Users" updateItemId=user1Id updateItemPath="teams"}}
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h3>Update a specific item at a specific path in a collection or provide a callback to handle whatever
+                    you need. </h3>
+            </div>
         </div>
-        <div class="col-md-3">
-            {{> MultipleSelectComponent
-            optionCollection="Teams" optionCollectionIndex="TeamsIndex"
-            updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
-            }}
+        <div class="row">
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select with mininum params to update an item in a collection"
+                optionCollection="Teams" optionValueName="name"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select to update an item in a collection and providing a search filter"
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select with mininum params to handle result in a callback only"
+                optionCollection="Teams" optionValueName="name"
+                updateCallback=updateCallbackDisplayArgs
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select to update an item in a collection and user a callback"
+                optionCollection="Teams" optionValueName="name"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                updateCallback=updateCallbackDisplayArgs
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> SingleSelectComponent selectLabel="Single slect with updateCallback only"
+                optionCollection="Teams" optionValueName="name"
+                updateCallback=updateCallbackDisplayArgs
+                }}
+            </div>
         </div>
-        <div class="col-md-3">
-            {{> MultipleNonMandatorySelectComponent title="Update user2 skills" filterPlaceHolder="Ceci est le search place holder" clearMessage="clear all selected"
-            optionCollection="Skills" optionValueName="label" optionCollectionIndex="SkillsIndex" nothingSelectedLabel="No skills"
-            updateCollection="Users" updateItemId=user2Id updateItemPath="skills"
-            quickSelectLabel="Assign to skill1 and skill2" quickSelectIds=skill1Idskill2Id
-            }}
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h3>Select options, do what you want with it.</h3>
+            </div>
         </div>
-        <div class="col-md-3">
-            {{> SingleSelectComponent title="Update task2 team" filterPlaceHolder="Ceci est le search place holder"
-            optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
-            updateCollection="Tasks" updateItemId=task2Id updateItemPath="teamId"
-            }}
+        <div class="row">
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select providing a search filter"
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select with a pre-filtered options list coming from a Mongo collection"
+                optionCollection="Teams" optionValueName="name" optionQuery=optionQueryteamsWithoutAlreadyAssigned
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select with options coming from an array "
+                optionCollection=optionCollectionAsArray optionValueName="label"
+                updateCallback=updateCallbackDisplayArgs
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> SingleSelectComponent selectLabel="Single select with options coming from an array "
+                optionCollection=optionCollectionAsArray optionValueName="label"
+                updateCallback=updateCallbackDisplayArgs
+                }}
+            </div>
         </div>
-        <div class="col-md-3">
-            {{> SingleNonMandatorySelectComponent title="Update task2 powersupply" filterPlaceHolder="Ceci est le search place holder" clearMessage="clear selected"
-            optionCollection="PowerSupplies" optionValueName="name" optionCollectionIndex="PowerSuppliesIndex"
-            updateCollection="Tasks" updateItemId=task2Id updateItemPath="powerSupplyId"
-            quickSelectLabel="Assign to powersupply1" quickSelectId=powersupply1
-            }}
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h3>Following are examples that update an item in a collection. Works the same with only a callback</h3>
+            </div>
         </div>
-        <div class="col-md-3">
-            {{> SingleNonMandatorySelectComponent withoutLabel=true title="Update task2 powersupply" filterPlaceHolder="Ceci est le search place holder" clearMessage="clear selected"
-            optionCollection="PowerSupplies" optionValueName="name" optionCollectionIndex="PowerSuppliesIndex"
-            updateCollection="Tasks" updateItemId=task2Id updateItemPath="powerSupplyId"}}
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h3>How many selected options to you want to display ? </h3>
+            </div>
         </div>
-        <div class="col-md-3">
-            {{> MultipleSelectComponent withoutLabel=true
-            optionCollection="Teams" optionCollectionIndex="TeamsIndex"
-            updateCollection="Users" updateItemId=user1Id updateItemPath="teams"}}
-
+        <div class="row">
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select that doesn't display any selected options"
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                maxSelectedOptionDisplayed=0}}
+            </div>
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select that display 2 at most selected options"
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                maxSelectedOptionDisplayed=2}}
+            </div>
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select that display 1 at most selected options with a custom label"
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                maxSelectedOptionDisplayed=1 maxSelectedOptionDisplayedLabel=" selected, over space ! Over !"}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h3>Other cool settings</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Multiple select where selected options are sorted at the top of the popover list"
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                selectedOptionSortedOnTopOfList=true}}
+            </div>
+            <div class="col-md-3">
+                <p>Multiple without label (this is not the label but just a span</p>
+                {{> MultipleSelectComponent withoutLabel=true
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h3>Non mandatory and custom label</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                {{> MultipleSelectComponent selectLabel="Custom label/title/search place holder" filterPlaceHolder="Pssst, you can search stuff here" title="My name is popover !"
+                optionCollection="Teams" optionValueName="name" optionCollectionIndex="TeamsIndex"
+                updateCollection="Users" updateItemId=user1Id updateItemPath="teams"
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> SingleNonMandatorySelectComponent title="Non mandatory single select" clearMessage="Custorm clear selected"
+                optionCollection="PowerSupplies" optionValueName="name" optionCollectionIndex="PowerSuppliesIndex"
+                updateCollection="Tasks" updateItemId=task2Id updateItemPath="powerSupplyId"}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h3>Make your user happy, spare him time !</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                {{> MultipleNonMandatorySelectComponent title="Non mandatory Multiple with quick selection"
+                optionCollection="Skills" optionValueName="label" optionCollectionIndex="SkillsIndex" nothingSelectedLabel="Nothing yet buddy..."
+                updateCollection="Users" updateItemId=user2Id updateItemPath="skills"
+                quickSelectLabel="Quick ! Click to select skill1 and skill2" quickSelectIds=skill1Idskill2Id
+                }}
+            </div>
+            <div class="col-md-3">
+                {{> SingleNonMandatorySelectComponent title="Single with quick selection"
+                optionCollection="PowerSupplies" optionValueName="name" optionCollectionIndex="PowerSuppliesIndex"
+                updateCollection="Tasks" updateItemId=task2Id updateItemPath="powerSupplyId"
+                quickSelectLabel="Assign to powersupply1" quickSelectId=powersupply1
+                }}
+            </div>
         </div>
     </div>
 

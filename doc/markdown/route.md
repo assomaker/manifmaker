@@ -5,6 +5,7 @@
 
 * [Route](#Route) : <code>object</code>
     * [.common](#Route.common) : <code>object</code>
+        * [.home  /](#Route.common.home  /)
         * [.demo-select  /demo-select](#Route.common.demo-select  /demo-select)
         * [.inject-data  /inject-data](#Route.common.inject-data  /inject-data)
         * [.home  /delete-all](#Route.common.home  /delete-all)
@@ -21,6 +22,7 @@
         * [.user.create  /user](#Route.User.user.create  /user)
         * [.user.read  /user/:_id](#Route.User.user.read  /user/__id)
         * [.user.read  /user/:_id](#Route.User.user.read  /user/__id)
+        * [.logout  /logout](#Route.User.logout  /logout)
 
 <a name="Route.common"></a>
 
@@ -28,12 +30,19 @@
 **Kind**: static namespace of <code>[Route](#Route)</code>  
 
 * [.common](#Route.common) : <code>object</code>
+    * [.home  /](#Route.common.home  /)
     * [.demo-select  /demo-select](#Route.common.demo-select  /demo-select)
     * [.inject-data  /inject-data](#Route.common.inject-data  /inject-data)
     * [.home  /delete-all](#Route.common.home  /delete-all)
     * [.init-access-right-data  /init-access-right-data](#Route.common.init-access-right-data  /init-access-right-data)
     * [.populate-data  /populate-data](#Route.common.populate-data  /populate-data)
 
+<a name="Route.common.home  /"></a>
+
+#### common.home  /
+**Kind**: static property of <code>[common](#Route.common)</code>  
+**Summary**: Home  
+**Locus**: client  
 <a name="Route.common.demo-select  /demo-select"></a>
 
 #### common.demo-select  /demo-select
@@ -133,6 +142,7 @@
     * [.user.create  /user](#Route.User.user.create  /user)
     * [.user.read  /user/:_id](#Route.User.user.read  /user/__id)
     * [.user.read  /user/:_id](#Route.User.user.read  /user/__id)
+    * [.logout  /logout](#Route.User.logout  /logout)
 
 <a name="Route.User.user.list  /users"></a>
 
@@ -168,3 +178,9 @@
 | --- |
 | userId | 
 
+<a name="Route.User.logout  /logout"></a>
+
+#### User.logout  /logout
+**Kind**: static property of <code>[User](#Route.User)</code>  
+**Summary**: Logout usser  
+**Locus**: client  

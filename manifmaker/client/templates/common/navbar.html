@@ -1,0 +1,13 @@
+<template name="navbar">
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+
+        <div class="container-fluid">
+            <button id="display-side-menu-button" type="button" class="sidebar-toggle btn btn-default navbar-btn" aria-label="Left Align">
+                <i class="mdi mdi-menu"></i>
+            </button>
+            {{> yield "topNavBar"}}
+        </div>
+    </nav>
+
+</template>

@@ -1,7 +1,7 @@
 export var Schemas = {};
 SimpleSchema.messages({
-    unknownId: `[label] could not be find in database`,
-    unknownIdOrDuplicateId: `[label] could not be find in database or is duplicated`,
+    unknownId: `[label] could not be found in database`,
+    unknownIdOrDuplicateId: `[label] could not be found in database or is duplicated`,
     duplicate: `[label] is duplicated`,
     endBeforeStart: `[label] must be after start date`,
     startAfterEnd: `[label] must be before end date`,

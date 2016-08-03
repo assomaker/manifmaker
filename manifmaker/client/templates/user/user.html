@@ -18,7 +18,7 @@
             {{> afQuickField name='name'}}
             {{> afQuickField name="teams"}}
             {{> afQuickField name="skills"}}
-            {{#if isInRole 'role'}}
+            {{#if isInRole RolesEnum.ROLE}}
                 {{#if this.loginUserId}}
                     {{> afQuickField name="groupRoles"}}
                 {{else}}
@@ -41,7 +41,7 @@
             {{> afQuickField name='name'}}
             {{> afQuickField name="teams"}}
             {{> afQuickField name="skills"}}
-            {{#if isInRole 'role'}}
+            {{#if isInRole RolesEnum.ROLE}}
                 {{#if this.loginUserId}}
                     {{> afQuickField name="groupRoles"}}
                 {{else}}

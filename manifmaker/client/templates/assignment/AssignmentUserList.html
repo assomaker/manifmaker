@@ -1,17 +1,24 @@
 <template name="AssignmentUserList">
     <h5 class="list-title">Users List</h5>
 
-    <form class="col s12">
+    <form class="col-md-12">
+        <!--TODO ca va comme bar trop styley ?-->
         <div class="row">
-            <div class="input-field">
-                <input placeholder="" id="search_user_name" type="text" class="validate">
-                <label for="search_user_name"><i class="material-icons tiny">search</i>User name..</label>
-            </div>
+            <div class="input-group">
+                <input type="text" class="form-control"  id="search_user_name" placeholder="Search user...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">
+                      <i class="mdi mdi-magnify mdi-inline"></i>
+                  </button>
+                </span>
+            </div><!-- /input-group -->
         </div>
 
+        <!--TODO sera remplacé par SingleCustomSelect-->
         {{> commonTeamListDropdown}}
 
-        <div class="input-field col s12 reset-materialize-multiple-select">
+        <!--TODO sera remplacé par MultipleCustomSelect-->
+        <div class="input-field col-md-12 reset-materialize-multiple-select">
             <select id="filter_skills_user" multiple="multiple" class="browser-default">
                 {{#each allOptionsSkills}}
                     <option value="{{_id}}">{{label}}</option>
@@ -22,19 +29,23 @@
     </form>
 
 
-    <ul id="assignment-user-list-collapsible" class="collapsible " data-collapsible="accordion">
+    <div id="assignment-user-list-collapsible" class="panel-group">
         {{#each users}}
-            <li class="user" data-_id="{{_id}}">
-                <div class="collapsible-header">
-                    <a class="href-assignment-user">{{name}}</a>
+            <div class="user panel panel-default" data-_id="{{_id}}">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#assignment-user-list-collapsible"
+                     data-target="#{{_id}}">
+                    <h4 class="panel-title">
+                        <a class="href-assignment-user">{{name}}</a>
+                    </h4>
                 </div>
+                <div id="{{_id}}" class="panel-collapse collapse">
+                    <div class="panel-body">
 
-                    <div class="collapsible-body">
                         <div>
                             {{#each userTeamsWithoutGlobalTeam}}
-                                <div class="chip">{{team}}</div>
+                                <div>{{team}}</div>
                             {{else}}
-                                <div class="chip">User don't have any teams</div>
+                                <div>User don't have any teams</div>
                             {{/each}}
                         </div>
                         <!--Availabilities :-->
@@ -46,7 +57,7 @@
 
                         <div>
                             {{#each skills}}
-                                <div class="chip">{{skillLabel}}</div>
+                                <div>{{skillLabel}}</div>
                             {{/each}}
                         </div>
                         <!--Assignments :-->
@@ -55,8 +66,10 @@
                         <!--<li>{{taskName}} from {{displayHours start}} to {{displayHours end}}</li>-->
                             <!--{{/each}}-->
                         <!--</ul>-->
+
                     </div>
-            </li>
+                </div>
+            </div>
         {{/each}}
-    </ul>
+    </div>
 </template>

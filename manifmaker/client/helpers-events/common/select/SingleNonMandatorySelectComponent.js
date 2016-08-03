@@ -4,6 +4,10 @@ export class SingleNonMandatorySelectComponent extends SingleSelectComponent {
 
     initializeData() {
         super.initializeData();
+        /**
+         * default : "Clear"
+         * @type {string}
+         */
         this.clearMessage = this.data().clearMessage || "Clear";
     }
 

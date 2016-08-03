@@ -5,7 +5,7 @@
     "test:watch": "meteor test --full-app  --driver-package practicalmeteor:mocha --port 3020",
     "start": "meteor run",
     "doc:html": "jsdoc -r both client server -c jsdoc-conf.json",
-    "doc:md": "jsdoc2md **/service/**.js > ../doc/markdown/service.md; jsdoc2md client/routes/**.js > ../doc/markdown/route.md; jsdoc2md server/server-collection/**.js both/collection/**.js> ../doc/markdown/collection.md; jsdoc2md both/collection/model/**.js both/collection/model/enum/**.js> ../doc/markdown/model.md; jsdoc2md both/methods/**.js> ../doc/markdown/meteor-method.md"
+    "doc:md": "jsdoc2md **/service/**.js > ../doc/markdown/service.md; jsdoc2md client/routes/**.js > ../doc/markdown/route.md; jsdoc2md server/server-collection/**.js both/collection/**.js> ../doc/markdown/collection.md; jsdoc2md both/collection/model/**.js both/collection/model/enum/**.js> ../doc/markdown/model.md; jsdoc2md both/methods/**.js> ../doc/markdown/meteor-method.md; jsdoc2md client/helpers-events/common/select/**.js> ../doc/markdown/select-component.md"
   },
   "devDependencies":{
     "jsdoc": "*",
