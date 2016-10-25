@@ -76,7 +76,7 @@ Router.route('/user/:_id', function () {
  * @summary Display the user in read mode by it's MongoId
  * @locus client
  * @param userId
- * @name 'user.read'  /user/:_id
+ * @name 'user.read'  /user/:_id/read
  */
 Router.route('/user/:_id/read', function () {
         if(!Users.findOne({_id: this.params._id})){
@@ -94,6 +94,31 @@ Router.route('/user/:_id/read', function () {
         });
     },
     {controller: ManifMakerRouterController,name: 'user.read'}
+);
+
+/**
+ * @memberOf Route.User
+ * @summary Display the user in read mode by it's MongoId
+ * @locus client
+ * @param userId
+ * @name 'user.export'  /user/:_id/export
+ */
+Router.route('/user/:_id/export', function () {
+        if(!Users.findOne({_id: this.params._id})){
+            throw new Meteor.Error("404","User not found");
+        }
+        if(Users.findOne(this.params._id).loginUserId !== Meteor.userId())
+            SecurityServiceClient.grantAccessToPage( RolesEnum.USERREAD);
+
+        console.info("routing", "/user/" + this.params._id + "/export");
+        this.render('exportUserAssignment', {
+            data: function () {
+                var currentUser = this.params._id;
+                return Users.findOne({_id: currentUser});
+            }, to: 'mainContent'
+        });
+    },
+    {controller: ManifMakerRouterController,name: 'user.export'}
 );
 
 
