@@ -3,5 +3,16 @@
 </template>
 
 <template name="exportUserAssignmentComponent">
-    Salut
+    <h1>Tasks planning</h1>
+    {{this.name}}
+    <br>
+    {{#each sortedAssignments}}
+        {{task.name}} :
+        {{displayDateTime timeSlot.start}} - {{displayDateTime timeSlot.end}}
+        <br>
+        {{#each timeSlot.peopleNeeded}}
+            {{displayAssignedUser this.assignedUserId}}
+        {{/each}}
+        <br>
+    {{/each}}
 </template>
