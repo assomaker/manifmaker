@@ -24,11 +24,23 @@ class ExportUserAssignmentComponent extends BlazeComponent {
         return TimeSlotService.getTimeSlot(this.task(), this.currentData().timeSlotId)
     }
 
-    displayAssignedUser(userId){
+    displayUserInfo(userId){
         var user = Users.findOne(userId);
-        return user.name + "(066666)"
+        return user.name + "(066666)";
     }
 
+    place(placeId){
+        return Places.findOne(placeId).name;
+    }
+
+    displayEquipment (equipmentObject){
+        var quantity = equipmentObject.quantity;
+        var equipmentName = Equipments.findOne(equipmentObject.equipmentId).name;
+        if (quantity > 0){
+            return String(quantity) + " " + equipmentName;
+        }
+
+    }
 }
 
 ExportUserAssignmentComponent.register('ExportUserAssignmentComponent');

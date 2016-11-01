@@ -10,8 +10,27 @@
         {{task.name}} :
         {{displayDateTime timeSlot.start}} - {{displayDateTime timeSlot.end}}
         <br>
+        Description :<br>
+        {{task.description}}
+        <br>
+        Responsible:
+        <br>
+        <strong>{{displayUserInfo task.liveEventMasterId}}</strong><br>
+        Team :
         {{#each timeSlot.peopleNeeded}}
-            {{displayAssignedUser this.assignedUserId}}
+            <br>
+            {{displayUserInfo this.assignedUserId}}
+        {{/each}}
+        <br>
+        Place :
+        <br>
+        {{place task.placeId}}
+        <br>
+        Equipment :
+        <br>
+        {{#each task.equipments}}
+            {{displayEquipment this}}
+            <br>
         {{/each}}
         <br>
     {{/each}}
