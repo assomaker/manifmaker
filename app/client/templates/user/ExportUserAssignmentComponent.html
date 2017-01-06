@@ -1,0 +1,37 @@
+<template name="exportUserAssignment">
+    {{> ExportUserAssignmentComponent}}
+</template>
+
+<template name="exportUserAssignmentComponent">
+    <h1>Tasks planning</h1>
+    {{this.name}}
+    <br>
+    {{#each sortedAssignments}}
+        {{task.name}} :
+        {{displayDateTime timeSlot.start}} - {{displayDateTime timeSlot.end}}
+        <br>
+        Description :<br>
+        {{task.description}}
+        <br>
+        Responsible:
+        <br>
+        <strong>{{displayUserInfo task.liveEventMasterId}}</strong><br>
+        Team :
+        {{#each timeSlot.peopleNeeded}}
+            <br>
+            {{displayUserInfo this.assignedUserId}}
+        {{/each}}
+        <br>
+        Place :
+        <br>
+        {{place task.placeId}}
+        <br>
+        Equipment :
+        <br>
+        {{#each task.equipments}}
+            {{displayEquipment this}}
+            <br>
+        {{/each}}
+        <br>
+    {{/each}}
+</template>
