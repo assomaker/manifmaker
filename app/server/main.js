@@ -13,9 +13,10 @@ InjectDataInfo = new Mongo.Collection("inject_data_infos");
 Meteor.startup(function () {
 
     var mailGunPassword = process.env.MAILGUN_PASSWORD
-    if(mailGunPassword)
-        process.env.MAIL_URL = "smtp://postmaster@mail.manifmaker.com:MAILGUN_PASSWORD@smtp.mailgun.org:587";
-    else
+    if(mailGunPassword) {
+        process.env.MAIL_URL = `smtp://postmaster@mail.manifmaker.com:${mailGunPassword}@smtp.mailgun.org:587`;
+        console.log("MAIL_URL has been set to "+process.env.MAIL_URL);
+    }else
         console.info("MAILGUN_PASSWORD is not defined, this app will not send mail");
 
 
